@@ -1,20 +1,25 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import 'react-native-url-polyfill/auto'
+import { useState, useEffect } from 'react'
+import { supabase } from './lib/supabase'
+import Auth from './components/Auth'
+import Account from './components/Account'
+import { View } from 'react-native'
+import { Session } from '@supabase/supabase-js'
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  const [session, setSession] = useState(null)
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  useEffect(() => {
+    setSession(supabase.auth.session())
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
+  }, [])
+
+  return (
+    <View>
+      {session && session.user ? <Account key={session.user.id} session={session} /> : <Auth />}
+    </View>
+  )
+}

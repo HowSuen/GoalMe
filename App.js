@@ -1,12 +1,11 @@
-import 'react-native-url-polyfill/auto'
-import { useState, useEffect } from 'react'
-import { supabase } from './lib/supabase'
-import Auth from './components/Auth'
-import Account from './components/Account'
-import { View } from 'react-native'
-import { Session } from '@supabase/supabase-js'
+import 'react-native-url-polyfill/auto';
+import { useState, useEffect } from 'react';
+import { supabase } from './lib/supabase';
+import Auth from './components/Auth';
+import Account from './components/Account';
+import { StyleSheet, View } from 'react-native';
 
-export default function App() {
+const App = () => {
   const [session, setSession] = useState(null)
 
   useEffect(() => {
@@ -18,8 +17,17 @@ export default function App() {
   }, [])
 
   return (
-    <View>
+    <View style={styles.container}>
       {session && session.user ? <Account key={session.user.id} session={session} /> : <Auth />}
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#222222'
+  }
+});
+
+export default App;

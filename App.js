@@ -1,9 +1,9 @@
-import 'react-native-url-polyfill/auto';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { supabase } from './lib/supabase';
-import Auth from './components/Auth';
-import Account from './components/Account';
+import Auth from './screens/Auth';
+import Account from './screens/Account';
 import { StyleSheet, View } from 'react-native';
+
 import { store } from './store/store';
 import { Provider } from 'react-redux';
 

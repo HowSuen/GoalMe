@@ -3,6 +3,7 @@ import { supabase } from "../lib/supabase";
 import { View, Alert } from "react-native";
 import { Button, Input } from "react-native-elements";
 import styles from "./Account.style";
+import "react-native-url-polyfill/auto";
 
 const Account = ({ session }) => {
   const [loading, setLoading] = useState(false);

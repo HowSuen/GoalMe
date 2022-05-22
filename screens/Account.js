@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../lib/supabase";
-import { View, Alert } from "react-native";
-import { Button, Input } from "react-native-elements";
+import { View, Alert, TouchableOpacity } from "react-native";
+import { Button, Input, Text } from "react-native-elements";
 import styles from "./Account.style";
 import "react-native-url-polyfill/auto";
 
 const Account = ({ session }) => {
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
-  const [website, setWebsite] = useState("");
   const [avatar_url, setAvatarUrl] = useState("");
 
   useEffect(() => {
@@ -32,7 +31,6 @@ const Account = ({ session }) => {
 
       if (data) {
         setUsername(data.username);
-        setWebsite(data.website);
         setAvatarUrl(data.avatar_url);
       }
     } catch (error) {
@@ -42,7 +40,7 @@ const Account = ({ session }) => {
     }
   };
 
-  const updateProfile = async ({ username, website, avatar_url }) => {
+  const updateProfile = async ({ username, avatar_url }) => {
     try {
       setLoading(true);
       const user = supabase.auth.user();
@@ -51,7 +49,6 @@ const Account = ({ session }) => {
       const updates = {
         id: user.id,
         username,
-        website,
         avatar_url,
         updated_at: new Date(),
       };
@@ -71,7 +68,7 @@ const Account = ({ session }) => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <View style={[styles.verticallySpaced, styles.mt20]}>
         <Input label="Email" value={session?.user?.email} disabled />
       </View>
@@ -82,25 +79,19 @@ const Account = ({ session }) => {
           onChangeText={(text) => setUsername(text)}
         />
       </View>
-      <View style={styles.verticallySpaced}>
-        <Input
-          label="Website"
-          value={website || ""}
-          onChangeText={(text) => setWebsite(text)}
-        />
-      </View>
 
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Button
-          title={loading ? "Loading ..." : "Update"}
-          onPress={() => updateProfile({ username, website, avatar_url })}
-          disabled={loading}
-        />
-      </View>
+      <TouchableOpacity 
+        style={[styles.button, styles.mt20]}
+        disabled={loading}
+        onPress={() => updateProfile({ username, avatar_url })}>
+        <Text style={styles.buttonText}>{loading ? "Loading ..." : "Update"}</Text>
+      </TouchableOpacity>
 
-      <View style={styles.verticallySpaced}>
-        <Button title="Sign Out" onPress={() => supabase.auth.signOut()} />
-      </View>
+      <TouchableOpacity 
+        style={[styles.button]}
+        onPress={() => supabase.auth.signOut()}>
+        <Text style={styles.buttonText}>Sign Out</Text>
+      </TouchableOpacity>
     </View>
   );
 };

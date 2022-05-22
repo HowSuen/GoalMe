@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Alert, View } from "react-native";
+import { Alert, TouchableOpacity, View } from "react-native";
 import { supabase } from "../lib/supabase";
-import { Button, Input } from "react-native-elements";
+import { Button, Input, Text, Image } from "react-native-elements";
 import styles from "./Auth.style";
 import "react-native-url-polyfill/auto";
 
@@ -64,21 +64,19 @@ const Auth = () => {
           autoCapitalize={"none"}
         />
       </View>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Button
-          title="Sign in"
-          disabled={loading}
-          onPress={() => signInWithEmail()}
-        />
+      <TouchableOpacity 
+        style={[styles.mt20, styles.signInButton]}
+        disabled={loading}
+        onPress={() => signInWithEmail()}>
+        <Text style={styles.signInText}>Sign in</Text>
+      </TouchableOpacity>
+      <TouchableOpacity 
+        style={styles.signUpButton}
+        disabled={loading}
+        onPress={() => signUpWithEmail()}>
+        <Text style={styles.signUpText}>No account yet? Sign up</Text>
+      </TouchableOpacity>
       </View>
-      <View style={styles.verticallySpaced}>
-        <Button
-          title="Sign up"
-          disabled={loading}
-          onPress={() => signUpWithEmail()}
-        />
-      </View>
-    </View>
   );
 };
 

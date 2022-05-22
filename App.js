@@ -1,20 +1,37 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { supabase } from './lib/supabase';
+import Auth from './screens/Auth';
+import Account from './screens/Account';
+import { StyleSheet, View } from 'react-native';
 
-export default function App() {
+import { store } from './store/store';
+import { Provider } from 'react-redux';
+
+const App = () => {
+  const [session, setSession] = useState(null)
+
+  useEffect(() => {
+    setSession(supabase.auth.session())
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
+  }, [])
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <Provider store={store}>
+      <View style={styles.container}>
+        {session && session.user ? <Account key={session.user.id} session={session} /> : <Auth />}
+      </View>
+    </Provider>
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    backgroundColor: '#222222'
+  }
 });
+
+export default App;

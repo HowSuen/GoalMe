@@ -1,16 +1,45 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, DarkTheme } from "react-native";
 
 export default StyleSheet.create({
   container: {
-    marginTop: 40,
-    padding: 12,
+    padding:15,
+    justifyContent:"center",
+    flex:1,
+    theme:{DarkTheme},
+  },
+  avatarContainer: {
+    justifyContent:"flex-end",
+    alignItems:"center",
+    flex:1,
+  },
+  avatar: {
+    height:200,
+    width:200,
+  },
+  formContainer: {
+    marginTop:50,
+    flex:1.5,
   },
   verticallySpaced: {
-    paddingTop: 4,
-    paddingBottom: 4,
-    alignSelf: "stretch",
+    paddingTop:5,
+    paddingBottom:5,
+    alignSelf:"stretch",
   },
-  mt20: {
-    marginTop: 20,
+  textInput: {
+    color:"white",
+  },
+  button: {
+    marginRight:20,
+    marginLeft:20,
+    marginTop:20,
+    paddingTop:10,
+    paddingBottom:10,
+    backgroundColor:"mediumspringgreen",
+    borderRadius:5,
+  },
+  buttonText: {
+    color:"black",
+    fontSize:17,
+    textAlign:"center",
   },
 });

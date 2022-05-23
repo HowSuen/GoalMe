@@ -28,30 +28,16 @@ export default StyleSheet.create({
   textInput: {
     color:"white",
   },
-  signInButton:{
-    marginRight:20,
-    marginLeft:20,
-    marginTop:20,
-    paddingTop:10,
-    paddingBottom:10,
-    backgroundColor:"mediumspringgreen",
-    borderRadius:5,
-  },
-  signUpButton:{
+  button:{
     marginRight:100,
     marginLeft:100,
     marginTop:20,
     paddingTop:5,
     paddingBottom:5,
   },
-  signInText:{
+  buttonText:{
     color:"black",
-    fontSize:17,
+    fontSize:18,
     textAlign:"center",
   },
-  signUpText:{
-    color:"white",
-    fontSize:14,
-    textAlign:"center",
-  }
 });

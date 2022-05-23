@@ -5,9 +5,10 @@ import { Input, Text, Image } from "react-native-elements";
 import styles from "./Auth.style";
 import "react-native-url-polyfill/auto";
 
-const Auth = () => {
+const CreateAcct = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState({});
 
@@ -17,35 +18,42 @@ const Auth = () => {
     };
   }, []);
 
-  const signInWithEmail = async () => {
-    setLoading(true);
-    const { error } = await supabase.auth.signIn({
-      email: email,
-      password: password,
-    });
-
-    if (error) Alert.alert(error.message);
-    setLoading(false);
-  };
-
-  const signUpWithEmail = async () => {
+  const signUp = async () => {
     setLoading(true);
     const { error } = await supabase.auth.signUp({
       email: email,
       password: password,
+      
     });
 
     if (error) Alert.alert(error.message);
+
+    try {
+        const user = supabase.auth.user();
+        const updates = {
+          id: user.id,
+          username,
+          updated_at: new Date(),
+        };
+    
+        let { error } = await supabase.from('profiles').upsert(updates);
+        if (error) {
+          throw error;
+        }
+    } catch (error) {
+        alert(error.message);
+    }
+    
     setLoading(false);
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
-        <Image
-          style={styles.logo}
-          source={require('../assets/goalme-transparent-logo.png')}
-        />
+      <Image
+        style={styles.logo}
+        source={require('../assets/goalme-transparent-logo.png')}
+      />
       </View>
       <View style={styles.formContainer}>
         <View style={styles.verticallySpaced}>
@@ -62,6 +70,17 @@ const Auth = () => {
         <View style={styles.verticallySpaced}>
           <Input
             style={styles.textInput}
+            label="Username"
+            leftIcon={{ type: "font-awesome", name: "envelope", color: "white" }}
+            onChangeText={(text) => setUsername(text)}
+            value={username}
+            placeholder="BarryTheBee"
+            autoCapitalize={"none"}
+          />
+        </View>
+        <View style={styles.verticallySpaced}>
+          <Input
+            style={styles.textInput}
             label="Password"
             leftIcon={{ type: "font-awesome", name: "lock", color: "white" }}
             onChangeText={(text) => setPassword(text)}
@@ -72,20 +91,14 @@ const Auth = () => {
           />
         </View>
         <TouchableOpacity 
-          style={styles.signInButton}
+          style={styles.button}
           disabled={loading}
-          onPress={() => signInWithEmail()}>
-          <Text style={styles.signInText}>Sign in</Text>
-        </TouchableOpacity>
-        <TouchableOpacity 
-          style={styles.signUpButton}
-          disabled={loading}
-          onPress={() => signUpWithEmail()}>
-          <Text style={styles.signUpText}>No account yet? Sign up</Text>
+          onPress={() => signUp()}>
+          <Text style={styles.buttonText}>Create Account</Text>
         </TouchableOpacity>
         </View>
       </View>
   );
 };
 
-export default Auth;
+export default CreateAcct;

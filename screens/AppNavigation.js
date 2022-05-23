@@ -2,13 +2,11 @@ import React from "react";
 import Account from "./Account";
 import { View, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { Icon } from "react-native-elements";
-import styles from "./HomePage.style";
+import styles from "./AppNavigation.style";
 
 const Tab = createBottomTabNavigator();
-// const Tab = createMaterialBottomTabNavigator();
 
 function TempSettingsScreen() {
   return (
@@ -34,11 +32,13 @@ function TempProgressChecker() {
   );
 }
 
-const HomePage = () => {
+const AppNavigation = ({session}) => {
   return (
     <NavigationContainer styles={styles.container}>
       <Tab.Navigator
+        initialRouteName={"Goal Trackers"}
         screenOptions={({ route, navigation }) => ({
+          tabBarLabel: navigation.isFocused() ? route.name : '',
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
             if (route.name === "Account") {
@@ -54,23 +54,25 @@ const HomePage = () => {
           },
           tabBarStyle: { backgroundColor: "#222222"},
           tabBarActiveTintColor: "tomato",
+          tabBarInactiveBackgroundColor: "#111111",
           tabBarInactiveTintColor: "gray",
+          tabBarHideOnKeyboard: true,
           headerStyle: { backgroundColor: "#222222" },
           headerTintColor: "white",
           presentation: "modal",
           headerTitleAlign: "center",
-          headerTitleStyle: {
-            fontWeight: "bold"
-          }
-        })}
+          headerTitleStyle: { fontWeight: "bold" },
+        })} 
       >
         <Tab.Screen name="Goal Trackers" component={TempGoalTrackers} />
         <Tab.Screen name="Progress Checker" component={TempProgressChecker} />
-        <Tab.Screen name="Account" component={Account} />
+        <Tab.Screen name="Account">
+          {props => <Account session={session}/>}
+        </Tab.Screen>
         <Tab.Screen name="Settings" component={TempSettingsScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
 };
 
-export default HomePage;
+export default AppNavigation;

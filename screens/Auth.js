@@ -44,7 +44,7 @@ const Auth = () => {
       <View style={styles.logoContainer}>
         <Image
           style={styles.logo}
-          source={require('../assets/goalme-transparent-logo.png')}
+          source={require("../assets/goalme-transparent-logo.png")}
         />
       </View>
       <View style={styles.formContainer}>
@@ -52,7 +52,11 @@ const Auth = () => {
           <Input
             style={styles.textInput}
             label="Email"
-            leftIcon={{ type: "font-awesome", name: "envelope", color: "white" }}
+            leftIcon={{
+              type: "font-awesome",
+              name: "envelope",
+              color: "white",
+            }}
             onChangeText={(text) => setEmail(text)}
             value={email}
             placeholder="email@address.com"
@@ -71,20 +75,22 @@ const Auth = () => {
             autoCapitalize={"none"}
           />
         </View>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.signInButton}
           disabled={loading}
-          onPress={() => signInWithEmail()}>
+          onPress={() => signInWithEmail()}
+        >
           <Text style={styles.signInText}>Sign in</Text>
         </TouchableOpacity>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.signUpButton}
           disabled={loading}
-          onPress={() => signUpWithEmail()}>
+          onPress={() => signUpWithEmail()}
+        >
           <Text style={styles.signUpText}>No account yet? Sign up</Text>
         </TouchableOpacity>
-        </View>
       </View>
+    </View>
   );
 };
 

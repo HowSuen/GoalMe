@@ -1,10 +1,11 @@
 import React from "react";
-import Account from "./Account";
+import Account from "../screens/Account";
 import { View, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { Icon } from "react-native-elements";
-import styles from "./AppNavigation.style";
+import styles from "./AppNavigator.style";
+import GTNavigator from "./GTNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -12,14 +13,6 @@ function TempSettingsScreen() {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>Settings!</Text>
-    </View>
-  );
-}
-
-function TempGoalTrackers() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Goal Trackers!</Text>
     </View>
   );
 }
@@ -32,13 +25,13 @@ function TempProgressChecker() {
   );
 }
 
-const AppNavigation = ({session}) => {
+const AppNavigator = ({ session }) => {
   return (
     <NavigationContainer styles={styles.container}>
       <Tab.Navigator
         initialRouteName={"Goal Trackers"}
         screenOptions={({ route, navigation }) => ({
-          tabBarLabel: navigation.isFocused() ? route.name : '',
+          tabBarLabel: navigation.isFocused() ? route.name : "",
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
             if (route.name === "Account") {
@@ -52,7 +45,7 @@ const AppNavigation = ({session}) => {
             }
             return <Icon name={iconName} size={size} color={color} />;
           },
-          tabBarStyle: { backgroundColor: "#222222"},
+          tabBarStyle: { backgroundColor: "#222222" },
           tabBarActiveTintColor: "tomato",
           tabBarInactiveBackgroundColor: "#111111",
           tabBarInactiveTintColor: "gray",
@@ -62,12 +55,16 @@ const AppNavigation = ({session}) => {
           presentation: "modal",
           headerTitleAlign: "center",
           headerTitleStyle: { fontWeight: "bold" },
-        })} 
+        })}
       >
-        <Tab.Screen name="Goal Trackers" component={TempGoalTrackers} />
+        <Tab.Screen
+          name="Goal Trackers"
+          component={GTNavigator}
+          options={{ headerShown: false }}
+        />
         <Tab.Screen name="Progress Checker" component={TempProgressChecker} />
         <Tab.Screen name="Account">
-          {props => <Account session={session}/>}
+          {(props) => <Account session={session} />}
         </Tab.Screen>
         <Tab.Screen name="Settings" component={TempSettingsScreen} />
       </Tab.Navigator>
@@ -75,4 +72,4 @@ const AppNavigation = ({session}) => {
   );
 };
 
-export default AppNavigation;
+export default AppNavigator;

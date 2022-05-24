@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { Icon } from "react-native-elements";
 import styles from "./AppNavigation.style";
-import GoalTracker from "../components/goal-trackers/GoalTracker";
+import GoalTrackers from "./goal-trackers/GoalTrackers";
 
 const Tab = createBottomTabNavigator();
 
@@ -13,14 +13,6 @@ function TempSettingsScreen() {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>Settings!</Text>
-    </View>
-  );
-}
-
-function TempGoalTrackers() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Goal Trackers!</Text>
     </View>
   );
 }
@@ -65,7 +57,7 @@ const AppNavigation = ({ session }) => {
           headerTitleStyle: { fontWeight: "bold" },
         })}
       >
-        <Tab.Screen name="Goal Trackers" component={GoalTracker} />
+        <Tab.Screen name="Goal Trackers" component={GoalTrackers} />
         <Tab.Screen name="Progress Checker" component={TempProgressChecker} />
         <Tab.Screen name="Account">
           {(props) => <Account session={session} />}

@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
-import {
-  ComponentContainer,
-  InputContainer,
-  Input,
-  SubmitButton,
-} from "./AddGoal.style";
+import styles from "./AddGoal.style";
+import { View, TextInput } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-export default function AddGoal({ submitHandler }) {
+export default function AddFinance({ submitHandler }) {
   const [value, setValue] = useState("");
 
   const onChangeText = (text) => {
@@ -19,22 +16,24 @@ export default function AddGoal({ submitHandler }) {
   };
 
   return (
-    <ComponentContainer>
-      <InputContainer>
-        <Input
+    <View style={styles.componentContainer}>
+      <View style={styles.componentContainer}>
+        <TextInput
+          style={styles.input}
           value={value}
-          placeholder="Add a goal!"
+          placeholder="Add a finance goal!"
           onChangeText={onChangeText}
         />
-      </InputContainer>
-      <SubmitButton
+      </View>
+      <TouchableOpacity
+        style={styles.submitButton}
         onPress={() => {
           setValue(submitHandler(value));
           resetText();
         }}
       >
         <FontAwesome name="plus" size={24} color="black" />
-      </SubmitButton>
-    </ComponentContainer>
+      </TouchableOpacity>
+    </View>
   );
 }

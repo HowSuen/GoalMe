@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { View, StatusBar, FlatList } from "react-native";
-import styled from "styled-components";
-import AddGoal from "./AddGoal";
-import GoalList from "./GoalList";
-import Header from "./Header";
-import Empty from "./Empty";
+import styles from "./GoalTrackers.style";
+import AddFitness from "../../components/goal-trackers/AddFitness";
+import FitnessList from "../../components/goal-trackers/FitnessList";
+import EmptyGoals from "./EmptyGoals";
 
-export default function GoalTracker() {
+export default FitnessTracker = () => {
   const [data, setData] = useState([]);
 
   const submitHandler = (value) => {
@@ -28,7 +27,7 @@ export default function GoalTracker() {
   };
 
   return (
-    <ComponentContainer>
+    <View style={styles.componentContainer}>
       <View>
         <StatusBar barStyle="light-content" backgroundColor="black" />
       </View>
@@ -36,25 +35,16 @@ export default function GoalTracker() {
       <View>
         <FlatList
           data={data}
-          ListHeaderComponent={() => <Header />}
-          ListEmptyComponent={() => <Empty />}
+          ListEmptyComponent={() => <EmptyGoals />}
           keyExtractor={(item) => item.key}
           renderItem={({ item }) => (
-            <GoalList item={item} deleteItem={deleteItem} />
+            <FitnessList item={item} deleteItem={deleteItem} />
           )}
         />
         <View>
-          <AddGoal submitHandler={submitHandler} />
+          <AddFitness submitHandler={submitHandler} />
         </View>
       </View>
-    </ComponentContainer>
+    </View>
   );
 }
-
-const ComponentContainer = styled.View`
-  background-color: black;
-  height: 100%;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;

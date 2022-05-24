@@ -1,53 +1,48 @@
-import styled from "styled-components";
+import { StyleSheet } from "react-native";
 
-export const ListContainer = styled.TouchableOpacity`
-  background-color: aliceblue;
-  height: auto;
-  width: 350px;
-  margin-bottom: 30px;
-  border-radius: 10px;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-export const ComponentContainer = styled.View`
-  flex-direction: row;
-  justify-content: center;
-  height: auto;
-  width: auto;
-`;
-
-export const TextItem = styled.Text`
-  color: black;
-  width: 260px;
-  height: auto;
-  font-size: 20px;
-  margin-top: 10px;
-  margin-right: 10px;
-`;
-
-export const TextDate = styled.Text`
-  color: slateblue;
-  font-size: 15px;
-  margin-right: 20px;
-
-  border-radius: 10px;
-  width: 40px;
-`;
-
-export const IconContainer = styled.TouchableOpacity`
-  align-items: center;
-  justify-content: center;
-  margin-right: 10px;
-  margin-top: 15px;
-
-  height: 40px;
-
-  border-radius: 10px;
-`;
-
-export const CirlceContainer = styled.View`
-  align-items: center;
-  justify-content: center;
-  padding-left: 10px;
-`;
+export default StyleSheet.create({
+  componentContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    height: "auto",
+    width: "auto",
+    marginTop: 30,
+  },
+  listContainer: {
+    height: "auto",
+    width: 350,
+    marginBottom: 30,
+    borderRadius: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: "mintcream",
+  },
+  circleContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingLeft: 10,
+  },
+  listText: {
+    color: "black",
+    width: 260,
+    height: "auto",
+    fontSize: 20,
+    marginTop: 10,
+    marginRight: 10,
+  },
+  listSubtext: {
+    color: "slateblue",
+    fontSize: 12,
+    marginRight: 20,
+    borderRadius: 10,
+    width: 60,
+  },
+  iconContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 10,
+    marginTop: 15,
+    height: 40,
+    borderRadius: 10,
+  },
+});

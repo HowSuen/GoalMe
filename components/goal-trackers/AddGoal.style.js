@@ -1,30 +1,29 @@
-import styled from "styled-components";
+import { StyleSheet } from "react-native";
 
-export const ComponentContainer = styled.View`
-  flex-direction: row;
-`;
-
-export const InputContainer = styled.View`
-  flex-direction: row;
-  border-radius: 10px;
-`;
-
-export const Input = styled.TextInput`
-  font-size: 20px;
-  background-color: aliceblue;
-  width: 300px;
-  margin-right: 20px;
-  padding: 10px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-`;
-
-export const SubmitButton = styled.TouchableOpacity`
-  width: 50px;
-  height: 50px;
-  justify-content: center;
-  align-items: center;
-  background-color: mediumspringgreen;
-  margin-bottom: 20px;
-  border-radius: 100px;
-`;
+export default StyleSheet.create({
+  componentContainer: {
+    flexDirection: "row",
+  },
+  inputContainer: {
+    flexDirection: "row",
+    borderRadius: 10,
+  },
+  input: {
+    fontSize: 18,
+    backgroundColor: "mintcream",
+    width: 300,
+    marginRight: 20,
+    padding: 10,
+    marginBottom: 20,
+    borderRadius: 10,
+  },
+  submitButton: {
+    width: 50,
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "mediumspringgreen",
+    marginBottom: 20,
+    borderRadius: 100,
+  },
+});

@@ -14,7 +14,7 @@ export default StyleSheet.create({
     borderRadius: 10,
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "white",
+    backgroundColor: "deepskyblue",
   },
   circleContainer: {
     alignItems: "center",
@@ -30,7 +30,7 @@ export default StyleSheet.create({
     marginRight: 10,
   },
   listSubtext: {
-    color: "slateblue",
+    color: "navy",
     fontSize: 12,
     marginRight: 20,
     borderRadius: 10,

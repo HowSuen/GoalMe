@@ -9,7 +9,7 @@ export default function FinanceList({ item, deleteItem }) {
     <View style={styles.componentContainer}>
       <TouchableOpacity style={styles.listContainer}>
         <View style={styles.circleContainer}>
-          <FontAwesome name="circle-o" size={20} color="darkgreen" />
+          <FontAwesome name="circle-o" size={20} color="darkslateblue" />
         </View>
         <View>
           <Text style={styles.listText}>{item.value}</Text>

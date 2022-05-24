@@ -23,44 +23,47 @@ const CreateAcct = () => {
     const { error } = await supabase.auth.signUp({
       email: email,
       password: password,
-      
     });
 
     if (error) Alert.alert(error.message);
 
     try {
-        const user = supabase.auth.user();
-        const updates = {
-          id: user.id,
-          username,
-          updated_at: new Date(),
-        };
-    
-        let { error } = await supabase.from('profiles').upsert(updates);
-        if (error) {
-          throw error;
-        }
+      const user = supabase.auth.user();
+      const updates = {
+        id: user.id,
+        username,
+        updated_at: new Date(),
+      };
+
+      let { error } = await supabase.from("profiles").upsert(updates);
+      if (error) {
+        throw error;
+      }
     } catch (error) {
-        alert(error.message);
+      alert(error.message);
     }
-    
+
     setLoading(false);
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
-      <Image
-        style={styles.logo}
-        source={require('../assets/goalme-transparent-logo.png')}
-      />
+        <Image
+          style={styles.logo}
+          source={require("../assets/goalme-transparent-logo.png")}
+        />
       </View>
       <View style={styles.formContainer}>
         <View style={styles.verticallySpaced}>
           <Input
             style={styles.textInput}
             label="Email"
-            leftIcon={{ type: "font-awesome", name: "envelope", color: "white" }}
+            leftIcon={{
+              type: "font-awesome",
+              name: "envelope",
+              color: "white",
+            }}
             onChangeText={(text) => setEmail(text)}
             value={email}
             placeholder="email@address.com"
@@ -71,7 +74,11 @@ const CreateAcct = () => {
           <Input
             style={styles.textInput}
             label="Username"
-            leftIcon={{ type: "font-awesome", name: "envelope", color: "white" }}
+            leftIcon={{
+              type: "font-awesome",
+              name: "envelope",
+              color: "white",
+            }}
             onChangeText={(text) => setUsername(text)}
             value={username}
             placeholder="BarryTheBee"
@@ -90,14 +97,15 @@ const CreateAcct = () => {
             autoCapitalize={"none"}
           />
         </View>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.button}
           disabled={loading}
-          onPress={() => signUp()}>
+          onPress={() => signUp()}
+        >
           <Text style={styles.buttonText}>Create Account</Text>
         </TouchableOpacity>
-        </View>
       </View>
+    </View>
   );
 };
 

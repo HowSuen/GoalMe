@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { Icon } from "react-native-elements";
 import styles from "./AppNavigation.style";
+import GoalTracker from "../components/goal-trackers/GoalTracker";
 
 const Tab = createBottomTabNavigator();
 
@@ -32,13 +33,13 @@ function TempProgressChecker() {
   );
 }
 
-const AppNavigation = ({session}) => {
+const AppNavigation = ({ session }) => {
   return (
     <NavigationContainer styles={styles.container}>
       <Tab.Navigator
         initialRouteName={"Goal Trackers"}
         screenOptions={({ route, navigation }) => ({
-          tabBarLabel: navigation.isFocused() ? route.name : '',
+          tabBarLabel: navigation.isFocused() ? route.name : "",
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
             if (route.name === "Account") {
@@ -52,7 +53,7 @@ const AppNavigation = ({session}) => {
             }
             return <Icon name={iconName} size={size} color={color} />;
           },
-          tabBarStyle: { backgroundColor: "#222222"},
+          tabBarStyle: { backgroundColor: "#222222" },
           tabBarActiveTintColor: "tomato",
           tabBarInactiveBackgroundColor: "#111111",
           tabBarInactiveTintColor: "gray",
@@ -62,12 +63,12 @@ const AppNavigation = ({session}) => {
           presentation: "modal",
           headerTitleAlign: "center",
           headerTitleStyle: { fontWeight: "bold" },
-        })} 
+        })}
       >
-        <Tab.Screen name="Goal Trackers" component={TempGoalTrackers} />
+        <Tab.Screen name="Goal Trackers" component={GoalTracker} />
         <Tab.Screen name="Progress Checker" component={TempProgressChecker} />
         <Tab.Screen name="Account">
-          {props => <Account session={session}/>}
+          {(props) => <Account session={session} />}
         </Tab.Screen>
         <Tab.Screen name="Settings" component={TempSettingsScreen} />
       </Tab.Navigator>

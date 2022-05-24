@@ -72,7 +72,7 @@ const Account = ({ session }) => {
       <View style={styles.avatarContainer}>
         <Image
           style={styles.avatar}
-          source={require('../assets/default-avatar.png')}
+          source={require("../assets/default-avatar.png")}
         />
       </View>
       <View style={styles.formContainer}>

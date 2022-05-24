@@ -1,8 +1,7 @@
 import { StyleSheet } from "react-native";
 
 export default styles = StyleSheet.create({
-    container: {
-      backgroundColor: "#222222",
-    },
-  });
-  
+  container: {
+    backgroundColor: "#222222",
+  },
+});

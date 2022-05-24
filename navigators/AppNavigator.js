@@ -57,7 +57,11 @@ const AppNavigator = ({ session }) => {
           headerTitleStyle: { fontWeight: "bold" },
         })}
       >
-        <Tab.Screen name="Goal Trackers" component={GTNavigator} />
+        <Tab.Screen
+          name="Goal Trackers"
+          component={GTNavigator}
+          options={{ headerShown: false }}
+        />
         <Tab.Screen name="Progress Checker" component={TempProgressChecker} />
         <Tab.Screen name="Account">
           {(props) => <Account session={session} />}

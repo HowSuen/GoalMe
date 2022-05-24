@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, StatusBar, FlatList } from "react-native";
-import styles from "./GoalTrackers.style";
+import styles from "./GoalTracker.style";
 import AddFitness from "../../components/goal-trackers/AddFitness";
 import FitnessList from "../../components/goal-trackers/FitnessList";
 import EmptyGoals from "./EmptyGoals";

@@ -1,13 +1,13 @@
 import React from "react";
-import styles from "./GoalTrackers.style";
+import styles from "./GTNavigator.style";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import AcademicTracker from "./AcademicTracker";
-import FitnessTracker from "./FitnessTracker";
-import FinanceTracker from "./FinanceTracker";
+import AcademicTracker from "../screens/goal-trackers/AcademicTracker";
+import FitnessTracker from "../screens/goal-trackers/FitnessTracker";
+import FinanceTracker from "../screens/goal-trackers/FinanceTracker";
 
 const Drawer = createDrawerNavigator();
 
-const GoalTrackers = () => {
+const GTNavigator = () => {
   return (
     <Drawer.Navigator
       screenOptions={{
@@ -15,25 +15,23 @@ const GoalTrackers = () => {
         headerTintColor: "white",
         presentation: "modal",
         headerTitleAlign: "center",
+        drawerActiveBackgroundColor: "springgreen",
       }}
     >
       <Drawer.Screen
         name="Academic Tracker"
-        style={styles.componentContainer}
         component={AcademicTracker}
       />
       <Drawer.Screen
         name="Fitness Tracker"
-        style={styles.componentContainer}
         component={FitnessTracker}
       />
       <Drawer.Screen
         name="Finance Tracker"
-        style={styles.componentContainer}
         component={FinanceTracker}
       />
     </Drawer.Navigator>
   );
 };
 
-export default GoalTrackers;
+export default GTNavigator;

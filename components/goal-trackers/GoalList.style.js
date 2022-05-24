@@ -6,16 +6,15 @@ export default StyleSheet.create({
     justifyContent: "center",
     height: "auto",
     width: "auto",
-    marginTop: 30,
+    marginTop: 20,
   },
   listContainer: {
     height: "auto",
     width: 350,
-    marginBottom: 30,
     borderRadius: 10,
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "mintcream",
+    backgroundColor: "white",
   },
   circleContainer: {
     alignItems: "center",

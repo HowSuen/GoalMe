@@ -10,7 +10,7 @@ export default StyleSheet.create({
   },
   input: {
     fontSize: 18,
-    backgroundColor: "mintcream",
+    backgroundColor: "white",
     width: 300,
     marginRight: 20,
     padding: 10,

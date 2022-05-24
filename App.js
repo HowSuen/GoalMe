@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from './lib/supabase';
 import Auth from './screens/Auth';
-import AppNavigation from './screens/AppNavigation';
+import AppNavigator from './navigators/AppNavigator';
 import { StyleSheet, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-
 import { store } from './store/store';
 import { Provider } from 'react-redux';
 
@@ -22,7 +21,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <View style={styles.container}>
-        {session && session.user ? <AppNavigation key={session.user.id} session={session} /> : <Auth />}
+        {session && session.user ? <AppNavigator key={session.user.id} session={session} /> : <Auth />}
       </View>
       <StatusBar style="light"/>
     </Provider>

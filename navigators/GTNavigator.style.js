@@ -21,11 +21,4 @@ export default StyleSheet.create({
     fontSize: 17,
     textAlign: "center",
   },
-  componentContainer: {
-    height: "100%",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "black",
-  },
 });

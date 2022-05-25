@@ -4,7 +4,7 @@ import styles from "./AddGoal.style";
 import { View, TextInput } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-export default function AddAcademic({ submitHandler }) {
+const AddAcademic = ({ submitHandler }) => {
   const [value, setValue] = useState("");
 
   const onChangeText = (text) => {
@@ -21,7 +21,8 @@ export default function AddAcademic({ submitHandler }) {
         <TextInput
           style={styles.input}
           value={value}
-          placeholder="Add an academic goal!"
+          placeholder="Add an academic goal..."
+          placeholderTextColor="dimgray"
           onChangeText={onChangeText}
         />
       </View>
@@ -37,3 +38,5 @@ export default function AddAcademic({ submitHandler }) {
     </View>
   );
 }
+
+export default AddAcademic

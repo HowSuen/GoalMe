@@ -9,7 +9,7 @@ import GTNavigator from "./GTNavigator";
 
 const Tab = createBottomTabNavigator();
 
-function TempSettingsScreen() {
+const TempSettingsScreen = () => {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>Settings!</Text>
@@ -17,7 +17,7 @@ function TempSettingsScreen() {
   );
 }
 
-function TempProgressChecker() {
+const TempProgressChecker = () => {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>Progress Checker!</Text>

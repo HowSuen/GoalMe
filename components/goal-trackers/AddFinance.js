@@ -4,7 +4,7 @@ import styles from "./AddGoal.style";
 import { View, TextInput } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-export default function AddFinance({ submitHandler }) {
+const AddFinance = ({ submitHandler }) => {
   const [value, setValue] = useState("");
 
   const onChangeText = (text) => {
@@ -21,7 +21,8 @@ export default function AddFinance({ submitHandler }) {
         <TextInput
           style={styles.input}
           value={value}
-          placeholder="Add a finance goal!"
+          placeholder="Add a finance goal..."
+          placeholderTextColor="dimgray"
           onChangeText={onChangeText}
         />
       </View>
@@ -37,3 +38,5 @@ export default function AddFinance({ submitHandler }) {
     </View>
   );
 }
+
+export default AddFinance

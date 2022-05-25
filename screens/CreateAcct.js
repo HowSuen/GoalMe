@@ -10,9 +10,9 @@ import { supabase } from "../lib/supabase";
 import { Image } from "react-native-elements";
 import styles from "./CreateAcct.style";
 import "react-native-url-polyfill/auto";
-import AuthButton from "../components/authentication/AuthButton";
-import PasswordInput from "../components/authentication/PasswordInput";
-import UserInput from "../components/authentication/UserInput";
+import AuthButton from "../components/auth/AuthButton";
+import PasswordInput from "../components/auth/PasswordInput";
+import UserInput from "../components/auth/UserInput";
 
 const CreateAcct = () => {
   const [email, setEmail] = useState("");

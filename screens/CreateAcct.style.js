@@ -15,12 +15,4 @@ export default StyleSheet.create({
     height: 200,
     width: 200,
   },
-  textInput: {
-    color: "white",
-  },
-  icon: {
-    position: "absolute",
-    top: 45,
-    right: 20,
-  },
 });

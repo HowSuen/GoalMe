@@ -20,9 +20,6 @@ export default StyleSheet.create({
     marginTop: 50,
     flex: 1.5,
   },
-  textInput: {
-    color: "white",
-  },
   signInButton: {
     marginRight: 20,
     marginLeft: 20,

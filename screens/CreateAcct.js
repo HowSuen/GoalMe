@@ -7,11 +7,12 @@ import {
   Keyboard,
 } from "react-native";
 import { supabase } from "../lib/supabase";
-import { Input, Image } from "react-native-elements";
+import { Image } from "react-native-elements";
 import styles from "./CreateAcct.style";
 import "react-native-url-polyfill/auto";
 import AuthButton from "../components/authentication/AuthButton";
 import PasswordInput from "../components/authentication/PasswordInput";
+import UserInput from "../components/authentication/UserInput";
 
 const CreateAcct = () => {
   const [email, setEmail] = useState("");
@@ -73,31 +74,15 @@ const CreateAcct = () => {
               source={require("../assets/goalme-transparent-logo.png")}
             />
           </View>
-          <Input
-            style={styles.textInput}
+          <UserInput
             label="Email"
-            leftIcon={{
-              type: "font-awesome",
-              name: "envelope",
-              color: "white",
-            }}
             onChangeText={(text) => setEmail(text)}
             value={email}
-            placeholder="email@address.com"
-            autoCapitalize={"none"}
           />
-          <Input
-            style={styles.textInput}
+          <UserInput 
             label="Username"
-            leftIcon={{
-              type: "font-awesome",
-              name: "envelope",
-              color: "white",
-            }}
             onChangeText={(text) => setUsername(text)}
             value={username}
-            placeholder="Username"
-            autoCapitalize={"none"}
           />
           <PasswordInput
             password={password}

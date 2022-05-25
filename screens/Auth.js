@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Alert, TouchableOpacity, View } from "react-native";
 import { supabase } from "../lib/supabase";
-import { Input, Text, Image } from "react-native-elements";
+import { Text, Image } from "react-native-elements";
 import styles from "./Auth.style";
 import "react-native-url-polyfill/auto";
 import AuthButton from "../components/authentication/AuthButton";
 import PasswordInput from "../components/authentication/PasswordInput";
+import UserInput from "../components/authentication/UserInput";
 
 const Auth = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -44,22 +45,11 @@ const Auth = ({ navigation }) => {
         />
       </View>
       <View style={styles.formContainer}>
-        <View style={styles.verticallySpaced}>
-          <Input
-            style={styles.textInput}
-            label="Email"
-            leftIcon={{
-              type: "font-awesome",
-              name: "envelope",
-              color: "white",
-            }}
-            onChangeText={(text) => setEmail(text)}
-            value={email}
-            placeholder="email@address.com"
-            autoCapitalize={"none"}
-            keyboardType="email-address"
-          />
-        </View>
+        <UserInput
+          label="Email"
+          onChangeText={(text) => setEmail(text)}
+          value={email}
+        />
         <PasswordInput
           password={password}
           passVisible={passVisible}

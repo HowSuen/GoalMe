@@ -20,6 +20,7 @@ const UserInput = ({ label, onChangeText, value }) => {
       value={value}
       placeholder={label === "Email" ? "email@address.com" : "Username"}
       autoCapitalize={"none"}
+      keyboardType={label === "Email" ? "email-address" : "default"}
     />
   );
 };

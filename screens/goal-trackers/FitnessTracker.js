@@ -3,7 +3,7 @@ import { View, StatusBar, FlatList } from "react-native";
 import styles from "./GoalTracker.style";
 import AddFitness from "../../components/goal-trackers/AddFitness";
 import FitnessList from "../../components/goal-trackers/FitnessList";
-import EmptyGoals from "./EmptyGoals";
+import Empty from "./Empty";
 
 export default FitnessTracker = () => {
   const [data, setData] = useState([]);
@@ -26,6 +26,12 @@ export default FitnessTracker = () => {
     });
   };
 
+  const completeItem = (key) => {
+    setData((prevTodo) => {
+      return prevTodo.filter((todo) => todo.key != key);
+    });
+  };
+
   return (
     <View style={styles.componentContainer}>
       <View>
@@ -35,10 +41,10 @@ export default FitnessTracker = () => {
       <View>
         <FlatList
           data={data}
-          ListEmptyComponent={() => <EmptyGoals />}
+          ListEmptyComponent={() => <Empty/>}
           keyExtractor={(item) => item.key}
           renderItem={({ item }) => (
-            <FitnessList item={item} deleteItem={deleteItem} />
+            <FitnessList item={item} deleteItem={deleteItem} completeItem={completeItem}/>
           )}
         />
         <View>

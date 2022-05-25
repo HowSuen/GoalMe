@@ -12,7 +12,7 @@ const FitnessList = ({ item, deleteItem, completeItem }) => {
           style={styles.circleContainer}
           onPress={() => completeItem(item.key)}
         >
-          <FontAwesome name="circle-o" size={20} color="mediumspringgreen" />
+          <FontAwesome name="circle-o" size={20} color="tomato" />
         </TouchableOpacity>
         <View>
           <Text style={styles.listText}>{item.value}</Text>
@@ -22,7 +22,7 @@ const FitnessList = ({ item, deleteItem, completeItem }) => {
           style={styles.iconContainer}
           onPress={() => deleteItem(item.key)}
         >
-          <FontAwesome name="trash-o" size={26} color="crimson" />
+          <FontAwesome name="trash" size={25} color="firebrick" />
         </TouchableOpacity>
       </View>
     </View>

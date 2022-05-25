@@ -15,7 +15,6 @@ const GTNavigator = () => {
         headerTintColor: "white",
         presentation: "modal",
         headerTitleAlign: "center",
-        drawerActiveBackgroundColor: "tomato",
         drawerActiveTintColor: "black",
         drawerInactiveTintColor: "white",
         drawerStyle: styles.container,
@@ -25,14 +24,23 @@ const GTNavigator = () => {
       <Drawer.Screen
         name="Academic Tracker"
         component={AcademicTracker}
+        options={{
+          drawerActiveBackgroundColor: "mediumseagreen",
+        }}
       />
       <Drawer.Screen
         name="Fitness Tracker"
         component={FitnessTracker}
+        options={{
+          drawerActiveBackgroundColor: "tomato",
+        }}
       />
       <Drawer.Screen
         name="Finance Tracker"
         component={FinanceTracker}
+        options={{
+          drawerActiveBackgroundColor: "royalblue",
+        }}
       />
     </Drawer.Navigator>
   );

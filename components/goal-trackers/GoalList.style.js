@@ -31,7 +31,7 @@ export default StyleSheet.create({
     marginRight: 10,
   },
   listSubtext: {
-    color: "burlywood",
+    color: "moccasin",
     fontSize: 12,
     marginRight: 20,
     borderRadius: 10,

@@ -4,12 +4,15 @@ import { supabase } from "../lib/supabase";
 import { Input, Text, Image } from "react-native-elements";
 import styles from "./Auth.style";
 import "react-native-url-polyfill/auto";
+import AuthButton from "../components/authentication/AuthButton";
+import PasswordInput from "../components/authentication/PasswordInput";
 
-const Auth = () => {
+const Auth = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState({});
+  const [passVisible, setVisible] = useState(true);
 
   useEffect(() => {
     return () => {
@@ -28,15 +31,8 @@ const Auth = () => {
     setLoading(false);
   };
 
-  const signUpWithEmail = async () => {
-    setLoading(true);
-    const { error } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-    });
-
-    if (error) Alert.alert(error.message);
-    setLoading(false);
+  const onIconPress = () => {
+    setVisible(!passVisible);
   };
 
   return (
@@ -61,31 +57,24 @@ const Auth = () => {
             value={email}
             placeholder="email@address.com"
             autoCapitalize={"none"}
+            keyboardType="email-address"
           />
         </View>
-        <View style={styles.verticallySpaced}>
-          <Input
-            style={styles.textInput}
-            label="Password"
-            leftIcon={{ type: "font-awesome", name: "lock", color: "white" }}
-            onChangeText={(text) => setPassword(text)}
-            value={password}
-            secureTextEntry={true}
-            placeholder="Password"
-            autoCapitalize={"none"}
-          />
-        </View>
-        <TouchableOpacity
-          style={styles.signInButton}
-          disabled={loading}
-          onPress={() => signInWithEmail()}
-        >
-          <Text style={styles.signInText}>Sign in</Text>
-        </TouchableOpacity>
+        <PasswordInput
+          password={password}
+          passVisible={passVisible}
+          onChangeText={(text) => setPassword(text)}
+          onIconPress={onIconPress}
+        />
+        <AuthButton
+          textInput={"Sign In!"}
+          loading={loading}
+          onPressFunc={signInWithEmail}
+        />
         <TouchableOpacity
           style={styles.signUpButton}
           disabled={loading}
-          onPress={() => signUpWithEmail()}
+          onPress={() => navigation.navigate("Signup")}
         >
           <Text style={styles.signUpText}>No account yet? Sign up</Text>
         </TouchableOpacity>

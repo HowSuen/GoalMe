@@ -77,10 +77,11 @@ const Account = ({ session }) => {
       </View>
       <View style={styles.formContainer}>
         <View style={styles.verticallySpaced}>
-          <Input 
+          <Input
             style={styles.textInput}
-            label="Email" 
-            value={session?.user?.email} disabled 
+            label="Email"
+            value={session?.user?.email}
+            disabled
           />
         </View>
         <View style={styles.verticallySpaced}>
@@ -91,17 +92,19 @@ const Account = ({ session }) => {
             onChangeText={(text) => setUsername(text)}
           />
         </View>
-
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.button}
           disabled={loading}
-          onPress={() => updateProfile({ username, avatar_url })}>
-          <Text style={styles.buttonText}>{loading ? "Loading ..." : "Update"}</Text>
+          onPress={() => updateProfile({ username, avatar_url })}
+        >
+          <Text style={styles.buttonText}>
+            {loading ? "Loading ..." : "Update"}
+          </Text>
         </TouchableOpacity>
-
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.button}
-          onPress={() => supabase.auth.signOut()}>
+          onPress={() => supabase.auth.signOut()}
+        >
           <Text style={styles.buttonText}>Sign Out</Text>
         </TouchableOpacity>
       </View>

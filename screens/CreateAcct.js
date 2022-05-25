@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Alert, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  View,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  Keyboard,
+} from "react-native";
 import { supabase } from "../lib/supabase";
-import { Input, Text, Image } from "react-native-elements";
-import styles from "./Auth.style";
+import { Input, Image } from "react-native-elements";
+import styles from "./CreateAcct.style";
 import "react-native-url-polyfill/auto";
+import AuthButton from "../components/authentication/AuthButton";
+import PasswordInput from "../components/authentication/PasswordInput";
 
 const CreateAcct = () => {
   const [email, setEmail] = useState("");
@@ -11,6 +19,7 @@ const CreateAcct = () => {
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState({});
+  const [passVisible, setVisible] = useState(true);
 
   useEffect(() => {
     return () => {
@@ -46,16 +55,24 @@ const CreateAcct = () => {
     setLoading(false);
   };
 
+  const onIconPress = () => {
+    setVisible(!passVisible);
+  };
+
   return (
-    <View style={styles.container}>
-      <View style={styles.logoContainer}>
-        <Image
-          style={styles.logo}
-          source={require("../assets/goalme-transparent-logo.png")}
-        />
-      </View>
-      <View style={styles.formContainer}>
-        <View style={styles.verticallySpaced}>
+    <KeyboardAvoidingView
+      behavior="padding"
+      style={styles.container}
+      keyboardVerticalOffset={50}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View>
+          <View style={styles.logoContainer}>
+            <Image
+              style={styles.logo}
+              source={require("../assets/goalme-transparent-logo.png")}
+            />
+          </View>
           <Input
             style={styles.textInput}
             label="Email"
@@ -69,8 +86,6 @@ const CreateAcct = () => {
             placeholder="email@address.com"
             autoCapitalize={"none"}
           />
-        </View>
-        <View style={styles.verticallySpaced}>
           <Input
             style={styles.textInput}
             label="Username"
@@ -81,31 +96,23 @@ const CreateAcct = () => {
             }}
             onChangeText={(text) => setUsername(text)}
             value={username}
-            placeholder="BarryTheBee"
+            placeholder="Username"
             autoCapitalize={"none"}
           />
-        </View>
-        <View style={styles.verticallySpaced}>
-          <Input
-            style={styles.textInput}
-            label="Password"
-            leftIcon={{ type: "font-awesome", name: "lock", color: "white" }}
+          <PasswordInput
+            password={password}
+            passVisible={passVisible}
             onChangeText={(text) => setPassword(text)}
-            value={password}
-            secureTextEntry={true}
-            placeholder="Password"
-            autoCapitalize={"none"}
+            onIconPress={onIconPress}
+          />
+          <AuthButton
+            textInput={"Create Account"}
+            loading={loading}
+            onPressFunc={signUp}
           />
         </View>
-        <TouchableOpacity
-          style={styles.button}
-          disabled={loading}
-          onPress={() => signUp()}
-        >
-          <Text style={styles.buttonText}>Create Account</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 

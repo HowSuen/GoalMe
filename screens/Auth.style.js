@@ -1,11 +1,11 @@
-import { StyleSheet, DarkTheme } from "react-native";
+import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   container: {
     padding: 15,
     justifyContent: "center",
     flex: 1,
-    theme: { DarkTheme },
+    backgroundColor: "#222222",
   },
   logoContainer: {
     justifyContent: "flex-end",
@@ -19,11 +19,6 @@ export default StyleSheet.create({
   formContainer: {
     marginTop: 50,
     flex: 1.5,
-  },
-  verticallySpaced: {
-    paddingTop: 5,
-    paddingBottom: 5,
-    alignSelf: "stretch",
   },
   textInput: {
     color: "white",

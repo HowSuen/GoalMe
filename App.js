@@ -1,29 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import { supabase } from './lib/supabase';
-import Auth from './screens/Auth';
-import AppNavigator from './navigators/AppNavigator';
-import { StyleSheet, View } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import { store } from './store/store';
-import { Provider } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View } from "react-native";
+import { StatusBar } from "expo-status-bar";
+import { store } from "./store/store";
+import { Provider } from "react-redux";
+import { supabase } from "./lib/supabase";
+import AppNavigation from "./navigators/AppNavigator";
+import AuthNavigation from "./navigators/AuthNavigator";
 
 const App = () => {
   const [session, setSession] = useState(null);
 
   useEffect(() => {
-    setSession(supabase.auth.session())
+    setSession(supabase.auth.session());
 
     supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
+      setSession(session);
+    });
   }, []);
 
   return (
     <Provider store={store}>
       <View style={styles.container}>
-        {session && session.user ? <AppNavigator key={session.user.id} session={session} /> : <Auth />}
+        {session && session.user ? (
+          <AppNavigation key={session.user.id} session={session} />
+        ) : (
+          <AuthNavigation />
+        )}
       </View>
-      <StatusBar style="light"/>
+      <StatusBar style="light" />
     </Provider>
   );
 };
@@ -31,8 +35,8 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#222222'
-  }
+    backgroundColor: "#222222",
+  },
 });
 
 export default App;

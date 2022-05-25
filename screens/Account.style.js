@@ -5,7 +5,7 @@ export default StyleSheet.create({
     padding: 15,
     justifyContent: "center",
     flex: 1,
-    theme: { DarkTheme },
+    backgroundColor: "#222222",
   },
   avatarContainer: {
     justifyContent: "flex-end",

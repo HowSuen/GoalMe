@@ -11,12 +11,13 @@ import { Image } from "react-native-elements";
 import styles from "./CreateAcct.style";
 import "react-native-url-polyfill/auto";
 import AuthButton from "../components/auth/AuthButton";
-import PasswordInput from "../components/auth/PasswordInput";
 import UserInput from "../components/auth/UserInput";
+import PasswordSecureInput from "../components/auth/PasswordSecureInput";
 
 const CreateAcct = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState({});
@@ -29,31 +30,36 @@ const CreateAcct = () => {
   }, []);
 
   const signUp = async () => {
-    setLoading(true);
-    const { error } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-    });
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      setLoading(false);
+    } else {
+      setLoading(true);
+      const { error } = await supabase.auth.signUp({
+        email: email,
+        password: password,
+      });
 
-    if (error) Alert.alert(error.message);
+      if (error) Alert.alert(error.message);
 
-    try {
-      const user = supabase.auth.user();
-      const updates = {
-        id: user.id,
-        username,
-        updated_at: new Date(),
-      };
+      try {
+        const user = supabase.auth.user();
+        const updates = {
+          id: user.id,
+          username,
+          updated_at: new Date(),
+        };
 
-      let { error } = await supabase.from("profiles").upsert(updates);
-      if (error) {
-        throw error;
+        let { error } = await supabase.from("profiles").upsert(updates);
+        if (error) {
+          throw error;
+        }
+      } catch (error) {
+        alert(error.message);
       }
-    } catch (error) {
-      alert(error.message);
-    }
 
-    setLoading(false);
+      setLoading(false);
+    }
   };
 
   const onIconPress = () => {
@@ -79,16 +85,20 @@ const CreateAcct = () => {
             onChangeText={(text) => setEmail(text)}
             value={email}
           />
-          <UserInput 
+          <UserInput
             label="Username"
             onChangeText={(text) => setUsername(text)}
             value={username}
           />
-          <PasswordInput
+          <PasswordSecureInput
             password={password}
-            passVisible={passVisible}
             onChangeText={(text) => setPassword(text)}
-            onIconPress={onIconPress}
+            placeholder="Password"
+          />
+          <PasswordSecureInput
+            password={confirmPassword}
+            onChangeText={(text) => setConfirmPassword(text)}
+            placeholder="Confirm Password"
           />
           <AuthButton
             textInput={"Create Account"}

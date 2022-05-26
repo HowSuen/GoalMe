@@ -6,7 +6,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     height: "auto",
     width: "auto",
-    marginTop: 20,
+    marginTop: 25,
   },
   listContainer: {
     height: "auto",

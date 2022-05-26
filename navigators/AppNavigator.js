@@ -11,16 +11,30 @@ const Tab = createBottomTabNavigator();
 
 const TempSettingsScreen = () => {
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Settings!</Text>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#222222",
+      }}
+    >
+      <Text style={{ color: "white" }}>Settings!</Text>
     </View>
   );
 };
 
 const TempProgressChecker = () => {
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Progress Checker!</Text>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#222222",
+      }}
+    >
+      <Text style={{ color: "white" }}>Progress Checker!</Text>
     </View>
   );
 };
@@ -45,17 +59,23 @@ const AppNavigator = ({ session }) => {
             }
             return <Icon name={iconName} size={size} color={color} />;
           },
-          tabBarStyle: { backgroundColor: "black", borderTopWidth: 0 },
+          tabBarStyle: {
+            backgroundColor: "black",
+            borderTopColor: "black",
+            borderTopWidth: 3,
+            borderBottomWidth: 0,
+          },
           tabBarActiveTintColor: "tomato",
           tabBarInactiveBackgroundColor: "black",
           tabBarInactiveTintColor: "gray",
           tabBarHideOnKeyboard: true,
-          headerStyle: { backgroundColor: "#222222" },
-          headerShadowVisible: false,
-          headerTintColor: "white",
-          presentation: "modal",
-          headerTitleAlign: "center",
-          headerTitleStyle: { fontWeight: "bold" },
+          headerShown: false,
+          // headerStyle: { backgroundColor: "dimgray" },
+          // headerShadowVisible: false,
+          // headerTintColor: "white",
+          // presentation: "modal",
+          // headerTitleAlign: "center",
+          // headerTitleStyle: { fontWeight: "bold" },
         })}
       >
         <Tab.Screen

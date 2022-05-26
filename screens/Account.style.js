@@ -8,17 +8,15 @@ export default StyleSheet.create({
     backgroundColor: "black",
   },
   avatarContainer: {
-    justifyContent: "flex-end",
+    justifyContent: "center",
     alignItems: "center",
-    flex: 1,
   },
   avatar: {
     height: 200,
     width: 200,
   },
   formContainer: {
-    marginTop: 50,
-    flex: 1.5,
+    marginTop: 0,
   },
   verticallySpaced: {
     paddingTop: 5,

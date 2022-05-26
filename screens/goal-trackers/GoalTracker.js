@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StatusBar, FlatList } from "react-native";
+import { View, StatusBar, FlatList, KeyboardAvoidingView, Platform } from "react-native";
 import styles from "./GoalTracker.style";
 import AddGoal from "../../components/goal-trackers/AddGoal";
 import GoalList from "../../components/goal-trackers/GoalList";
@@ -25,7 +25,7 @@ export default GoalTracker = () => {
       return prevGoal.filter((goal) => goal.key != key);
     });
   };
-  
+
   const completeItem = (key) => {
     setData((prevGoal) => {
       return prevGoal.filter((goal) => goal.key != key);
@@ -33,24 +33,33 @@ export default GoalTracker = () => {
   };
 
   return (
-    <View style={styles.componentContainer}>
-      <View>
-        <StatusBar barStyle="light-content" backgroundColor="black" />
-      </View>
-
-      <View>
-        <FlatList
-          data={data}
-          ListEmptyComponent={() => <Empty/>}
-          keyExtractor={(item) => item.key}
-          renderItem={({ item }) => (
-            <GoalList item={item} deleteItem={deleteItem} completeItem={completeItem}/>
-          )}
-        />
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "height" : ""}
+      keyboardVerticalOffset={90}
+    >
+      <View style={styles.componentContainer}>
         <View>
-          <AddGoal submitHandler={submitHandler} />
+          <StatusBar barStyle="light-content" backgroundColor="black" />
+        </View>
+
+        <View>
+          <FlatList
+            data={data}
+            ListEmptyComponent={() => <Empty />}
+            keyExtractor={(item) => item.key}
+            renderItem={({ item }) => (
+              <GoalList
+                item={item}
+                deleteItem={deleteItem}
+                completeItem={completeItem}
+              />
+            )}
+          />
+          <View>
+            <AddGoal submitHandler={submitHandler} />
+          </View>
         </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
-}
+};

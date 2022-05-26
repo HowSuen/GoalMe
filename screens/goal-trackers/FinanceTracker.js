@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StatusBar, FlatList } from "react-native";
+import { View, StatusBar, FlatList, KeyboardAvoidingView, Platform } from "react-native";
 import styles from "./GoalTracker.style";
 import AddFinance from "../../components/goal-trackers/AddFinance";
 import FinanceList from "../../components/goal-trackers/FinanceList";
@@ -33,6 +33,10 @@ export default FinanceTracker = () => {
   };
 
   return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "height" : ""}
+      keyboardVerticalOffset={90}
+    >
     <View style={styles.componentContainer}>
       <View>
         <StatusBar barStyle="light-content" backgroundColor="black" />
@@ -52,5 +56,6 @@ export default FinanceTracker = () => {
         </View>
       </View>
     </View>
+    </KeyboardAvoidingView>
   );
 }

@@ -74,6 +74,10 @@ const CreateAcct = () => {
               style={styles.logo}
               source={require("../assets/goalme-transparent-logo.png")}
             />
+            <Image
+              style={styles.title}
+              source={require("../assets/goalme-title.png")}
+            />
           </View>
           <UserInput
             label="Email"

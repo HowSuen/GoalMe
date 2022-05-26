@@ -8,11 +8,17 @@ export default StyleSheet.create({
     backgroundColor: "black",
   },
   logoContainer: {
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
+    flexDirection: "row",
   },
   logo: {
     height: 200,
     width: 200,
+    marginRight: -40,
   },
+  title: {
+    height: 40,
+    width: 144,
+  }
 });

@@ -15,6 +15,14 @@ export default StyleSheet.create({
     height: 200,
     width: 200,
   },
+  titleContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  title: {
+    height: 60,
+    width: 216,
+  },
   formContainer: {
     marginTop: 50,
   },

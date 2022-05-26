@@ -16,7 +16,7 @@ const TempSettingsScreen = () => {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#222222",
+        backgroundColor: "black",
       }}
     >
       <Text style={{ color: "white" }}>Settings!</Text>
@@ -31,7 +31,7 @@ const TempProgressChecker = () => {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#222222",
+        backgroundColor: "black",
       }}
     >
       <Text style={{ color: "white" }}>Progress Checker!</Text>
@@ -70,7 +70,7 @@ const AppNavigator = ({ session }) => {
           tabBarInactiveTintColor: "gray",
           tabBarHideOnKeyboard: true,
           headerShown: false,
-          // headerStyle: { backgroundColor: "dimgray" },
+          // headerStyle: { backgroundColor: "#222222" },
           // headerShadowVisible: false,
           // headerTintColor: "white",
           // presentation: "modal",

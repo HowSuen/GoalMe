@@ -9,7 +9,7 @@ const Stack = createNativeStackNavigator();
 const AuthNavigation = () => {
   return (
     <NavigationContainer theme={DarkTheme}>
-      <Stack.Navigator screenOptions={{  }}>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Login" component={Auth} />
         <Stack.Screen options={{title:"Register your account"}} name="Signup" component={CreateAcct} />
       </Stack.Navigator>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StatusBar, FlatList, KeyboardAvoidingView } from "react-native";
+import { View, StatusBar, FlatList, KeyboardAvoidingView, Platform } from "react-native";
 import styles from "./GoalTracker.style";
 import AddAcademic from "../../components/goal-trackers/AddAcademic";
 import AcademicList from "../../components/goal-trackers/AcademicList";
@@ -34,7 +34,7 @@ export default AcademicTracker = () => {
 
   return (
     <KeyboardAvoidingView
-      behavior="height"
+      behavior={Platform.OS === "ios" ? "padding" : ""}
       style={styles.componentContainer}
       keyboardVerticalOffset={90}
     >

@@ -70,7 +70,7 @@ const Auth = ({ navigation }) => {
               onIconPress={onIconPress}
             />
             <AuthButton
-              textInput={"Sign In!"}
+              textInput={"Sign In"}
               loading={loading}
               onPressFunc={signInWithEmail}
             />

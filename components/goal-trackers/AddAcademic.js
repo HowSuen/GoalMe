@@ -5,7 +5,6 @@ import {
   View,
   TextInput,
   Keyboard,
-  KeyboardAvoidingView,
   TouchableWithoutFeedback,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -22,10 +21,6 @@ const AddAcademic = ({ submitHandler }) => {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.componentContainer}
-    >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.componentContainer}>
           <View style={styles.componentContainer}>
@@ -48,7 +43,6 @@ const AddAcademic = ({ submitHandler }) => {
           </TouchableOpacity>
         </View>
       </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StatusBar, FlatList } from "react-native";
+import { View, StatusBar, FlatList, KeyboardAvoidingView } from "react-native";
 import styles from "./GoalTracker.style";
 import AddFitness from "../../components/goal-trackers/AddFitness";
 import FitnessList from "../../components/goal-trackers/FitnessList";
@@ -33,24 +33,34 @@ export default FitnessTracker = () => {
   };
 
   return (
-    <View style={styles.componentContainer}>
-      <View>
-        <StatusBar barStyle="light-content" backgroundColor="black" />
-      </View>
-
-      <View>
-        <FlatList
-          data={data}
-          ListEmptyComponent={() => <Empty/>}
-          keyExtractor={(item) => item.key}
-          renderItem={({ item }) => (
-            <FitnessList item={item} deleteItem={deleteItem} completeItem={completeItem}/>
-          )}
-        />
+    <KeyboardAvoidingView
+      behavior="height"
+      style={styles.componentContainer}
+      keyboardVerticalOffset={90}
+    >
+      <View style={styles.componentContainer}>
         <View>
-          <AddFitness submitHandler={submitHandler} />
+          <StatusBar barStyle="light-content" backgroundColor="black" />
+        </View>
+
+        <View>
+          <FlatList
+            data={data}
+            ListEmptyComponent={() => <Empty />}
+            keyExtractor={(item) => item.key}
+            renderItem={({ item }) => (
+              <FitnessList
+                item={item}
+                deleteItem={deleteItem}
+                completeItem={completeItem}
+              />
+            )}
+          />
+          <View>
+            <AddFitness submitHandler={submitHandler} />
+          </View>
         </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
-}
+};

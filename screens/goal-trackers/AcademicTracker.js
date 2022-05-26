@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StatusBar, FlatList } from "react-native";
+import { View, StatusBar, FlatList, KeyboardAvoidingView } from "react-native";
 import styles from "./GoalTracker.style";
 import AddAcademic from "../../components/goal-trackers/AddAcademic";
 import AcademicList from "../../components/goal-trackers/AcademicList";
@@ -25,7 +25,7 @@ export default AcademicTracker = () => {
       return prevGoal.filter((goal) => goal.key != key);
     });
   };
-  
+
   const completeItem = (key) => {
     setData((prevGoal) => {
       return prevGoal.filter((goal) => goal.key != key);
@@ -33,24 +33,34 @@ export default AcademicTracker = () => {
   };
 
   return (
-    <View style={styles.componentContainer}>
-      <View>
-        <StatusBar barStyle="light-content" backgroundColor="black" />
-      </View>
-
-      <View>
-        <FlatList
-          data={data}
-          ListEmptyComponent={() => <Empty/>}
-          keyExtractor={(item) => item.key}
-          renderItem={({ item }) => (
-            <AcademicList item={item} deleteItem={deleteItem} completeItem={completeItem}/>
-          )}
-        />
+    <KeyboardAvoidingView
+      behavior="height"
+      style={styles.componentContainer}
+      keyboardVerticalOffset={90}
+    >
+      <View style={styles.componentContainer}>
         <View>
-          <AddAcademic submitHandler={submitHandler} />
+          <StatusBar barStyle="light-content" backgroundColor="black" />
+        </View>
+
+        <View>
+          <FlatList
+            data={data}
+            ListEmptyComponent={() => <Empty />}
+            keyExtractor={(item) => item.key}
+            renderItem={({ item }) => (
+              <AcademicList
+                item={item}
+                deleteItem={deleteItem}
+                completeItem={completeItem}
+              />
+            )}
+          />
+          <View>
+            <AddAcademic submitHandler={submitHandler} />
+          </View>
         </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
-}
+};

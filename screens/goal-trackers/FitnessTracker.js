@@ -34,8 +34,7 @@ export default FitnessTracker = () => {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : ""}
-      style={styles.componentContainer}
+      behavior={Platform.OS === "ios" ? "height" : ""}
       keyboardVerticalOffset={90}
     >
       <View style={styles.componentContainer}>

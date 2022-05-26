@@ -12,7 +12,7 @@ const FinanceList = ({ item, deleteItem, completeItem }) => {
           style={styles.circleContainer}
           onPress={() => completeItem(item.key)}
         >
-          <FontAwesome name="circle-o" size={20} color="royalblue" />
+          <FontAwesome name="circle-o" size={20} color="goldenrod" />
         </TouchableOpacity>
         <View>
           <Text style={styles.listText}>{item.value}</Text>

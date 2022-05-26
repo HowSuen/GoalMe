@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { View, StatusBar, FlatList } from "react-native";
 import styles from "./GoalTracker.style";
-import AddFinance from "../../components/goal-trackers/AddFinance";
-import FinanceList from "../../components/goal-trackers/FinanceList";
+import AddGoal from "../../components/goal-trackers/AddGoal";
+import GoalList from "../../components/goal-trackers/GoalList";
 import Empty from "./Empty";
 
-export default FinanceTracker = () => {
+export default GoalTracker = () => {
   const [data, setData] = useState([]);
 
   const submitHandler = (value) => {
@@ -25,7 +25,7 @@ export default FinanceTracker = () => {
       return prevGoal.filter((goal) => goal.key != key);
     });
   };
-
+  
   const completeItem = (key) => {
     setData((prevGoal) => {
       return prevGoal.filter((goal) => goal.key != key);
@@ -44,11 +44,11 @@ export default FinanceTracker = () => {
           ListEmptyComponent={() => <Empty/>}
           keyExtractor={(item) => item.key}
           renderItem={({ item }) => (
-            <FinanceList item={item} deleteItem={deleteItem} completeItem={completeItem}/>
+            <GoalList item={item} deleteItem={deleteItem} completeItem={completeItem}/>
           )}
         />
         <View>
-          <AddFinance submitHandler={submitHandler} />
+          <AddGoal submitHandler={submitHandler} />
         </View>
       </View>
     </View>

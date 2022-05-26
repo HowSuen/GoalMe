@@ -9,26 +9,26 @@ export default AcademicTracker = () => {
   const [data, setData] = useState([]);
 
   const submitHandler = (value) => {
-    setData((prevTodo) => {
+    setData((prevGoal) => {
       return [
         {
           value: value,
           key: Math.random().toString(),
         },
-        ...prevTodo,
+        ...prevGoal,
       ];
     });
   };
 
   const deleteItem = (key) => {
-    setData((prevTodo) => {
-      return prevTodo.filter((todo) => todo.key != key);
+    setData((prevGoal) => {
+      return prevGoal.filter((goal) => goal.key != key);
     });
   };
   
   const completeItem = (key) => {
-    setData((prevTodo) => {
-      return prevTodo.filter((todo) => todo.key != key);
+    setData((prevGoal) => {
+      return prevGoal.filter((goal) => goal.key != key);
     });
   };
 

@@ -5,7 +5,7 @@ import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
   Keyboard,
-  Platform
+  Platform,
 } from "react-native";
 import { supabase } from "../lib/supabase";
 import { Image } from "react-native-elements";

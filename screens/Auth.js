@@ -6,6 +6,7 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
+  Platform
 } from "react-native";
 import { supabase } from "../lib/supabase";
 import { Text, Image } from "react-native-elements";
@@ -45,9 +46,8 @@ const Auth = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView
-      behavior="padding"
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
-      keyboardVerticalOffset={50}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View>

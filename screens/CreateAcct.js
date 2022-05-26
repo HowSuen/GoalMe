@@ -5,6 +5,7 @@ import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
   Keyboard,
+  Platform
 } from "react-native";
 import { supabase } from "../lib/supabase";
 import { Image } from "react-native-elements";
@@ -21,7 +22,6 @@ const CreateAcct = () => {
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState({});
-  const [passVisible, setVisible] = useState(true);
 
   useEffect(() => {
     return () => {
@@ -62,15 +62,10 @@ const CreateAcct = () => {
     }
   };
 
-  const onIconPress = () => {
-    setVisible(!passVisible);
-  };
-
   return (
     <KeyboardAvoidingView
-      behavior="padding"
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
-      keyboardVerticalOffset={50}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View>

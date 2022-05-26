@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import styles from "./AddGoal.style";
-import { View, TextInput } from "react-native";
+import {
+  View,
+  TextInput,
+  Keyboard,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 const AddAcademic = ({ submitHandler }) => {
@@ -16,27 +22,34 @@ const AddAcademic = ({ submitHandler }) => {
   };
 
   return (
-    <View style={styles.componentContainer}>
-      <View style={styles.componentContainer}>
-        <TextInput
-          style={styles.input}
-          value={value}
-          placeholder="Add an academic goal..."
-          placeholderTextColor="dimgray"
-          onChangeText={onChangeText}
-        />
-      </View>
-      <TouchableOpacity
-        style={styles.submitButton}
-        onPress={() => {
-          setValue(submitHandler(value));
-          resetText();
-        }}
-      >
-        <FontAwesome name="plus" size={24} color="black" />
-      </TouchableOpacity>
-    </View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.componentContainer}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.componentContainer}>
+          <View style={styles.componentContainer}>
+            <TextInput
+              style={styles.input}
+              value={value}
+              placeholder="Add an academic goal..."
+              placeholderTextColor="dimgray"
+              onChangeText={onChangeText}
+            />
+          </View>
+          <TouchableOpacity
+            style={styles.submitButton}
+            onPress={() => {
+              setValue(submitHandler(value));
+              resetText();
+            }}
+          >
+            <FontAwesome name="plus" size={24} color="black" />
+          </TouchableOpacity>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
-}
+};
 
-export default AddAcademic
+export default AddAcademic;

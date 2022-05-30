@@ -6,6 +6,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { Icon } from "react-native-elements";
 import styles from "./AppNavigator.style";
 import GTNavigator from "./GTNavigator";
+import ProfileNavigator from "./ProfileNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -48,7 +49,7 @@ const AppNavigator = ({ session }) => {
           tabBarLabel: navigation.isFocused() ? route.name : "",
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
-            if (route.name === "Account") {
+            if (route.name === "Profile") {
               iconName = "account-circle";
             } else if (route.name === "Settings") {
               iconName = "settings";
@@ -70,12 +71,6 @@ const AppNavigator = ({ session }) => {
           tabBarInactiveTintColor: "gray",
           tabBarHideOnKeyboard: true,
           headerShown: false,
-          // headerStyle: { backgroundColor: "#222222" },
-          // headerShadowVisible: false,
-          // headerTintColor: "white",
-          // presentation: "modal",
-          // headerTitleAlign: "center",
-          // headerTitleStyle: { fontWeight: "bold" },
         })}
       >
         <Tab.Screen
@@ -84,8 +79,10 @@ const AppNavigator = ({ session }) => {
           options={{ headerShown: false }}
         />
         <Tab.Screen name="Progress Checker" component={TempProgressChecker} />
-        <Tab.Screen name="Account">
-          {(props) => <Account session={session} />}
+        <Tab.Screen name="Profile">
+          {({ navigation }) =>
+            ProfileNavigator({ session: session, navigation: navigation })
+          }
         </Tab.Screen>
         <Tab.Screen name="Settings" component={TempSettingsScreen} />
       </Tab.Navigator>

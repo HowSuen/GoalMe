@@ -8,11 +8,12 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import { Image, Input, Text } from "react-native-elements";
+import { Input, Text } from "react-native-elements";
 import styles from "./Account.style";
 import "react-native-url-polyfill/auto";
+import Avatar from "../components/game/Avatar";
 
-const Account = ({ session }) => {
+const Account = ({ navigation, session }) => {
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [avatar_url, setAvatarUrl] = useState("");
@@ -82,10 +83,17 @@ const Account = ({ session }) => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View>
           <View style={styles.avatarContainer}>
-            <Image
-              style={styles.avatar}
-              source={require("../assets/default-avatar.png")}
-            />
+            <Avatar />
+            <TouchableOpacity
+              style={styles.avatarButton}
+              onPress={() =>
+                navigation.navigate("Profile", {
+                  screen: "CustomiseAvatar",
+                })
+              }
+            >
+              <Text>Customise</Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.formContainer}>
             <View style={styles.verticallySpaced}>

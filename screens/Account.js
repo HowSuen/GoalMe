@@ -83,7 +83,7 @@ const Account = ({ navigation, session }) => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View>
           <View style={styles.avatarContainer}>
-            <Avatar />
+            <Avatar size={250} />
             <TouchableOpacity
               style={styles.avatarButton}
               onPress={() =>

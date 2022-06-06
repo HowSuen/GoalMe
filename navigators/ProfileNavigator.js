@@ -16,6 +16,10 @@ const ProfileNavigation = ({ navigation, session }) => {
         options={{
           headerShown: true,
           headerTitle: "Customise your Avatar",
+          headerStyle: {backgroundColor: "#222222"},
+          headerTintColor: "white",
+          presentation: "modal",
+          headerTitleAlign: "center",
         }}
       >
         {() => <CustomiseAvatar navigation={navigation} session={session} />}

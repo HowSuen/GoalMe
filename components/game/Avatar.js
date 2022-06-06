@@ -1,29 +1,47 @@
 import React from "react";
 import { BigHead } from "react-native-bigheads";
 
-const Avatar = ({avatar}) => {
+const Avatar = ({
+  size,
+  gender,
+  skin,
+  hat,
+  hatColor,
+  bgColor,
+  accessory,
+  clothing,
+  clotheColor,
+  eyebrow,
+  eye,
+  facialHair,
+  graphic,
+  hair,
+  hairColor,
+  mouth,
+  lipColor,
+}) => {
   return (
     <BigHead
-      accessory="hoopEarrings"
-      bgColor="blue"
+      accessory={accessory || "none"}
+      bgColor={bgColor || "blue"}
       bgShape="circle"
-      body="chest"
-      clothing="tankTop"
-      clothingColor="black"
-      eyebrows="angry"
-      eyes="wink"
-      facialHair="mediumBeard"
-      graphic="vue"
-      hair="short"
-      hairColor="black"
-      hat="none"
-      hatColor="green"
-      lashes={false}
-      lipColor="purple"
-      mouth="open"
+      body={gender || "chest"}
+      clothing={clothing || "shirt"}
+      clothingColor={clotheColor || "white"}
+      eyebrows={eyebrow || "raised"}
+      eyes={eye || "normal"}
+      facialHair={facialHair || "none"}
+      graphic={graphic || "none"}
+      hair={hair || "none"}
+      hairColor={hairColor || "black"}
+      hat={hat || "none"}
+      hatColor={hatColor || "red"}
+      lashes={gender ? (gender == "chest" ? false : true) : false}
+      lipColor={lipColor || "red"}
+      mouth={mouth || "grin"}
       showBackground={true}
-      size={300}
-      skinTone="brown"
+      size={size}
+      skinTone={skin || "light"}
     />
   );
 };

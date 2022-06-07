@@ -7,10 +7,17 @@ export default StyleSheet.create({
     alignItems: "stretch",
     backgroundColor: "black",
   },
+  saveButton: {
+    justifyContent: "center",
+    backgroundColor: "mediumspringgreen",
+    padding: 10,
+    borderRadius: 5,
+  },
   avatar: {
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: -20,
+    marginTop: 0,
   },
   menu: {
     backgroundColor: "#222222",

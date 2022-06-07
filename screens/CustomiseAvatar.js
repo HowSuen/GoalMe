@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, ScrollView, TouchableOpacity, Alert } from "react-native";
 import Avatar from "../components/game/Avatar";
 import styles from "./CustomiseAvatar.style";
 import DropdownList from "../components/game/DropdownList";
+import { supabase } from "../lib/supabase";
 
 const genders = [
   { label: "Male", value: "chest" },
@@ -181,9 +182,111 @@ const CustomiseAvatar = ({ navigation, session }) => {
   const [mouth, setMouth] = useState("grin");
   const [lipColor, setLipColor] = useState("red");
 
+  useEffect(() => {
+    if (session) getProfile();
+  }, [session]);
+
+  const getProfile = async () => {
+    try {
+      const user = supabase.auth.user();
+      if (!user) throw new Error("No user on the session!");
+
+      let { data, error, status } = await supabase
+        .from("avatars")
+        .select(
+          `gender,
+        hat,
+        skin,
+        bgColor,
+        accessory,
+        clothing,
+        clotheColor,
+        eyebrow,
+        eye,
+        facialHair,
+        graphic,
+        hair,
+        hairColor,
+        hatColor,
+        mouth,
+        lipColor,`
+        )
+        .eq("id", user.id)
+        .single();
+      if (error && status !== 406) {
+        throw error;
+      }
+
+      if (data) {
+        setGender(data.gender)
+        setHat(data.hat);
+        setSkin(data.skin);
+        setBgColor(data.bgColor);
+        setAccessory(data.accessory);
+        setClothing(data.clothing);
+        setClotheColor(data.clotheColor);
+        setEyebrow(data.eyebrow);
+        setEye(data.eye);
+        setFacialHair(data.facialHair);
+        setGraphic(data.graphic);
+        setHair(data.hair);
+        setHairColor(data.hairColor);
+        setHatColor(data.hatColor);
+        setMouth(data.mouth);
+        setLipColor(data.lipColor);
+      }
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+  };
+
+  const updateProfile = async (e) => {
+    e.preventDefault();
+    try {
+      const user = supabase.auth.user();
+      if (!user) throw new Error("No user on the session!");
+
+      const updates = {
+        id: user.id,
+        gender: gender,
+        hat: hat,
+        skin: skin,
+        bgColor: bgColor,
+        accessory: accessory,
+        clothing: clothing,
+        clotheColor: clotheColor,
+        eyebrow: eyebrow,
+        eye: eye,
+        facialHair: facialHair,
+        graphic: graphic,
+        hair: hair,
+        hairColor: hairColor,
+        hatColor: hatColor,
+        mouth: mouth,
+        lipColor: lipColor,
+      };
+
+      let { error } = await supabase
+        .from("avatars")
+        .upsert(updates, { returning: "minimal" });
+
+      if (error) {
+        throw error;
+      }
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.avatar}>
+        <TouchableOpacity
+          style={styles.saveButton}
+          onPress={updateProfile}
+        >
+          <Text>Save</Text>
+        </TouchableOpacity>
         <Avatar
           size={250}
           gender={gender}

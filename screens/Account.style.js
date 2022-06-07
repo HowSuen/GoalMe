@@ -40,4 +40,9 @@ export default StyleSheet.create({
     fontSize: 17,
     textAlign: "center",
   },
+  avatarButton: {
+    backgroundColor: "mediumspringgreen",
+    padding: 5,
+    borderRadius: 5,
+  },
 });

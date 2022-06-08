@@ -16,11 +16,11 @@ export default GoalList = ({ item, deleteItem, completeItem }) => {
             name="circle-o"
             size={20}
             color={
-              item.type == "General"
+              item.type == "general"
                 ? "mediumseagreen"
-                : item.type == "Academic"
+                : item.type == "academic"
                 ? "royalblue"
-                : item.type == "Fitness"
+                : item.type == "fitness"
                 ? "tomato"
                 : "goldenrod"
             }

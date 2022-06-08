@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { Icon } from "react-native-elements";
 import styles from "./AppNavigator.style";
-import GTNavigator from "./GTNavigator";
+import GTNavigator from "./GoalNavigator";
 import ProfileNavigator from "./ProfileNavigator";
 
 const Tab = createBottomTabNavigator();
@@ -40,7 +40,7 @@ const TempProgressChecker = () => {
   );
 };
 
-const AppNavigator = ({ session }) => {
+export default AppNavigator = ({ session }) => {
   return (
     <NavigationContainer styles={styles.container}>
       <Tab.Navigator
@@ -90,4 +90,3 @@ const AppNavigator = ({ session }) => {
   );
 };
 
-export default AppNavigator;

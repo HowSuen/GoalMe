@@ -6,7 +6,7 @@ import CreateAcct from "../screens/CreateAcct";
 
 const Stack = createNativeStackNavigator();
 
-const AuthNavigation = () => {
+export default AuthNavigation = () => {
   return (
     <NavigationContainer theme={DarkTheme}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -16,5 +16,3 @@ const AuthNavigation = () => {
     </NavigationContainer>
   );
 };
-
-export default AuthNavigation; 

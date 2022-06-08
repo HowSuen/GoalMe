@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Avatar from "./Avatar";
 import { Alert } from "react-native";
-import { supabase } from "../../lib/supabase";
+import supabase from "../../lib/supabase";
 import { useIsFocused } from "@react-navigation/native";
 
 const SavedAvatar = ({ size, session }) => {

@@ -3,7 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, Alert } from "react-native";
 import Avatar from "../components/game/Avatar";
 import styles from "./CustomiseAvatar.style";
 import DropdownList from "../components/game/DropdownList";
-import { supabase } from "../lib/supabase";
+import supabase from "../lib/supabase";
 import { useIsFocused } from "@react-navigation/native";
 
 const genders = [

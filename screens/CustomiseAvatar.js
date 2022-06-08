@@ -4,6 +4,7 @@ import Avatar from "../components/game/Avatar";
 import styles from "./CustomiseAvatar.style";
 import DropdownList from "../components/game/DropdownList";
 import { supabase } from "../lib/supabase";
+import { useIsFocused } from "@react-navigation/native";
 
 const genders = [
   { label: "Male", value: "chest" },
@@ -182,9 +183,11 @@ const CustomiseAvatar = ({ navigation, session }) => {
   const [mouth, setMouth] = useState("grin");
   const [lipColor, setLipColor] = useState("red");
 
+  const isFocused = useIsFocused();
+
   useEffect(() => {
     if (session) getProfile();
-  }, [session]);
+  }, [session, isFocused]);
 
   const getProfile = async () => {
     try {

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Avatar from "./Avatar";
 import { Alert } from "react-native";
 import { supabase } from "../../lib/supabase";
+import { useIsFocused } from "@react-navigation/native";
 
 const SavedAvatar = ({ size, session }) => {
   const [gender, setGender] = useState("chest");
@@ -21,9 +22,11 @@ const SavedAvatar = ({ size, session }) => {
   const [mouth, setMouth] = useState("grin");
   const [lipColor, setLipColor] = useState("red");
 
+  const isFocused = useIsFocused();
+
   useEffect(() => {
     if (session) getProfile();
-  }, [session]);
+  }, [session, isFocused]);
 
   const getProfile = async () => {
     try {

@@ -17,10 +17,10 @@ const TempSettingsScreen = () => {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "black",
+        backgroundColor: "ghostwhite",
       }}
     >
-      <Text style={{ color: "white" }}>Settings!</Text>
+      <Text style={{ color: "black" }}>Settings!</Text>
     </View>
   );
 };
@@ -32,10 +32,10 @@ const TempProgressChecker = () => {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "black",
+        backgroundColor: "ghostwhite",
       }}
     >
-      <Text style={{ color: "white" }}>Progress Checker!</Text>
+      <Text style={{ color: "black" }}>Progress Checker!</Text>
     </View>
   );
 };
@@ -61,13 +61,13 @@ export default AppNavigator = ({ session }) => {
             return <Icon name={iconName} size={size} color={color} />;
           },
           tabBarStyle: {
-            backgroundColor: "black",
-            borderTopColor: "black",
+            backgroundColor: "ghostwhite",
+            borderTopColor: "ghostwhite",
             borderTopWidth: 3,
             borderBottomWidth: 0,
           },
-          tabBarActiveTintColor: "tomato",
-          tabBarInactiveBackgroundColor: "black",
+          tabBarActiveTintColor: "dodgerblue",
+          tabBarInactiveBackgroundColor: "ghostwhite",
           tabBarInactiveTintColor: "gray",
           tabBarHideOnKeyboard: true,
           headerShown: false,

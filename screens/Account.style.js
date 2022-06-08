@@ -5,7 +5,7 @@ export default StyleSheet.create({
     padding: 15,
     justifyContent: "center",
     flex: 1,
-    backgroundColor: "black",
+    backgroundColor: "ghostwhite",
   },
   avatarContainer: {
     justifyContent: "center",
@@ -24,7 +24,7 @@ export default StyleSheet.create({
     alignSelf: "stretch",
   },
   textInput: {
-    color: "white",
+    color: "black",
   },
   button: {
     marginRight: 20,
@@ -32,7 +32,7 @@ export default StyleSheet.create({
     marginTop: 20,
     paddingTop: 10,
     paddingBottom: 10,
-    backgroundColor: "mediumspringgreen",
+    backgroundColor: "dodgerblue",
     borderRadius: 5,
   },
   buttonText: {
@@ -41,7 +41,7 @@ export default StyleSheet.create({
     textAlign: "center",
   },
   avatarButton: {
-    backgroundColor: "mediumspringgreen",
+    backgroundColor: "dodgerblue",
     padding: 5,
     borderRadius: 5,
   },

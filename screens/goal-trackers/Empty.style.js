@@ -13,7 +13,7 @@ export default StyleSheet.create({
   },
 
   emptyText: {
-    color: "white",
+    color: "black",
     marginTop: 30,
     fontSize: 30,
   },

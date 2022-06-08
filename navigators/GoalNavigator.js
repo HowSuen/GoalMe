@@ -13,13 +13,13 @@ export default GoalNavigator = () => {
   return (
     <Drawer.Navigator
       screenOptions={{
-        headerStyle: styles.container,
-        headerTintColor: "white",
+        // headerStyle: styles.container,
+        headerTintColor: "black",
         presentation: "modal",
         headerTitleAlign: "center",
         headerShadowVisible: false,
         drawerActiveTintColor: "black",
-        drawerInactiveTintColor: "white",
+        drawerInactiveTintColor: "black",
         drawerStyle: styles.container,
       }}
     >
@@ -27,6 +27,7 @@ export default GoalNavigator = () => {
         name="Goal Tracker"
         component={GoalTracker}
         options={{
+          headerStyle: {backgroundColor: "mediumseagreen"},
           drawerActiveBackgroundColor: "mediumseagreen",
           unmountOnBlur: true,
         }}
@@ -35,6 +36,7 @@ export default GoalNavigator = () => {
         name="Academic Tracker"
         component={AcademicTracker}
         options={{
+          headerStyle: {backgroundColor: "royalblue"},
           drawerActiveBackgroundColor: "royalblue",
           unmountOnBlur: true,
         }}
@@ -43,6 +45,7 @@ export default GoalNavigator = () => {
         name="Fitness Tracker"
         component={FitnessTracker}
         options={{
+          headerStyle: {backgroundColor: "tomato"},
           drawerActiveBackgroundColor: "tomato",
           unmountOnBlur: true,
         }}
@@ -51,6 +54,7 @@ export default GoalNavigator = () => {
         name="Finance Tracker"
         component={FinanceTracker}
         options={{
+          headerStyle: {backgroundColor: "goldenrod"},
           drawerActiveBackgroundColor: "goldenrod",
           unmountOnBlur: true,
         }}
@@ -59,7 +63,8 @@ export default GoalNavigator = () => {
         name="Completed Goals"
         component={CompletedGoals}
         options={{
-          drawerActiveBackgroundColor: "aquamarine",
+          headerStyle: {backgroundColor: "mediumspringgreen"},
+          drawerActiveBackgroundColor: "mediumspringgreen",
           unmountOnBlur: true,
         }}
       />

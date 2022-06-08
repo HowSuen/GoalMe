@@ -5,11 +5,11 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "stretch",
-    backgroundColor: "black",
+    backgroundColor: "ghostwhite",
   },
   saveButton: {
     justifyContent: "center",
-    backgroundColor: "mediumspringgreen",
+    backgroundColor: "dodgerblue",
     padding: 10,
     borderRadius: 5,
   },
@@ -20,12 +20,12 @@ export default StyleSheet.create({
     marginTop: 0,
   },
   menu: {
-    backgroundColor: "#222222",
+    backgroundColor: "ghostwhite",
   },
   label: {
     fontSize: 16,
     padding: 10,
-    color: "white",
+    color: "black",
     flex: 0.45,
   },
   slot: {

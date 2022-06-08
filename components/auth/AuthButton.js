@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     paddingTop: 10,
     paddingBottom: 10,
-    backgroundColor: "mediumspringgreen",
+    backgroundColor: "dodgerblue",
     borderRadius: 5,
   },
   text:{

@@ -5,6 +5,6 @@ export default StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "black",
+    backgroundColor: "ghostwhite",
   },
 });

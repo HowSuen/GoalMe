@@ -16,8 +16,8 @@ export default ProfileNavigation = ({ navigation, session }) => {
         options={{
           headerShown: true,
           headerTitle: "Customise your Avatar",
-          headerStyle: {backgroundColor: "#222222"},
-          headerTintColor: "white",
+          headerStyle: {backgroundColor: "ghostwhite"},
+          headerTintColor: "black",
           presentation: "modal",
           headerTitleAlign: "center",
         }}

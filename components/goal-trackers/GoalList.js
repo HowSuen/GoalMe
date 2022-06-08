@@ -7,7 +7,15 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 export default GoalList = ({ item, deleteItem, completeItem }) => {
   return (
     <View style={styles.componentContainer}>
-      <View style={styles.listContainer}>
+      <View style={
+        item.type == "general"
+        ? styles.goalListContainer
+        : item.type == "academic"
+        ? styles.academicListContainer
+        : item.type == "fitness"
+        ? styles.fitnessListContainer
+        : styles.financeListContainer
+      }>
         <TouchableOpacity
           style={styles.circleContainer}
           onPress={() => completeItem(item.key)}
@@ -15,15 +23,7 @@ export default GoalList = ({ item, deleteItem, completeItem }) => {
           <FontAwesome
             name="circle-o"
             size={20}
-            color={
-              item.type == "general"
-                ? "mediumseagreen"
-                : item.type == "academic"
-                ? "royalblue"
-                : item.type == "fitness"
-                ? "tomato"
-                : "goldenrod"
-            }
+            color={"black"}
           />
         </TouchableOpacity>
         <View>
@@ -34,7 +34,7 @@ export default GoalList = ({ item, deleteItem, completeItem }) => {
           style={styles.iconContainer}
           onPress={() => deleteItem(item.key)}
         >
-          <FontAwesome name="trash" size={25} color="firebrick" />
+          <FontAwesome name="trash" size={25} color="black" />
         </TouchableOpacity>
       </View>
     </View>

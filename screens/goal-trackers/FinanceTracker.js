@@ -1,35 +1,83 @@
-import React, { useState } from "react";
-import { View, StatusBar, FlatList, KeyboardAvoidingView, Platform } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  StatusBar,
+  FlatList,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import styles from "./GoalTracker.style";
 import AddFinance from "../../components/goal-trackers/AddFinance";
-import FinanceList from "../../components/goal-trackers/FinanceList";
+import GoalList from "../../components/goal-trackers/GoalList";
 import Empty from "./Empty";
 
 export default FinanceTracker = () => {
   const [data, setData] = useState([]);
+  const user = supabase.auth.user();
 
-  const submitHandler = (value) => {
-    setData((prevGoal) => {
-      return [
-        {
-          value: value,
-          key: Math.random().toString(),
-        },
-        ...prevGoal,
-      ];
-    });
+  useEffect(() => {
+    (async () => {
+      let { data: goals, error } = await supabase
+        .from("goals")
+        .select("*")
+        .match({ user_id: user.id, type: "finance", completion_status: false });
+
+      !error &&
+        goals.map((goal) => {
+          setData((prevGoal) => {
+            return [
+              {
+                value: goal.content,
+                key: goal.id,
+                type: goal.type,
+              },
+              ...prevGoal,
+            ];
+          });
+        });
+    })();
+  }, []);
+
+  const submitHandler = async (value) => {
+    const { data, error } = await supabase
+      .from("goals")
+      .insert([{ user_id: user.id, content: value, type: "finance" }]);
+
+    !error &&
+      setData((prevGoal) => {
+        return [
+          {
+            value: data[0].content,
+            key: data[0].id,
+            type: data[0].type,
+          },
+          ...prevGoal,
+        ];
+      });
   };
 
-  const deleteItem = (key) => {
-    setData((prevGoal) => {
-      return prevGoal.filter((goal) => goal.key != key);
-    });
+  const deleteItem = async (key) => {
+    const { data, error } = await supabase
+      .from("goals")
+      .delete()
+      .match({ id: key });
+
+    !error &&
+      setData((prevGoal) => {
+        return prevGoal.filter((goal) => goal.key != key);
+      });
   };
 
-  const completeItem = (key) => {
-    setData((prevGoal) => {
-      return prevGoal.filter((goal) => goal.key != key);
-    });
+  const completeItem = async (key) => {
+    const { data, error } = await supabase
+      .from("goals")
+      .update({ completion_status: true })
+      .match({ id: key });
+
+    !error &&
+      setData((prevGoal) => {
+        return prevGoal.filter((goal) => goal.key != key);
+      });
   };
 
   return (
@@ -37,25 +85,29 @@ export default FinanceTracker = () => {
       behavior={Platform.OS === "ios" ? "height" : ""}
       keyboardVerticalOffset={90}
     >
-    <View style={styles.componentContainer}>
-      <View>
-        <StatusBar barStyle="light-content" backgroundColor="black" />
-      </View>
-
-      <View>
-        <FlatList
-          data={data}
-          ListEmptyComponent={() => <Empty/>}
-          keyExtractor={(item) => item.key}
-          renderItem={({ item }) => (
-            <FinanceList item={item} deleteItem={deleteItem} completeItem={completeItem}/>
-          )}
-        />
+      <View style={styles.componentContainer}>
         <View>
-          <AddFinance submitHandler={submitHandler} />
+          <StatusBar barStyle="light-content" backgroundColor="black" />
+        </View>
+
+        <View>
+          <FlatList
+            data={data}
+            ListEmptyComponent={() => <Empty />}
+            keyExtractor={(item) => item.key}
+            renderItem={({ item }) => (
+              <GoalList
+                item={item}
+                deleteItem={deleteItem}
+                completeItem={completeItem}
+              />
+            )}
+          />
+          <View>
+            <AddFinance submitHandler={submitHandler} />
+          </View>
         </View>
       </View>
-    </View>
     </KeyboardAvoidingView>
   );
-}
+};

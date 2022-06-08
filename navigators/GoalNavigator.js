@@ -1,14 +1,15 @@
 import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import styles from "./GTNavigator.style";
+import styles from "./GoalNavigator.style";
 import GoalTracker from "../screens/goal-trackers/GoalTracker";
 import AcademicTracker from "../screens/goal-trackers/AcademicTracker";
 import FitnessTracker from "../screens/goal-trackers/FitnessTracker";
 import FinanceTracker from "../screens/goal-trackers/FinanceTracker";
+import CompletedGoals from "../screens/goal-trackers/CompletedGoals";
 
 const Drawer = createDrawerNavigator();
 
-const GTNavigator = () => {
+export default GoalNavigator = () => {
   return (
     <Drawer.Navigator
       screenOptions={{
@@ -23,10 +24,19 @@ const GTNavigator = () => {
       }}
     >
       <Drawer.Screen
+        name="Goal Tracker"
+        component={GoalTracker}
+        options={{
+          drawerActiveBackgroundColor: "mediumseagreen",
+          unmountOnBlur: true,
+        }}
+      />
+      <Drawer.Screen
         name="Academic Tracker"
         component={AcademicTracker}
         options={{
           drawerActiveBackgroundColor: "royalblue",
+          unmountOnBlur: true,
         }}
       />
       <Drawer.Screen
@@ -34,6 +44,7 @@ const GTNavigator = () => {
         component={FitnessTracker}
         options={{
           drawerActiveBackgroundColor: "tomato",
+          unmountOnBlur: true,
         }}
       />
       <Drawer.Screen
@@ -41,17 +52,17 @@ const GTNavigator = () => {
         component={FinanceTracker}
         options={{
           drawerActiveBackgroundColor: "goldenrod",
+          unmountOnBlur: true,
         }}
       />
       <Drawer.Screen
-        name="General Tracker"
-        component={GoalTracker}
+        name="Completed Goals"
+        component={CompletedGoals}
         options={{
-          drawerActiveBackgroundColor: "mediumseagreen",
+          drawerActiveBackgroundColor: "aquamarine",
+          unmountOnBlur: true,
         }}
       />
     </Drawer.Navigator>
   );
 };
-
-export default GTNavigator;

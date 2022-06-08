@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { store } from "./store/store";
 import { Provider } from "react-redux";
-import { supabase } from "./lib/supabase";
+import supabase from "./lib/supabase";
 import AppNavigation from "./navigators/AppNavigator";
 import AuthNavigation from "./navigators/AuthNavigator";
 

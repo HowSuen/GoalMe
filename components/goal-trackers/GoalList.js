@@ -4,7 +4,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import styles from "./GoalList.style";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const GoalList = ({ item, deleteItem, completeItem }) => {
+export default GoalList = ({ item, deleteItem, completeItem }) => {
   return (
     <View style={styles.componentContainer}>
       <View style={styles.listContainer}>
@@ -12,11 +12,23 @@ const GoalList = ({ item, deleteItem, completeItem }) => {
           style={styles.circleContainer}
           onPress={() => completeItem(item.key)}
         >
-          <FontAwesome name="circle-o" size={20} color="mediumseagreen" />
+          <FontAwesome
+            name="circle-o"
+            size={20}
+            color={
+              item.type == "General"
+                ? "mediumseagreen"
+                : item.type == "Academic"
+                ? "royalblue"
+                : item.type == "Fitness"
+                ? "tomato"
+                : "goldenrod"
+            }
+          />
         </TouchableOpacity>
         <View>
           <Text style={styles.listText}>{item.value}</Text>
-          <Text style={styles.listSubtext}>General</Text>
+          <Text style={styles.listSubtext}>{item.type}</Text>
         </View>
         <TouchableOpacity
           style={styles.iconContainer}
@@ -28,5 +40,3 @@ const GoalList = ({ item, deleteItem, completeItem }) => {
     </View>
   );
 };
-
-export default GoalList;

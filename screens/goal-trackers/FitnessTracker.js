@@ -1,35 +1,84 @@
-import React, { useState } from "react";
-import { View, StatusBar, FlatList, KeyboardAvoidingView, Platform } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  StatusBar,
+  FlatList,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import styles from "./GoalTracker.style";
 import AddFitness from "../../components/goal-trackers/AddFitness";
-import FitnessList from "../../components/goal-trackers/FitnessList";
+import GoalList from "../../components/goal-trackers/GoalList";
 import Empty from "./Empty";
+import supabase from "../../lib/supabase";
 
 export default FitnessTracker = () => {
   const [data, setData] = useState([]);
+  const user = supabase.auth.user();
 
-  const submitHandler = (value) => {
-    setData((prevGoal) => {
-      return [
-        {
-          value: value,
-          key: Math.random().toString(),
-        },
-        ...prevGoal,
-      ];
-    });
+  useEffect(() => {
+    (async () => {
+      let { data: goals, error } = await supabase
+        .from("goals")
+        .select("*")
+        .match({ user_id: user.id, type: "fitness", completion_status: false });
+
+      !error &&
+        goals.map((goal) => {
+          setData((prevGoal) => {
+            return [
+              {
+                value: goal.content,
+                key: goal.id,
+                type: goal.type,
+              },
+              ...prevGoal,
+            ];
+          });
+        });
+    })();
+  }, []);
+
+  const submitHandler = async (value) => {
+    const { data, error } = await supabase
+      .from("goals")
+      .insert([{ user_id: user.id, content: value, type: "fitness" }]);
+
+    !error &&
+      setData((prevGoal) => {
+        return [
+          {
+            value: data[0].content,
+            key: data[0].id,
+            type: data[0].type,
+          },
+          ...prevGoal,
+        ];
+      });
   };
 
-  const deleteItem = (key) => {
-    setData((prevGoal) => {
-      return prevGoal.filter((goal) => goal.key != key);
-    });
+  const deleteItem = async (key) => {
+    const { data, error } = await supabase
+      .from("goals")
+      .delete()
+      .match({ id: key });
+
+    !error &&
+      setData((prevGoal) => {
+        return prevGoal.filter((goal) => goal.key != key);
+      });
   };
 
-  const completeItem = (key) => {
-    setData((prevGoal) => {
-      return prevGoal.filter((goal) => goal.key != key);
-    });
+  const completeItem = async (key) => {
+    const { data, error } = await supabase
+      .from("goals")
+      .update({ completion_status: true })
+      .match({ id: key });
+
+    !error &&
+      setData((prevGoal) => {
+        return prevGoal.filter((goal) => goal.key != key);
+      });
   };
 
   return (
@@ -48,7 +97,7 @@ export default FitnessTracker = () => {
             ListEmptyComponent={() => <Empty />}
             keyExtractor={(item) => item.key}
             renderItem={({ item }) => (
-              <FitnessList
+              <GoalList
                 item={item}
                 deleteItem={deleteItem}
                 completeItem={completeItem}

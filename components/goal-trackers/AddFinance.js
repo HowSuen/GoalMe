@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import styles from "./AddGoal.style";
-import { View, TextInput } from "react-native";
+import {
+  View,
+  TextInput,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const AddFinance = ({ submitHandler }) => {
+export default AddFinance = ({ submitHandler }) => {
   const [value, setValue] = useState("");
 
   const onChangeText = (text) => {
@@ -16,27 +21,27 @@ const AddFinance = ({ submitHandler }) => {
   };
 
   return (
-    <View style={styles.componentContainer}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.componentContainer}>
-        <TextInput
-          style={styles.input}
-          value={value}
-          placeholder="Add a finance goal..."
-          placeholderTextColor="dimgray"
-          onChangeText={onChangeText}
-        />
+        <View style={styles.componentContainer}>
+          <TextInput
+            style={styles.input}
+            value={value}
+            placeholder="Add a finance goal..."
+            placeholderTextColor="dimgray"
+            onChangeText={onChangeText}
+          />
+        </View>
+        <TouchableOpacity
+          style={styles.financeSubmitButton}
+          onPress={() => {
+            setValue(submitHandler(value));
+            resetText();
+          }}
+        >
+          <FontAwesome name="plus" size={24} color="black" />
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={styles.submitButton}
-        onPress={() => {
-          setValue(submitHandler(value));
-          resetText();
-        }}
-      >
-        <FontAwesome name="plus" size={24} color="black" />
-      </TouchableOpacity>
-    </View>
+    </TouchableWithoutFeedback>
   );
-}
-
-export default AddFinance
+};

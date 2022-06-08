@@ -1,80 +1,88 @@
 import React, { useEffect, useState } from "react";
-import { View, StatusBar, FlatList, KeyboardAvoidingView, Platform } from "react-native";
+import {
+  View,
+  StatusBar,
+  FlatList,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import styles from "./GoalTracker.style";
 import AddAcademic from "../../components/goal-trackers/AddAcademic";
-import AcademicList from "../../components/goal-trackers/AcademicList";
+import GoalList from "../../components/goal-trackers/GoalList";
 import Empty from "./Empty";
-import { supabase } from "../../lib/supabase";
+import supabase from "../../lib/supabase";
 
 export default AcademicTracker = () => {
   const [data, setData] = useState([]);
-  const user = supabase.auth.user()
+  const user = supabase.auth.user();
 
   useEffect(() => {
     (async () => {
       let { data: goals, error } = await supabase
-      .from("goals")
-      .select("id, content")
-      .eq("user_id", user.id)
-      
-      // !error && setData([goals][1]);
-      console.log(goals)
-      // const contents = goals.map((item) => {
-      //   return (
-      //     <View>{item.content}</View>
-      //   )
-      // })
-      // setData(contents);
-      setData(goals.map((goal) => {
-        return [
-          {
-            value: goal.content,
-            key: goal.id,
-          },
-        ];
-      }));
+        .from("goals")
+        .select("*")
+        .match({
+          user_id: user.id,
+          type: "academic",
+          completion_status: false,
+        });
+
+      !error &&
+        goals.map((goal) => {
+          setData((prevGoal) => {
+            return [
+              {
+                value: goal.content,
+                key: goal.id,
+                type: goal.type,
+              },
+              ...prevGoal,
+            ];
+          });
+        });
     })();
   }, []);
 
   const submitHandler = async (value) => {
     const { data, error } = await supabase
-            .from('goals')
-            .insert([
-                { content: value, user_id: user.id },
-            ]);
-    
-    console.log(data, error);
-    setData((prevGoal) => {
-      return [
-        {
-          value: value,
-          key: Math.random().toString(),
-        },
-        ...prevGoal,
-      ];
-    });
+      .from("goals")
+      .insert([{ user_id: user.id, content: value, type: "academic" }]);
+
+    !error &&
+      setData((prevGoal) => {
+        return [
+          {
+            value: data[0].content,
+            key: data[0].id,
+            type: data[0].type,
+          },
+          ...prevGoal,
+        ];
+      });
   };
 
-  // const acadData = async () => {
-  //   let { data, error } = await supabase
-  //   .from('goals')
-  //   .select('content')
-  //   .eq('user_id', user.id)
-    
-  //   console.log(data, error);
-  //   setData({data});
-  // };
+  const deleteItem = async (key) => {
+    const { data, error } = await supabase
+      .from("goals")
+      .delete()
+      .match({ id: key });
 
-  const deleteItem = (key) => {
-    setData((prevGoal) => {
-      return prevGoal.filter((goal) => goal.key != key);
-    });
+    !error &&
+      setData((prevGoal) => {
+        return prevGoal.filter((goal) => goal.key != key);
+      });
   };
 
-  const completeItem = (key) => {
-    setData((prevGoal) => {
-      return prevGoal.filter((goal) => goal.key != key);
-    });
+  const completeItem = async (key) => {
+    const { data, error } = await supabase
+      .from("goals")
+      .update({ completion_status: true })
+      .match({ id: key });
+
+    !error &&
+      setData((prevGoal) => {
+        return prevGoal.filter((goal) => goal.key != key);
+      });
   };
 
   return (
@@ -90,10 +98,10 @@ export default AcademicTracker = () => {
         <View>
           <FlatList
             data={data}
-            ListEmptyComponent={() => <Empty/>}
+            ListEmptyComponent={() => <Empty />}
             keyExtractor={(item) => item.key}
             renderItem={({ item }) => (
-              <AcademicList
+              <GoalList
                 item={item}
                 deleteItem={deleteItem}
                 completeItem={completeItem}

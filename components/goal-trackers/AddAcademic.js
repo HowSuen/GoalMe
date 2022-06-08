@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const AddAcademic = ({ submitHandler }) => {
+export default AddAcademic = ({ submitHandler }) => {
   const [value, setValue] = useState("");
 
   const onChangeText = (text) => {
@@ -21,29 +21,27 @@ const AddAcademic = ({ submitHandler }) => {
   };
 
   return (
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.componentContainer}>
         <View style={styles.componentContainer}>
-          <View style={styles.componentContainer}>
-            <TextInput
-              style={styles.input}
-              value={value}
-              placeholder="Add an academic goal..."
-              placeholderTextColor="dimgray"
-              onChangeText={onChangeText}
-            />
-          </View>
-          <TouchableOpacity
-            style={styles.submitButton}
-            onPress={() => {
-              setValue(submitHandler(value));
-              resetText();
-            }}
-          >
-            <FontAwesome name="plus" size={24} color="black" />
-          </TouchableOpacity>
+          <TextInput
+            style={styles.input}
+            value={value}
+            placeholder="Add an academic goal..."
+            placeholderTextColor="dimgray"
+            onChangeText={onChangeText}
+          />
         </View>
-      </TouchableWithoutFeedback>
+        <TouchableOpacity
+          style={styles.academicSubmitButton}
+          onPress={() => {
+            setValue(submitHandler(value));
+            resetText();
+          }}
+        >
+          <FontAwesome name="plus" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
-
-export default AddAcademic;

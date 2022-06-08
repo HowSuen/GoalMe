@@ -14,17 +14,25 @@ export default AcademicTracker = () => {
     (async () => {
       let { data: goals, error } = await supabase
       .from("goals")
-      .select("content")
+      .select("id, content")
       .eq("user_id", user.id)
       
       // !error && setData([goals][1]);
       console.log(goals)
-      const contents = goals.map((item) => {
-        return (
-          <View>{item.content}</View>
-        )
-      })
-      setData(contents);
+      // const contents = goals.map((item) => {
+      //   return (
+      //     <View>{item.content}</View>
+      //   )
+      // })
+      // setData(contents);
+      setData(goals.map((goal) => {
+        return [
+          {
+            value: goal.content,
+            key: goal.id,
+          },
+        ];
+      }));
     })();
   }, []);
 

@@ -14,7 +14,7 @@ const PasswordInput = ({
       <Input
         style={styles.textInput}
         label="Password"
-        leftIcon={{ type: "font-awesome", name: "lock", color: "dodgerblue" }}
+        leftIcon={{ type: "font-awesome", name: "lock", color: "#222222" }}
         onChangeText={onChangeText}
         value={password}
         secureTextEntry={passVisible}
@@ -22,7 +22,7 @@ const PasswordInput = ({
         autoCapitalize={"none"}
       />
       <TouchableOpacity style={styles.icon} onPress={onIconPress}>
-        <Icon name={passVisible ? "eye" : "eye-off"} size={20} color="dodgerblue" />
+        <Icon name={passVisible ? "eye" : "eye-off"} size={20} color="#222222" />
       </TouchableOpacity>
     </View>
   );

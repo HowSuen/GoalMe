@@ -1,9 +1,8 @@
 import React from "react";
-import Account from "../screens/Account";
 import { View, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import { Icon } from "react-native-elements";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import styles from "./AppNavigator.style";
 import GTNavigator from "./GoalNavigator";
 import ProfileNavigator from "./ProfileNavigator";
@@ -46,24 +45,23 @@ export default AppNavigator = ({ session }) => {
       <Tab.Navigator
         initialRouteName={"Goal Trackers"}
         screenOptions={({ route, navigation }) => ({
-          tabBarLabel: navigation.isFocused() ? route.name : "",
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
             if (route.name === "Profile") {
-              iconName = "account-circle";
+              iconName = focused ? "account-circle" : "account-circle-outline";
             } else if (route.name === "Settings") {
-              iconName = "settings";
+              iconName = focused ? "cog" : "cog-outline";
             } else if (route.name === "Goal Trackers") {
-              iconName = "flag";
+              iconName = focused ? "flag-variant" : "flag-variant-outline";
             } else if (route.name === "Progress Checker") {
-              iconName = "analytics";
+              iconName = focused ? "chart-box" : "chart-box-outline";
             }
-            return <Icon name={iconName} size={size} color={color} />;
+            return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
           },
           tabBarStyle: {
             backgroundColor: "ghostwhite",
             borderTopColor: "ghostwhite",
-            borderTopWidth: 3,
+            borderTopWidth: 0,
             borderBottomWidth: 0,
           },
           tabBarActiveTintColor: "dodgerblue",

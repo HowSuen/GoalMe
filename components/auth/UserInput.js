@@ -12,9 +12,9 @@ const UserInput = ({ label, onChangeText, value }) => {
           ? {
               type: "font-awesome",
               name: "envelope",
-              color: "black",
+              color: "dodgerblue",
             }
-          : { type: "font-awesome", name: "user", color: "black" }
+          : { type: "font-awesome", name: "user", color: "dodgerblue" }
       }
       onChangeText={onChangeText}
       value={value}

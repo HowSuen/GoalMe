@@ -96,7 +96,7 @@ const Account = ({ navigation, session }) => {
                 })
               }
             >
-              <Text>Customise</Text>
+              <Text style={styles.buttonText}>Customise</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.formContainer}>

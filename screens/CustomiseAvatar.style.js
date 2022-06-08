@@ -10,25 +10,33 @@ export default StyleSheet.create({
   saveButton: {
     justifyContent: "center",
     backgroundColor: "dodgerblue",
-    padding: 10,
+    padding: 5,
+    paddingHorizontal: 16,
     borderRadius: 5,
+    elevation: 10,
   },
   avatar: {
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
     marginTop: 0,
+    marginBottom: 5,
   },
   menu: {
     backgroundColor: "ghostwhite",
   },
   label: {
-    fontSize: 16,
+    fontSize: 17,
     padding: 10,
-    color: "black",
+    color: "rgb(0, 77, 153)",
     flex: 0.45,
   },
   slot: {
     paddingBottom: 10,
+  },
+  save: {
+    color: "white",
+    fontSize: 17,
+    textAlign: "center",
   },
 });

@@ -85,7 +85,7 @@ const Auth = ({ navigation }) => {
               disabled={loading}
               onPress={() => navigation.navigate("Signup")}
             >
-              <Text style={styles.signUpText}>No account yet? Sign up</Text>
+              <Text style={styles.signUpText}>No account yet? <Text style={styles.signUpTextR}>Sign up</Text></Text>
             </TouchableOpacity>
           </View>
         </View>

@@ -18,6 +18,7 @@ export default StyleSheet.create({
   titleContainer: {
     justifyContent: "center",
     alignItems: "center",
+    marginTop: -30,
   },
   title: {
     height: 60,
@@ -35,6 +36,11 @@ export default StyleSheet.create({
   },
   signUpText: {
     color: "black",
+    fontSize: 14,
+    textAlign: "center",
+  },
+  signUpTextR: {
+    color: "dodgerblue",
     fontSize: 14,
     textAlign: "center",
   },

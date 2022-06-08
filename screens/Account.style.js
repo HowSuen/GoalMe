@@ -34,9 +34,10 @@ export default StyleSheet.create({
     paddingBottom: 10,
     backgroundColor: "dodgerblue",
     borderRadius: 5,
+    elevation: 10,
   },
   buttonText: {
-    color: "black",
+    color: "white",
     fontSize: 17,
     textAlign: "center",
   },
@@ -44,5 +45,6 @@ export default StyleSheet.create({
     backgroundColor: "dodgerblue",
     padding: 5,
     borderRadius: 5,
+    elevation: 10,
   },
 });

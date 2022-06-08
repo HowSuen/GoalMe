@@ -25,9 +25,10 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     backgroundColor: "dodgerblue",
     borderRadius: 5,
+    elevation: 10,
   },
   text:{
-    color:"black",
+    color:"white",
     fontSize:17,
     textAlign:"center",
   }

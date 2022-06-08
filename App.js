@@ -27,7 +27,7 @@ const App = () => {
           <AuthNavigation />
         )}
       </View>
-      <StatusBar style="light" />
+      <StatusBar style="dark" />
     </Provider>
   );
 };

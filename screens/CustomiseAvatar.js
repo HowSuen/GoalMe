@@ -193,26 +193,10 @@ const CustomiseAvatar = ({ navigation, session }) => {
 
       let { data, error, status } = await supabase
         .from("avatars")
-        .select(
-          `gender,
-        hat,
-        skin,
-        bgColor,
-        accessory,
-        clothing,
-        clotheColor,
-        eyebrow,
-        eye,
-        facialHair,
-        graphic,
-        hair,
-        hairColor,
-        hatColor,
-        mouth,
-        lipColor,`
-        )
+        .select()
         .eq("id", user.id)
         .single();
+
       if (error && status !== 406) {
         throw error;
       }
@@ -309,7 +293,7 @@ const CustomiseAvatar = ({ navigation, session }) => {
       </View>
       <ScrollView style={styles.menu}>
         <View style={styles.slot}>
-          <Text style={styles.label}>Gender 👫</Text>
+          <Text style={styles.label}>Gender</Text>
           <DropdownList items={genders} onValueChange={(e) => setGender(e)} />
         </View>
         <View style={styles.slot}>
@@ -321,39 +305,39 @@ const CustomiseAvatar = ({ navigation, session }) => {
           <DropdownList items={bgColors} onValueChange={(e) => setBgColor(e)} />
         </View>
         <View style={styles.slot}>
-          <Text style={styles.label}>Hat 🧢</Text>
+          <Text style={styles.label}>Hat</Text>
           <DropdownList items={hats} onValueChange={(e) => setHat(e)} />
         </View>
         <View style={styles.slot}>
-          <Text style={styles.label}>Hat Color 🧢</Text>
+          <Text style={styles.label}>Hat Color</Text>
           <DropdownList
             items={hatColors}
             onValueChange={(e) => setHatColor(e)}
           />
         </View>
         <View style={styles.slot}>
-          <Text style={styles.label}>Accessory 💍</Text>
+          <Text style={styles.label}>Accessory</Text>
           <DropdownList
             items={accessories}
             onValueChange={(e) => setAccessory(e)}
           />
         </View>
         <View style={styles.slot}>
-          <Text style={styles.label}>Clothing 👕</Text>
+          <Text style={styles.label}>Clothing</Text>
           <DropdownList
             items={clothings}
             onValueChange={(e) => setClothing(e)}
           />
         </View>
         <View style={styles.slot}>
-          <Text style={styles.label}>Clothing Color 👕</Text>
+          <Text style={styles.label}>Clothing Color</Text>
           <DropdownList
             items={clothingColor}
             onValueChange={(e) => setClotheColor(e)}
           />
         </View>
         <View style={styles.slot}>
-          <Text style={styles.label}>T-Shirt Graphic 👕</Text>
+          <Text style={styles.label}>T-Shirt Graphic</Text>
           <DropdownList items={graphics} onValueChange={(e) => setGraphic(e)} />
         </View>
         <View style={styles.slot}>
@@ -361,7 +345,7 @@ const CustomiseAvatar = ({ navigation, session }) => {
           <DropdownList items={eyebrows} onValueChange={(e) => setEyebrow(e)} />
         </View>
         <View style={styles.slot}>
-          <Text style={styles.label}>Eyes 👀</Text>
+          <Text style={styles.label}>Eyes</Text>
           <DropdownList items={eyes} onValueChange={(e) => setEye(e)} />
         </View>
         <View style={styles.slot}>
@@ -383,11 +367,11 @@ const CustomiseAvatar = ({ navigation, session }) => {
           />
         </View>
         <View style={styles.slot}>
-          <Text style={styles.label}>Mouth 👄</Text>
+          <Text style={styles.label}>Mouth</Text>
           <DropdownList items={mouths} onValueChange={(e) => setMouth(e)} />
         </View>
         <View style={styles.slot}>
-          <Text style={styles.label}>Lip Color 👄</Text>
+          <Text style={styles.label}>Lip Color</Text>
           <DropdownList
             items={lipColors}
             onValueChange={(e) => setLipColor(e)}

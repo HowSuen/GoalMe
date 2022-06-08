@@ -11,7 +11,7 @@ import {
 import { Input, Text } from "react-native-elements";
 import styles from "./Account.style";
 import "react-native-url-polyfill/auto";
-import Avatar from "../components/game/Avatar";
+import SavedAvatar from "../components/game/SavedAvatar";
 
 const Account = ({ navigation, session }) => {
   const [loading, setLoading] = useState(false);
@@ -83,7 +83,7 @@ const Account = ({ navigation, session }) => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View>
           <View style={styles.avatarContainer}>
-            <Avatar size={250} />
+            <SavedAvatar size={250} session={session} />
             <TouchableOpacity
               style={styles.avatarButton}
               onPress={() =>

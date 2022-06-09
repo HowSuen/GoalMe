@@ -39,7 +39,7 @@ export default AddFitness = ({ submitHandler }) => {
             resetText();
           }}
         >
-          <FontAwesome name="plus" size={24} color="black" />
+          <FontAwesome name="plus" size={20} color="black" />
         </TouchableOpacity>
       </View>
     </TouchableWithoutFeedback>

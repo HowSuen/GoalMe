@@ -10,12 +10,16 @@ import styles from "./GoalTracker.style";
 import AddFinance from "../../components/goal-trackers/AddFinance";
 import GoalList from "../../components/goal-trackers/GoalList";
 import Empty from "./Empty";
+import supabase from "../../lib/supabase";
+import { useIsFocused } from "@react-navigation/native";
 
-export default FinanceTracker = () => {
+export default FinanceTracker = ({ navigation }) => {
   const [data, setData] = useState([]);
   const user = supabase.auth.user();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
+    setData([]);
     (async () => {
       let { data: goals, error } = await supabase
         .from("goals")
@@ -30,13 +34,14 @@ export default FinanceTracker = () => {
                 value: goal.content,
                 key: goal.id,
                 type: goal.type,
+                description: goal.description,
               },
               ...prevGoal,
             ];
           });
         });
     })();
-  }, []);
+  }, [isFocused]);
 
   const submitHandler = async (value) => {
     const { data, error } = await supabase
@@ -100,6 +105,7 @@ export default FinanceTracker = () => {
                 item={item}
                 deleteItem={deleteItem}
                 completeItem={completeItem}
+                navigation={navigation}
               />
             )}
           />

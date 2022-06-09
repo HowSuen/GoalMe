@@ -20,7 +20,7 @@ export default CompletedList = ({ item, deleteItem, uncompleteItem }) => {
           style={styles.checkContainer}
           onPress={() => uncompleteItem(item.key)}
         >
-          <FontAwesome name="check" size={20} color="black" />
+          <FontAwesome name="check-square-o" size={20} color="black" />
         </TouchableOpacity>
         <View>
           <Text style={styles.listText}>{item.value}</Text>
@@ -30,7 +30,7 @@ export default CompletedList = ({ item, deleteItem, uncompleteItem }) => {
           style={styles.iconContainer}
           onPress={() => deleteItem(item.key)}
         >
-          <FontAwesome name="trash" size={25} color="firebrick" />
+          <FontAwesome name="trash" size={25} color="black" />
         </TouchableOpacity>
       </View>
     </View>

@@ -12,7 +12,7 @@ export default StyleSheet.create({
     height: 50,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "mediumspringgreen",
+    backgroundColor: "mediumaquamarine",
     marginBottom: 20,
     marginLeft: 300,
     borderRadius: 100,

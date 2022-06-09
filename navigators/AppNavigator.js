@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import styles from "./AppNavigator.style";
-import GTNavigator from "./GoalNavigator";
+import GoalNavigator from "./GoalNavigator";
 import ProfileNavigator from "./ProfileNavigator";
 
 const Tab = createBottomTabNavigator();
@@ -43,7 +43,7 @@ export default AppNavigator = ({ session }) => {
   return (
     <NavigationContainer styles={styles.container}>
       <Tab.Navigator
-        initialRouteName={"Goal Trackers"}
+        initialRouteName={"Goals"}
         screenOptions={({ route, navigation }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
@@ -51,12 +51,18 @@ export default AppNavigator = ({ session }) => {
               iconName = focused ? "account-circle" : "account-circle-outline";
             } else if (route.name === "Settings") {
               iconName = focused ? "cog" : "cog-outline";
-            } else if (route.name === "Goal Trackers") {
+            } else if (route.name === "Goals") {
               iconName = focused ? "flag-variant" : "flag-variant-outline";
-            } else if (route.name === "Progress Checker") {
+            } else if (route.name === "Progress") {
               iconName = focused ? "chart-box" : "chart-box-outline";
             }
-            return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
+            return (
+              <MaterialCommunityIcons
+                name={iconName}
+                size={size}
+                color={color}
+              />
+            );
           },
           tabBarStyle: {
             backgroundColor: "ghostwhite",
@@ -72,11 +78,12 @@ export default AppNavigator = ({ session }) => {
         })}
       >
         <Tab.Screen
-          name="Goal Trackers"
-          component={GTNavigator}
+          name="Goals"
           options={{ headerShown: false }}
-        />
-        <Tab.Screen name="Progress Checker" component={TempProgressChecker} />
+        >
+          {({ route, navigation }) => GoalNavigator({ route: route, navigation: navigation })}
+        </Tab.Screen>
+        <Tab.Screen name="Progress" component={TempProgressChecker} />
         <Tab.Screen name="Profile">
           {({ navigation }) =>
             ProfileNavigator({ session: session, navigation: navigation })
@@ -87,4 +94,3 @@ export default AppNavigator = ({ session }) => {
     </NavigationContainer>
   );
 };
-

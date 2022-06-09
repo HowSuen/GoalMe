@@ -5,7 +5,7 @@ import CustomiseAvatar from "../screens/CustomiseAvatar";
 
 const Stack = createNativeStackNavigator();
 
-export default ProfileNavigation = ({ navigation, session }) => {
+export default ProfileNavigator = ({ navigation, session }) => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Account">

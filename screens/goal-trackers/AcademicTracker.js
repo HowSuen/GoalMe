@@ -5,6 +5,7 @@ import {
   FlatList,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from "react-native";
 import styles from "./GoalTracker.style";
 import AddAcademic from "../../components/goal-trackers/AddAcademic";
@@ -29,21 +30,22 @@ export default AcademicTracker = ({ navigation }) => {
           type: "academic",
           completion_status: false,
         });
-
-      !error &&
-        goals.map((goal) => {
-          setData((prevGoal) => {
-            return [
-              {
-                value: goal.content,
-                key: goal.id,
-                type: goal.type,
-                description: goal.description,
-              },
-              ...prevGoal,
-            ];
-          });
+      
+      if (error) Alert.alert(error)
+      goals.sort((a, b) => a.id - b.id);
+      goals.map((goal) => {
+        setData((prevGoal) => {
+          return [
+            {
+              value: goal.content,
+              key: goal.id,
+              type: goal.type,
+              description: goal.description,
+            },
+            ...prevGoal,
+          ];
         });
+      });
     })();
   }, [isFocused]);
 

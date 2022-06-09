@@ -26,20 +26,21 @@ export default FinanceTracker = ({ navigation }) => {
         .select("*")
         .match({ user_id: user.id, type: "finance", completion_status: false });
 
-      !error &&
-        goals.map((goal) => {
-          setData((prevGoal) => {
-            return [
-              {
-                value: goal.content,
-                key: goal.id,
-                type: goal.type,
-                description: goal.description,
-              },
-              ...prevGoal,
-            ];
-          });
+      if (error) Alert.alert(error);
+      goals.sort((a, b) => a.id - b.id);
+      goals.map((goal) => {
+        setData((prevGoal) => {
+          return [
+            {
+              value: goal.content,
+              key: goal.id,
+              type: goal.type,
+              description: goal.description,
+            },
+            ...prevGoal,
+          ];
         });
+      });
     })();
   }, [isFocused]);
 
@@ -48,17 +49,16 @@ export default FinanceTracker = ({ navigation }) => {
       .from("goals")
       .insert([{ user_id: user.id, content: value, type: "finance" }]);
 
-    !error &&
-      setData((prevGoal) => {
-        return [
-          {
-            value: data[0].content,
-            key: data[0].id,
-            type: data[0].type,
-          },
-          ...prevGoal,
-        ];
-      });
+    setData((prevGoal) => {
+      return [
+        {
+          value: data[0].content,
+          key: data[0].id,
+          type: data[0].type,
+        },
+        ...prevGoal,
+      ];
+    });
   };
 
   const deleteItem = async (key) => {

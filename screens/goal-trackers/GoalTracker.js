@@ -26,20 +26,21 @@ export default GoalTracker = ({ navigation }) => {
         .select("*")
         .match({ user_id: user.id, completion_status: false });
 
-      !error &&
-        goals.map((goal) => {
-          setData((prevGoal) => {
-            return [
-              {
-                value: goal.content,
-                key: goal.id,
-                type: goal.type,
-                description: goal.description,
-              },
-              ...prevGoal,
-            ];
-          });
+      if (error) Alert.alert(error);
+      goals.sort((a, b) => a.id - b.id);
+      goals.map((goal) => {
+        setData((prevGoal) => {
+          return [
+            {
+              value: goal.content,
+              key: goal.id,
+              type: goal.type,
+              description: goal.description,
+            },
+            ...prevGoal,
+          ];
         });
+      });
     })();
   }, [isFocused]);
 

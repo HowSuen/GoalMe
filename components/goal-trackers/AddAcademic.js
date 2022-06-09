@@ -35,8 +35,11 @@ export default AddAcademic = ({ submitHandler }) => {
         <TouchableOpacity
           style={styles.academicSubmitButton}
           onPress={() => {
-            setValue(submitHandler(value));
-            resetText();
+            if (value == "") Alert.alert("Write something first!");
+            else {
+              setValue(submitHandler(value));
+              resetText();
+            }
           }}
         >
           <FontAwesome name="plus" size={20} color="black" />

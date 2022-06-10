@@ -1,7 +1,7 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Account from "../screens/Account";
-import CustomiseAvatar from "../screens/CustomiseAvatar";
+import Account from "../screens/profile/Account";
+import CustomiseAvatar from "../screens/profile/CustomiseAvatar";
 
 const Stack = createNativeStackNavigator();
 

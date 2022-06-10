@@ -13,7 +13,7 @@ export default StyleSheet.create({
     padding: 5,
     paddingHorizontal: 16,
     borderRadius: 5,
-    elevation: 10,
+    elevation: 5,
   },
   avatar: {
     flexDirection: "column",

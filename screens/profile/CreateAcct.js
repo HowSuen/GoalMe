@@ -7,13 +7,13 @@ import {
   Keyboard,
   Platform,
 } from "react-native";
-import { supabase } from "../lib/supabase";
+import { supabase } from "../../lib/supabase";
 import { Image } from "react-native-elements";
 import styles from "./CreateAcct.style";
 import "react-native-url-polyfill/auto";
-import AuthButton from "../components/auth/AuthButton";
-import UserInput from "../components/auth/UserInput";
-import PasswordSecureInput from "../components/auth/PasswordSecureInput";
+import AuthButton from "../../components/auth/AuthButton";
+import UserInput from "../../components/auth/UserInput";
+import PasswordSecureInput from "../../components/auth/PasswordSecureInput";
 
 const CreateAcct = () => {
   const [email, setEmail] = useState("");
@@ -72,11 +72,11 @@ const CreateAcct = () => {
           <View style={styles.logoContainer}>
             <Image
               style={styles.logo}
-              source={require("../assets/goalme-transparent-logo.png")}
+              source={require("../../assets/goalme-transparent-logo.png")}
             />
             <Image
               style={styles.title}
-              source={require("../assets/goalme-title.png")}
+              source={require("../../assets/goalme-title.png")}
             />
           </View>
           <UserInput

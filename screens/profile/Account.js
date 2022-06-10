@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import supabase from "../lib/supabase";
+import supabase from "../../lib/supabase";
 import {
   View,
   Alert,
@@ -11,7 +11,7 @@ import {
 import { Input, Text } from "react-native-elements";
 import styles from "./Account.style";
 import "react-native-url-polyfill/auto";
-import SavedAvatar from "../components/game/SavedAvatar";
+import SavedAvatar from "../../components/game/SavedAvatar";
 import { useIsFocused } from "@react-navigation/native";
 
 const Account = ({ navigation, session }) => {

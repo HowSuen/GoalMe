@@ -2,14 +2,14 @@ import React from "react";
 import { View, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 import styles from "./AppNavigator.style";
 import GoalNavigator from "./GoalNavigator";
 import ProfileNavigator from "./ProfileNavigator";
 
 const Tab = createBottomTabNavigator();
 
-const TempSettingsScreen = () => {
+const TempGameScreen = () => {
   return (
     <View
       style={{
@@ -19,7 +19,7 @@ const TempSettingsScreen = () => {
         backgroundColor: "ghostwhite",
       }}
     >
-      <Text style={{ color: "black" }}>Settings!</Text>
+      <Text style={{ color: "black" }}>Game!</Text>
     </View>
   );
 };
@@ -77,19 +77,32 @@ export default AppNavigator = ({ session }) => {
           headerShown: false,
         })}
       >
-        <Tab.Screen
-          name="Goals"
-          options={{ headerShown: false }}
-        >
-          {({ route, navigation }) => GoalNavigator({ route: route, navigation: navigation })}
+        <Tab.Screen name="Goals" options={{ headerShown: false }}>
+          {({ route, navigation }) =>
+            GoalNavigator({ route: route, navigation: navigation })
+          }
         </Tab.Screen>
         <Tab.Screen name="Progress" component={TempProgressChecker} />
+        <Tab.Screen
+          name="Game"
+          component={TempGameScreen}
+          options={{
+            tabBarIcon: ({ focused, color, size }) => {
+              return (
+                <Ionicons
+                  name={focused ? "game-controller" : "game-controller-outline"}
+                  size={size}
+                  color={color}
+                />
+              );
+            },
+          }}
+        />
         <Tab.Screen name="Profile">
           {({ navigation }) =>
             ProfileNavigator({ session: session, navigation: navigation })
           }
         </Tab.Screen>
-        <Tab.Screen name="Settings" component={TempSettingsScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );

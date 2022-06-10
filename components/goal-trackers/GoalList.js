@@ -3,8 +3,10 @@ import { Text, View } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import styles from "./GoalList.style";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { useRoute } from "@react-navigation/native";
 
 export default GoalList = ({ item, deleteItem, completeItem, navigation }) => {
+  const route = useRoute();
   return (
     <View style={styles.componentContainer}>
       <TouchableOpacity
@@ -17,7 +19,12 @@ export default GoalList = ({ item, deleteItem, completeItem, navigation }) => {
             ? styles.fitnessListContainer
             : styles.financeListContainer
         }
-        onPress={() => navigation.navigate("GoalDetails", { item: item })}
+        onPress={() =>
+          navigation.navigate("GoalEditor", {
+            routeName: route.name,
+            item: item,
+          })
+        }
       >
         <TouchableOpacity
           style={styles.circleContainer}

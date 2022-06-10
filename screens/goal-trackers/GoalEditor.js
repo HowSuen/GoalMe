@@ -1,16 +1,16 @@
 import { KeyboardAvoidingView, Keyboard, View, Text } from "react-native";
 import { useState } from "react";
 import { Input } from "react-native-elements";
-import styles from "./GoalDetails.style";
+import styles from "./GoalEditor.style";
 import { useRoute } from "@react-navigation/native";
 import {
   TouchableWithoutFeedback,
   TouchableOpacity,
 } from "react-native-gesture-handler";
 
-export default GoalDetails = ({ navigation }) => {
+export default GoalEditor = ({ navigation }) => {
   const route = useRoute();
-  const { item } = route.params;
+  const { routeName, item } = route.params;
   const [value, setValue] = useState(item.value);
   const [description, setDescription] = useState(item.description);
 
@@ -58,7 +58,7 @@ export default GoalDetails = ({ navigation }) => {
                 style={styles.button}
                 onPress={() => {
                   updateItem(item.key);
-                  navigation.goBack();
+                  navigation.navigate(routeName);
                 }}
               >
                 <Text style={styles.buttonText}>Save</Text>

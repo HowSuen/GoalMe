@@ -10,7 +10,7 @@ const Drawer = createDrawerNavigator();
 const showHeader = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route);
 
-  if (routeName == "GoalDetails") {
+  if (routeName == "GoalEditor") {
     return false;
   }
   return true;
@@ -20,7 +20,7 @@ export default GoalNavigator = () => {
   return (
     <Drawer.Navigator
       screenOptions={({route}) => ({
-        headerShown: Platform.OS === "android" ? showHeader(route) : true,
+        headerShown: Platform.OS === "ios" ? true : showHeader(route),
         headerTintColor: "black",
         presentation: "modal",
         headerTitleAlign: "center",

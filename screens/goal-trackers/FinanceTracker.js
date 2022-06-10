@@ -10,50 +10,55 @@ import styles from "./GoalTracker.style";
 import AddFinance from "../../components/goal-trackers/AddFinance";
 import GoalList from "../../components/goal-trackers/GoalList";
 import Empty from "./Empty";
+import supabase from "../../lib/supabase";
+import { useIsFocused } from "@react-navigation/native";
 
-export default FinanceTracker = () => {
+export default FinanceTracker = ({ navigation }) => {
   const [data, setData] = useState([]);
   const user = supabase.auth.user();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
+    setData([]);
     (async () => {
       let { data: goals, error } = await supabase
         .from("goals")
         .select("*")
         .match({ user_id: user.id, type: "finance", completion_status: false });
 
-      !error &&
-        goals.map((goal) => {
-          setData((prevGoal) => {
-            return [
-              {
-                value: goal.content,
-                key: goal.id,
-                type: goal.type,
-              },
-              ...prevGoal,
-            ];
-          });
+      if (error) Alert.alert(error);
+      goals.sort((a, b) => a.id - b.id);
+      goals.map((goal) => {
+        setData((prevGoal) => {
+          return [
+            {
+              value: goal.content,
+              key: goal.id,
+              type: goal.type,
+              description: goal.description,
+            },
+            ...prevGoal,
+          ];
         });
+      });
     })();
-  }, []);
+  }, [isFocused]);
 
   const submitHandler = async (value) => {
     const { data, error } = await supabase
       .from("goals")
       .insert([{ user_id: user.id, content: value, type: "finance" }]);
 
-    !error &&
-      setData((prevGoal) => {
-        return [
-          {
-            value: data[0].content,
-            key: data[0].id,
-            type: data[0].type,
-          },
-          ...prevGoal,
-        ];
-      });
+    setData((prevGoal) => {
+      return [
+        {
+          value: data[0].content,
+          key: data[0].id,
+          type: data[0].type,
+        },
+        ...prevGoal,
+      ];
+    });
   };
 
   const deleteItem = async (key) => {
@@ -100,6 +105,7 @@ export default FinanceTracker = () => {
                 item={item}
                 deleteItem={deleteItem}
                 completeItem={completeItem}
+                navigation={navigation}
               />
             )}
           />

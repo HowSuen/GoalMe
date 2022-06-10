@@ -5,18 +5,22 @@ import {
   FlatList,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from "react-native";
 import styles from "./GoalTracker.style";
 import AddAcademic from "../../components/goal-trackers/AddAcademic";
 import GoalList from "../../components/goal-trackers/GoalList";
 import Empty from "./Empty";
 import supabase from "../../lib/supabase";
+import { useIsFocused } from "@react-navigation/native";
 
-export default AcademicTracker = () => {
+export default AcademicTracker = ({ navigation }) => {
   const [data, setData] = useState([]);
   const user = supabase.auth.user();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
+    setData([]);
     (async () => {
       let { data: goals, error } = await supabase
         .from("goals")
@@ -26,22 +30,24 @@ export default AcademicTracker = () => {
           type: "academic",
           completion_status: false,
         });
-
-      !error &&
-        goals.map((goal) => {
-          setData((prevGoal) => {
-            return [
-              {
-                value: goal.content,
-                key: goal.id,
-                type: goal.type,
-              },
-              ...prevGoal,
-            ];
-          });
+      
+      if (error) Alert.alert(error)
+      goals.sort((a, b) => a.id - b.id);
+      goals.map((goal) => {
+        setData((prevGoal) => {
+          return [
+            {
+              value: goal.content,
+              key: goal.id,
+              type: goal.type,
+              description: goal.description,
+            },
+            ...prevGoal,
+          ];
         });
+      });
     })();
-  }, []);
+  }, [isFocused]);
 
   const submitHandler = async (value) => {
     const { data, error } = await supabase
@@ -105,6 +111,7 @@ export default AcademicTracker = () => {
                 item={item}
                 deleteItem={deleteItem}
                 completeItem={completeItem}
+                navigation={navigation}
               />
             )}
           />

@@ -1,4 +1,4 @@
-import { StyleSheet, DarkTheme } from "react-native";
+import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   container: {
@@ -7,13 +7,9 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: "ghostwhite",
   },
-  avatarContainer: {
+  buttonContainer: {
     justifyContent: "center",
     alignItems: "center",
-  },
-  avatar: {
-    height: 200,
-    width: 200,
   },
   formContainer: {
     marginTop: 0,
@@ -26,24 +22,15 @@ export default StyleSheet.create({
   textInput: {
     color: "black",
   },
-  button: {
-    marginRight: 20,
-    marginLeft: 20,
-    marginTop: 20,
-    paddingTop: 10,
-    paddingBottom: 10,
-    backgroundColor: "dodgerblue",
-    borderRadius: 5,
-    elevation: 10,
-  },
   buttonText: {
     color: "white",
     fontSize: 17,
     textAlign: "center",
   },
-  avatarButton: {
+  button: {
     backgroundColor: "dodgerblue",
-    padding: 5,
+    padding: 10,
+    width: 100,
     borderRadius: 5,
     elevation: 10,
   },

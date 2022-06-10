@@ -25,6 +25,7 @@ export default CompletedGoals = () => {
               {
                 value: goal.content,
                 key: goal.id,
+                type: goal.type,
               },
               ...prevGoal,
             ];
@@ -57,7 +58,7 @@ export default CompletedGoals = () => {
       });
   };
 
-  const deleteAll = async (key) => {
+  const deleteAll = async () => {
     const { data, error } = await supabase
       .from("goals")
       .delete()

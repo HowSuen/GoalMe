@@ -23,11 +23,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
     paddingTop: 10,
     paddingBottom: 10,
-    backgroundColor: "mediumspringgreen",
+    backgroundColor: "dodgerblue",
     borderRadius: 5,
+    elevation: 10,
   },
   text:{
-    color:"black",
+    color:"white",
     fontSize:17,
     textAlign:"center",
   }

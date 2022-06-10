@@ -1,11 +1,10 @@
 import React from "react";
-import Account from "../screens/Account";
 import { View, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import { Icon } from "react-native-elements";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import styles from "./AppNavigator.style";
-import GTNavigator from "./GoalNavigator";
+import GoalNavigator from "./GoalNavigator";
 import ProfileNavigator from "./ProfileNavigator";
 
 const Tab = createBottomTabNavigator();
@@ -17,10 +16,10 @@ const TempSettingsScreen = () => {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "black",
+        backgroundColor: "ghostwhite",
       }}
     >
-      <Text style={{ color: "white" }}>Settings!</Text>
+      <Text style={{ color: "black" }}>Settings!</Text>
     </View>
   );
 };
@@ -32,10 +31,10 @@ const TempProgressChecker = () => {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "black",
+        backgroundColor: "ghostwhite",
       }}
     >
-      <Text style={{ color: "white" }}>Progress Checker!</Text>
+      <Text style={{ color: "black" }}>Progress Checker!</Text>
     </View>
   );
 };
@@ -44,41 +43,47 @@ export default AppNavigator = ({ session }) => {
   return (
     <NavigationContainer styles={styles.container}>
       <Tab.Navigator
-        initialRouteName={"Goal Trackers"}
+        initialRouteName={"Goals"}
         screenOptions={({ route, navigation }) => ({
-          tabBarLabel: navigation.isFocused() ? route.name : "",
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
             if (route.name === "Profile") {
-              iconName = "account-circle";
+              iconName = focused ? "account-circle" : "account-circle-outline";
             } else if (route.name === "Settings") {
-              iconName = "settings";
-            } else if (route.name === "Goal Trackers") {
-              iconName = "flag";
-            } else if (route.name === "Progress Checker") {
-              iconName = "analytics";
+              iconName = focused ? "cog" : "cog-outline";
+            } else if (route.name === "Goals") {
+              iconName = focused ? "flag-variant" : "flag-variant-outline";
+            } else if (route.name === "Progress") {
+              iconName = focused ? "chart-box" : "chart-box-outline";
             }
-            return <Icon name={iconName} size={size} color={color} />;
+            return (
+              <MaterialCommunityIcons
+                name={iconName}
+                size={size}
+                color={color}
+              />
+            );
           },
           tabBarStyle: {
-            backgroundColor: "black",
-            borderTopColor: "black",
-            borderTopWidth: 3,
+            backgroundColor: "ghostwhite",
+            borderTopColor: "ghostwhite",
+            borderTopWidth: 0,
             borderBottomWidth: 0,
           },
-          tabBarActiveTintColor: "tomato",
-          tabBarInactiveBackgroundColor: "black",
+          tabBarActiveTintColor: "dodgerblue",
+          tabBarInactiveBackgroundColor: "ghostwhite",
           tabBarInactiveTintColor: "gray",
           tabBarHideOnKeyboard: true,
           headerShown: false,
         })}
       >
         <Tab.Screen
-          name="Goal Trackers"
-          component={GTNavigator}
+          name="Goals"
           options={{ headerShown: false }}
-        />
-        <Tab.Screen name="Progress Checker" component={TempProgressChecker} />
+        >
+          {({ route, navigation }) => GoalNavigator({ route: route, navigation: navigation })}
+        </Tab.Screen>
+        <Tab.Screen name="Progress" component={TempProgressChecker} />
         <Tab.Screen name="Profile">
           {({ navigation }) =>
             ProfileNavigator({ session: session, navigation: navigation })
@@ -89,4 +94,3 @@ export default AppNavigator = ({ session }) => {
     </NavigationContainer>
   );
 };
-

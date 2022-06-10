@@ -12,7 +12,7 @@ const PasswordSecureInput = ({
       <Input
         style={styles.textInput}
         label="Password"
-        leftIcon={{ type: "font-awesome", name: "lock", color: "white" }}
+        leftIcon={{ type: "font-awesome", name: "lock", color: "black" }}
         onChangeText={onChangeText}
         value={password}
         secureTextEntry={true}
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
   },
   textInput: {
-    color: "white",
+    color: "black",
   },
   icon: {
     position: "absolute",

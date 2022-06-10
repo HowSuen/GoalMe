@@ -5,7 +5,7 @@ import CustomiseAvatar from "../screens/CustomiseAvatar";
 
 const Stack = createNativeStackNavigator();
 
-export default ProfileNavigation = ({ navigation, session }) => {
+export default ProfileNavigator = ({ navigation, session }) => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Account">
@@ -16,8 +16,8 @@ export default ProfileNavigation = ({ navigation, session }) => {
         options={{
           headerShown: true,
           headerTitle: "Customise your Avatar",
-          headerStyle: {backgroundColor: "#222222"},
-          headerTintColor: "white",
+          headerStyle: {backgroundColor: "ghostwhite"},
+          headerTintColor: "black",
           presentation: "modal",
           headerTitleAlign: "center",
         }}

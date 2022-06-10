@@ -12,9 +12,9 @@ const UserInput = ({ label, onChangeText, value }) => {
           ? {
               type: "font-awesome",
               name: "envelope",
-              color: "white",
+              color: "#222222",
             }
-          : { type: "font-awesome", name: "user", color: "white" }
+          : { type: "font-awesome", name: "user", color: "#222222" }
       }
       onChangeText={onChangeText}
       value={value}
@@ -29,6 +29,6 @@ export default UserInput;
 
 const styles = StyleSheet.create({
   textInput: {
-    color: "white",
+    color: "black",
   },
 });

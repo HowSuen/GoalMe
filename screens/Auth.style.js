@@ -5,7 +5,7 @@ export default StyleSheet.create({
     padding: 15,
     justifyContent: "center",
     flex: 1,
-    backgroundColor: "black",
+    backgroundColor: "ghostwhite",
   },
   logoContainer: {
     justifyContent: "center",
@@ -18,6 +18,7 @@ export default StyleSheet.create({
   titleContainer: {
     justifyContent: "center",
     alignItems: "center",
+    marginTop: -30,
   },
   title: {
     height: 60,
@@ -34,7 +35,12 @@ export default StyleSheet.create({
     paddingBottom: 5,
   },
   signUpText: {
-    color: "white",
+    color: "black",
+    fontSize: 14,
+    textAlign: "center",
+  },
+  signUpTextR: {
+    color: "dodgerblue",
     fontSize: 14,
     textAlign: "center",
   },

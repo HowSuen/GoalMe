@@ -205,7 +205,7 @@ const CustomiseAvatar = ({ navigation, session }) => {
       }
 
       if (data) {
-        setGender(data.gender)
+        setGender(data.gender);
         setHat(data.hat);
         setSkin(data.skin);
         setBgColor(data.bgColor);
@@ -268,12 +268,6 @@ const CustomiseAvatar = ({ navigation, session }) => {
   return (
     <View style={styles.container}>
       <View style={styles.avatar}>
-        <TouchableOpacity
-          style={styles.saveButton}
-          onPress={updateProfile}
-        >
-          <Text>Save</Text>
-        </TouchableOpacity>
         <Avatar
           size={250}
           gender={gender}
@@ -293,6 +287,9 @@ const CustomiseAvatar = ({ navigation, session }) => {
           mouth={mouth}
           lipColor={lipColor}
         />
+        <TouchableOpacity style={styles.saveButton} onPress={updateProfile}>
+          <Text style={styles.save}>Save</Text>
+        </TouchableOpacity>
       </View>
       <ScrollView style={styles.menu}>
         <View style={styles.slot}>

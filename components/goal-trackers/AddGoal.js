@@ -6,6 +6,7 @@ import {
   TextInput,
   Keyboard,
   TouchableWithoutFeedback,
+  Alert,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -35,11 +36,14 @@ export default AddGoal = ({ submitHandler }) => {
         <TouchableOpacity
           style={styles.goalSubmitButton}
           onPress={() => {
-            setValue(submitHandler(value));
-            resetText();
+            if (value == "") Alert.alert("Write something first!");
+            else {
+              setValue(submitHandler(value));
+              resetText();
+            }
           }}
         >
-          <FontAwesome name="plus" size={24} color="black" />
+          <FontAwesome name="plus" size={20} color="black" />
         </TouchableOpacity>
       </View>
     </TouchableWithoutFeedback>

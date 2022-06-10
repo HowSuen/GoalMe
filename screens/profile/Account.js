@@ -12,19 +12,15 @@ import { Input, Text } from "react-native-elements";
 import styles from "./Account.style";
 import "react-native-url-polyfill/auto";
 import SavedAvatar from "../../components/game/SavedAvatar";
-import { useIsFocused } from "@react-navigation/native";
 
 const Account = ({ navigation, session }) => {
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [avatar_url, setAvatarUrl] = useState("");
 
-  const isFocused = useIsFocused();
-  // console.log(isFocused);
-
   useEffect(() => {
     if (session) getProfile();
-  }, [session, isFocused]);
+  }, [session]);
 
   const getProfile = async () => {
     try {
@@ -87,7 +83,7 @@ const Account = ({ navigation, session }) => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View>
           <View style={styles.avatarContainer}>
-            <SavedAvatar size={250} session={session} isFocused={isFocused} />
+            <SavedAvatar size={250} session={session}/>
             <TouchableOpacity
               style={styles.avatarButton}
               onPress={() =>

@@ -7,22 +7,9 @@ import styles from "./AppNavigator.style";
 import GoalNavigator from "./GoalNavigator";
 import ProfileNavigator from "./ProfileNavigator";
 
-const Tab = createBottomTabNavigator();
+import GameScreen from "../screens/game/GameScreen";
 
-const TempGameScreen = () => {
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "ghostwhite",
-      }}
-    >
-      <Text style={{ color: "black" }}>Game!</Text>
-    </View>
-  );
-};
+const Tab = createBottomTabNavigator();
 
 const TempProgressChecker = () => {
   return (
@@ -85,7 +72,6 @@ export default AppNavigator = ({ session }) => {
         <Tab.Screen name="Progress" component={TempProgressChecker} />
         <Tab.Screen
           name="Game"
-          component={TempGameScreen}
           options={{
             tabBarIcon: ({ focused, color, size }) => {
               return (
@@ -97,7 +83,11 @@ export default AppNavigator = ({ session }) => {
               );
             },
           }}
-        />
+        >
+          {({ navigation }) =>
+            GameScreen({ navigation: navigation, session: session })
+          }
+        </Tab.Screen>
         <Tab.Screen name="Profile">
           {({ navigation }) =>
             ProfileNavigator({ session: session, navigation: navigation })

@@ -7,6 +7,11 @@ import { useRoute } from "@react-navigation/native";
 
 export default GoalList = ({ item, deleteItem, completeItem, navigation }) => {
   const route = useRoute();
+
+  const capitaliseFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   return (
     <View style={styles.componentContainer}>
       <TouchableOpacity
@@ -34,7 +39,7 @@ export default GoalList = ({ item, deleteItem, completeItem, navigation }) => {
         </TouchableOpacity>
         <View>
           <Text style={styles.listText}>{item.value}</Text>
-          <Text style={styles.listSubtext}>{item.type}</Text>
+          <Text style={styles.listSubtext}>{capitaliseFirstLetter(item.type)}</Text>
         </View>
         <TouchableOpacity
           style={styles.iconContainer}

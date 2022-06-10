@@ -29,6 +29,10 @@ export default GoalEditor = ({ navigation }) => {
       .match({ id: key });
   };
 
+  const capitaliseFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -43,6 +47,14 @@ export default GoalEditor = ({ navigation }) => {
                 label="Goal"
                 value={value}
                 onChangeText={onChangeValue}
+              />
+            </View>
+            <View style={styles.verticallySpaced}>
+              <Input
+                style={styles.textInput}
+                label="Type"
+                value={capitaliseFirstLetter(item.type)}
+                disabled
               />
             </View>
             <View style={styles.verticallySpaced}>

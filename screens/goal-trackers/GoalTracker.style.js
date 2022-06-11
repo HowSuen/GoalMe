@@ -14,7 +14,7 @@ export default StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
     backgroundColor: "mediumseagreen",
-    marginBottom: 10,
+    marginVertical: 5,
     borderRadius: 100,
   },
   academicButton: {
@@ -24,7 +24,7 @@ export default StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
     backgroundColor: "royalblue",
-    marginBottom: 10,
+    marginVertical: 5,
     borderRadius: 100,
   },
   fitnessButton: {
@@ -34,7 +34,7 @@ export default StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
     backgroundColor: "tomato",
-    marginBottom: 10,
+    marginVertical: 5,
     borderRadius: 100,
   },
   financeButton: {
@@ -44,7 +44,7 @@ export default StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
     backgroundColor: "goldenrod",
-    marginBottom: 10,
+    marginVertical: 5,
     borderRadius: 100,
   },
 });

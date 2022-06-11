@@ -1,13 +1,13 @@
 import {
   KeyboardAvoidingView,
-  Alert,
   View,
   Text,
+  Alert,
   Keyboard,
 } from "react-native";
 import { useState } from "react";
 import { Input } from "react-native-elements";
-import styles from "./GoalEditor.style";
+import styles from "./GoalSetter.style";
 import { useRoute } from "@react-navigation/native";
 import {
   TouchableOpacity,
@@ -15,22 +15,13 @@ import {
 } from "react-native-gesture-handler";
 import GoalDropdownList from "../../components/goal-trackers/GoalDropdownList";
 
-export default GoalEditor = ({ navigation }) => {
+export default GoalSetter = ({ navigation }) => {
   const route = useRoute();
-  const { routeName, goal } = route.params;
-  const [content, setContent] = useState(goal.content);
-  const [description, setDescription] = useState(goal.description);
-  const [type, setType] = useState(goal.type);
-  const [difficulty, setDifficulty] = useState(goal.difficulty);
-
-  const stateChanged = () => {
-    return (
-      content != goal.content ||
-      description != goal.description ||
-      type != goal.type ||
-      difficulty != goal.difficulty
-    );
-  };
+  const { user, routeName, defaultType } = route.params;
+  const [content, setContent] = useState("");
+  const [description, setDescription] = useState("");
+  const [type, setType] = useState(defaultType);
+  const [difficulty, setDifficulty] = useState("None");
 
   const types = [
     { label: "General", value: "General" },
@@ -46,18 +37,17 @@ export default GoalEditor = ({ navigation }) => {
     { label: "Hard", value: "Hard" },
   ];
 
-  const updateGoal = async (key) => {
+  const submitGoal = async () => {
     try {
-      let { data, error } = await supabase
-        .from("goals")
-        .update({
+      const { data, error } = await supabase.from("goals").insert([
+        {
+          user_id: user.id,
           content: content,
           description: description,
           type: type,
           difficulty: difficulty,
-        })
-        .match({ id: key });
-
+        },
+      ]);
       if (error) throw error;
     } catch (error) {
       Alert.alert(error.message);
@@ -75,17 +65,17 @@ export default GoalEditor = ({ navigation }) => {
             style={styles.textInput}
             inputContainerStyle={styles.inputContainer}
             label="Goal"
+            placeholder="Add a goal..."
+            placeholderTextColor="darkgray"
             value={content}
             onChangeText={(text) => setContent(text)}
-            multiline={true}
-            maxHeight={90}
           />
           <Input
             style={styles.textInput}
             inputContainerStyle={styles.inputContainer}
             label="Description"
             placeholder="Add an optional description..."
-            placeholderTextColor="lightgray"
+            placeholderTextColor="darkgray"
             value={description}
             onChangeText={(text) => setDescription(text)}
             multiline={true}
@@ -112,18 +102,14 @@ export default GoalEditor = ({ navigation }) => {
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
-            style={
-              content != "" && stateChanged()
-                ? styles.button
-                : styles.disabledButton
-            }
-            disabled={content == "" || !stateChanged()}
+            style={content == "" ? styles.disabledButton : styles.button}
+            disabled={content == ""}
             onPress={() => {
-              updateGoal(goal.key);
+              submitGoal();
               navigation.navigate(routeName);
             }}
           >
-            <Text style={styles.buttonText}>Save Changes</Text>
+            <Text style={styles.buttonText}>Add</Text>
           </TouchableOpacity>
         </View>
       </View>

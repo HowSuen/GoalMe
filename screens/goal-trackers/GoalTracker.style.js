@@ -1,10 +1,50 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-  componentContainer: {
+  container: {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "ghostwhite",
+  },
+  goalButton: {
+    width: 60,
+    height: 60,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    backgroundColor: "mediumseagreen",
+    marginVertical: 5,
+    borderRadius: 100,
+  },
+  academicButton: {
+    width: 60,
+    height: 60,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    backgroundColor: "royalblue",
+    marginVertical: 5,
+    borderRadius: 100,
+  },
+  fitnessButton: {
+    width: 60,
+    height: 60,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    backgroundColor: "tomato",
+    marginVertical: 5,
+    borderRadius: 100,
+  },
+  financeButton: {
+    width: 60,
+    height: 60,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    backgroundColor: "goldenrod",
+    marginVertical: 5,
+    borderRadius: 100,
   },
 });

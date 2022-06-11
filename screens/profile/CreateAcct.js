@@ -7,7 +7,7 @@ import {
   Keyboard,
   Platform,
 } from "react-native";
-import { supabase } from "../../lib/supabase";
+import supabase  from "../../lib/supabase";
 import { Image } from "react-native-elements";
 import styles from "./CreateAcct.style";
 import "react-native-url-polyfill/auto";

@@ -1,15 +1,15 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-  componentContainer: {
+  container: {
     alignItems: "center",
     justifyContent: "center",
-    height: 650,
+    marginTop: 150,
   },
 
   emptyImage: {
     width: 300,
-    height: 225,
+    height: 300,
   },
 
   emptyText: {

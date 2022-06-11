@@ -16,16 +16,20 @@ export default StyleSheet.create({
     marginTop: 0,
   },
   inputContainer: {
-    paddingTop: 5,
-    paddingBottom: 5,
+    marginTop: 10,
+    paddingVertical: 3,
+    paddingHorizontal: 10,
+    borderRadius: 4,
+    borderWidth: 1,
     alignSelf: "stretch",
+    backgroundColor: "white",
   },
   textInput: {
     color: "black",
   },
   dropdownContainer: {
-    paddingTop: 10,
-    paddingBottom: 25,
+    paddingBottom: 20,
+    paddingTop: 2,
     alignSelf: "stretch",
   },
   dropdownLabel: {
@@ -43,7 +47,14 @@ export default StyleSheet.create({
   button: {
     backgroundColor: "dodgerblue",
     padding: 10,
-    width: 90,
+    width: 160,
+    borderRadius: 5,
+    elevation: 10,
+  },
+  disabledButton: {
+    backgroundColor: "gray",
+    padding: 10,
+    width: 160,
     borderRadius: 5,
     elevation: 10,
   },

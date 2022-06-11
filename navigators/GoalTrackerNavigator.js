@@ -1,6 +1,5 @@
 import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import styles from "./GoalsNavigator.style";
 import CompletedGoals from "../screens/goal-trackers/CompletedGoals";
 import GoalNavigator from "./GoalNavigator";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
@@ -10,16 +9,16 @@ const Drawer = createDrawerNavigator();
 const showHeader = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route);
 
-  if (routeName == "Goal") {
+  if (routeName == "GoalEditor" || routeName == "GoalSetter") {
     return false;
   }
   return true;
 };
 
-export default GoalsNavigator = () => {
+export default GoalTrackerNavigator = () => {
   return (
     <Drawer.Navigator
-      screenOptions={({route}) => ({
+      screenOptions={({ route }) => ({
         headerShown: Platform.OS === "ios" ? true : showHeader(route),
         headerTintColor: "black",
         presentation: "modal",
@@ -27,7 +26,7 @@ export default GoalsNavigator = () => {
         headerShadowVisible: false,
         drawerActiveTintColor: "black",
         drawerInactiveTintColor: "black",
-        drawerStyle: styles.container,
+        drawerStyle: { backgroundColor: "ghostwhite" },
         unmountOnBlur: true,
       })}
     >

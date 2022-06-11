@@ -97,7 +97,6 @@ export default GoalTracker = ({ navigation }) => {
 
       <View>
         <FlatList
-          style={styles.listContainer}
           data={data}
           ListEmptyComponent={() => <Empty />}
           keyExtractor={(goal) => goal.key}

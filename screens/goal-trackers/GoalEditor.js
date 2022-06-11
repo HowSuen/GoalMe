@@ -23,6 +23,15 @@ export default GoalEditor = ({ navigation }) => {
   const [type, setType] = useState(goal.type);
   const [difficulty, setDifficulty] = useState(goal.difficulty);
 
+  const stateChanged = () => {
+    return (
+      content != goal.content ||
+      description != goal.description ||
+      type != goal.type ||
+      difficulty != goal.difficulty
+    );
+  };
+
   const types = [
     { label: "General", value: "General" },
     { label: "Academic", value: "Academic" },
@@ -44,6 +53,7 @@ export default GoalEditor = ({ navigation }) => {
         .update({
           content: content,
           description: description,
+          type: type,
           difficulty: difficulty,
         })
         .match({ id: key });
@@ -61,37 +71,35 @@ export default GoalEditor = ({ navigation }) => {
     >
       <View style={styles.formContainer}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={styles.inputContainer}>
-            <Input
-              style={styles.textInput}
-              label="Goal"
-              value={content}
-              onChangeText={(text) => setContent(text)}
-              multiline={true}
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <Input
-              style={styles.textInput}
-              label="Description"
-              placeholder="Add an optional description..."
-              placeholderTextColor="lightgray"
-              value={description}
-              onChangeText={(text) => setDescription(text)}
-              multiline={true}
-            />
-          </View>
+          <Input
+            style={styles.textInput}
+            inputContainerStyle={styles.inputContainer}
+            label="Goal"
+            value={content}
+            onChangeText={(text) => setContent(text)}
+            multiline={true}
+          />
+          <Input
+            style={styles.textInput}
+            inputContainerStyle={styles.inputContainer}
+            label="Description"
+            placeholder="Add an optional description..."
+            placeholderTextColor="lightgray"
+            value={description}
+            onChangeText={(text) => setDescription(text)}
+            multiline={true}
+          />
         </TouchableWithoutFeedback>
-        {/* <View style={styles.dropdownContainer}>
-            <Text style={styles.dropdownLabel}>Type</Text>
-            <GoalDropdownList
-              value={type}
-              items={types}
-              onValueChange={(value) => setType(value)}
-              placeholder={{ label: "Select a type...", value: null }}
-              disabled={true}
-            />
-          </View> */}
+        <View style={styles.dropdownContainer}>
+          <Text style={styles.dropdownLabel}>Type</Text>
+          <GoalDropdownList
+            value={type}
+            items={types}
+            onValueChange={(value) => setType(value)}
+            placeholder={{ label: "Select a type...", value: null }}
+            disabled={true}
+          />
+        </View>
         <View style={styles.dropdownContainer}>
           <Text style={styles.dropdownLabel}>Difficulty</Text>
           <GoalDropdownList
@@ -103,16 +111,18 @@ export default GoalEditor = ({ navigation }) => {
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
-            style={styles.button}
+            style={
+              content != "" && stateChanged()
+                ? styles.button
+                : styles.disabledButton
+            }
+            disabled={content == "" || !stateChanged()}
             onPress={() => {
-              if (content == "") Alert.alert("Goal cannot be empty!");
-              else {
-                updateGoal(goal.key);
-                navigation.navigate(routeName);
-              }
+              updateGoal(goal.key);
+              navigation.navigate(routeName);
             }}
           >
-            <Text style={styles.buttonText}>Save</Text>
+            <Text style={styles.buttonText}>Save Changes</Text>
           </TouchableOpacity>
         </View>
       </View>

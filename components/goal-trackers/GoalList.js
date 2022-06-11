@@ -28,7 +28,7 @@ export default GoalList = ({ goal, completeGoal, deleteGoal, navigation }) => {
         }
       >
         <TouchableOpacity
-          style={styles.circleContainer}
+          style={styles.boxContainer}
           onPress={() => completeGoal(goal.key)}
         >
           <FontAwesome name="square-o" size={25} color={"black"} />

@@ -40,10 +40,11 @@ export default GoalNavigator = ({ route, navigation }) => {
         name="GoalEditor"
         options={{
           headerShown: true,
-          headerTitle: "Your Goal",
+          headerTitle: "",
           headerStyle: { backgroundColor: "ghostwhite" },
           headerTintColor: "black",
-          presentation: "modal",
+          headerShadowVisible: false,
+          presentation: "card",
           headerTitleAlign: "center",
         }}
       >

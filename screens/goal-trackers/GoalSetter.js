@@ -61,28 +61,25 @@ export default GoalSetter = ({ navigation }) => {
     >
       <View style={styles.formContainer}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={styles.inputContainer}>
-            <Input
-              style={styles.textInput}
-              label="Goal"
-              placeholder="Add a goal..."
-              placeholderTextColor="lightgray"
-              value={content}
-              onChangeText={(text) => setContent(text)}
-              multiline={true}
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <Input
-              style={styles.textInput}
-              label="Description"
-              placeholder="Add an optional description..."
-              placeholderTextColor="lightgray"
-              value={description}
-              onChangeText={(text) => setDescription(text)}
-              multiline={true}
-            />
-          </View>
+          <Input
+            style={styles.textInput}
+            inputContainerStyle={styles.inputContainer}
+            label="Goal"
+            placeholder="Add a goal..."
+            placeholderTextColor="darkgray"
+            value={content}
+            onChangeText={(text) => setContent(text)}
+          />
+          <Input
+            style={styles.textInput}
+            inputContainerStyle={styles.inputContainer}
+            label="Description"
+            placeholder="Add an optional description..."
+            placeholderTextColor="darkgray"
+            value={description}
+            onChangeText={(text) => setDescription(text)}
+            multiline={true}
+          />
         </TouchableWithoutFeedback>
         <View style={styles.dropdownContainer}>
           <Text style={styles.dropdownLabel}>Type</Text>
@@ -104,13 +101,11 @@ export default GoalSetter = ({ navigation }) => {
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
-            style={styles.button}
+            style={content == "" ? styles.disabledButton : styles.button}
+            disabled={content == ""}
             onPress={() => {
-              if (content == "") Alert.alert("Goal cannot be empty!");
-              else {
-                submitGoal();
-                navigation.navigate(routeName);
-              }
+              submitGoal();
+              navigation.navigate(routeName);
             }}
           >
             <Text style={styles.buttonText}>Add</Text>

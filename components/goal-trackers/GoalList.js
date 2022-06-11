@@ -16,11 +16,11 @@ export default GoalList = ({ item, deleteItem, completeItem, navigation }) => {
     <View style={styles.componentContainer}>
       <TouchableOpacity
         style={
-          item.type == "general"
+          item.type == "General"
             ? styles.goalListContainer
-            : item.type == "academic"
+            : item.type == "Academic"
             ? styles.academicListContainer
-            : item.type == "fitness"
+            : item.type == "Fitness"
             ? styles.fitnessListContainer
             : styles.financeListContainer
         }

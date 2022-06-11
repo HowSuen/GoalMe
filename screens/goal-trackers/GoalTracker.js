@@ -47,7 +47,7 @@ export default GoalTracker = ({ navigation }) => {
   const submitHandler = async (value) => {
     const { data, error } = await supabase
       .from("goals")
-      .insert([{ user_id: user.id, content: value, type: "general" }]);
+      .insert([{ user_id: user.id, content: value, type: "General" }]);
 
     !error &&
       setData((prevGoal) => {

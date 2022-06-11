@@ -8,11 +8,11 @@ export default CompletedList = ({ item, deleteItem, uncompleteItem }) => {
   return (
     <View style={styles.componentContainer}>
       <View style={
-        item.type == "general"
+        item.type == "General"
         ? styles.goalListContainer
-        : item.type == "academic"
+        : item.type == "Academic"
         ? styles.academicListContainer
-        : item.type == "fitness"
+        : item.type == "Fitness"
         ? styles.fitnessListContainer
         : styles.financeListContainer
       }>

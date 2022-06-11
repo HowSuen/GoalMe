@@ -1,8 +1,8 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer, DarkTheme } from "@react-navigation/native";
-import Auth from "../screens/Auth";
-import CreateAcct from "../screens/CreateAcct";
+import Auth from "../screens/auth/Auth";
+import CreateAcct from "../screens/profile/CreateAcct";
 
 const Stack = createNativeStackNavigator();
 

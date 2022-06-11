@@ -24,7 +24,7 @@ export default FitnessTracker = ({ navigation }) => {
       let { data: goals, error } = await supabase
         .from("goals")
         .select("*")
-        .match({ user_id: user.id, type: "fitness", completion_status: false });
+        .match({ user_id: user.id, type: "Fitness", completion_status: false });
 
       if (error) Alert.alert(error);
       goals.sort((a, b) => a.id - b.id);
@@ -47,7 +47,7 @@ export default FitnessTracker = ({ navigation }) => {
   const submitHandler = async (value) => {
     const { data, error } = await supabase
       .from("goals")
-      .insert([{ user_id: user.id, content: value, type: "fitness" }]);
+      .insert([{ user_id: user.id, content: value, type: "Fitness" }]);
 
     !error &&
       setData((prevGoal) => {

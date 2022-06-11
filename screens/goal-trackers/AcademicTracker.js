@@ -27,7 +27,7 @@ export default AcademicTracker = ({ navigation }) => {
         .select("*")
         .match({
           user_id: user.id,
-          type: "academic",
+          type: "Academic",
           completion_status: false,
         });
       
@@ -52,7 +52,7 @@ export default AcademicTracker = ({ navigation }) => {
   const submitHandler = async (value) => {
     const { data, error } = await supabase
       .from("goals")
-      .insert([{ user_id: user.id, content: value, type: "academic" }]);
+      .insert([{ user_id: user.id, content: value, type: "Academic" }]);
 
     !error &&
       setData((prevGoal) => {

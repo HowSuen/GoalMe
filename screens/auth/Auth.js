@@ -8,13 +8,13 @@ import {
   Keyboard,
   Platform,
 } from "react-native";
-import supabase from "../lib/supabase";
+import supabase from "../../lib/supabase";
 import { Text, Image } from "react-native-elements";
 import styles from "./Auth.style";
 import "react-native-url-polyfill/auto";
-import AuthButton from "../components/auth/AuthButton";
-import PasswordInput from "../components/auth/PasswordInput";
-import UserInput from "../components/auth/UserInput";
+import AuthButton from "../../components/auth/AuthButton";
+import PasswordInput from "../../components/auth/PasswordInput";
+import UserInput from "../../components/auth/UserInput";
 
 const Auth = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -54,13 +54,13 @@ const Auth = ({ navigation }) => {
           <View style={styles.logoContainer}>
             <Image
               style={styles.logo}
-              source={require("../assets/goalme-transparent-logo.png")}
+              source={require("../../assets/goalme-transparent-logo.png")}
             />
           </View>
           <View style={styles.titleContainer}>
             <Image
               style={styles.title}
-              source={require("../assets/goalme-title.png")}
+              source={require("../../assets/goalme-title.png")}
             />
           </View>
           <View style={styles.formContainer}>

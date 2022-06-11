@@ -1,9 +1,18 @@
-import { KeyboardAvoidingView, View, Text, Alert } from "react-native";
+import {
+  KeyboardAvoidingView,
+  View,
+  Text,
+  Alert,
+  Keyboard,
+} from "react-native";
 import { useState } from "react";
 import { Input } from "react-native-elements";
 import styles from "./GoalSetter.style";
 import { useRoute } from "@react-navigation/native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import {
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from "react-native-gesture-handler";
 import GoalDropdownList from "../../components/goal-trackers/GoalDropdownList";
 
 export default GoalSetter = ({ navigation }) => {
@@ -50,8 +59,8 @@ export default GoalSetter = ({ navigation }) => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
     >
-      <View>
-        <View style={styles.formContainer}>
+      <View style={styles.formContainer}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.inputContainer}>
             <Input
               style={styles.textInput}
@@ -60,6 +69,7 @@ export default GoalSetter = ({ navigation }) => {
               placeholderTextColor="lightgray"
               value={content}
               onChangeText={(text) => setContent(text)}
+              multiline={true}
             />
           </View>
           <View style={styles.inputContainer}>
@@ -70,40 +80,41 @@ export default GoalSetter = ({ navigation }) => {
               placeholderTextColor="lightgray"
               value={description}
               onChangeText={(text) => setDescription(text)}
+              multiline={true}
             />
           </View>
-          <View style={styles.dropdownContainer}>
-            <Text style={styles.dropdownLabel}>Type</Text>
-            <GoalDropdownList
-              value={type}
-              items={types}
-              onValueChange={(value) => setType(value)}
-              placeholder={{label: "Select a type...", value: null}}
-            />
-          </View>
-          <View style={styles.dropdownContainer}>
-            <Text style={styles.dropdownLabel}>Difficulty</Text>
-            <GoalDropdownList
-              value={difficulty}
-              items={difficulties}
-              onValueChange={(value) => setDifficulty(value)}
-              placeholder={{label: "Select a difficulty...", value: null}}
-            />
-          </View>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                if (content == "") Alert.alert("Goal cannot be empty!");
-                else {
-                  submitGoal();
-                  navigation.navigate(routeName);
-                }
-              }}
-            >
-              <Text style={styles.buttonText}>Add</Text>
-            </TouchableOpacity>
-          </View>
+        </TouchableWithoutFeedback>
+        <View style={styles.dropdownContainer}>
+          <Text style={styles.dropdownLabel}>Type</Text>
+          <GoalDropdownList
+            value={type}
+            items={types}
+            onValueChange={(value) => setType(value)}
+            placeholder={{ label: "Select a type...", value: null }}
+          />
+        </View>
+        <View style={styles.dropdownContainer}>
+          <Text style={styles.dropdownLabel}>Difficulty</Text>
+          <GoalDropdownList
+            value={difficulty}
+            items={difficulties}
+            onValueChange={(value) => setDifficulty(value)}
+            placeholder={{ label: "Select a difficulty...", value: null }}
+          />
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              if (content == "") Alert.alert("Goal cannot be empty!");
+              else {
+                submitGoal();
+                navigation.navigate(routeName);
+              }
+            }}
+          >
+            <Text style={styles.buttonText}>Add</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </KeyboardAvoidingView>

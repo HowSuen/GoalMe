@@ -25,7 +25,10 @@ export default CompletedList = ({ goal, uncompleteGoal, deleteGoal }) => {
           <FontAwesome name="check-square-o" size={25} color="black" />
         </TouchableOpacity>
         <View>
-          <Text style={styles.listText}>{goal.content}</Text>
+          <Text style={styles.listText}>
+            {goal.content.substring(0, 22) +
+              (goal.content.length > 22 ? "..." : "")}
+          </Text>
           <Text style={styles.listSubtext}>{goal.difficulty}</Text>
         </View>
         <TouchableOpacity

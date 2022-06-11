@@ -78,6 +78,7 @@ export default GoalEditor = ({ navigation }) => {
             value={content}
             onChangeText={(text) => setContent(text)}
             multiline={true}
+            maxHeight={90}
           />
           <Input
             style={styles.textInput}
@@ -88,6 +89,7 @@ export default GoalEditor = ({ navigation }) => {
             value={description}
             onChangeText={(text) => setDescription(text)}
             multiline={true}
+            maxHeight={160}
           />
         </TouchableWithoutFeedback>
         <View style={styles.dropdownContainer}>
@@ -97,7 +99,6 @@ export default GoalEditor = ({ navigation }) => {
             items={types}
             onValueChange={(value) => setType(value)}
             placeholder={{ label: "Select a type...", value: null }}
-            disabled={true}
           />
         </View>
         <View style={styles.dropdownContainer}>

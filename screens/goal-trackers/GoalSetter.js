@@ -79,6 +79,7 @@ export default GoalSetter = ({ navigation }) => {
             value={description}
             onChangeText={(text) => setDescription(text)}
             multiline={true}
+            maxHeight={160}
           />
         </TouchableWithoutFeedback>
         <View style={styles.dropdownContainer}>

@@ -7,9 +7,9 @@ const LevelBar = ({ type, color, level, progress }) => {
 
   return (
     <View style={styles.experience}>
-      <Text style={[styles.generalLvl, {color: color}]}>{type}</Text>
+      <Text style={[styles.generalLvl, { color: color }]}>{type}</Text>
       <View style={styles.bar}>
-        <Text style={[styles.generalLvl, {color: color}]}>{level}</Text>
+        <Text style={[styles.generalLvl, { color: color }]}>{level}</Text>
         <Bar
           progress={progress}
           width={xpBarWidth}
@@ -17,6 +17,7 @@ const LevelBar = ({ type, color, level, progress }) => {
           unfilledColor="lightgray"
           color={type == "LEVEL" ? "mediumspringgreen" : color}
           borderWidth={0}
+          animationConfig={{bounciness: 5,}}
         />
       </View>
     </View>

@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Alert,
-  View,
-  StatusBar,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import { Alert, View, FlatList, TouchableOpacity } from "react-native";
 import styles from "./GoalTracker.style";
 import { FontAwesome } from "@expo/vector-icons";
 import GoalList from "../../components/goal-trackers/GoalList";
@@ -87,10 +81,6 @@ export default GoalTracker = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View>
-        <StatusBar barStyle="light-content" backgroundColor="black" />
-      </View>
-
       <View>
         <FlatList
           data={data}

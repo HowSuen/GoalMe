@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Alert, View, StatusBar, FlatList } from "react-native";
+import { Alert, View, FlatList } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { FontAwesome } from "@expo/vector-icons";
 import styles from "./CompletedGoals.style";
@@ -96,10 +96,6 @@ export default CompletedGoals = () => {
 
   return (
     <View style={styles.container}>
-      <View>
-        <StatusBar barStyle="light-content" backgroundColor="black" />
-      </View>
-
       <View>
         <FlatList
           data={data}

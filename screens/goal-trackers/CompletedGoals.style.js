@@ -14,7 +14,7 @@ export default StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
     backgroundColor: "mediumaquamarine",
-    marginBottom: 20,
+    marginBottom: 10,
     borderRadius: 100,
   },
 });

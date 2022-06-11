@@ -1,92 +1,54 @@
 import React from "react";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import styles from "./GoalNavigator.style";
-import CompletedGoals from "../screens/goal-trackers/CompletedGoals";
-import GoalDetailsNavigator from "./GoalEditorNavigator";
-import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import GoalTracker from "../screens/goal-trackers/GoalTracker";
+import AcademicTracker from "../screens/goal-trackers/AcademicTracker";
+import FitnessTracker from "../screens/goal-trackers/FitnessTracker";
+import FinanceTracker from "../screens/goal-trackers/FinanceTracker";
+import GoalEditor from "../screens/goal-trackers/GoalEditor";
+import GoalSetter from "../screens/goal-trackers/GoalSetter";
 
-const Drawer = createDrawerNavigator();
+const Stack = createNativeStackNavigator();
 
-const showHeader = (route) => {
-  const routeName = getFocusedRouteNameFromRoute(route);
-
-  if (routeName == "GoalEditor") {
-    return false;
-  }
-  return true;
-};
-
-export default GoalNavigator = () => {
+export default GoalNavigator = ({ route, navigation }) => {
   return (
-    <Drawer.Navigator
-      screenOptions={({route}) => ({
-        headerShown: Platform.OS === "ios" ? true : showHeader(route),
-        headerTintColor: "black",
-        presentation: "modal",
-        headerTitleAlign: "center",
-        headerShadowVisible: false,
-        drawerActiveTintColor: "black",
-        drawerInactiveTintColor: "black",
-        drawerStyle: styles.container,
-      })}
+    <Stack.Navigator
+      screenOptions={{ headerShown: false, unmountOnBlur: true }}
     >
-      <Drawer.Screen
-        name="Goal Tracker"
+      {route.name == "Goal Tracker" ? (
+        <Stack.Screen name="GoalTracker" component={GoalTracker} />
+      ) : route.name == "Academic Tracker" ? (
+        <Stack.Screen name="AcademicTracker" component={AcademicTracker} />
+      ) : route.name == "Fitness Tracker" ? (
+        <Stack.Screen name="FitnessTracker" component={FitnessTracker} />
+      ) : (
+        <Stack.Screen name="FinanceTracker" component={FinanceTracker} />
+      )}
+      <Stack.Screen
+        name="GoalSetter"
         options={{
-          headerStyle: { backgroundColor: "mediumseagreen" },
-          drawerActiveBackgroundColor: "mediumseagreen",
-          unmountOnBlur: true,
+          headerShown: true,
+          headerTitle: "Set your goal",
+          headerStyle: { backgroundColor: "ghostwhite" },
+          headerTintColor: "black",
+          presentation: "modal",
+          headerTitleAlign: "center",
         }}
       >
-        {({ route, navigation }) =>
-          GoalDetailsNavigator({ route: route, navigation: navigation })
-        }
-      </Drawer.Screen>
-      <Drawer.Screen
-        name="Academic Tracker"
+        {() => <GoalSetter route={route} navigation={navigation} />}
+      </Stack.Screen>
+      <Stack.Screen
+        name="GoalEditor"
         options={{
-          headerStyle: { backgroundColor: "royalblue" },
-          drawerActiveBackgroundColor: "royalblue",
-          unmountOnBlur: true,
+          headerShown: true,
+          headerTitle: "Edit your goal",
+          headerStyle: { backgroundColor: "ghostwhite" },
+          headerTintColor: "black",
+          presentation: "modal",
+          headerTitleAlign: "center",
         }}
       >
-        {({ route, navigation }) =>
-          GoalDetailsNavigator({ route: route, navigation: navigation })
-        }
-      </Drawer.Screen>
-      <Drawer.Screen
-        name="Fitness Tracker"
-        options={{
-          headerStyle: { backgroundColor: "tomato" },
-          drawerActiveBackgroundColor: "tomato",
-          unmountOnBlur: true,
-        }}
-      >
-        {({ route, navigation }) =>
-          GoalDetailsNavigator({ route: route, navigation: navigation })
-        }
-      </Drawer.Screen>
-      <Drawer.Screen
-        name="Finance Tracker"
-        options={{
-          headerStyle: { backgroundColor: "goldenrod" },
-          drawerActiveBackgroundColor: "goldenrod",
-          unmountOnBlur: true,
-        }}
-      >
-        {({ route, navigation }) =>
-          GoalDetailsNavigator({ route: route, navigation: navigation })
-        }
-      </Drawer.Screen>
-      <Drawer.Screen
-        name="Completed Goals"
-        component={CompletedGoals}
-        options={{
-          headerStyle: { backgroundColor: "mediumaquamarine" },
-          drawerActiveBackgroundColor: "mediumaquamarine",
-          unmountOnBlur: true,
-        }}
-      />
-    </Drawer.Navigator>
+        {() => <GoalEditor route={route} navigation={navigation} />}
+      </Stack.Screen>
+    </Stack.Navigator>
   );
 };

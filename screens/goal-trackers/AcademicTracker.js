@@ -1,23 +1,17 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  StatusBar,
-  FlatList,
-  KeyboardAvoidingView,
-  Platform,
-  Alert,
-} from "react-native";
+import { View, StatusBar, FlatList, TouchableOpacity } from "react-native";
 import styles from "./GoalTracker.style";
-import AddAcademic from "../../components/goal-trackers/AddAcademic";
+import { FontAwesome } from "@expo/vector-icons";
 import GoalList from "../../components/goal-trackers/GoalList";
 import Empty from "./Empty";
 import supabase from "../../lib/supabase";
-import { useIsFocused } from "@react-navigation/native";
+import { useIsFocused, useRoute } from "@react-navigation/native";
 
 export default AcademicTracker = ({ navigation }) => {
   const [data, setData] = useState([]);
   const user = supabase.auth.user();
   const isFocused = useIsFocused();
+  const route = useRoute();
 
   useEffect(() => {
     setData([]);
@@ -30,17 +24,17 @@ export default AcademicTracker = ({ navigation }) => {
           type: "Academic",
           completion_status: false,
         });
-      
-      if (error) Alert.alert(error)
+
+      if (error) Alert.alert(error);
       goals.sort((a, b) => a.id - b.id);
       goals.map((goal) => {
         setData((prevGoal) => {
           return [
             {
-              value: goal.content,
               key: goal.id,
-              type: goal.type,
+              value: goal.content,
               description: goal.description,
+              type: goal.type,
             },
             ...prevGoal,
           ];
@@ -49,77 +43,64 @@ export default AcademicTracker = ({ navigation }) => {
     })();
   }, [isFocused]);
 
-  const submitHandler = async (value) => {
-    const { data, error } = await supabase
-      .from("goals")
-      .insert([{ user_id: user.id, content: value, type: "Academic" }]);
-
-    !error &&
-      setData((prevGoal) => {
-        return [
-          {
-            value: data[0].content,
-            key: data[0].id,
-            type: data[0].type,
-          },
-          ...prevGoal,
-        ];
-      });
-  };
-
-  const deleteItem = async (key) => {
+  const deleteGoal = async (key) => {
     const { data, error } = await supabase
       .from("goals")
       .delete()
       .match({ id: key });
 
-    !error &&
-      setData((prevGoal) => {
-        return prevGoal.filter((goal) => goal.key != key);
-      });
+    if (error) Alert.alert(error);
+    setData((prevGoal) => {
+      return prevGoal.filter((goal) => goal.key != key);
+    });
   };
 
-  const completeItem = async (key) => {
+  const completeGoal = async (key) => {
     const { data, error } = await supabase
       .from("goals")
       .update({ completion_status: true })
       .match({ id: key });
 
-    !error &&
-      setData((prevGoal) => {
-        return prevGoal.filter((goal) => goal.key != key);
-      });
+    if (error) Alert.alert(error);
+    setData((prevGoal) => {
+      return prevGoal.filter((goal) => goal.key != key);
+    });
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "height" : ""}
-      keyboardVerticalOffset={90}
-    >
-      <View style={styles.componentContainer}>
-        <View>
-          <StatusBar barStyle="light-content" backgroundColor="black" />
-        </View>
-
-        <View>
-          <FlatList
-            data={data}
-            ListEmptyComponent={() => <Empty />}
-            keyExtractor={(item) => item.key}
-            renderItem={({ item }) => (
-              <GoalList
-                item={item}
-                deleteItem={deleteItem}
-                completeItem={completeItem}
-                navigation={navigation}
-              />
-            )}
-          />
-          <View>
-            <AddAcademic submitHandler={submitHandler} />
-          </View>
-        </View>
+    <View style={styles.componentContainer}>
+      <View>
+        <StatusBar barStyle="light-content" backgroundColor="black" />
       </View>
-    </KeyboardAvoidingView>
+
+      <View>
+        <FlatList
+          style={styles.listContainer}
+          data={data}
+          ListEmptyComponent={() => <Empty />}
+          keyExtractor={(item) => item.key}
+          renderItem={({ item }) => (
+            <GoalList
+              item={item}
+              deleteItem={deleteGoal}
+              completeItem={completeGoal}
+              navigation={navigation}
+            />
+          )}
+        />
+        <TouchableOpacity
+          style={styles.academicButton}
+          onPress={() => {
+            navigation.navigate("GoalSetter", {
+              user: user,
+              routeName: route.name,
+              defaultType: "Academic",
+            });
+          }}
+        >
+          <FontAwesome name="plus" size={20} color="black" />
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };

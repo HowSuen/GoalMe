@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 import styles from "./AppNavigator.style";
-import GoalNavigator from "./GoalNavigator";
+import GoalsNavigator from "./GoalsNavigator";
 import ProfileNavigator from "./ProfileNavigator";
 
 import GameScreen from "../screens/game/GameScreen";
@@ -66,7 +66,7 @@ export default AppNavigator = ({ session }) => {
       >
         <Tab.Screen name="Goals" options={{ headerShown: false }}>
           {({ route, navigation }) =>
-            GoalNavigator({ route: route, navigation: navigation })
+            GoalsNavigator({ route: route, navigation: navigation })
           }
         </Tab.Screen>
         <Tab.Screen name="Progress" component={TempProgressChecker} />

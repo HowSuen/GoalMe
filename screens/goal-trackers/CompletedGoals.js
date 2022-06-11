@@ -12,6 +12,7 @@ export default CompletedGoals = () => {
   const user = supabase.auth.user();
 
   useEffect(() => {
+    setData([]);
     (async () => {
       let { data: goals, error } = await supabase
         .from("goals")

@@ -1,4 +1,10 @@
-import { KeyboardAvoidingView, Keyboard, View, Text } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Keyboard,
+  View,
+  Text,
+  Alert,
+} from "react-native";
 import { useState } from "react";
 import { Input } from "react-native-elements";
 import styles from "./GoalEditor.style";
@@ -8,17 +14,34 @@ import {
   TouchableOpacity,
 } from "react-native-gesture-handler";
 
-export default GoalEditor = ({ navigation }) => {
+export default GoalSetter = ({ navigation }) => {
   const route = useRoute();
-  const { routeName, item } = route.params;
-  const [value, setValue] = useState(item.value);
-  const [description, setDescription] = useState(item.description);
+  const { user, routeName, defaultType } = route.params;
+  const [value, setValue] = useState("");
+  const [type, setType] = useState(defaultType);
+  const [description, setDescription] = useState("");
 
-  const updateGoal = async (key) => {
-    const { data, error } = await supabase
-      .from("goals")
-      .update({ content: value, description: description })
-      .match({ id: key });
+  const submitGoal = async (value, type, description) => {
+    const { data, error } = await supabase.from("goals").insert([
+      {
+        user_id: user.id,
+        content: value,
+        type: type,
+        description: description,
+      },
+    ]);
+
+    if (error) Alert.alert(error);
+    // setData((prevGoal) => {
+    //   return [
+    //     {
+    //       value: data[0].content,
+    //       key: data[0].id,
+    //       type: data[0].type,
+    //     },
+    //     ...prevGoal,
+    //   ];
+    // });
   };
 
   return (
@@ -49,19 +72,22 @@ export default GoalEditor = ({ navigation }) => {
               <Input
                 style={styles.textInput}
                 label="Type"
-                value={item.type}
-                disabled
+                value={type}
+                onChangeText={(text) => setType(text)}
               />
             </View>
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
-                  updateGoal(item.key);
-                  navigation.navigate(routeName);
+                  if (value == "") Alert.alert("Goal cannot be empty!");
+                  else {
+                    submitGoal(value, type, description);
+                    navigation.navigate(routeName);
+                  }
                 }}
               >
-                <Text style={styles.buttonText}>Save</Text>
+                <Text style={styles.buttonText}>Set</Text>
               </TouchableOpacity>
             </View>
           </View>

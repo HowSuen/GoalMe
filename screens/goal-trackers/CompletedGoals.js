@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, StatusBar, FlatList } from "react-native";
+import { Alert, View, StatusBar, FlatList } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { FontAwesome } from "@expo/vector-icons";
 import styles from "./CompletedGoals.style";
@@ -14,65 +14,88 @@ export default CompletedGoals = () => {
   useEffect(() => {
     setData([]);
     (async () => {
-      let { data: goals, error } = await supabase
-        .from("goals")
-        .select("*")
-        .match({ user_id: user.id, completion_status: true });
+      try {
+        let { data: goals, error } = await supabase
+          .from("goals")
+          .select("*")
+          .match({ user_id: user.id, completion_status: true });
 
-      !error &&
+        if (error) throw error;
+
+        goals.sort((a, b) => a.id - b.id);
         goals.map((goal) => {
           setData((prevGoal) => {
             return [
               {
-                value: goal.content,
                 key: goal.id,
+                content: goal.content,
+                description: goal.description,
                 type: goal.type,
+                difficulty: goal.difficulty,
               },
               ...prevGoal,
             ];
           });
         });
+      } catch (error) {
+        Alert.alert(error.message);
+      }
     })();
   }, []);
 
-  const deleteItem = async (key) => {
-    const { data, error } = await supabase
-      .from("goals")
-      .delete()
-      .match({ id: key });
+  const deleteGoal = async (key) => {
+    try {
+      let { data, error } = await supabase
+        .from("goals")
+        .delete()
+        .match({ id: key });
 
-    !error &&
-      setData((prevGoal) => {
-        return prevGoal.filter((goal) => goal.key != key);
-      });
+      if (error) throw error;
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+
+    setData((prevGoal) => {
+      return prevGoal.filter((goal) => goal.key != key);
+    });
   };
 
-  const uncompleteItem = async (key) => {
-    const { data, error } = await supabase
-      .from("goals")
-      .update({ completion_status: false })
-      .match({ id: key });
+  const uncompleteGoal = async (key) => {
+    try {
+      let { data, error } = await supabase
+        .from("goals")
+        .update({ completion_status: false })
+        .match({ id: key });
 
-    !error &&
-      setData((prevGoal) => {
-        return prevGoal.filter((goal) => goal.key != key);
-      });
+      if (error) throw error;
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+
+    setData((prevGoal) => {
+      return prevGoal.filter((goal) => goal.key != key);
+    });
   };
 
   const deleteAll = async () => {
-    const { data, error } = await supabase
-      .from("goals")
-      .delete()
-      .match({ completion_status: true });
+    try {
+      let { data, error } = await supabase
+        .from("goals")
+        .delete()
+        .match({ completion_status: true });
 
-    !error &&
-      setData((prevGoal) => {
-        return prevGoal.filter((goal) => false);
-      });
+      if (error) throw error;
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+
+    setData((prevGoal) => {
+      return prevGoal.filter((goal) => false);
+    });
   };
 
   return (
-    <View style={styles.componentContainer}>
+    <View style={styles.container}>
       <View>
         <StatusBar barStyle="light-content" backgroundColor="black" />
       </View>
@@ -81,17 +104,17 @@ export default CompletedGoals = () => {
         <FlatList
           data={data}
           ListEmptyComponent={() => <Empty />}
-          keyExtractor={(item) => item.key}
+          keyExtractor={(goal) => goal.key}
           renderItem={({ item }) => (
             <CompletedList
-              item={item}
-              deleteItem={deleteItem}
-              uncompleteItem={uncompleteItem}
+              goal={item}
+              deleteGoal={deleteGoal}
+              uncompleteGoal={uncompleteGoal}
             />
           )}
         />
         <TouchableOpacity style={styles.deleteButton} onPress={deleteAll}>
-          <FontAwesome name="trash" size={24} color="black" />
+          <FontAwesome name="trash" size={25} color="black" />
         </TouchableOpacity>
       </View>
     </View>

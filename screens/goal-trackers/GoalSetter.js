@@ -1,47 +1,48 @@
-import {
-  KeyboardAvoidingView,
-  Keyboard,
-  View,
-  Text,
-  Alert,
-} from "react-native";
+import { KeyboardAvoidingView, View, Text, Alert } from "react-native";
 import { useState } from "react";
 import { Input } from "react-native-elements";
-import styles from "./GoalEditor.style";
+import styles from "./GoalSetter.style";
 import { useRoute } from "@react-navigation/native";
-import {
-  TouchableWithoutFeedback,
-  TouchableOpacity,
-} from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import GoalDropdownList from "../../components/goal-trackers/GoalDropdownList";
 
 export default GoalSetter = ({ navigation }) => {
   const route = useRoute();
   const { user, routeName, defaultType } = route.params;
-  const [value, setValue] = useState("");
-  const [type, setType] = useState(defaultType);
+  const [content, setContent] = useState("");
   const [description, setDescription] = useState("");
+  const [type, setType] = useState(defaultType);
+  const [difficulty, setDifficulty] = useState("None");
 
-  const submitGoal = async (value, type, description) => {
-    const { data, error } = await supabase.from("goals").insert([
-      {
-        user_id: user.id,
-        content: value,
-        type: type,
-        description: description,
-      },
-    ]);
+  const types = [
+    { label: "General", value: "General" },
+    { label: "Academic", value: "Academic" },
+    { label: "Fitness", value: "Fitness" },
+    { label: "Finance", value: "Finance" },
+  ];
 
-    if (error) Alert.alert(error);
-    // setData((prevGoal) => {
-    //   return [
-    //     {
-    //       value: data[0].content,
-    //       key: data[0].id,
-    //       type: data[0].type,
-    //     },
-    //     ...prevGoal,
-    //   ];
-    // });
+  const difficulties = [
+    { label: "None", value: "None" },
+    { label: "Easy", value: "Easy" },
+    { label: "Medium", value: "Medium" },
+    { label: "Hard", value: "Hard" },
+  ];
+
+  const submitGoal = async () => {
+    try {
+      const { data, error } = await supabase.from("goals").insert([
+        {
+          user_id: user.id,
+          content: content,
+          description: description,
+          type: type,
+          difficulty: difficulty,
+        },
+      ]);
+      if (error) throw error;
+    } catch (error) {
+      Alert.alert(error.message);
+    }
   };
 
   return (
@@ -49,50 +50,62 @@ export default GoalSetter = ({ navigation }) => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View>
-          <View style={styles.formContainer}>
-            <View style={styles.verticallySpaced}>
-              <Input
-                style={styles.textInput}
-                label="Goal"
-                value={value}
-                onChangeText={(text) => setValue(text)}
-              />
-            </View>
-            <View style={styles.verticallySpaced}>
-              <Input
-                style={styles.textInput}
-                label="Description"
-                value={description}
-                onChangeText={(text) => setDescription(text)}
-              />
-            </View>
-            <View style={styles.verticallySpaced}>
-              <Input
-                style={styles.textInput}
-                label="Type"
-                value={type}
-                onChangeText={(text) => setType(text)}
-              />
-            </View>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => {
-                  if (value == "") Alert.alert("Goal cannot be empty!");
-                  else {
-                    submitGoal(value, type, description);
-                    navigation.navigate(routeName);
-                  }
-                }}
-              >
-                <Text style={styles.buttonText}>Set</Text>
-              </TouchableOpacity>
-            </View>
+      <View>
+        <View style={styles.formContainer}>
+          <View style={styles.inputContainer}>
+            <Input
+              style={styles.textInput}
+              label="Goal"
+              placeholder="Add a goal..."
+              placeholderTextColor="lightgray"
+              value={content}
+              onChangeText={(text) => setContent(text)}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Input
+              style={styles.textInput}
+              label="Description"
+              placeholder="Add an optional description..."
+              placeholderTextColor="lightgray"
+              value={description}
+              onChangeText={(text) => setDescription(text)}
+            />
+          </View>
+          <View style={styles.dropdownContainer}>
+            <Text style={styles.dropdownLabel}>Type</Text>
+            <GoalDropdownList
+              value={type}
+              items={types}
+              onValueChange={(value) => setType(value)}
+              placeholder={{label: "Select a type...", value: null}}
+            />
+          </View>
+          <View style={styles.dropdownContainer}>
+            <Text style={styles.dropdownLabel}>Difficulty</Text>
+            <GoalDropdownList
+              value={difficulty}
+              items={difficulties}
+              onValueChange={(value) => setDifficulty(value)}
+              placeholder={{label: "Select a difficulty...", value: null}}
+            />
+          </View>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                if (content == "") Alert.alert("Goal cannot be empty!");
+                else {
+                  submitGoal();
+                  navigation.navigate(routeName);
+                }
+              }}
+            >
+              <Text style={styles.buttonText}>Add</Text>
+            </TouchableOpacity>
           </View>
         </View>
-      </TouchableWithoutFeedback>
+      </View>
     </KeyboardAvoidingView>
   );
 };

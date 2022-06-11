@@ -27,7 +27,7 @@ export default GoalNavigator = ({ route, navigation }) => {
         name="GoalSetter"
         options={{
           headerShown: true,
-          headerTitle: "Set your goal",
+          headerTitle: "Set a goal",
           headerStyle: { backgroundColor: "ghostwhite" },
           headerTintColor: "black",
           presentation: "modal",

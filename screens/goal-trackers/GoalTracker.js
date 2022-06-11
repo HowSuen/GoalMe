@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, StatusBar, FlatList, TouchableOpacity } from "react-native";
+import {
+  Alert,
+  View,
+  StatusBar,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import styles from "./GoalTracker.style";
 import { FontAwesome } from "@expo/vector-icons";
 import GoalList from "../../components/goal-trackers/GoalList";
@@ -16,55 +22,71 @@ export default GoalTracker = ({ navigation }) => {
   useEffect(() => {
     setData([]);
     (async () => {
-      let { data: goals, error } = await supabase
-        .from("goals")
-        .select("*")
-        .match({ user_id: user.id, completion_status: false });
+      try {
+        let { data: goals, error } = await supabase
+          .from("goals")
+          .select("*")
+          .match({ user_id: user.id, completion_status: false });
 
-      if (error) Alert.alert(error);
-      goals.sort((a, b) => a.id - b.id);
-      goals.map((goal) => {
-        setData((prevGoal) => {
-          return [
-            {
-              key: goal.id,
-              value: goal.content,
-              description: goal.description,
-              type: goal.type,
-            },
-            ...prevGoal,
-          ];
+        if (error) throw error;
+
+        goals.sort((a, b) => a.id - b.id);
+        goals.map((goal) => {
+          setData((prevGoal) => {
+            return [
+              {
+                key: goal.id,
+                content: goal.content,
+                description: goal.description,
+                type: goal.type,
+                difficulty: goal.difficulty,
+              },
+              ...prevGoal,
+            ];
+          });
         });
-      });
+      } catch (error) {
+        Alert.alert(error.message);
+      }
     })();
   }, [isFocused]);
 
   const deleteGoal = async (key) => {
-    const { data, error } = await supabase
-      .from("goals")
-      .delete()
-      .match({ id: key });
+    try {
+      let { data, error } = await supabase
+        .from("goals")
+        .delete()
+        .match({ id: key });
 
-    if (error) Alert.alert(error);
+      if (error) throw error;
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+
     setData((prevGoal) => {
       return prevGoal.filter((goal) => goal.key != key);
     });
   };
 
   const completeGoal = async (key) => {
-    const { data, error } = await supabase
-      .from("goals")
-      .update({ completion_status: true })
-      .match({ id: key });
+    try {
+      let { data, error } = await supabase
+        .from("goals")
+        .update({ completion_status: true })
+        .match({ id: key });
 
-    if (error) Alert.alert(error);
+      if (error) throw error;
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+
     setData((prevGoal) => {
       return prevGoal.filter((goal) => goal.key != key);
     });
   };
 
   return (
-    <View style={styles.componentContainer}>
+    <View style={styles.container}>
       <View>
         <StatusBar barStyle="light-content" backgroundColor="black" />
       </View>
@@ -74,12 +96,12 @@ export default GoalTracker = ({ navigation }) => {
           style={styles.listContainer}
           data={data}
           ListEmptyComponent={() => <Empty />}
-          keyExtractor={(item) => item.key}
+          keyExtractor={(goal) => goal.key}
           renderItem={({ item }) => (
             <GoalList
-              item={item}
-              deleteItem={deleteGoal}
-              completeItem={completeGoal}
+              goal={item}
+              deleteGoal={deleteGoal}
+              completeGoal={completeGoal}
               navigation={navigation}
             />
           )}

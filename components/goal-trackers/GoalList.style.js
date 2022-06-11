@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-  componentContainer: {
+  container: {
     flexDirection: "row",
     justifyContent: "center",
     height: "auto",
@@ -67,7 +67,7 @@ export default StyleSheet.create({
     fontSize: 12,
     marginRight: 20,
     borderRadius: 10,
-    width: 80,
+    width: 200,
   },
   iconContainer: {
     alignItems: "center",

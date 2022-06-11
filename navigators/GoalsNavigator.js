@@ -28,6 +28,7 @@ export default GoalsNavigator = () => {
         drawerActiveTintColor: "black",
         drawerInactiveTintColor: "black",
         drawerStyle: styles.container,
+        unmountOnBlur: true,
       })}
     >
       <Drawer.Screen
@@ -35,7 +36,6 @@ export default GoalsNavigator = () => {
         options={{
           headerStyle: { backgroundColor: "mediumseagreen" },
           drawerActiveBackgroundColor: "mediumseagreen",
-          unmountOnBlur: true,
         }}
       >
         {({ route, navigation }) =>
@@ -47,7 +47,6 @@ export default GoalsNavigator = () => {
         options={{
           headerStyle: { backgroundColor: "royalblue" },
           drawerActiveBackgroundColor: "royalblue",
-          unmountOnBlur: true,
         }}
       >
         {({ route, navigation }) =>
@@ -59,7 +58,6 @@ export default GoalsNavigator = () => {
         options={{
           headerStyle: { backgroundColor: "tomato" },
           drawerActiveBackgroundColor: "tomato",
-          unmountOnBlur: true,
         }}
       >
         {({ route, navigation }) =>
@@ -71,7 +69,6 @@ export default GoalsNavigator = () => {
         options={{
           headerStyle: { backgroundColor: "goldenrod" },
           drawerActiveBackgroundColor: "goldenrod",
-          unmountOnBlur: true,
         }}
       >
         {({ route, navigation }) =>
@@ -84,7 +81,6 @@ export default GoalsNavigator = () => {
         options={{
           headerStyle: { backgroundColor: "mediumaquamarine" },
           drawerActiveBackgroundColor: "mediumaquamarine",
-          unmountOnBlur: true,
         }}
       />
     </Drawer.Navigator>

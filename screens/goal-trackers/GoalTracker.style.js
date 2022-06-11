@@ -1,15 +1,15 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-  componentContainer: {
+  container: {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "ghostwhite",
   },
   goalButton: {
-    width: 50,
-    height: 50,
+    width: 60,
+    height: 60,
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
@@ -18,8 +18,8 @@ export default StyleSheet.create({
     borderRadius: 100,
   },
   academicButton: {
-    width: 50,
-    height: 50,
+    width: 60,
+    height: 60,
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
@@ -28,8 +28,8 @@ export default StyleSheet.create({
     borderRadius: 100,
   },
   fitnessButton: {
-    width: 50,
-    height: 50,
+    width: 60,
+    height: 60,
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
@@ -38,8 +38,8 @@ export default StyleSheet.create({
     borderRadius: 100,
   },
   financeButton: {
-    width: 50,
-    height: 50,
+    width: 60,
+    height: 60,
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",

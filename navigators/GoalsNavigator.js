@@ -10,7 +10,7 @@ const Drawer = createDrawerNavigator();
 const showHeader = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route);
 
-  if (routeName == "Goal") {
+  if (routeName == "GoalEditor" || routeName == "GoalSetter") {
     return false;
   }
   return true;

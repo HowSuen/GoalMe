@@ -5,45 +5,44 @@ import styles from "./GoalList.style";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useRoute } from "@react-navigation/native";
 
-export default GoalList = ({ item, deleteItem, completeItem, navigation }) => {
+export default GoalList = ({ goal, completeGoal, deleteGoal, navigation }) => {
   const route = useRoute();
 
-  const capitaliseFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
-
   return (
-    <View style={styles.componentContainer}>
+    <View style={styles.container}>
       <TouchableOpacity
         style={
-          item.type == "General"
+          goal.type == "General"
             ? styles.goalListContainer
-            : item.type == "Academic"
+            : goal.type == "Academic"
             ? styles.academicListContainer
-            : item.type == "Fitness"
+            : goal.type == "Fitness"
             ? styles.fitnessListContainer
             : styles.financeListContainer
         }
         onPress={() =>
           navigation.navigate("GoalEditor", {
             routeName: route.name,
-            item: item,
+            goal: goal,
           })
         }
       >
         <TouchableOpacity
-          style={styles.circleContainer}
-          onPress={() => completeItem(item.key)}
+          style={styles.boxContainer}
+          onPress={() => completeGoal(goal.key)}
         >
-          <FontAwesome name="square-o" size={24} color={"black"} />
+          <FontAwesome name="square-o" size={25} color={"black"} />
         </TouchableOpacity>
         <View>
-          <Text style={styles.listText}>{item.value}</Text>
-          <Text style={styles.listSubtext}>{capitaliseFirstLetter(item.type)}</Text>
+          <Text style={styles.listText}>
+            {goal.content.substring(0, 22) +
+              (goal.content.length > 22 ? "..." : "")}
+          </Text>
+          <Text style={styles.listSubtext}>{goal.difficulty}</Text>
         </View>
         <TouchableOpacity
           style={styles.iconContainer}
-          onPress={() => deleteItem(item.key)}
+          onPress={() => deleteGoal(goal.key)}
         >
           <FontAwesome name="trash" size={25} color="black" />
         </TouchableOpacity>

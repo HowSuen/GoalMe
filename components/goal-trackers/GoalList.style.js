@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-  componentContainer: {
+  container: {
     flexDirection: "row",
     justifyContent: "center",
     height: "auto",
@@ -44,15 +44,17 @@ export default StyleSheet.create({
     alignItems: "center",
     backgroundColor: "goldenrod",
   },
-  circleContainer: {
+  boxContainer: {
     alignItems: "center",
     justifyContent: "center",
     paddingLeft: 10,
+    marginVertical: 17,
   },
   checkContainer: {
     alignItems: "center",
     justifyContent: "center",
     paddingLeft: 10,
+    marginVertical: 17,
   },
   listText: {
     color: "ghostwhite",
@@ -60,21 +62,18 @@ export default StyleSheet.create({
     height: "auto",
     fontSize: 20,
     marginTop: 5,
+    marginBottom: 2,
     marginRight: 10,
   },
   listSubtext: {
     color: "black",
     fontSize: 12,
-    marginRight: 20,
-    borderRadius: 10,
-    width: 80,
+    marginBottom: 5,
   },
   iconContainer: {
     alignItems: "center",
     justifyContent: "center",
     marginRight: 10,
-    marginTop: 15,
-    marginBottom: 5,
     height: 40,
     borderRadius: 10,
   },

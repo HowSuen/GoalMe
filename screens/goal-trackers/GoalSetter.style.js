@@ -47,14 +47,14 @@ export default StyleSheet.create({
   button: {
     backgroundColor: "dodgerblue",
     padding: 10,
-    width: 160,
+    width: 90,
     borderRadius: 5,
     elevation: 10,
   },
   disabledButton: {
     backgroundColor: "gray",
     padding: 10,
-    width: 150,
+    width: 90,
     borderRadius: 5,
     elevation: 10,
   },

@@ -24,6 +24,10 @@ const GameScreen = ({ navigation, session }) => {
   /**
    * xp / xp_at_that_level = level, remainder leftover_xp
    * progress = leftover_xp / xp_at_new_level
+   * 
+   * XP PER LEVEL = (LEVEL / X) ^ Y
+   * X = 0.07      Lower X, More XP required per level
+   * Y = 2         Higher Y, Larger gaps between levels
    */
 
   return (

@@ -1,4 +1,6 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
+
+const width = (Dimensions.get("window").width / 10) * 9;
 
 export default StyleSheet.create({
   container: {
@@ -12,15 +14,18 @@ export default StyleSheet.create({
   },
   levelContainer: {
     justifyContent: "flex-start",
-    paddingBottom: 5,
-    borderBottomColor: "black",
+    paddingVertical: 5,
+    borderColor: "royalblue",
     borderBottomWidth: 0.5,
+    borderTopWidth: 0.5,
+    marginTop: 5,
   },
   experience: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     padding: 5,
+    width: width,
   },
   generalLvl: {
     fontSize: 16,

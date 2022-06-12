@@ -2,9 +2,10 @@ import React from "react";
 import { View, Text, Dimensions, StyleSheet } from "react-native";
 import { Bar } from "react-native-progress";
 
-const LevelBar = ({ type, color, level, progress }) => {
-  const xpBarWidth = (Dimensions.get("window").width / 10) * 5.5;
+const width = (Dimensions.get("window").width / 10) * 9;
+const xpBarWidth = (Dimensions.get("window").width / 10) * 5.5;
 
+const LevelBar = ({ type, color, level, progress }) => {
   return (
     <View style={styles.experience}>
       <Text style={[styles.generalLvl, { color: color }]}>{type}</Text>
@@ -32,6 +33,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     padding: 5,
+    width: width,
   },
   generalLvl: {
     fontSize: 16,

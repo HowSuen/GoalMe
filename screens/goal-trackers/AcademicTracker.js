@@ -38,18 +38,18 @@ export default AcademicTracker = ({ navigation }) => {
 
         if (error) throw error;
 
-        goals.sort(sortItems(order, orderBy));
+        goals.sort(sortItems(order, orderBy)).reverse();
 
         goals.map((goal) => {
           setData((prevGoal) => {
             return [
               {
-                key: goal.id,
+                id: goal.id,
                 content: goal.content,
                 description: goal.description,
                 type: goal.type,
                 difficulty: goal.difficulty,
-                updated_at: new Date(goal.updated_at),
+                updated_at: goal.updated_at,
               },
               ...prevGoal,
             ];
@@ -59,7 +59,7 @@ export default AcademicTracker = ({ navigation }) => {
         Alert.alert(error.message);
       }
     })();
-  }, []);
+  }, [isFocused]);
 
   const sortGoals = (order, orderBy) => {
     setData((goals) => {
@@ -87,7 +87,7 @@ export default AcademicTracker = ({ navigation }) => {
         <FlatList
           data={data}
           ListEmptyComponent={() => <Empty />}
-          keyExtractor={(goal) => goal.key}
+          keyExtractor={(goal) => goal.id}
           renderItem={({ item }) => (
             <GoalList
               goal={item}

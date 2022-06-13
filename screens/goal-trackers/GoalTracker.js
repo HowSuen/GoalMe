@@ -20,45 +20,49 @@ const orderBys = [
 ];
 
 const sortItems = (order, orderBy) => {
-  const convertDiff = (d) => {
-    if (d == "None") {
+  const convertDiff = (difficulty) => {
+    if (difficulty == "None") {
       return 0;
-    } else if (d == "Easy") {
+    } else if (difficulty == "Easy") {
       return 1;
-    } else if (d == "Medium") {
+    } else if (difficulty == "Medium") {
       return 2;
     } else {
       return 3;
     }
   };
 
-  const convertType = (t) => {
-    console.log(t)
-    if (t == "General") {
+  const convertType = (type) => {
+    if (type == "General") {
       return 0;
-    } else if (t == "Academic") {
+    } else if (type == "Academic") {
       return 1;
-    } else if (t == "Fitness") {
+    } else if (type == "Fitness") {
       return 2;
     } else {
       return 3;
     }
+  };
+
+  const convertDate = (date) => {
+    return new Date(date);
   };
 
   let comparator;
   if (orderBy == "dateCreated") {
-    comparator = (a, b) =>
-      order == "ascending" ? a.key - b.key : b.key - a.key;
+    comparator = (a, b) => {
+      return order == "ascending" ? a.id - b.id : b.id - a.id;
+    };
   } else if (orderBy == "dateUpdated") {
     comparator = (a, b) =>
       order == "ascending"
-        ? a.updated_at - b.updated_at
-        : b.updated_at - a.updated_at;
+        ? convertDate(a.updated_at) - convertDate(b.updated_at)
+        : convertDate(b.updated_at) - convertDate(a.updated_at);
   } else if (orderBy == "dateCompleted") {
     comparator = (a, b) =>
       order == "ascending"
-        ? a.completed_at - b.completed_at
-        : b.completed_at - a.completed_at;
+        ? convertDate(a.completed_at) - convertDate(b.completed_at)
+        : convertDate(b.completed_at) - convertDate(a.completed_at);
   } else if (orderBy == "difficulty") {
     comparator = (a, b) =>
       order == "ascending"
@@ -82,7 +86,7 @@ const completeItem = async (item) => {
         completion_status: true,
         completed_at: new Date().toISOString().toLocaleString(),
       })
-      .match({ id: item.key });
+      .match({ id: item.id });
 
     if (error) throw error;
   } catch (error) {
@@ -95,7 +99,7 @@ const deleteItem = async (item) => {
     let { data, error } = await supabase
       .from("goals")
       .delete()
-      .match({ id: item.key });
+      .match({ id: item.id });
 
     if (error) throw error;
   } catch (error) {
@@ -122,18 +126,18 @@ export default GoalTracker = ({ navigation }) => {
 
         if (error) throw error;
 
-        goals.sort(sortItems(order, orderBy));
+        goals.sort(sortItems(order, orderBy)).reverse();
 
         goals.map((goal) => {
           setData((prevGoal) => {
             return [
               {
-                key: goal.id,
+                id: goal.id,
                 content: goal.content,
                 description: goal.description,
                 type: goal.type,
                 difficulty: goal.difficulty,
-                updated_at: new Date(goal.updated_at),
+                updated_at: goal.updated_at,
               },
               ...prevGoal,
             ];
@@ -143,7 +147,7 @@ export default GoalTracker = ({ navigation }) => {
         Alert.alert(error.message);
       }
     })();
-  }, []);
+  }, [isFocused]);
 
   const sortGoals = (order, orderBy) => {
     setData((goals) => {
@@ -171,7 +175,7 @@ export default GoalTracker = ({ navigation }) => {
         <FlatList
           data={data}
           ListEmptyComponent={() => <Empty />}
-          keyExtractor={(goal) => goal.key}
+          keyExtractor={(goal) => goal.id}
           renderItem={({ item }) => (
             <GoalList
               goal={item}

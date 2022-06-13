@@ -4,7 +4,6 @@ import {
   View,
   Text,
   Keyboard,
-  LogBox,
 } from "react-native";
 import { useState } from "react";
 import { Input } from "react-native-elements";
@@ -16,10 +15,6 @@ import {
 } from "react-native-gesture-handler";
 import GoalDropdownList from "../../components/goal-trackers/GoalDropdownList";
 import { types, difficulties } from "./GoalSetter";
-
-LogBox.ignoreLogs([
-  "Non-serializable values were found in the navigation state",
-]);
 
 export default GoalEditor = ({ navigation }) => {
   const route = useRoute();
@@ -42,7 +37,7 @@ export default GoalEditor = ({ navigation }) => {
     return content == "" || type == null || difficulty == null;
   };
 
-  const updateGoal = async (key) => {
+  const updateGoal = async (goal) => {
     try {
       let { data, error } = await supabase
         .from("goals")
@@ -53,7 +48,7 @@ export default GoalEditor = ({ navigation }) => {
           difficulty: difficulty,
           updated_at: new Date().toISOString().toLocaleString(),
         })
-        .match({ id: key });
+        .match({ id: goal.id });
 
       if (error) throw error;
     } catch (error) {
@@ -74,8 +69,6 @@ export default GoalEditor = ({ navigation }) => {
             label="Goal"
             value={content}
             onChangeText={(text) => setContent(text)}
-            multiline={true}
-            maxHeight={90}
           />
           <Input
             style={styles.textInput}
@@ -116,7 +109,7 @@ export default GoalEditor = ({ navigation }) => {
             }
             disabled={noStateChange() || hasEmptyValues()}
             onPress={() => {
-              updateGoal(goal.key);
+              updateGoal(goal);
               navigation.navigate(routeName);
             }}
           >

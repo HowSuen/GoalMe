@@ -19,7 +19,7 @@ const uncompleteItem = async (item) => {
     let { data, error } = await supabase
       .from("goals")
       .update({ completion_status: false, completed_at: null })
-      .match({ id: item.key });
+      .match({ id: item.id });
 
     if (error) throw error;
   } catch (error) {
@@ -57,17 +57,18 @@ export default CompletedGoals = () => {
 
         if (error) throw error;
 
-        goals.sort(sortItems(order, orderBy));
+        goals.sort(sortItems(order, orderBy)).reverse();
+
         goals.map((goal) => {
           setData((prevGoal) => {
             return [
               {
-                key: goal.id,
+                id: goal.id,
                 content: goal.content,
                 description: goal.description,
                 type: goal.type,
                 difficulty: goal.difficulty,
-                completed_at: new Date(goal.completed_at),
+                completed_at: goal.completed_at,
               },
               ...prevGoal,
             ];
@@ -110,7 +111,7 @@ export default CompletedGoals = () => {
         <FlatList
           data={data}
           ListEmptyComponent={() => <Empty />}
-          keyExtractor={(goal) => goal.key}
+          keyExtractor={(goal) => goal.id}
           renderItem={({ item }) => (
             <CompletedList
               goal={item}

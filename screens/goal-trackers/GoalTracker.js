@@ -51,7 +51,7 @@ const sortItems = (order, orderBy) => {
   return comparator;
 };
 
-const completeItem = async (goal) => {
+const completeItem = async (item) => {
   try {
     let { data, error } = await supabase
       .from("goals")
@@ -59,7 +59,7 @@ const completeItem = async (goal) => {
         completion_status: true,
         completed_at: new Date().toISOString().toLocaleString(),
       })
-      .match({ id: goal.key });
+      .match({ id: item.key });
 
     if (error) throw error;
   } catch (error) {
@@ -67,12 +67,12 @@ const completeItem = async (goal) => {
   }
 };
 
-const deleteItem = async (goal) => {
+const deleteItem = async (item) => {
   try {
     let { data, error } = await supabase
       .from("goals")
       .delete()
-      .match({ id: goal.key });
+      .match({ id: item.key });
 
     if (error) throw error;
   } catch (error) {

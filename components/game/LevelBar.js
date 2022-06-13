@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Dimensions, StyleSheet } from "react-native";
+import { View, Text, Dimensions, StyleSheet, Alert } from "react-native";
 import { Bar } from "react-native-progress";
 import { useIsFocused } from "@react-navigation/native";
+import supabase from "../../lib/supabase";
 
 const width = (Dimensions.get("window").width / 10) * 9;
 const xpBarWidth = (Dimensions.get("window").width / 10) * 5.5;

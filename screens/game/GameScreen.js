@@ -9,7 +9,6 @@ import LevelBar from "../../components/game/LevelBar";
 import styles from "./GameScreen.style";
 
 const GameScreen = ({ navigation, session }) => {
-  const width = (Dimensions.get("window").width / 10) * 9;
 
   // Current xp. Reset to 0 each time you level up.
   const [totalXp, setTotalXp] = useState(0);
@@ -18,24 +17,20 @@ const GameScreen = ({ navigation, session }) => {
   const [wealthXp, setWealthXp] = useState(0);
 
   // Current level.
-  const [totalLvl, setTotalLvl] = useState(0);
-  const [strengthLvl, setStrengthLvl] = useState(0);
-  const [wisdomLvl, setWisdomLvl] = useState(0);
-  const [wealthLvl, setWealthLvl] = useState(0);
+  const [totalLvl, setTotalLvl] = useState(1);
+  const [strengthLvl, setStrengthLvl] = useState(1);
+  const [wisdomLvl, setWisdomLvl] = useState(1);
+  const [wealthLvl, setWealthLvl] = useState(1);
 
   const totalMax = Math.round(Math.pow(totalLvl / 0.07, 2));
   const strengthMax = Math.round(Math.pow(strengthLvl / 0.07, 2));
   const wisdomMax = Math.round(Math.pow(wisdomLvl / 0.07, 2));
   const wealthMax = Math.round(Math.pow(wealthLvl / 0.07, 2));
 
-  // const totalProgress = totalXp / totalMax;
-  // const strengthProgress = strengthXp / strengthMax;
-  // const wisdomProgress = wisdomXp / wisdomMax;
-  // const wealthProgress = moneyXp / moneyMax;
-  const totalProgress = 0.3;
-  const strengthProgress = 0.4;
-  const wisdomProgress = 0.5;
-  const wealthProgress = 0.6;
+  const totalProgress = totalXp / totalMax;
+  const strengthProgress = strengthXp / strengthMax;
+  const wisdomProgress = wisdomXp / wisdomMax;
+  const wealthProgress = wealthXp / wealthMax;
 
   /**
    * xp / xp_at_that_level = level, remainder leftover_xp

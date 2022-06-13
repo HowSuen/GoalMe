@@ -48,7 +48,7 @@ export default FinanceTracker = ({ navigation }) => {
                 description: goal.description,
                 type: goal.type,
                 difficulty: goal.difficulty,
-                updated_at: goal.updated_at,
+                updated_at: new Date(goal.updated_at),
               },
               ...prevGoal,
             ];
@@ -66,17 +66,17 @@ export default FinanceTracker = ({ navigation }) => {
     });
   };
 
-  const completeGoal = async (key) => {
-    completeItem(key);
+  const completeGoal = async (goal) => {
+    completeItem(goal);
     setData((goals) => {
-      return goals.filter((goal) => goal.key != key);
+      return goals.filter((g) => g != goal);
     });
   };
 
-  const deleteGoal = async (key) => {
-    deleteItem(key);
+  const deleteGoal = async (goal) => {
+    deleteItem(goal);
     setData((goals) => {
-      return goals.filter((goal) => goal.key != key);
+      return goals.filter((g) => g != goal);
     });
   };
 

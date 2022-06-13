@@ -20,7 +20,7 @@ export default CompletedList = ({ goal, uncompleteGoal, deleteGoal }) => {
       >
         <TouchableOpacity
           style={styles.checkContainer}
-          onPress={() => uncompleteGoal(goal.key)}
+          onPress={() => uncompleteGoal(goal)}
         >
           <FontAwesome name="check-square-o" size={25} color="black" />
         </TouchableOpacity>
@@ -33,7 +33,7 @@ export default CompletedList = ({ goal, uncompleteGoal, deleteGoal }) => {
         </View>
         <TouchableOpacity
           style={styles.iconContainer}
-          onPress={() => deleteGoal(goal.key)}
+          onPress={() => deleteGoal(goal)}
         >
           <FontAwesome name="trash" size={25} color="black" />
         </TouchableOpacity>

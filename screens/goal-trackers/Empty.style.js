@@ -4,7 +4,7 @@ export default StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 120,
+    marginTop: 130,
   },
 
   emptyImage: {
@@ -14,7 +14,7 @@ export default StyleSheet.create({
 
   emptyText: {
     color: "black",
-    marginTop: 30,
-    fontSize: 32,
+    marginTop: 20,
+    fontSize: 28,
   },
 });

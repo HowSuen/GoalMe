@@ -34,7 +34,8 @@ export default CompletedGoals = () => {
 
         if (error) throw error;
 
-        goals.sort((a, b) => a.completion_date - b.completion_date);
+        goals.sort((a, b) => new Date(a.completed_at) - new Date(b.completed_at));
+
         goals.map((goal) => {
           setData((prevGoal) => {
             return [
@@ -44,6 +45,7 @@ export default CompletedGoals = () => {
                 description: goal.description,
                 type: goal.type,
                 difficulty: goal.difficulty,
+                completed_at: new Date(goal.completed_at),
               },
               ...prevGoal,
             ];
@@ -70,8 +72,10 @@ export default CompletedGoals = () => {
 
     let comparator;
     if (orderBy == "dateCompleted") {
-      comparator = (a, b) =>
-        order == "ascending" ? a.key - b.key : b.key - a.key;
+      comparator = (a, b) => 
+      order == "ascending"
+          ? a.completed_at - b.completed_at
+          : b.completed_at - a.completed_at;
     } else if (orderBy == "difficulty") {
       comparator = (a, b) =>
         order == "ascending"
@@ -105,7 +109,7 @@ export default CompletedGoals = () => {
     try {
       let { data, error } = await supabase
         .from("goals")
-        .update({ completion_status: false })
+        .update({ completion_status: false, completed_at: null })
         .match({ id: key });
 
       if (error) throw error;

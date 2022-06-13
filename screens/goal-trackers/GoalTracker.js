@@ -72,7 +72,7 @@ const sortItems = (order, orderBy) => {
     comparator = (a, b) =>
       order == "ascending"
         ? convertType(a.type) - convertType(b.type)
-        : convertType(b.type) - convertType(b.type);
+        : convertType(b.type) - convertType(a.type);
   }
 
   return comparator;

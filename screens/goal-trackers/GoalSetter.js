@@ -15,6 +15,20 @@ import {
 } from "react-native-gesture-handler";
 import GoalDropdownList from "../../components/goal-trackers/GoalDropdownList";
 
+const types = [
+  { label: "General", value: "General" },
+  { label: "Academic", value: "Academic" },
+  { label: "Fitness", value: "Fitness" },
+  { label: "Finance", value: "Finance" },
+];
+
+const difficulties = [
+  { label: "None", value: "None" },
+  { label: "Easy", value: "Easy" },
+  { label: "Medium", value: "Medium" },
+  { label: "Hard", value: "Hard" },
+];
+
 export default GoalSetter = ({ navigation }) => {
   const route = useRoute();
   const { user, routeName, defaultType } = route.params;
@@ -22,20 +36,6 @@ export default GoalSetter = ({ navigation }) => {
   const [description, setDescription] = useState("");
   const [type, setType] = useState(defaultType);
   const [difficulty, setDifficulty] = useState("None");
-
-  const types = [
-    { label: "General", value: "General" },
-    { label: "Academic", value: "Academic" },
-    { label: "Fitness", value: "Fitness" },
-    { label: "Finance", value: "Finance" },
-  ];
-
-  const difficulties = [
-    { label: "None", value: "None" },
-    { label: "Easy", value: "Easy" },
-    { label: "Medium", value: "Medium" },
-    { label: "Hard", value: "Hard" },
-  ];
 
   const submitGoal = async () => {
     try {
@@ -55,8 +55,8 @@ export default GoalSetter = ({ navigation }) => {
   };
 
   const hasEmptyValues = () => {
-    return content == "" || type == null || difficulty ==  null;
-  }
+    return content == "" || type == null || difficulty == null;
+  };
 
   return (
     <KeyboardAvoidingView
@@ -120,3 +120,5 @@ export default GoalSetter = ({ navigation }) => {
     </KeyboardAvoidingView>
   );
 };
+
+export { types, difficulties };

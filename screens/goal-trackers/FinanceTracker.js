@@ -7,6 +7,13 @@ import Empty from "./Empty";
 import supabase from "../../lib/supabase";
 import { useIsFocused, useRoute } from "@react-navigation/native";
 import SortButton from "../../components/goal-trackers/SortButton";
+import {
+  orders,
+  orderBys,
+  sortItems,
+  completeItem,
+  deleteItem,
+} from "./GoalTracker";
 
 export default FinanceTracker = ({ navigation }) => {
   const [data, setData] = useState([]);
@@ -15,17 +22,6 @@ export default FinanceTracker = ({ navigation }) => {
   const user = supabase.auth.user();
   const isFocused = useIsFocused();
   const route = useRoute();
-
-  const orders = [
-    { label: "Ascending", value: "ascending" },
-    { label: "Descending", value: "descending" },
-  ];
-
-  const orderBys = [
-    { label: "Date Created", value: "dateCreated" },
-    { label: "Date Updated", value: "dateUpdated" },
-    { label: "Difficulty", value: "difficulty" },
-  ];
 
   useEffect(() => {
     setData([]);
@@ -65,71 +61,20 @@ export default FinanceTracker = ({ navigation }) => {
   }, [isFocused]);
 
   const sortGoals = (order, orderBy) => {
-    const convert = (d) => {
-      if (d == "Hard") {
-        return 3;
-      } else if (d == "Medium") {
-        return 2;
-      } else if (d == "Easy") {
-        return 1;
-      } else {
-        return 0;
-      }
-    };
-
-    let comparator;
-    if (orderBy == "dateCreated") {
-      comparator = (a, b) =>
-        order == "ascending" ? a.key - b.key : b.key - a.key;
-    } else if (orderBy == "dateUpdated") {
-      comparator = (a, b) =>
-        order == "ascending"
-          ? a.updated_at - b.updated_at
-          : b.updated_at - a.updated_at;
-    } else if (orderBy == "difficulty") {
-      comparator = (a, b) =>
-        order == "ascending"
-          ? convert(a.difficulty) - convert(b.difficulty)
-          : convert(b.difficulty) - convert(a.difficulty);
-    }
-
     setData((goals) => {
-      return goals.sort(comparator);
+      return goals.sort(sortItems(order, orderBy));
     });
   };
 
-  const deleteGoal = async (key) => {
-    try {
-      let { data, error } = await supabase
-        .from("goals")
-        .delete()
-        .match({ id: key });
-
-      if (error) throw error;
-    } catch (error) {
-      Alert.alert(error.message);
-    }
-
+  const completeGoal = async (key) => {
+    completeItem(key);
     setData((goals) => {
       return goals.filter((goal) => goal.key != key);
     });
   };
 
-  const completeGoal = async (key) => {
-    try {
-      let { data, error } = await supabase
-        .from("goals")
-        .update({
-          completion_status: true,
-          completed_at: new Date().toISOString().toLocaleString(),
-        })
-        .match({ id: key });
-
-      if (error) throw error;
-    } catch (error) {
-      Alert.alert(error.message);
-    }
-
+  const deleteGoal = async (key) => {
+    deleteItem(key);
     setData((goals) => {
       return goals.filter((goal) => goal.key != key);
     });

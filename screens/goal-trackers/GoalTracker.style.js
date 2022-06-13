@@ -7,12 +7,17 @@ export default StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "ghostwhite",
   },
+  bottomContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
   goalButton: {
     width: 60,
     height: 60,
     justifyContent: "center",
     alignItems: "center",
-    alignSelf: "center",
+    alignSelf: "flex-end",
     backgroundColor: "mediumseagreen",
     marginVertical: 5,
     borderRadius: 100,

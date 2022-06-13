@@ -6,12 +6,26 @@ import GoalList from "../../components/goal-trackers/GoalList";
 import Empty from "./Empty";
 import supabase from "../../lib/supabase";
 import { useIsFocused, useRoute } from "@react-navigation/native";
+import SortButton from "../../components/goal-trackers/SortButton";
 
-export default GoalTracker = ({ navigation }) => {
+export default FinanceTracker = ({ navigation }) => {
   const [data, setData] = useState([]);
+  const [order, setOrder] = useState("descending");
+  const [orderBy, setOrderBy] = useState("dateCreated");
   const user = supabase.auth.user();
   const isFocused = useIsFocused();
   const route = useRoute();
+
+  const orders = [
+    { label: "Ascending", value: "ascending" },
+    { label: "Descending", value: "descending" },
+  ];
+
+  const orderBys = [
+    { label: "Date Created", value: "dateCreated" },
+    { label: "Date Updated", value: "dateUpdated" },
+    { label: "Difficulty", value: "difficulty" },
+  ];
 
   useEffect(() => {
     setData([]);
@@ -38,6 +52,7 @@ export default GoalTracker = ({ navigation }) => {
                 description: goal.description,
                 type: goal.type,
                 difficulty: goal.difficulty,
+                updated_at: goal.updated_at,
               },
               ...prevGoal,
             ];
@@ -48,6 +63,40 @@ export default GoalTracker = ({ navigation }) => {
       }
     })();
   }, [isFocused]);
+
+  const sortGoals = (order, orderBy) => {
+    const convert = (d) => {
+      if (d == "Hard") {
+        return 3;
+      } else if (d == "Medium") {
+        return 2;
+      } else if (d == "Easy") {
+        return 1;
+      } else {
+        return 0;
+      }
+    };
+
+    let comparator;
+    if (orderBy == "dateCreated") {
+      comparator = (a, b) =>
+        order == "ascending" ? a.key - b.key : b.key - a.key;
+    } else if (orderBy == "dateUpdated") {
+      comparator = (a, b) =>
+        order == "ascending"
+          ? a.updated_at - b.updated_at
+          : b.updated_at - a.updated_at;
+    } else if (orderBy == "difficulty") {
+      comparator = (a, b) =>
+        order == "ascending"
+          ? convert(a.difficulty) - convert(b.difficulty)
+          : convert(b.difficulty) - convert(a.difficulty);
+    }
+
+    setData((goals) => {
+      return goals.sort(comparator);
+    });
+  };
 
   const deleteGoal = async (key) => {
     try {
@@ -61,8 +110,8 @@ export default GoalTracker = ({ navigation }) => {
       Alert.alert(error.message);
     }
 
-    setData((prevGoal) => {
-      return prevGoal.filter((goal) => goal.key != key);
+    setData((goals) => {
+      return goals.filter((goal) => goal.key != key);
     });
   };
 
@@ -70,7 +119,10 @@ export default GoalTracker = ({ navigation }) => {
     try {
       let { data, error } = await supabase
         .from("goals")
-        .update({ completion_status: true })
+        .update({
+          completion_status: true,
+          completed_at: new Date().toISOString().toLocaleString(),
+        })
         .match({ id: key });
 
       if (error) throw error;
@@ -78,8 +130,8 @@ export default GoalTracker = ({ navigation }) => {
       Alert.alert(error.message);
     }
 
-    setData((prevGoal) => {
-      return prevGoal.filter((goal) => goal.key != key);
+    setData((goals) => {
+      return goals.filter((goal) => goal.key != key);
     });
   };
 
@@ -99,18 +151,36 @@ export default GoalTracker = ({ navigation }) => {
             />
           )}
         />
-        <TouchableOpacity
-          style={styles.financeButton}
-          onPress={() => {
-            navigation.navigate("GoalSetter", {
-              user: user,
-              routeName: route.name,
-              defaultType: "Finance",
-            });
-          }}
-        >
-          <FontAwesome name="plus" size={20} color="black" />
-        </TouchableOpacity>
+        <View style={styles.bottomContainer}>
+          <SortButton
+            value={orderBy}
+            items={orderBys}
+            onValueChange={(orderBy) => {
+              setOrderBy(orderBy);
+              sortGoals(order, orderBy);
+            }}
+          />
+          <SortButton
+            value={order}
+            items={orders}
+            onValueChange={(order) => {
+              setOrder(order);
+              sortGoals(order, orderBy);
+            }}
+          />
+          <TouchableOpacity
+            style={styles.financeButton}
+            onPress={() => {
+              navigation.navigate("GoalSetter", {
+                user: user,
+                routeName: route.name,
+                defaultType: "Finance",
+              });
+            }}
+          >
+            <FontAwesome name="plus" size={20} color="black" />
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );

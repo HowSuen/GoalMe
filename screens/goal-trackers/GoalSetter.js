@@ -54,6 +54,10 @@ export default GoalSetter = ({ navigation }) => {
     }
   };
 
+  const hasEmptyValues = () => {
+    return content == "" || type == null || difficulty ==  null;
+  }
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -102,8 +106,8 @@ export default GoalSetter = ({ navigation }) => {
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
-            style={content == "" ? styles.disabledButton : styles.button}
-            disabled={content == ""}
+            style={hasEmptyValues() ? styles.disabledButton : styles.button}
+            disabled={hasEmptyValues()}
             onPress={() => {
               submitGoal();
               navigation.navigate(routeName);

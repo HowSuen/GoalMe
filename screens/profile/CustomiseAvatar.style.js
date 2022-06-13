@@ -7,11 +7,19 @@ export default StyleSheet.create({
     alignItems: "stretch",
     backgroundColor: "ghostwhite",
   },
-  saveButton: {
+  buttonContainer: {
     justifyContent: "center",
+    alignItems: "stretch",
+    marginTop: 5,
+    marginBottom: 10,
+  },
+  saveButton: {
+    marginRight: 20,
+    marginLeft: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingHorizontal: 20,
     backgroundColor: "dodgerblue",
-    padding: 5,
-    paddingHorizontal: 16,
     borderRadius: 5,
     elevation: 5,
   },
@@ -19,7 +27,7 @@ export default StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 0,
+    marginTop: 1,
     marginBottom: 5,
   },
   menu: {

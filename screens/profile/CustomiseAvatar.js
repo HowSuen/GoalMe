@@ -265,6 +265,11 @@ const CustomiseAvatar = ({ navigation, session }) => {
     }
   };
 
+  const onSave = async (e) => {
+    updateProfile(e);
+    navigation.navigate("Account");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.avatar}>
@@ -287,9 +292,6 @@ const CustomiseAvatar = ({ navigation, session }) => {
           mouth={mouth}
           lipColor={lipColor}
         />
-        <TouchableOpacity style={styles.saveButton} onPress={updateProfile}>
-          <Text style={styles.save}>Save</Text>
-        </TouchableOpacity>
       </View>
       <ScrollView style={styles.menu}>
         <View style={styles.slot}>
@@ -378,6 +380,11 @@ const CustomiseAvatar = ({ navigation, session }) => {
           />
         </View>
       </ScrollView>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.saveButton} onPress={onSave}>
+          <Text style={styles.save}>Save</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

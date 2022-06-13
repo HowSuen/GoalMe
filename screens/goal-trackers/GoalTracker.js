@@ -51,7 +51,7 @@ const sortItems = (order, orderBy) => {
   return comparator;
 };
 
-const completeItem = async (key) => {
+const completeItem = async (item) => {
   try {
     let { data, error } = await supabase
       .from("goals")
@@ -59,7 +59,7 @@ const completeItem = async (key) => {
         completion_status: true,
         completed_at: new Date().toISOString().toLocaleString(),
       })
-      .match({ id: key });
+      .match({ id: item.key });
 
     if (error) throw error;
   } catch (error) {
@@ -67,12 +67,12 @@ const completeItem = async (key) => {
   }
 };
 
-const deleteItem = async (key) => {
+const deleteItem = async (item) => {
   try {
     let { data, error } = await supabase
       .from("goals")
       .delete()
-      .match({ id: key });
+      .match({ id: item.key });
 
     if (error) throw error;
   } catch (error) {
@@ -127,17 +127,17 @@ export default GoalTracker = ({ navigation }) => {
     });
   };
 
-  const completeGoal = async (key) => {
-    completeItem(key);
+  const completeGoal = async (goal) => {
+    completeItem(goal);
     setData((goals) => {
-      return goals.filter((goal) => goal.key != key);
+      return goals.filter((g) => g != goal);
     });
   };
 
-  const deleteGoal = async (key) => {
-    deleteItem(key);
+  const deleteGoal = async (goal) => {
+    deleteItem(goal);
     setData((goals) => {
-      return goals.filter((goal) => goal.key != key);
+      return goals.filter((g) => g != goal);
     });
   };
 

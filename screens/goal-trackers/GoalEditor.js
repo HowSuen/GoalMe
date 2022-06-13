@@ -4,6 +4,7 @@ import {
   View,
   Text,
   Keyboard,
+  LogBox,
 } from "react-native";
 import { useState } from "react";
 import { Input } from "react-native-elements";
@@ -15,6 +16,10 @@ import {
 } from "react-native-gesture-handler";
 import GoalDropdownList from "../../components/goal-trackers/GoalDropdownList";
 import { types, difficulties } from "./GoalSetter";
+
+LogBox.ignoreLogs([
+  "Non-serializable values were found in the navigation state",
+]);
 
 export default GoalEditor = ({ navigation }) => {
   const route = useRoute();

@@ -38,7 +38,8 @@ export default FinanceTracker = ({ navigation }) => {
 
         if (error) throw error;
 
-        goals.sort((a, b) => a.id - b.id);
+        goals.sort(sortItems(order, orderBy));
+
         goals.map((goal) => {
           setData((prevGoal) => {
             return [
@@ -58,7 +59,7 @@ export default FinanceTracker = ({ navigation }) => {
         Alert.alert(error.message);
       }
     })();
-  }, [isFocused]);
+  }, []);
 
   const sortGoals = (order, orderBy) => {
     setData((goals) => {

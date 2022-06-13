@@ -20,15 +20,27 @@ const orderBys = [
 ];
 
 const sortItems = (order, orderBy) => {
-  const convert = (d) => {
-    if (d == "Hard") {
-      return 3;
-    } else if (d == "Medium") {
-      return 2;
+  const convertDiff = (d) => {
+    if (d == "None") {
+      return 0;
     } else if (d == "Easy") {
       return 1;
+    } else if (d == "Medium") {
+      return 2;
     } else {
+      return 3;
+    }
+  };
+
+  const convertType = (t) => {
+    if (t == "General") {
       return 0;
+    } else if (t == "Academic") {
+      return 1;
+    } else if (t == "Fitness") {
+      return 2;
+    } else {
+      return 3;
     }
   };
 
@@ -41,11 +53,21 @@ const sortItems = (order, orderBy) => {
       order == "ascending"
         ? a.updated_at - b.updated_at
         : b.updated_at - a.updated_at;
+  } else if (orderBy == "dateCompleted") {
+    comparator = (a, b) =>
+      order == "ascending"
+        ? a.completed_at - b.completed_at
+        : b.completed_at - a.completed_at;
   } else if (orderBy == "difficulty") {
     comparator = (a, b) =>
       order == "ascending"
-        ? convert(a.difficulty) - convert(b.difficulty)
-        : convert(b.difficulty) - convert(a.difficulty);
+        ? convertDiff(a.difficulty) - convertDiff(b.difficulty)
+        : convertDiff(b.difficulty) - convertDiff(a.difficulty);
+  } else if (orderBy == "type") {
+    comparator = (a, b) =>
+      order == "ascending"
+        ? convertType(a.type) - convertType(b.type)
+        : convertType(b.type) - convertType(b.type);
   }
 
   return comparator;
@@ -99,7 +121,8 @@ export default GoalTracker = ({ navigation }) => {
 
         if (error) throw error;
 
-        goals.sort((a, b) => a.id - b.id);
+        goals.sort(sortItems(order, orderBy));
+
         goals.map((goal) => {
           setData((prevGoal) => {
             return [
@@ -119,7 +142,7 @@ export default GoalTracker = ({ navigation }) => {
         Alert.alert(error.message);
       }
     })();
-  }, [isFocused]);
+  }, []);
 
   const sortGoals = (order, orderBy) => {
     setData((goals) => {

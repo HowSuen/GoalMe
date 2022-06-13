@@ -23,14 +23,18 @@ export default GoalEditor = ({ navigation }) => {
   const [type, setType] = useState(goal.type);
   const [difficulty, setDifficulty] = useState(goal.difficulty);
 
-  const stateChanged = () => {
+  const noStateChange = () => {
     return (
-      content != goal.content ||
-      description != goal.description ||
-      type != goal.type ||
-      difficulty != goal.difficulty
+      content == goal.content &&
+      description == goal.description &&
+      type == goal.type &&
+      difficulty == goal.difficulty 
     );
   };
+
+  const hasEmptyValues = () => {
+    return content == "" || type == null || difficulty ==  null;
+  }
 
   const types = [
     { label: "General", value: "General" },
@@ -55,6 +59,7 @@ export default GoalEditor = ({ navigation }) => {
           description: description,
           type: type,
           difficulty: difficulty,
+          updated_at: new Date().toISOString().toLocaleString(),
         })
         .match({ id: key });
 
@@ -113,11 +118,11 @@ export default GoalEditor = ({ navigation }) => {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={
-              content != "" && stateChanged()
-                ? styles.button
-                : styles.disabledButton
+              noStateChange() || hasEmptyValues()
+                ? styles.disabledButton
+                : styles.button
             }
-            disabled={content == "" || !stateChanged()}
+            disabled={noStateChange() || hasEmptyValues()}
             onPress={() => {
               updateGoal(goal.key);
               navigation.navigate(routeName);

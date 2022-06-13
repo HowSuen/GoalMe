@@ -9,7 +9,19 @@ import supabase from "../../lib/supabase";
 
 export default CompletedGoals = () => {
   const [data, setData] = useState([]);
+  const [order, setOrder] = useState("descending");
+  const [orderBy, setOrderBy] = useState("dateCompleted");
   const user = supabase.auth.user();
+
+  const orders = [
+    { label: "Ascending", value: "ascending" },
+    { label: "Descending", value: "descending" },
+  ];
+
+  const orderBys = [
+    { label: "Date Completed", value: "dateCompleted" },
+    { label: "Difficulty", value: "difficulty" },
+  ];
 
   useEffect(() => {
     setData([]);
@@ -22,7 +34,7 @@ export default CompletedGoals = () => {
 
         if (error) throw error;
 
-        goals.sort((a, b) => a.id - b.id);
+        goals.sort((a, b) => a.completion_date - b.completion_date);
         goals.map((goal) => {
           setData((prevGoal) => {
             return [
@@ -43,6 +55,35 @@ export default CompletedGoals = () => {
     })();
   }, []);
 
+  const sortGoals = (order, orderBy) => {
+    const convert = (d) => {
+      if (d == "Hard") {
+        return 3;
+      } else if (d == "Medium") {
+        return 2;
+      } else if (d == "Easy") {
+        return 1;
+      } else {
+        return 0;
+      }
+    };
+
+    let comparator;
+    if (orderBy == "dateCompleted") {
+      comparator = (a, b) =>
+        order == "ascending" ? a.key - b.key : b.key - a.key;
+    } else if (orderBy == "difficulty") {
+      comparator = (a, b) =>
+        order == "ascending"
+          ? convert(a.difficulty) - convert(b.difficulty)
+          : convert(b.difficulty) - convert(a.difficulty);
+    }
+
+    setData((goals) => {
+      return goals.sort(comparator);
+    });
+  };
+
   const deleteGoal = async (key) => {
     try {
       let { data, error } = await supabase
@@ -55,8 +96,8 @@ export default CompletedGoals = () => {
       Alert.alert(error.message);
     }
 
-    setData((prevGoal) => {
-      return prevGoal.filter((goal) => goal.key != key);
+    setData((goals) => {
+      return goals.filter((goal) => goal.key != key);
     });
   };
 
@@ -72,8 +113,8 @@ export default CompletedGoals = () => {
       Alert.alert(error.message);
     }
 
-    setData((prevGoal) => {
-      return prevGoal.filter((goal) => goal.key != key);
+    setData((goals) => {
+      return goals.filter((goal) => goal.key != key);
     });
   };
 
@@ -89,9 +130,7 @@ export default CompletedGoals = () => {
       Alert.alert(error.message);
     }
 
-    setData((prevGoal) => {
-      return prevGoal.filter((goal) => false);
-    });
+    setData([]);
   };
 
   return (
@@ -109,9 +148,27 @@ export default CompletedGoals = () => {
             />
           )}
         />
-        <TouchableOpacity style={styles.deleteButton} onPress={deleteAll}>
-          <FontAwesome name="trash" size={25} color="black" />
-        </TouchableOpacity>
+        <View style={styles.bottomContainer}>
+          <SortButton
+            value={order}
+            items={orders}
+            onValueChange={(order) => {
+              setOrder(order);
+              sortGoals(order, orderBy);
+            }}
+          />
+          <TouchableOpacity style={styles.deleteButton} onPress={deleteAll}>
+            <FontAwesome name="trash" size={25} color="black" />
+          </TouchableOpacity>
+          <SortButton
+            value={orderBy}
+            items={orderBys}
+            onValueChange={(orderBy) => {
+              setOrderBy(orderBy);
+              sortGoals(order, orderBy);
+            }}
+          />
+        </View>
       </View>
     </View>
   );

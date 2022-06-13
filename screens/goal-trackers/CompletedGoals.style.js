@@ -7,6 +7,11 @@ export default StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "ghostwhite",
   },
+  bottomContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
   deleteButton: {
     width: 60,
     height: 60,

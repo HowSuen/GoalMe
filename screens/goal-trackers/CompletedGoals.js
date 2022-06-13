@@ -150,6 +150,14 @@ export default CompletedGoals = () => {
         />
         <View style={styles.bottomContainer}>
           <SortButton
+            value={orderBy}
+            items={orderBys}
+            onValueChange={(orderBy) => {
+              setOrderBy(orderBy);
+              sortGoals(order, orderBy);
+            }}
+          />
+          <SortButton
             value={order}
             items={orders}
             onValueChange={(order) => {
@@ -160,14 +168,6 @@ export default CompletedGoals = () => {
           <TouchableOpacity style={styles.deleteButton} onPress={deleteAll}>
             <FontAwesome name="trash" size={25} color="black" />
           </TouchableOpacity>
-          <SortButton
-            value={orderBy}
-            items={orderBys}
-            onValueChange={(orderBy) => {
-              setOrderBy(orderBy);
-              sortGoals(order, orderBy);
-            }}
-          />
         </View>
       </View>
     </View>

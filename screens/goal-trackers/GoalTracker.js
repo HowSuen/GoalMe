@@ -79,9 +79,10 @@ export default GoalTracker = ({ navigation }) => {
         order == "ascending" ? a.key - b.key : b.key - a.key;
     } else if (orderBy == "dateUpdated") {
       comparator = (a, b) =>
-        order == "ascending" ? a.updated_at - b.updated_at : b.updated_at - a.updated_at;
-    } 
-    else if (orderBy == "difficulty") {
+        order == "ascending"
+          ? a.updated_at - b.updated_at
+          : b.updated_at - a.updated_at;
+    } else if (orderBy == "difficulty") {
       comparator = (a, b) =>
         order == "ascending"
           ? convert(a.difficulty) - convert(b.difficulty)
@@ -148,6 +149,14 @@ export default GoalTracker = ({ navigation }) => {
         />
         <View style={styles.bottomContainer}>
           <SortButton
+            value={orderBy}
+            items={orderBys}
+            onValueChange={(orderBy) => {
+              setOrderBy(orderBy);
+              sortGoals(order, orderBy);
+            }}
+          />
+          <SortButton
             value={order}
             items={orders}
             onValueChange={(order) => {
@@ -167,14 +176,6 @@ export default GoalTracker = ({ navigation }) => {
           >
             <FontAwesome name="plus" size={20} color="black" />
           </TouchableOpacity>
-          <SortButton
-            value={orderBy}
-            items={orderBys}
-            onValueChange={(orderBy) => {
-              setOrderBy(orderBy);
-              sortGoals(order, orderBy);
-            }}
-          />
         </View>
       </View>
     </View>

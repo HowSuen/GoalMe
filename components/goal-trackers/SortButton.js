@@ -29,6 +29,7 @@ const pickerSelectStyles = StyleSheet.create({
     borderRadius: 4,
     borderWidth: 1.5,
     borderColor: "black",
+    color: "black",
     backgroundColor: "ghostwhite",
   },
   inputAndroid: {
@@ -40,8 +41,9 @@ const pickerSelectStyles = StyleSheet.create({
     paddingHorizontal: 5,
     marginTop: 15,
     borderWidth: 1.5,
-    borderColor: "black",
     borderRadius: 8,
+    borderColor: "black",
+    color: "black",
     backgroundColor: "ghostwhite",
   },
 });

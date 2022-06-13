@@ -34,7 +34,11 @@ export default fitnessTracker = ({ navigation }) => {
         let { data: goals, error } = await supabase
           .from("goals")
           .select("*")
-          .match({ user_id: user.id, type: "Fitness", completion_status: false });
+          .match({
+            user_id: user.id,
+            type: "Fitness",
+            completion_status: false,
+          });
 
         if (error) throw error;
 
@@ -79,9 +83,10 @@ export default fitnessTracker = ({ navigation }) => {
         order == "ascending" ? a.key - b.key : b.key - a.key;
     } else if (orderBy == "dateUpdated") {
       comparator = (a, b) =>
-        order == "ascending" ? a.updated_at - b.updated_at : b.updated_at - a.updated_at;
-    } 
-    else if (orderBy == "difficulty") {
+        order == "ascending"
+          ? a.updated_at - b.updated_at
+          : b.updated_at - a.updated_at;
+    } else if (orderBy == "difficulty") {
       comparator = (a, b) =>
         order == "ascending"
           ? convert(a.difficulty) - convert(b.difficulty)
@@ -148,6 +153,14 @@ export default fitnessTracker = ({ navigation }) => {
         />
         <View style={styles.bottomContainer}>
           <SortButton
+            value={orderBy}
+            items={orderBys}
+            onValueChange={(orderBy) => {
+              setOrderBy(orderBy);
+              sortGoals(order, orderBy);
+            }}
+          />
+          <SortButton
             value={order}
             items={orders}
             onValueChange={(order) => {
@@ -167,14 +180,6 @@ export default fitnessTracker = ({ navigation }) => {
           >
             <FontAwesome name="plus" size={20} color="black" />
           </TouchableOpacity>
-          <SortButton
-            value={orderBy}
-            items={orderBys}
-            onValueChange={(orderBy) => {
-              setOrderBy(orderBy);
-              sortGoals(order, orderBy);
-            }}
-          />
         </View>
       </View>
     </View>

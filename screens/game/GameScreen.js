@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Alert, Dimensions } from "react-native";
-import { Badge } from "react-native-elements";
+import { Badge, Card } from "react-native-elements";
 import { Bar } from "react-native-progress";
 import supabase from "../../lib/supabase";
 import { useIsFocused } from "@react-navigation/native";
@@ -9,7 +9,6 @@ import LevelBar from "../../components/game/LevelBar";
 import styles from "./GameScreen.style";
 
 const GameScreen = ({ navigation, session }) => {
-
   // Current xp. Reset to 0 each time you level up.
   const [totalXp, setTotalXp] = useState(0);
   const [wisdomXp, setWisdomXp] = useState(0);
@@ -79,48 +78,52 @@ const GameScreen = ({ navigation, session }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.avatar}>
-        <SavedAvatar size={180} session={session} />
-        <Badge
-          value={totalLvl}
-          status="success"
-          badgeStyle={{ width: 30, height: 30, borderRadius: 30 }}
-          textStyle={{ fontSize: 20, fontWeight: "bold" }}
-          containerStyle={{ marginTop: -20 }}
-        />
-      </View>
-      <View style={styles.experience}>
-        <Text style={styles.generalLvl}>LEVEL</Text>
-        <Bar
-          progress={totalProgress}
-          height={16}
-          width={(Dimensions.get("window").width / 10) * 7}
-          unfilledColor="lightgray"
-          color={"mediumspringgreen"}
-          borderWidth={0}
-          animationConfig={{ bounciness: 5 }}
-        />
-      </View>
-      <View style={styles.levelContainer}>
-        <LevelBar
-          type="WISDOM"
-          color="royalblue"
-          level={wisdomLvl}
-          progress={strengthProgress}
-        />
-        <LevelBar
-          type="STRENGTH"
-          color="tomato"
-          level={strengthLvl}
-          progress={wisdomProgress}
-        />
-        <LevelBar
-          type="WEALTH"
-          color="goldenrod"
-          level={wealthLvl}
-          progress={wealthProgress}
-        />
-      </View>
+      <Card containerStyle={{ padding: 5 }}>
+        <View style={styles.avatar}>
+          <SavedAvatar size={180} session={session} />
+          <Badge
+            value={totalLvl}
+            status="success"
+            badgeStyle={{ width: 30, height: 30, borderRadius: 30 }}
+            textStyle={{ fontSize: 20, fontWeight: "bold" }}
+            containerStyle={{ marginTop: -20 }}
+          />
+        </View>
+        <View style={styles.experience}>
+          <Text style={styles.generalLvl}>LEVEL</Text>
+          <Bar
+            progress={totalProgress}
+            height={16}
+            width={(Dimensions.get("window").width / 10) * 7}
+            unfilledColor="lightgray"
+            color={"mediumspringgreen"}
+            borderWidth={0}
+            animationConfig={{ bounciness: 5 }}
+          />
+        </View>
+      </Card>
+      <Card containerStyle={{ padding: 5 }}>
+        <View style={styles.levelContainer}>
+          <LevelBar
+            type="WISDOM"
+            color="royalblue"
+            level={wisdomLvl}
+            progress={strengthProgress}
+          />
+          <LevelBar
+            type="STRENGTH"
+            color="tomato"
+            level={strengthLvl}
+            progress={wisdomProgress}
+          />
+          <LevelBar
+            type="WEALTH"
+            color="goldenrod"
+            level={wealthLvl}
+            progress={wealthProgress}
+          />
+        </View>
+      </Card>
     </View>
   );
 };

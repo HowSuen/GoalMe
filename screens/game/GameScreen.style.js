@@ -11,14 +11,11 @@ export default StyleSheet.create({
   },
   avatar: {
     justifyContent: "center",
+    alignItems: "center",
   },
   levelContainer: {
     justifyContent: "flex-start",
     paddingVertical: 5,
-    borderColor: "royalblue",
-    borderBottomWidth: 0.5,
-    borderTopWidth: 0.5,
-    marginTop: 5,
   },
   experience: {
     flexDirection: "row",

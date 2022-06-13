@@ -42,7 +42,7 @@ const deleteAllItems = async () => {
 
 export default CompletedGoals = () => {
   const [data, setData] = useState([]);
-  const [order, setOrder] = useState("descending");
+  const [order, setOrder] = useState("ascending");
   const [orderBy, setOrderBy] = useState("dateCompleted");
   const user = supabase.auth.user();
 

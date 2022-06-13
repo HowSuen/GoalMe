@@ -33,6 +33,7 @@ const sortItems = (order, orderBy) => {
   };
 
   const convertType = (t) => {
+    console.log(t)
     if (t == "General") {
       return 0;
     } else if (t == "Academic") {
@@ -104,7 +105,7 @@ const deleteItem = async (item) => {
 
 export default GoalTracker = ({ navigation }) => {
   const [data, setData] = useState([]);
-  const [order, setOrder] = useState("descending");
+  const [order, setOrder] = useState("ascending");
   const [orderBy, setOrderBy] = useState("dateCreated");
   const user = supabase.auth.user();
   const isFocused = useIsFocused();

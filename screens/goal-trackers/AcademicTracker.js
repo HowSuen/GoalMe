@@ -17,7 +17,7 @@ import {
 
 export default AcademicTracker = ({ navigation }) => {
   const [data, setData] = useState([]);
-  const [order, setOrder] = useState("descending");
+  const [order, setOrder] = useState("ascending");
   const [orderBy, setOrderBy] = useState("dateCreated");
   const user = supabase.auth.user();
   const isFocused = useIsFocused();

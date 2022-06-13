@@ -109,7 +109,7 @@ export default GoalTracker = ({ navigation }) => {
                 description: goal.description,
                 type: goal.type,
                 difficulty: goal.difficulty,
-                updated_at: goal.updated_at,
+                updated_at: new Date(goal.updated_at),
               },
               ...prevGoal,
             ];

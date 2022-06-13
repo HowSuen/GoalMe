@@ -115,39 +115,146 @@ export default GoalTracker = ({ navigation }) => {
   const isFocused = useIsFocused();
   const route = useRoute();
 
+  const [totalXp, setTotalXp] = useState(0);
+  const [wisdomXp, setWisdomXp] = useState(0);
+  const [strengthXp, setStrengthXp] = useState(0);
+  const [wealthXp, setWealthXp] = useState(0);
+
+  const [totalLvl, setTotalLvl] = useState(1);
+  const [strengthLvl, setStrengthLvl] = useState(1);
+  const [wisdomLvl, setWisdomLvl] = useState(1);
+  const [wealthLvl, setWealthLvl] = useState(1);
+
   useEffect(() => {
     setData([]);
-    (async () => {
-      try {
-        let { data: goals, error } = await supabase
-          .from("goals")
-          .select("*")
-          .match({ user_id: user.id, completion_status: false });
+    getGoals();
+    getExperience();
+  }, [isFocused, totalXp]);
 
-        if (error) throw error;
+  const getGoals = async () => {
+    try {
+      let { data: goals, error } = await supabase
+        .from("goals")
+        .select("*")
+        .match({ user_id: user.id, completion_status: false });
 
-        goals.sort(sortItems(order, orderBy)).reverse();
+      if (error) throw error;
 
-        goals.map((goal) => {
-          setData((prevGoal) => {
-            return [
-              {
-                id: goal.id,
-                content: goal.content,
-                description: goal.description,
-                type: goal.type,
-                difficulty: goal.difficulty,
-                updated_at: goal.updated_at,
-              },
-              ...prevGoal,
-            ];
-          });
+      goals.sort(sortItems(order, orderBy)).reverse();
+
+      goals.map((goal) => {
+        setData((prevGoal) => {
+          return [
+            {
+              id: goal.id,
+              content: goal.content,
+              description: goal.description,
+              type: goal.type,
+              difficulty: goal.difficulty,
+              updated_at: goal.updated_at,
+            },
+            ...prevGoal,
+          ];
         });
-      } catch (error) {
-        Alert.alert(error.message);
+      });
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+  };
+
+  const getExperience = async () => {
+    try {
+      const user = supabase.auth.user();
+      if (!user) throw new Error("No user on the session!");
+
+      let { data, error, status } = await supabase
+        .from("experience")
+        .select()
+        .eq("id", user.id)
+        .single();
+
+      if (error && status !== 406) {
+        throw error;
       }
-    })();
-  }, [isFocused]);
+
+      if (data) {
+        setTotalXp(data.totalXP);
+        setTotalLvl(data.totalLVL);
+        setWisdomXp(data.wisdomXP);
+        setWisdomLvl(data.wisdomLVL);
+        setStrengthXp(data.strengthXP);
+        setStrengthLvl(data.strengthLVL);
+        setWealthXp(data.wealthXP);
+        setWealthLvl(data.wealthLVL);
+      }
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+  };
+
+  const updateExperience = async (goal) => {
+    let addXP = 0;
+    if (goal.difficulty == "Hard") {
+      addXP = 200;
+    } else if (goal.difficulty == "Medium") {
+      addXP = 100;
+    } else if (goal.difficulty == "Easy") {
+      addXP = 50;
+    }
+
+    let newWisdomXp = wisdomXp;
+    let newStrengthXp = strengthXp;
+    let newWealthXp = wealthXp;
+
+    if (goal.type == "Academic") {
+      newWisdomXp += addXP;
+    } else if (goal.type == "Fitness") {
+      newStrengthXp += addXP;
+    } else if (goal.type == "Finance") {
+      newWealthXp += addXP;
+    }
+
+    const newTotalXp = totalXp + addXP;
+
+    const totalMax = Math.round(Math.pow(totalLvl / 0.07, 2));
+    const wisdomMax = Math.round(Math.pow(wisdomLvl / 0.07, 2));
+    const strengthMax = Math.round(Math.pow(strengthLvl / 0.07, 2));
+    const wealthMax = Math.round(Math.pow(wealthLvl / 0.07, 2));
+
+    try {
+      const user = supabase.auth.user();
+      if (!user) throw new Error("No user on the session!");
+
+      const updates = {
+        id: user.id,
+        updated_at: new Date().toISOString().toLocaleString(),
+        totalXP: newTotalXp >= totalMax ? newTotalXp % totalMax : newTotalXp,
+        totalLVL: newTotalXp >= totalMax ? totalLvl + 1 : totalLvl,
+        wisdomXP:
+          newWisdomXp >= wisdomMax ? newWisdomXp % wisdomMax : newWisdomXp,
+        wisdomLVL: newWisdomXp >= wisdomMax ? wisdomLvl + 1 : wisdomLvl,
+        strengthXP:
+          newStrengthXp >= strengthMax
+            ? newStrengthXp % strengthMax
+            : newStrengthXp,
+        strengthLVL:
+          newStrengthXp >= strengthMax ? strengthLvl + 1 : strengthLvl,
+        wealthXP:
+          newWealthXp >= wealthMax ? newWealthXp % wealthMax : newWealthXp,
+        wealthLVL: newWealthXp >= wealthMax ? wealthLvl + 1 : wealthLvl,
+      };
+
+      let { error } = await supabase
+        .from("experience")
+        .upsert(updates, { returning: "minimal" });
+
+      if (error) {
+        throw error;
+      }
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+  };
 
   const sortGoals = (order, orderBy) => {
     setData((goals) => {
@@ -160,6 +267,7 @@ export default GoalTracker = ({ navigation }) => {
     setData((goals) => {
       return goals.filter((g) => g != goal);
     });
+    updateExperience(goal);
   };
 
   const deleteGoal = async (goal) => {

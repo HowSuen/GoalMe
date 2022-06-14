@@ -36,7 +36,6 @@ export default AcademicTracker = ({ navigation }) => {
   useEffect(() => {
     setData([]);
     getGoals();
-    getExperience();
   }, [isFocused, totalXp]);
 
   const getGoals = async () => {
@@ -72,11 +71,11 @@ export default AcademicTracker = ({ navigation }) => {
     } catch (error) {
       Alert.alert(error.message);
     }
+    getExperience();
   };
 
   const getExperience = async () => {
     try {
-      const user = supabase.auth.user();
       if (!user) throw new Error("No user on the session!");
 
       let { data, error, status } = await supabase

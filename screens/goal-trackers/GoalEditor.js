@@ -14,6 +14,7 @@ import {
   TouchableWithoutFeedback,
 } from "react-native-gesture-handler";
 import GoalDropdownList from "../../components/goal-trackers/GoalDropdownList";
+import { types, difficulties } from "./GoalSetter";
 
 export default GoalEditor = ({ navigation }) => {
   const route = useRoute();
@@ -28,29 +29,15 @@ export default GoalEditor = ({ navigation }) => {
       content == goal.content &&
       description == goal.description &&
       type == goal.type &&
-      difficulty == goal.difficulty 
+      difficulty == goal.difficulty
     );
   };
 
   const hasEmptyValues = () => {
-    return content == "" || type == null || difficulty ==  null;
-  }
+    return content == "" || type == null || difficulty == null;
+  };
 
-  const types = [
-    { label: "General", value: "General" },
-    { label: "Academic", value: "Academic" },
-    { label: "Fitness", value: "Fitness" },
-    { label: "Finance", value: "Finance" },
-  ];
-
-  const difficulties = [
-    { label: "None", value: "None" },
-    { label: "Easy", value: "Easy" },
-    { label: "Medium", value: "Medium" },
-    { label: "Hard", value: "Hard" },
-  ];
-
-  const updateGoal = async (key) => {
+  const updateGoal = async (goal) => {
     try {
       let { data, error } = await supabase
         .from("goals")
@@ -61,7 +48,7 @@ export default GoalEditor = ({ navigation }) => {
           difficulty: difficulty,
           updated_at: new Date().toISOString().toLocaleString(),
         })
-        .match({ id: key });
+        .match({ id: goal.id });
 
       if (error) throw error;
     } catch (error) {
@@ -82,8 +69,6 @@ export default GoalEditor = ({ navigation }) => {
             label="Goal"
             value={content}
             onChangeText={(text) => setContent(text)}
-            multiline={true}
-            maxHeight={90}
           />
           <Input
             style={styles.textInput}
@@ -124,7 +109,7 @@ export default GoalEditor = ({ navigation }) => {
             }
             disabled={noStateChange() || hasEmptyValues()}
             onPress={() => {
-              updateGoal(goal.key);
+              updateGoal(goal);
               navigation.navigate(routeName);
             }}
           >

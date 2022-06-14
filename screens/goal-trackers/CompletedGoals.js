@@ -6,22 +6,46 @@ import styles from "./CompletedGoals.style";
 import CompletedList from "../../components/goal-trackers/CompletedList";
 import Empty from "./Empty";
 import supabase from "../../lib/supabase";
+import { orders, sortItems, deleteItem } from "./GoalTracker";
+import AlertPrompt from "../../components/goal-trackers/AlertPrompt";
+
+const orderBys = [
+  { label: "Date Completed", value: "dateCompleted" },
+  { label: "Difficulty", value: "difficulty" },
+  { label: "Type", value: "type" },
+];
+
+const redoItem = async (item) => {
+  try {
+    let { data, error } = await supabase
+      .from("goals")
+      .update({ completion_status: false, completed_at: null })
+      .match({ id: item.id });
+
+    if (error) throw error;
+  } catch (error) {
+    Alert.alert(error.message);
+  }
+};
+
+const deleteAllItems = async () => {
+  try {
+    let { data, error } = await supabase
+      .from("goals")
+      .delete()
+      .match({ completion_status: true });
+
+    if (error) throw error;
+  } catch (error) {
+    Alert.alert(error.message);
+  }
+};
 
 export default CompletedGoals = () => {
   const [data, setData] = useState([]);
-  const [order, setOrder] = useState("descending");
+  const [order, setOrder] = useState("ascending");
   const [orderBy, setOrderBy] = useState("dateCompleted");
   const user = supabase.auth.user();
-
-  const orders = [
-    { label: "Ascending", value: "ascending" },
-    { label: "Descending", value: "descending" },
-  ];
-
-  const orderBys = [
-    { label: "Date Completed", value: "dateCompleted" },
-    { label: "Difficulty", value: "difficulty" },
-  ];
 
   useEffect(() => {
     setData([]);
@@ -34,18 +58,18 @@ export default CompletedGoals = () => {
 
         if (error) throw error;
 
-        goals.sort((a, b) => new Date(a.completed_at) - new Date(b.completed_at));
+        goals.sort(sortItems(order, orderBy)).reverse();
 
         goals.map((goal) => {
           setData((prevGoal) => {
             return [
               {
-                key: goal.id,
+                id: goal.id,
                 content: goal.content,
                 description: goal.description,
                 type: goal.type,
                 difficulty: goal.difficulty,
-                completed_at: new Date(goal.completed_at),
+                completed_at: goal.completed_at,
               },
               ...prevGoal,
             ];
@@ -58,83 +82,34 @@ export default CompletedGoals = () => {
   }, []);
 
   const sortGoals = (order, orderBy) => {
-    const convert = (d) => {
-      if (d == "Hard") {
-        return 3;
-      } else if (d == "Medium") {
-        return 2;
-      } else if (d == "Easy") {
-        return 1;
-      } else {
-        return 0;
-      }
-    };
-
-    let comparator;
-    if (orderBy == "dateCompleted") {
-      comparator = (a, b) => 
-      order == "ascending"
-          ? a.completed_at - b.completed_at
-          : b.completed_at - a.completed_at;
-    } else if (orderBy == "difficulty") {
-      comparator = (a, b) =>
-        order == "ascending"
-          ? convert(a.difficulty) - convert(b.difficulty)
-          : convert(b.difficulty) - convert(a.difficulty);
-    }
-
     setData((goals) => {
-      return goals.sort(comparator);
+      return goals.sort(sortItems(order, orderBy));
     });
   };
 
-  const deleteGoal = async (key) => {
-    try {
-      let { data, error } = await supabase
-        .from("goals")
-        .delete()
-        .match({ id: key });
-
-      if (error) throw error;
-    } catch (error) {
-      Alert.alert(error.message);
-    }
-
-    setData((goals) => {
-      return goals.filter((goal) => goal.key != key);
+  const deleteGoal = async (goal) => {
+    AlertPrompt("Delete this goal?", async () => {
+      deleteItem(goal);
+      setData((goals) => {
+        return goals.filter((g) => g != goal);
+      });
     });
   };
 
-  const uncompleteGoal = async (key) => {
-    try {
-      let { data, error } = await supabase
-        .from("goals")
-        .update({ completion_status: false, completed_at: null })
-        .match({ id: key });
-
-      if (error) throw error;
-    } catch (error) {
-      Alert.alert(error.message);
-    }
-
-    setData((goals) => {
-      return goals.filter((goal) => goal.key != key);
+  const redoGoal = async (goal) => {
+    AlertPrompt("Redo this goal?", async () => {
+      redoItem(goal);
+      setData((goals) => {
+        return goals.filter((g) => g != goal);
+      });
     });
   };
 
-  const deleteAll = async () => {
-    try {
-      let { data, error } = await supabase
-        .from("goals")
-        .delete()
-        .match({ completion_status: true });
-
-      if (error) throw error;
-    } catch (error) {
-      Alert.alert(error.message);
-    }
-
-    setData([]);
+  const deleteAllGoals = async () => {
+    AlertPrompt("Delete all completed goals?", async () => {
+      deleteAllItems();
+      setData([]);
+    });
   };
 
   return (
@@ -143,12 +118,12 @@ export default CompletedGoals = () => {
         <FlatList
           data={data}
           ListEmptyComponent={() => <Empty />}
-          keyExtractor={(goal) => goal.key}
+          keyExtractor={(goal) => goal.id}
           renderItem={({ item }) => (
             <CompletedList
               goal={item}
               deleteGoal={deleteGoal}
-              uncompleteGoal={uncompleteGoal}
+              redoGoal={redoGoal}
             />
           )}
         />
@@ -169,7 +144,10 @@ export default CompletedGoals = () => {
               sortGoals(order, orderBy);
             }}
           />
-          <TouchableOpacity style={styles.deleteButton} onPress={deleteAll}>
+          <TouchableOpacity
+            style={styles.deleteButton}
+            onPress={deleteAllGoals}
+          >
             <FontAwesome name="trash" size={25} color="black" />
           </TouchableOpacity>
         </View>

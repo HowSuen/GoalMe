@@ -7,131 +7,176 @@ import Empty from "./Empty";
 import supabase from "../../lib/supabase";
 import { useIsFocused, useRoute } from "@react-navigation/native";
 import SortButton from "../../components/goal-trackers/SortButton";
+import {
+  orders,
+  orderBys,
+  sortItems,
+  completeItem,
+  deleteItem,
+} from "./GoalTracker";
+import AlertPrompt from "../../components/goal-trackers/AlertPrompt";
 
 export default AcademicTracker = ({ navigation }) => {
   const [data, setData] = useState([]);
-  const [order, setOrder] = useState("descending");
+  const [order, setOrder] = useState("ascending");
   const [orderBy, setOrderBy] = useState("dateCreated");
   const user = supabase.auth.user();
   const isFocused = useIsFocused();
   const route = useRoute();
 
-  const orders = [
-    { label: "Ascending", value: "ascending" },
-    { label: "Descending", value: "descending" },
-  ];
+  const [totalXp, setTotalXp] = useState(0);
+  const [wisdomXp, setWisdomXp] = useState(0);
+  const [strengthXp, setStrengthXp] = useState(0);
+  const [wealthXp, setWealthXp] = useState(0);
 
-  const orderBys = [
-    { label: "Date Created", value: "dateCreated" },
-    { label: "Date Updated", value: "dateUpdated" },
-    { label: "Difficulty", value: "difficulty" },
-  ];
+  const [totalLvl, setTotalLvl] = useState(1);
+  const [strengthLvl, setStrengthLvl] = useState(1);
+  const [wisdomLvl, setWisdomLvl] = useState(1);
+  const [wealthLvl, setWealthLvl] = useState(1);
 
   useEffect(() => {
     setData([]);
-    (async () => {
-      try {
-        let { data: goals, error } = await supabase
-          .from("goals")
-          .select("*")
-          .match({
-            user_id: user.id,
-            type: "Academic",
-            completion_status: false,
-          });
+    getGoals();
+  }, [isFocused, totalXp]);
 
-        if (error) throw error;
-
-        goals.sort((a, b) => a.id - b.id);
-        goals.map((goal) => {
-          setData((prevGoal) => {
-            return [
-              {
-                key: goal.id,
-                content: goal.content,
-                description: goal.description,
-                type: goal.type,
-                difficulty: goal.difficulty,
-                updated_at: new Date(goal.updated_at),
-              },
-              ...prevGoal,
-            ];
-          });
+  const getGoals = async () => {
+    try {
+      let { data: goals, error } = await supabase
+        .from("goals")
+        .select("*")
+        .match({
+          user_id: user.id,
+          type: "Academic",
+          completion_status: false,
         });
-      } catch (error) {
-        Alert.alert(error.message);
+
+      if (error) throw error;
+
+      goals.sort(sortItems(order, orderBy)).reverse();
+
+      goals.map((goal) => {
+        setData((prevGoal) => {
+          return [
+            {
+              id: goal.id,
+              content: goal.content,
+              description: goal.description,
+              type: goal.type,
+              difficulty: goal.difficulty,
+              updated_at: goal.updated_at,
+            },
+            ...prevGoal,
+          ];
+        });
+      });
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+    getExperience();
+  };
+
+  const getExperience = async () => {
+    try {
+      if (!user) throw new Error("No user on the session!");
+
+      let { data, error, status } = await supabase
+        .from("experience")
+        .select()
+        .eq("id", user.id)
+        .single();
+
+      if (error && status !== 406) {
+        throw error;
       }
-    })();
-  }, [isFocused]);
+
+      if (data) {
+        setTotalXp(data.totalXP);
+        setTotalLvl(data.totalLVL);
+        setWisdomXp(data.wisdomXP);
+        setWisdomLvl(data.wisdomLVL);
+        setStrengthXp(data.strengthXP);
+        setStrengthLvl(data.strengthLVL);
+        setWealthXp(data.wealthXP);
+        setWealthLvl(data.wealthLVL);
+      }
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+  };
+
+  const updateExperience = async (goal) => {
+    let addXP = 0;
+    if (goal.difficulty == "Hard") {
+      addXP = 200;
+    } else if (goal.difficulty == "Medium") {
+      addXP = 100;
+    } else if (goal.difficulty == "Easy") {
+      addXP = 50;
+    }
+    const newTotalXp = totalXp + addXP;
+    const newWisdomXp = wisdomXp + addXP;
+    const totalMax = Math.round(Math.pow(totalLvl / 0.07, 2));
+    const wisdomMax = Math.round(Math.pow(wisdomLvl / 0.07, 2));
+
+    setTotalXp(newTotalXp >= totalMax ? newTotalXp % totalMax : newTotalXp);
+    setTotalLvl(newTotalXp >= totalMax ? totalLvl + 1 : totalLvl);
+    setWisdomXp(
+      newWisdomXp >= wisdomMax ? newWisdomXp % wisdomMax : newWisdomXp
+    );
+    setWisdomLvl(newWisdomXp >= wisdomMax ? wisdomLvl + 1 : wisdomLvl);
+
+    try {
+      const user = supabase.auth.user();
+      if (!user) throw new Error("No user on the session!");
+
+      const updates = {
+        id: user.id,
+        updated_at: new Date().toISOString().toLocaleString(),
+        totalXP: newTotalXp >= totalMax ? newTotalXp % totalMax : newTotalXp,
+        totalLVL: newTotalXp >= totalMax ? totalLvl + 1 : totalLvl,
+        wisdomXP:
+          newWisdomXp >= wisdomMax ? newWisdomXp % wisdomMax : newWisdomXp,
+        wisdomLVL: newWisdomXp >= wisdomMax ? wisdomLvl + 1 : wisdomLvl,
+        strengthXP: strengthXp,
+        strengthLVL: strengthLvl,
+        wealthXP: wealthXp,
+        wealthLVL: wealthLvl,
+      };
+
+      let { error } = await supabase
+        .from("experience")
+        .upsert(updates, { returning: "minimal" });
+
+      if (error) {
+        throw error;
+      }
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+  };
 
   const sortGoals = (order, orderBy) => {
-    const convert = (d) => {
-      if (d == "Hard") {
-        return 3;
-      } else if (d == "Medium") {
-        return 2;
-      } else if (d == "Easy") {
-        return 1;
-      } else {
-        return 0;
-      }
-    };
-
-    let comparator;
-    if (orderBy == "dateCreated") {
-      comparator = (a, b) =>
-        order == "ascending" ? a.key - b.key : b.key - a.key;
-    } else if (orderBy == "dateUpdated") {
-      comparator = (a, b) =>
-        order == "ascending"
-          ? a.updated_at - b.updated_at
-          : b.updated_at - a.updated_at;
-    } else if (orderBy == "difficulty") {
-      comparator = (a, b) =>
-        order == "ascending"
-          ? convert(a.difficulty) - convert(b.difficulty)
-          : convert(b.difficulty) - convert(a.difficulty);
-    }
-
     setData((goals) => {
-      return goals.sort(comparator);
+      return goals.sort(sortItems(order, orderBy));
     });
   };
 
-  const deleteGoal = async (key) => {
-    try {
-      let { data, error } = await supabase
-        .from("goals")
-        .delete()
-        .match({ id: key });
-
-      if (error) throw error;
-    } catch (error) {
-      Alert.alert(error.message);
-    }
-
-    setData((goals) => {
-      return goals.filter((goal) => goal.key != key);
+  const completeGoal = async (goal) => {
+    AlertPrompt("Complete this goal?", async () => {
+      completeItem(goal);
+      setData((goals) => {
+        return goals.filter((g) => g != goal);
+      });
+      updateExperience(goal);
     });
   };
 
-  const completeGoal = async (key) => {
-    try {
-      let { data, error } = await supabase
-        .from("goals")
-        .update({
-          completion_status: true,
-          completed_at: new Date().toISOString().toLocaleString(),
-        })
-        .match({ id: key });
-
-      if (error) throw error;
-    } catch (error) {
-      Alert.alert(error.message);
-    }
-
-    setData((goals) => {
-      return goals.filter((goal) => goal.key != key);
+  const deleteGoal = async (goal) => {
+    AlertPrompt("Delete this goal?", async () => {
+      deleteItem(goal);
+      setData((goals) => {
+        return goals.filter((g) => g != goal);
+      });
     });
   };
 
@@ -141,7 +186,7 @@ export default AcademicTracker = ({ navigation }) => {
         <FlatList
           data={data}
           ListEmptyComponent={() => <Empty />}
-          keyExtractor={(goal) => goal.key}
+          keyExtractor={(goal) => goal.id}
           renderItem={({ item }) => (
             <GoalList
               goal={item}

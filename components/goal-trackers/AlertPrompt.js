@@ -3,11 +3,11 @@ import { Alert } from "react-native";
 export default AlertPrompt = (title, onPress) => {
   return Alert.alert(title, "", [
     {
-      text: "Yes",
-      onPress: onPress,
+      text: "Cancel",
     },
     {
-      text: "No",
+      text: "Yes",
+      onPress: onPress,
     },
   ]);
 };

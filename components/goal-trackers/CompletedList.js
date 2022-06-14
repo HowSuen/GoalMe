@@ -4,7 +4,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import styles from "./GoalList.style";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-export default CompletedList = ({ goal, uncompleteGoal, deleteGoal }) => {
+export default CompletedList = ({ goal, redoGoal, deleteGoal }) => {
   return (
     <View style={styles.container}>
       <View
@@ -20,7 +20,7 @@ export default CompletedList = ({ goal, uncompleteGoal, deleteGoal }) => {
       >
         <TouchableOpacity
           style={styles.checkContainer}
-          onPress={() => uncompleteGoal(goal)}
+          onPress={() => redoGoal(goal)}
         >
           <FontAwesome name="check-square-o" size={25} color="black" />
         </TouchableOpacity>

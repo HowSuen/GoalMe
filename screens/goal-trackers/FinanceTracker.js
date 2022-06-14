@@ -14,6 +14,7 @@ import {
   completeItem,
   deleteItem,
 } from "./GoalTracker";
+import AlertPrompt from "../../components/goal-trackers/AlertPrompt";
 
 export default FinanceTracker = ({ navigation }) => {
   const [data, setData] = useState([]);
@@ -155,17 +156,21 @@ export default FinanceTracker = ({ navigation }) => {
   };
 
   const completeGoal = async (goal) => {
-    completeItem(goal);
-    setData((goals) => {
-      return goals.filter((g) => g != goal);
+    AlertPrompt("Complete this goal?", async () => {
+      completeItem(goal);
+      setData((goals) => {
+        return goals.filter((g) => g != goal);
+      });
+      updateExperience(goal);
     });
-    updateExperience(goal);
   };
 
   const deleteGoal = async (goal) => {
-    deleteItem(goal);
-    setData((goals) => {
-      return goals.filter((g) => g != goal);
+    AlertPrompt("Delete this goal?", async () => {
+      deleteItem(goal);
+      setData((goals) => {
+        return goals.filter((g) => g != goal);
+      });
     });
   };
 

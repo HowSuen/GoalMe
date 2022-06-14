@@ -7,6 +7,7 @@ import Empty from "./Empty";
 import supabase from "../../lib/supabase";
 import { useIsFocused, useRoute } from "@react-navigation/native";
 import SortButton from "../../components/goal-trackers/SortButton";
+import AlertPrompt from "../../components/goal-trackers/AlertPrompt";
 
 const orders = [
   { label: "Ascending", value: "ascending" },
@@ -262,17 +263,21 @@ export default GoalTracker = ({ navigation }) => {
   };
 
   const completeGoal = async (goal) => {
-    completeItem(goal);
-    setData((goals) => {
-      return goals.filter((g) => g != goal);
+    AlertPrompt("Complete this goal?", async () => {
+      completeItem(goal);
+      setData((goals) => {
+        return goals.filter((g) => g != goal);
+      });
+      updateExperience(goal);
     });
-    updateExperience(goal);
   };
 
   const deleteGoal = async (goal) => {
-    deleteItem(goal);
-    setData((goals) => {
-      return goals.filter((g) => g != goal);
+    AlertPrompt("Delete this goal?", async () => {
+      deleteItem(goal);
+      setData((goals) => {
+        return goals.filter((g) => g != goal);
+      });
     });
   };
 

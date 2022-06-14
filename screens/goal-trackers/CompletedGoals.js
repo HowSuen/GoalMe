@@ -7,6 +7,7 @@ import CompletedList from "../../components/goal-trackers/CompletedList";
 import Empty from "./Empty";
 import supabase from "../../lib/supabase";
 import { orders, sortItems, deleteItem } from "./GoalTracker";
+import AlertPrompt from "../../components/goal-trackers/AlertPrompt";
 
 const orderBys = [
   { label: "Date Completed", value: "dateCompleted" },
@@ -14,7 +15,7 @@ const orderBys = [
   { label: "Type", value: "type" },
 ];
 
-const uncompleteItem = async (item) => {
+const redoItem = async (item) => {
   try {
     let { data, error } = await supabase
       .from("goals")
@@ -87,22 +88,28 @@ export default CompletedGoals = () => {
   };
 
   const deleteGoal = async (goal) => {
-    deleteItem(goal);
-    setData((goals) => {
-      return goals.filter((g) => g != goal);
+    AlertPrompt("Delete this goal?", async () => {
+      deleteItem(goal);
+      setData((goals) => {
+        return goals.filter((g) => g != goal);
+      });
     });
   };
 
-  const uncompleteGoal = async (goal) => {
-    uncompleteItem(goal);
-    setData((goals) => {
-      return goals.filter((g) => g != goal);
+  const redoGoal = async (goal) => {
+    AlertPrompt("Redo this goal?", async () => {
+      redoItem(goal);
+      setData((goals) => {
+        return goals.filter((g) => g != goal);
+      });
     });
   };
 
   const deleteAllGoals = async () => {
-    deleteAllItems();
-    setData([]);
+    AlertPrompt("Delete all completed goals?", async () => {
+      deleteAllItems();
+      setData([]);
+    });
   };
 
   return (
@@ -116,7 +123,7 @@ export default CompletedGoals = () => {
             <CompletedList
               goal={item}
               deleteGoal={deleteGoal}
-              uncompleteGoal={uncompleteGoal}
+              redoGoal={redoGoal}
             />
           )}
         />

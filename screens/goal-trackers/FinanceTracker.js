@@ -119,6 +119,13 @@ export default FinanceTracker = ({ navigation }) => {
     const totalMax = Math.round(Math.pow(totalLvl / 0.07, 2));
     const wealthMax = Math.round(Math.pow(wealthLvl / 0.07, 2));
 
+    setTotalXp(newTotalXp >= totalMax ? newTotalXp % totalMax : newTotalXp);
+    setTotalLvl(newTotalXp >= totalMax ? totalLvl + 1 : totalLvl);
+    setWealthXp(
+      newWealthXp >= wealthMax ? newWealthXp % wealthMax : newWealthXp
+    );
+    setWealthLvl(newWealthXp >= wealthMax ? wealthLvl + 1 : wealthLvl);
+
     try {
       const user = supabase.auth.user();
       if (!user) throw new Error("No user on the session!");

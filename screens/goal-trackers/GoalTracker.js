@@ -221,6 +221,23 @@ export default GoalTracker = ({ navigation }) => {
     const strengthMax = Math.round(Math.pow(strengthLvl / 0.07, 2));
     const wealthMax = Math.round(Math.pow(wealthLvl / 0.07, 2));
 
+    setTotalXp(newTotalXp >= totalMax ? newTotalXp % totalMax : newTotalXp);
+    setTotalLvl(newTotalXp >= totalMax ? totalLvl + 1 : totalLvl);
+    setWisdomXp(
+      newWisdomXp >= wisdomMax ? newWisdomXp % wisdomMax : newWisdomXp
+    );
+    setWisdomLvl(newWisdomXp >= wisdomMax ? wisdomLvl + 1 : wisdomLvl);
+    setStrengthXp(
+      newStrengthXp >= strengthMax ? newStrengthXp % strengthMax : newStrengthXp
+    );
+    setStrengthLvl(
+      newStrengthXp >= strengthMax ? strengthLvl + 1 : strengthLvl
+    );
+    setWealthXp(
+      newWealthXp >= wealthMax ? newWealthXp % wealthMax : newWealthXp
+    );
+    setWealthLvl(newWealthXp >= wealthMax ? wealthLvl + 1 : wealthLvl);
+
     try {
       const user = supabase.auth.user();
       if (!user) throw new Error("No user on the session!");

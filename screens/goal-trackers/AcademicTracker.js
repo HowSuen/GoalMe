@@ -118,6 +118,13 @@ export default AcademicTracker = ({ navigation }) => {
     const totalMax = Math.round(Math.pow(totalLvl / 0.07, 2));
     const wisdomMax = Math.round(Math.pow(wisdomLvl / 0.07, 2));
 
+    setTotalXp(newTotalXp >= totalMax ? newTotalXp % totalMax : newTotalXp);
+    setTotalLvl(newTotalXp >= totalMax ? totalLvl + 1 : totalLvl);
+    setWisdomXp(
+      newWisdomXp >= wisdomMax ? newWisdomXp % wisdomMax : newWisdomXp
+    );
+    setWisdomLvl(newWisdomXp >= wisdomMax ? wisdomLvl + 1 : wisdomLvl);
+
     try {
       const user = supabase.auth.user();
       if (!user) throw new Error("No user on the session!");

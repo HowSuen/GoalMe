@@ -11,6 +11,7 @@ export default StyleSheet.create({
   goalListContainer: {
     height: "auto",
     width: 350,
+    borderRadius: 10,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",

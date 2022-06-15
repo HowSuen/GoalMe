@@ -6,8 +6,7 @@ import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 import styles from "./AppNavigator.style";
 import GoalTrackerNavigator from "./GoalTrackerNavigator";
 import ProfileNavigator from "./ProfileNavigator";
-
-import GameScreen from "../screens/game/GameScreen";
+import GameNavigator from "./GameNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -85,7 +84,7 @@ export default AppNavigator = ({ session }) => {
           }}
         >
           {({ navigation }) =>
-            GameScreen({ navigation: navigation, session: session })
+            GameNavigator({ navigation: navigation, session: session })
           }
         </Tab.Screen>
         <Tab.Screen name="Profile">

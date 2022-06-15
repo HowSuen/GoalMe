@@ -66,6 +66,5 @@ export default StyleSheet.create({
     fontSize: 20,
     color: "#2d2b2c",
     fontWeight: "bold",
-    marginHorizontal: 20,
   }
 });

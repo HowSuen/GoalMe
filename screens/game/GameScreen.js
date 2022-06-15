@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Dimensions } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { Card, Image } from "react-native-elements";
 import LevelBar from "../../components/game/LevelBar";
 import MainLevel from "../../components/game/MainLevel";
@@ -18,16 +18,24 @@ const GameScreen = ({ navigation, session }) => {
           <LevelBar type="WEALTH" session={session} />
         </View>
       </Card>
-      <Card containerStyle={{ padding: 5 }}>
-        <View style={styles.achievementContainer}>
-          <Image
-            style={styles.achievement}
-            source={require("../../assets/achievement_logo_alt.png")}
-          />
-          <Text style={styles.achievementText}>Achievements Completed:</Text>
-          <Text style={styles.achievementText}>69</Text>
-        </View>
-      </Card>
+      <Pressable
+        onPress={() =>
+          navigation.navigate("Game", {
+            screen: "Achievements",
+          })
+        }
+      >
+        <Card containerStyle={{ padding: 5 }}>
+          <View style={styles.achievementContainer}>
+            <Image
+              style={styles.achievement}
+              source={require("../../assets/achievement_logo_alt.png")}
+            />
+            <Text style={styles.achievementText}>Achievements Completed:</Text>
+            <Text style={styles.achievementText}>69</Text>
+          </View>
+        </Card>
+      </Pressable>
     </View>
   );
 };

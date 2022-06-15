@@ -59,6 +59,7 @@ export default GoalNavigator = ({ route, navigation }) => {
         options={{
           headerShown: true,
           headerStyle: { backgroundColor: "orange" },
+          headerTintColor: "black",
         }}
       />
       <Stack.Screen

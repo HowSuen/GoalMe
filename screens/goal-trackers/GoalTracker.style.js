@@ -62,4 +62,17 @@ export default StyleSheet.create({
     marginVertical: 5,
     borderRadius: 100,
   },
+  moduleNavButton: {
+    alignSelf: "stretch",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "orange",
+    borderRadius: 10,
+    marginTop: 25,
+  },
+  buttonText: {
+    fontSize: 18,
+    padding: 10,
+    color: "black",
+  },
 });

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Alert, View, FlatList, TouchableOpacity } from "react-native";
+import { Alert, View, FlatList, TouchableOpacity, Text } from "react-native";
 import styles from "./GoalTracker.style";
 import { FontAwesome } from "@expo/vector-icons";
 import GoalList from "../../components/goal-trackers/GoalList";
@@ -190,6 +190,14 @@ export default AcademicTracker = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("Modules");
+          }}
+          style={styles.moduleNavButton}
+        >
+          <Text style={styles.buttonText}>Modules</Text>
+        </TouchableOpacity>
         <FlatList
           data={data}
           ListEmptyComponent={() => <Empty />}

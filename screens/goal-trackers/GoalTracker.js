@@ -126,6 +126,8 @@ export default GoalTracker = ({ navigation }) => {
   const [wisdomLvl, setWisdomLvl] = useState(1);
   const [wealthLvl, setWealthLvl] = useState(1);
 
+  const [completed, setCompleted] = useState(0);
+
   useEffect(() => {
     setData([]);
     getGoals();
@@ -186,6 +188,7 @@ export default GoalTracker = ({ navigation }) => {
         setStrengthLvl(data.strengthLVL);
         setWealthXp(data.wealthXP);
         setWealthLvl(data.wealthLVL);
+        setCompleted(data.completed);
       }
     } catch (error) {
       Alert.alert(error.message);
@@ -237,6 +240,7 @@ export default GoalTracker = ({ navigation }) => {
       newWealthXp >= wealthMax ? newWealthXp % wealthMax : newWealthXp
     );
     setWealthLvl(newWealthXp >= wealthMax ? wealthLvl + 1 : wealthLvl);
+    setCompleted(completed + 1);
 
     try {
       const user = supabase.auth.user();
@@ -259,6 +263,7 @@ export default GoalTracker = ({ navigation }) => {
         wealthXP:
           newWealthXp >= wealthMax ? newWealthXp % wealthMax : newWealthXp,
         wealthLVL: newWealthXp >= wealthMax ? wealthLvl + 1 : wealthLvl,
+        completed: completed + 1,
       };
 
       let { error } = await supabase

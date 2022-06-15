@@ -34,6 +34,8 @@ export default fitnessTracker = ({ navigation }) => {
   const [wisdomLvl, setWisdomLvl] = useState(1);
   const [wealthLvl, setWealthLvl] = useState(1);
 
+  const [completed, setCompleted] = useState(0);
+
   useEffect(() => {
     setData([]);
     getGoals();
@@ -98,6 +100,7 @@ export default fitnessTracker = ({ navigation }) => {
         setStrengthLvl(data.strengthLVL);
         setWealthXp(data.wealthXP);
         setWealthLvl(data.wealthLVL);
+        setCompleted(data.completed);
       }
     } catch (error) {
       Alert.alert(error.message);
@@ -127,6 +130,7 @@ export default fitnessTracker = ({ navigation }) => {
     setStrengthLvl(
       newStrengthXp >= strengthMax ? strengthLvl + 1 : strengthLvl
     );
+    setCompleted(completed + 1);
 
     try {
       const user = supabase.auth.user();
@@ -147,6 +151,7 @@ export default fitnessTracker = ({ navigation }) => {
           newStrengthXp >= strengthMax ? strengthLvl + 1 : strengthLvl,
         wealthXP: wealthXp,
         wealthLVL: wealthLvl,
+        completed: completed + 1,
       };
 
       let { error } = await supabase

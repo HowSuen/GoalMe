@@ -51,5 +51,21 @@ export default StyleSheet.create({
   bar: {
     flexDirection: "row",
     alignItems: "center",
+  },
+  achievementContainer: {
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: width,
+  },
+  achievement: {
+    width: 150,
+    height: 150,
+  },
+  achievementText: {
+    fontSize: 20,
+    color: "#2d2b2c",
+    fontWeight: "bold",
+    marginHorizontal: 20,
   }
 });

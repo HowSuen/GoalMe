@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, TouchableOpacity } from "react-native";
 import { Card, Image } from "react-native-elements";
 import LevelBar from "../../components/game/LevelBar";
 import MainLevel from "../../components/game/MainLevel";
@@ -18,7 +18,7 @@ const GameScreen = ({ navigation, session }) => {
           <LevelBar type="WEALTH" session={session} />
         </View>
       </Card>
-      <Pressable
+      <TouchableOpacity
         onPress={() =>
           navigation.navigate("Game", {
             screen: "Achievements",
@@ -35,7 +35,7 @@ const GameScreen = ({ navigation, session }) => {
             <Text style={styles.achievementText}>69</Text>
           </View>
         </Card>
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 };

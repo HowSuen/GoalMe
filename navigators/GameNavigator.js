@@ -15,10 +15,11 @@ export default GameNavigator = ({ navigation, session }) => {
         name="Achievements"
         options={{
           headerShown: true,
-          headerTitle: "Achievements",
+          headerTitle: "",
           headerStyle: { backgroundColor: "ghostwhite" },
-          headerTintColor: "#2d2b2c",
-          presentation: "modal",
+          headerTintColor: "black",
+          headerShadowVisible: false,
+          presentation: "card",
           headerTitleAlign: "center",
         }}
       >

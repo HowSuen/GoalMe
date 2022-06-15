@@ -46,6 +46,8 @@ export default GoalTrackerNavigator = () => {
         options={{
           headerStyle: { backgroundColor: "mediumseagreen" },
           drawerActiveBackgroundColor: "mediumseagreen",
+          headerTitle: "All Goals",
+          drawerLabel: "All Goals",
         }}
       >
         {({ route, navigation }) =>
@@ -55,11 +57,13 @@ export default GoalTrackerNavigator = () => {
       <Drawer.Screen
         name="Academic Tracker"
         options={({ route }) => ({
-          headerTitle: !inModules(route) ? "Academic Tracker" : "Modules",
+          headerTitle: !inModules(route) ? "Academic Goals" : "Modules",
           headerStyle: {
             backgroundColor: !inModules(route) ? "royalblue" : "orange",
           },
           drawerActiveBackgroundColor: "royalblue",
+          drawerLabel: "Academic Goals",
+          
         })}
       >
         {({ route, navigation }) =>
@@ -71,6 +75,8 @@ export default GoalTrackerNavigator = () => {
         options={{
           headerStyle: { backgroundColor: "tomato" },
           drawerActiveBackgroundColor: "tomato",
+          headerTitle: "Fitness Goals",
+          drawerLabel: "Fitness Goals",
         }}
       >
         {({ route, navigation }) =>
@@ -82,6 +88,8 @@ export default GoalTrackerNavigator = () => {
         options={{
           headerStyle: { backgroundColor: "goldenrod" },
           drawerActiveBackgroundColor: "goldenrod",
+          headerTitle: "Finance Goals",
+          drawerLabel: "Finance Goals",
         }}
       >
         {({ route, navigation }) =>

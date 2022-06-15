@@ -8,40 +8,29 @@ const Drawer = createDrawerNavigator();
 
 const showHeaderAndroid = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route);
-
-  if (
-    routeName == "GoalEditor" ||
-    routeName == "GoalSetter" ||
-    routeName == "Modules" ||
-    routeName == "ModuleSetter" ||
-    routeName == "ModuleEditor"
-  ) {
+  if (routeName == "GoalEditor" || routeName == "GoalSetter") {
     return false;
   }
   return true;
 };
 
-const showHeaderIOS = (route) => {
+const inModules = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route);
-
   if (
     routeName == "Modules" ||
     routeName == "ModuleSetter" ||
     routeName == "ModuleEditor"
   ) {
-    return false;
+    return true;
   }
-  return true;
+  return false;
 };
 
 export default GoalTrackerNavigator = () => {
   return (
     <Drawer.Navigator
       screenOptions={({ route }) => ({
-        headerShown:
-          Platform.OS === "ios"
-            ? showHeaderIOS(route)
-            : showHeaderAndroid(route),
+        headerShown: Platform.OS === "ios" ? true : showHeaderAndroid(route),
         headerTintColor: "black",
         presentation: "modal",
         headerTitleAlign: "center",
@@ -65,10 +54,13 @@ export default GoalTrackerNavigator = () => {
       </Drawer.Screen>
       <Drawer.Screen
         name="Academic Tracker"
-        options={{
-          headerStyle: { backgroundColor: "royalblue" },
+        options={({ route }) => ({
+          headerTitle: !inModules(route) ? "Academic Tracker" : "Modules",
+          headerStyle: {
+            backgroundColor: !inModules(route) ? "royalblue" : "orange",
+          },
           drawerActiveBackgroundColor: "royalblue",
-        }}
+        })}
       >
         {({ route, navigation }) =>
           GoalNavigator({ route: route, navigation: navigation })

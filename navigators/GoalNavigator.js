@@ -58,8 +58,10 @@ export default GoalNavigator = ({ route, navigation }) => {
         component={Modules}
         options={{
           headerShown: true,
-          headerStyle: { backgroundColor: "orange" },
+          headerTitle: "",
+          headerStyle: { backgroundColor: "ghostwhite" },
           headerTintColor: "black",
+          headerShadowVisible: false,
         }}
       />
       <Stack.Screen
@@ -67,7 +69,7 @@ export default GoalNavigator = ({ route, navigation }) => {
         options={{
           headerShown: true,
           headerTitle: "Add Your Modules",
-          headerStyle: { backgroundColor: "orange" },
+          headerStyle: { backgroundColor: "ghostwhite" },
           headerTintColor: "black",
           presentation: "modal",
           headerTitleAlign: "center",
@@ -79,8 +81,8 @@ export default GoalNavigator = ({ route, navigation }) => {
         name="ModuleEditor"
         options={{
           headerShown: true,
-          headerTitle: "Edit Module",
-          headerStyle: { backgroundColor: "orange" },
+          headerTitle: "",
+          headerStyle: { backgroundColor: "ghostwhite" },
           headerTintColor: "black",
           headerShadowVisible: false,
           presentation: "card",

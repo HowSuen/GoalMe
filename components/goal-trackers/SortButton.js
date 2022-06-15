@@ -35,7 +35,7 @@ const pickerSelectStyles = StyleSheet.create({
     width: 130,
     paddingVertical: 12,
     paddingLeft: 6.5,
-    paddingRight: 20, // to ensure the text is never behind the icon
+    paddingRight: 25, // to ensure the text is never behind the icon
     marginTop: 15,
     borderRadius: 4,
     borderWidth: 1.5,
@@ -49,7 +49,7 @@ const pickerSelectStyles = StyleSheet.create({
     width: 130,
     paddingVertical: 8,
     paddingLeft: 6.5,
-    paddingRight: 20, // to ensure the text is never behind the icon
+    paddingRight: 25, // to ensure the text is never behind the icon
     marginTop: 15,
     borderWidth: 1.5,
     borderRadius: 8,

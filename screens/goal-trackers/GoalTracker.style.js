@@ -52,4 +52,14 @@ export default StyleSheet.create({
     marginVertical: 5,
     borderRadius: 100,
   },
+  moduleButton: {
+    width: 60,
+    height: 60,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    backgroundColor: "orange",
+    marginVertical: 5,
+    borderRadius: 100,
+  },
 });

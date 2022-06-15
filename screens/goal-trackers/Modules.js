@@ -2,23 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Alert, View, FlatList, TouchableOpacity } from "react-native";
 import styles from "./GoalTracker.style";
 import { FontAwesome } from "@expo/vector-icons";
-import GoalList from "../../components/goal-trackers/GoalList";
+import ModuleList from "../../components/goal-trackers/ModuleList";
 import Empty from "./Empty";
 import supabase from "../../lib/supabase";
 import { useIsFocused, useRoute } from "@react-navigation/native";
 import SortButton from "../../components/goal-trackers/SortButton";
-import AlertPrompt from "../../components/goal-trackers/AlertPrompt";
-
-const orders = [
-  { label: "Ascending", value: "ascending" },
-  { label: "Descending", value: "descending" },
-];
+import { orders } from "./GoalTracker";
 
 const orderBys = [
-  { label: "Date Created", value: "dateCreated" },
-  { label: "Date Updated", value: "dateUpdated" },
-  { label: "Difficulty", value: "difficulty" },
   { label: "Alphabetical", value: "alphabetical" },
+  { label: "Target Grade", value: "targetGrade" },
+  { label: "Difficulty", value: "difficulty" },
+  { label: "Date Updated", value: "dateUpdated" },
 ];
 
 const sortItems = (order, orderBy) => {
@@ -34,90 +29,60 @@ const sortItems = (order, orderBy) => {
     }
   };
 
-  const convertType = (type) => {
-    if (type == "General") {
-      return 0;
-    } else if (type == "Academic") {
-      return 1;
-    } else if (type == "Fitness") {
-      return 2;
-    } else {
-      return 3;
-    }
-  };
-
   const convertDate = (date) => {
     return new Date(date);
   };
 
   let comparator;
-  if (orderBy == "dateCreated") {
+  if (orderBy == "targetGrade") {
     comparator = (a, b) => {
-      return order == "ascending" ? a.id - b.id : b.id - a.id;
+      return order == "ascending"
+        ? a.targetGrade.localeCompare(b.targetGrade)
+        : b.targetGrade.localeCompare(a.targetGrade);
     };
   } else if (orderBy == "dateUpdated") {
     comparator = (a, b) =>
       order == "ascending"
         ? convertDate(a.updated_at) - convertDate(b.updated_at)
         : convertDate(b.updated_at) - convertDate(a.updated_at);
-  } else if (orderBy == "dateCompleted") {
-    comparator = (a, b) =>
-      order == "ascending"
-        ? convertDate(a.completed_at) - convertDate(b.completed_at)
-        : convertDate(b.completed_at) - convertDate(a.completed_at);
   } else if (orderBy == "difficulty") {
     comparator = (a, b) =>
       order == "ascending"
         ? convertDiff(a.difficulty) - convertDiff(b.difficulty)
         : convertDiff(b.difficulty) - convertDiff(a.difficulty);
-  } else if (orderBy == "type") {
-    comparator = (a, b) =>
-      order == "ascending"
-        ? convertType(a.type) - convertType(b.type)
-        : convertType(b.type) - convertType(a.type);
   } else if (orderBy == "alphabetical") {
     comparator = (a, b) =>
       order == "ascending"
-        ? a.content.localeCompare(b.content)
-        : b.content.localeCompare(a.content);
+        ? a.moduleCode.localeCompare(b.moduleCode)
+        : b.moduleCode.localeCompare(a.moduleCode);
   }
 
   return comparator;
 };
 
-const completeItem = async (item) => {
-  try {
-    let { data, error } = await supabase
-      .from("goals")
-      .update({
-        completion_status: true,
-        completed_at: new Date().toISOString().toLocaleString(),
-      })
-      .match({ id: item.id });
-
-    if (error) throw error;
-  } catch (error) {
-    Alert.alert(error.message);
+const convertGrade = (grade) => {
+  if (grade == "A+") {
+    return 7;
+  } else if (grade == "A") {
+    return 6;
+  } else if (grade == "A-") {
+    return 5;
+  } else if (grade == "B+") {
+    return 4;
+  } else if (grade == "B") {
+    return 3;
+  } else if (grade == "B-") {
+    return 2;
+  } else {
+    return 1;
   }
 };
 
-const deleteItem = async (item) => {
-  try {
-    let { data, error } = await supabase
-      .from("goals")
-      .delete()
-      .match({ id: item.id });
-
-    if (error) throw error;
-  } catch (error) {
-    Alert.alert(error.message);
-  }
-};
-
-export default GoalTracker = ({ navigation }) => {
+export default Modules = ({ navigation }) => {
   const [data, setData] = useState([]);
   const [order, setOrder] = useState("ascending");
-  const [orderBy, setOrderBy] = useState("dateCreated");
+  const [orderBy, setOrderBy] = useState("alphabetical");
+  const [gradeReceived, setGradeReceived] = useState("alphabetical");
   const user = supabase.auth.user();
   const isFocused = useIsFocused();
   const route = useRoute();
@@ -134,32 +99,35 @@ export default GoalTracker = ({ navigation }) => {
 
   useEffect(() => {
     setData([]);
-    getGoals();
+    getModules();
   }, [isFocused, totalXp]);
 
-  const getGoals = async () => {
+  const getModules = async () => {
     try {
-      let { data: goals, error } = await supabase
-        .from("goals")
+      let { data: modules, error } = await supabase
+        .from("modules")
         .select("*")
-        .match({ user_id: user.id, completion_status: false });
+        .match({
+          user_id: user.id,
+          completion_status: false,
+        });
 
       if (error) throw error;
 
-      goals.sort(sortItems(order, orderBy)).reverse();
+      modules.sort((a, b) => b.module_code.localeCompare(a.module_code));
 
-      goals.map((goal) => {
-        setData((prevGoal) => {
+      modules.map((module) => {
+        setData((prevModule) => {
           return [
             {
-              id: goal.id,
-              content: goal.content,
-              description: goal.description,
-              type: goal.type,
-              difficulty: goal.difficulty,
-              updated_at: goal.updated_at,
+              id: module.id,
+              goalId: module.goal_id,
+              moduleCode: module.module_code,
+              targetGrade: module.target_grade,
+              gradeReceived: module.grade_received,
+              difficulty: module.difficulty,
             },
-            ...prevGoal,
+            ...prevModule,
           ];
         });
       });
@@ -198,34 +166,22 @@ export default GoalTracker = ({ navigation }) => {
     }
   };
 
-  const updateExperience = async (goal) => {
+  const updateExperience = async (module) => {
     let addXP = 0;
-    if (goal.difficulty == "Hard") {
+    if (module.difficulty == "Hard") {
+      addXP = 400;
+    } else if (module.difficulty == "Medium") {
+      addXP = 300;
+    } else if (module.difficulty == "Easy") {
       addXP = 200;
-    } else if (goal.difficulty == "Medium") {
-      addXP = 100;
-    } else if (goal.difficulty == "Easy") {
-      addXP = 50;
     }
 
-    let newWisdomXp = wisdomXp;
-    let newStrengthXp = strengthXp;
-    let newWealthXp = wealthXp;
-
-    if (goal.type == "Academic") {
-      newWisdomXp += addXP;
-    } else if (goal.type == "Fitness") {
-      newStrengthXp += addXP;
-    } else if (goal.type == "Finance") {
-      newWealthXp += addXP;
-    }
+    addXP *= convertGrade(gradeReceived) / convertGrade(module.targetGrade);
 
     const newTotalXp = totalXp + addXP;
-
+    const newWisdomXp = wisdomXp + addXP;
     const totalMax = Math.round(Math.pow(totalLvl / 0.07, 2));
     const wisdomMax = Math.round(Math.pow(wisdomLvl / 0.07, 2));
-    const strengthMax = Math.round(Math.pow(strengthLvl / 0.07, 2));
-    const wealthMax = Math.round(Math.pow(wealthLvl / 0.07, 2));
 
     setTotalXp(newTotalXp >= totalMax ? newTotalXp % totalMax : newTotalXp);
     setTotalLvl(newTotalXp >= totalMax ? totalLvl + 1 : totalLvl);
@@ -233,19 +189,8 @@ export default GoalTracker = ({ navigation }) => {
       newWisdomXp >= wisdomMax ? newWisdomXp % wisdomMax : newWisdomXp
     );
     setWisdomLvl(newWisdomXp >= wisdomMax ? wisdomLvl + 1 : wisdomLvl);
-    setStrengthXp(
-      newStrengthXp >= strengthMax ? newStrengthXp % strengthMax : newStrengthXp
-    );
-    setStrengthLvl(
-      newStrengthXp >= strengthMax ? strengthLvl + 1 : strengthLvl
-    );
-    setWealthXp(
-      newWealthXp >= wealthMax ? newWealthXp % wealthMax : newWealthXp
-    );
-    setWealthLvl(newWealthXp >= wealthMax ? wealthLvl + 1 : wealthLvl);
 
     try {
-      const user = supabase.auth.user();
       if (!user) throw new Error("No user on the session!");
 
       const updates = {
@@ -256,15 +201,10 @@ export default GoalTracker = ({ navigation }) => {
         wisdomXP:
           newWisdomXp >= wisdomMax ? newWisdomXp % wisdomMax : newWisdomXp,
         wisdomLVL: newWisdomXp >= wisdomMax ? wisdomLvl + 1 : wisdomLvl,
-        strengthXP:
-          newStrengthXp >= strengthMax
-            ? newStrengthXp % strengthMax
-            : newStrengthXp,
-        strengthLVL:
-          newStrengthXp >= strengthMax ? strengthLvl + 1 : strengthLvl,
-        wealthXP:
-          newWealthXp >= wealthMax ? newWealthXp % wealthMax : newWealthXp,
-        wealthLVL: newWealthXp >= wealthMax ? wealthLvl + 1 : wealthLvl,
+        strengthXP: strengthXp,
+        strengthLVL: strengthLvl,
+        wealthXP: wealthXp,
+        wealthLVL: wealthLvl,
       };
 
       let { error } = await supabase
@@ -279,27 +219,70 @@ export default GoalTracker = ({ navigation }) => {
     }
   };
 
-  const sortGoals = (order, orderBy) => {
-    setData((goals) => {
-      return goals.sort(sortItems(order, orderBy));
+  const sortModules = (order, orderBy) => {
+    setData((modules) => {
+      return modules.sort(sortItems(order, orderBy));
     });
   };
 
-  const completeGoal = async (goal) => {
-    AlertPrompt("Complete this goal?", async () => {
-      completeItem(goal);
-      setData((goals) => {
-        return goals.filter((g) => g != goal);
-      });
-      updateExperience(goal);
+  const completeModule = async (module) => {
+    try {
+      let { data, error } = await supabase
+        .from("goals")
+        .update({
+          completion_status: true,
+          completed_at: new Date().toISOString().toLocaleString(),
+        })
+        .match({ id: module.goalId });
+
+      if (error) throw error;
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+
+    try {
+      let { data, error } = await supabase
+        .from("modules")
+        .update({
+          grade_received: gradeReceived,
+          completion_status: true,
+          completed_at: new Date().toISOString().toLocaleString(),
+        })
+        .match({ id: module.id });
+
+      if (error) throw error;
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+
+    updateExperience(module);
+    
+    setData((modules) => {
+      return modules.filter((m) => m != module);
     });
   };
 
-  const deleteGoal = async (goal) => {
-    AlertPrompt("Delete this goal?", async () => {
-      deleteItem(goal);
-      setData((goals) => {
-        return goals.filter((g) => g != goal);
+  const deleteModule = async (module) => {
+    AlertPrompt("Delete this module?", async () => {
+      try {
+        let { error } = await supabase
+          .from("modules")
+          .delete()
+          .match({ id: module.id });
+
+        if (error) throw error;
+
+        let { error: error1 } = await supabase
+          .from("goals")
+          .delete()
+          .match({ id: module.goalId });
+
+        if (error1) throw error1;
+      } catch (error) {
+        Alert.alert(error.message);
+      }
+      setData((modules) => {
+        return modules.filter((m) => m != module);
       });
     });
   };
@@ -309,13 +292,14 @@ export default GoalTracker = ({ navigation }) => {
       <View>
         <FlatList
           data={data}
-          ListEmptyComponent={() => <Empty />}
-          keyExtractor={(goal) => goal.id}
+          ListEmptyComponent={() => <Empty text={"No modules added."} />}
+          keyExtractor={(module) => module.id}
           renderItem={({ item }) => (
-            <GoalList
-              goal={item}
-              deleteGoal={deleteGoal}
-              completeGoal={completeGoal}
+            <ModuleList
+              module={item}
+              deleteModule={deleteModule}
+              completeModule={completeModule}
+              onChangeText={(text) => setGradeReceived(text)}
               navigation={navigation}
             />
           )}
@@ -326,7 +310,7 @@ export default GoalTracker = ({ navigation }) => {
             items={orderBys}
             onValueChange={(orderBy) => {
               setOrderBy(orderBy);
-              sortGoals(order, orderBy);
+              sortModules(order, orderBy);
             }}
           />
           <SortButton
@@ -334,16 +318,15 @@ export default GoalTracker = ({ navigation }) => {
             items={orders}
             onValueChange={(order) => {
               setOrder(order);
-              sortGoals(order, orderBy);
+              sortModules(order, orderBy);
             }}
           />
           <TouchableOpacity
-            style={styles.goalButton}
+            style={styles.moduleButton}
             onPress={() => {
-              navigation.navigate("GoalSetter", {
+              navigation.navigate("ModuleSetter", {
                 user: user,
                 routeName: route.name,
-                defaultType: "General",
               });
             }}
           >
@@ -354,5 +337,3 @@ export default GoalTracker = ({ navigation }) => {
     </View>
   );
 };
-
-export { orders, orderBys, sortItems, completeItem, deleteItem };

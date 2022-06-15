@@ -1,7 +1,8 @@
 import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import CompletedGoals from "../screens/goal-trackers/CompletedGoals";
 import GoalNavigator from "./GoalNavigator";
+import CompletedGoals from "../screens/goal-trackers/CompletedGoals";
+import ModuleNavigator from "./ModuleNavigator";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 
 const Drawer = createDrawerNavigator();
@@ -82,6 +83,17 @@ export default GoalTrackerNavigator = () => {
           drawerActiveBackgroundColor: "mediumaquamarine",
         }}
       />
+      <Drawer.Screen
+        name="Modules"
+        options={{
+          headerStyle: { backgroundColor: "orange" },
+          drawerActiveBackgroundColor: "orange",
+        }}
+      >
+        {({ route, navigation }) =>
+          ModuleNavigator({ route: route, navigation: navigation })
+        }
+      </Drawer.Screen>
     </Drawer.Navigator>
   );
 };

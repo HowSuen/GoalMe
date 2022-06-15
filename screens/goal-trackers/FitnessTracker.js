@@ -129,7 +129,6 @@ export default fitnessTracker = ({ navigation }) => {
     );
 
     try {
-      const user = supabase.auth.user();
       if (!user) throw new Error("No user on the session!");
 
       const updates = {

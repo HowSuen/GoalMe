@@ -127,7 +127,6 @@ export default FinanceTracker = ({ navigation }) => {
     setWealthLvl(newWealthXp >= wealthMax ? wealthLvl + 1 : wealthLvl);
 
     try {
-      const user = supabase.auth.user();
       if (!user) throw new Error("No user on the session!");
 
       const updates = {

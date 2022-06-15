@@ -126,7 +126,6 @@ export default AcademicTracker = ({ navigation }) => {
     setWisdomLvl(newWisdomXp >= wisdomMax ? wisdomLvl + 1 : wisdomLvl);
 
     try {
-      const user = supabase.auth.user();
       if (!user) throw new Error("No user on the session!");
 
       const updates = {

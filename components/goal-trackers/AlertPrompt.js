@@ -6,7 +6,7 @@ export default AlertPrompt = (title, onPress) => {
       text: "Cancel",
     },
     {
-      text: "Yes",
+      text: "Complete",
       onPress: onPress,
     },
   ]);

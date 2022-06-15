@@ -7,6 +7,24 @@ import { useRoute } from "@react-navigation/native";
 import DialogPrompt from "./DialogPrompt";
 import { useState } from "react";
 
+const grades = [
+  { label: "A+", value: "A+" },
+  { label: "A", value: "A" },
+  { label: "A-", value: "A-" },
+  { label: "B+", value: "B+" },
+  { label: "B", value: "B" },
+  { label: "B-", value: "B-" },
+  { label: "C+", value: "C+" },
+  { label: "C", value: "C" },
+  { label: "C-", value: "C-" },
+  { label: "D+", value: "D+" },
+  { label: "D", value: "D" },
+  { label: "F", value: "F" },
+  { label: "F*", value: "F*" },
+  // { label: "S", value: "S" },
+  // { label: "U", value: "U" },
+];
+
 export default ModuleList = ({
   module,
   completeModule,
@@ -36,8 +54,9 @@ export default ModuleList = ({
           <FontAwesome name="square-o" size={25} color={"black"} />
           <DialogPrompt
             title="Received Grade"
-            description="What letter grade did you receive for this module?"
+            description="What grade did you receive for this module?"
             placeholder="Enter grade here..."
+            matches={grades}
             onChangeText={onChangeText}
             onPress={() => completeModule(module)}
             visible={visible}
@@ -46,14 +65,9 @@ export default ModuleList = ({
         </TouchableOpacity>
         <View>
           <Text style={styles.listText}>{module.moduleCode}</Text>
-          <View style={styles.listSubtextContainer}>
-            <Text style={styles.listSubtext}>
-              Target Grade: {module.targetGrade}
-            </Text>
-            <Text style={styles.listSubtext}>
-              Difficulty: {module.difficulty}
-            </Text>
-          </View>
+          <Text style={styles.listSubtext}>
+            Target Grade: {module.targetGrade}
+          </Text>
         </View>
         <TouchableOpacity
           style={styles.iconContainer}

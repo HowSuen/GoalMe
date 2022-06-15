@@ -2,25 +2,54 @@ import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import GoalNavigator from "./GoalNavigator";
 import CompletedGoals from "../screens/goal-trackers/CompletedGoals";
-import ModuleNavigator from "./ModuleNavigator";
-import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
+import {
+  getFocusedRouteNameFromRoute,
+  useNavigation,
+} from "@react-navigation/native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { Text } from "react-native-elements";
+import { StyleSheet } from "react-native";
 
 const Drawer = createDrawerNavigator();
 
-const showHeader = (route) => {
+const showHeaderAndroid = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route);
 
-  if (routeName == "GoalEditor" || routeName == "GoalSetter") {
+  if (
+    routeName == "GoalEditor" ||
+    routeName == "GoalSetter" ||
+    routeName == "Modules" ||
+    routeName == "ModuleSetter" ||
+    routeName == "ModuleEditor"
+  ) {
+    return false;
+  }
+  return true;
+};
+
+const showHeaderIOS = (route) => {
+  const routeName = getFocusedRouteNameFromRoute(route);
+
+  if (
+    routeName == "Modules" ||
+    routeName == "ModuleSetter" ||
+    routeName == "ModuleEditor"
+  ) {
     return false;
   }
   return true;
 };
 
 export default GoalTrackerNavigator = () => {
+  const navigation = useNavigation();
+
   return (
     <Drawer.Navigator
       screenOptions={({ route }) => ({
-        headerShown: Platform.OS === "ios" ? true : showHeader(route),
+        headerShown:
+          Platform.OS === "ios"
+            ? showHeaderIOS(route)
+            : showHeaderAndroid(route),
         headerTintColor: "black",
         presentation: "modal",
         headerTitleAlign: "center",
@@ -47,6 +76,16 @@ export default GoalTrackerNavigator = () => {
         options={{
           headerStyle: { backgroundColor: "royalblue" },
           drawerActiveBackgroundColor: "royalblue",
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("Modules");
+              }}
+              style={styles.button}
+            >
+              <Text style={styles.text}>Modules</Text>
+            </TouchableOpacity>
+          ),
         }}
       >
         {({ route, navigation }) =>
@@ -83,17 +122,21 @@ export default GoalTrackerNavigator = () => {
           drawerActiveBackgroundColor: "mediumaquamarine",
         }}
       />
-      <Drawer.Screen
-        name="Modules"
-        options={{
-          headerStyle: { backgroundColor: "orange" },
-          drawerActiveBackgroundColor: "orange",
-        }}
-      >
-        {({ route, navigation }) =>
-          ModuleNavigator({ route: route, navigation: navigation })
-        }
-      </Drawer.Screen>
     </Drawer.Navigator>
   );
 };
+const styles = StyleSheet.create({
+  button: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 25,
+    backgroundColor: "orange",
+    borderRadius: 5,
+  },
+  text: {
+    fontSize: 16,
+    padding: 5,
+    paddingHorizontal: 10,
+    color: "black",
+  },
+});

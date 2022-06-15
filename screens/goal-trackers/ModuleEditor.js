@@ -14,28 +14,19 @@ import {
   TouchableWithoutFeedback,
 } from "react-native-gesture-handler";
 import GoalDropdownList from "../../components/goal-trackers/GoalDropdownList";
-
-const difficulties = [
-  { label: "Easy", value: "Easy" },
-  { label: "Medium", value: "Medium" },
-  { label: "Hard", value: "Hard" },
-];
+import { grades } from "./Modules";
 
 export default ModuleEditor = ({ navigation }) => {
   const route = useRoute();
   const { routeName, module } = route.params;
   const [targetGrade, setTargetGrade] = useState(module.targetGrade);
-  const [difficulty, setDifficulty] = useState(module.difficulty);
 
   const noStateChange = () => {
-    return (
-      targetGrade == module.targetGrade &&
-      difficulty == module.difficulty
-    );
+    return targetGrade == module.targetGrade;
   };
 
   const hasEmptyValues = () => {
-    return targetGrade == "" || difficulty == null;
+    return targetGrade == null;
   };
 
   const updateModule = async (module) => {
@@ -44,23 +35,11 @@ export default ModuleEditor = ({ navigation }) => {
         .from("modules")
         .update({
           target_grade: targetGrade,
-          difficulty: difficulty,
           updated_at: new Date().toISOString().toLocaleString(),
         })
         .match({ id: module.id });
 
       if (error) throw error;
-      
-      let { error: error1 } = await supabase
-        .from("goals")
-        .update({
-          content: "Get " + targetGrade + " for " + module.moduleCode,
-          difficulty: difficulty,
-          updated_at: new Date().toISOString().toLocaleString(),
-        })
-        .match({ id: module.goalId });
-
-      if (error1) throw error1;
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -75,21 +54,21 @@ export default ModuleEditor = ({ navigation }) => {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <Text style={styles.dropdownLabel}>Module</Text>
           <Text style={styles.moduleText}>{module.moduleCode}</Text>
-          <Input
+          {/* <Input
             style={styles.textInput}
             inputContainerStyle={styles.inputContainer}
             label="Target Grade"
             value={targetGrade}
             onChangeText={(text) => setTargetGrade(text)}
-          />
+          /> */}
         </TouchableWithoutFeedback>
         <View style={styles.dropdownContainer}>
-          <Text style={styles.dropdownLabel}>Difficulty</Text>
+          <Text style={styles.dropdownLabel}>Target Grade</Text>
           <GoalDropdownList
-            value={difficulty}
-            items={difficulties}
-            onValueChange={(value) => setDifficulty(value)}
-            placeholder={{ label: "Select a difficulty...", value: null }}
+            value={targetGrade}
+            items={grades}
+            onValueChange={(value) => setTargetGrade(value)}
+            placeholder={{ label: "Select a grade...", value: null }}
           />
         </View>
         <View style={styles.buttonContainer}>

@@ -61,7 +61,7 @@ export default StyleSheet.create({
     width: 260,
     height: "auto",
     fontSize: 20,
-    marginTop: 5,
+    marginTop: 10,
     marginBottom: 2,
     marginRight: 10,
   },

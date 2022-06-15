@@ -31,26 +31,14 @@ export default ModuleSetter = ({ navigation }) => {
 
     try {
       for (let i = 0; i < mods.length; i++) {
-        let { data: goal, error } = await supabase.from("goals").insert([
+        let { data, error } = await supabase.from("modules").insert([
           {
             user_id: user.id,
-            content: "Get A for " + mods[i],
-            type: "Academic",
-            difficulty: "Hard",
+            module_code: mods[i],
+            target_grade: "A",
           },
         ]);
         if (error) throw error;
-
-        let { data, error: error1 } = await supabase.from("modules").insert([
-          {
-            user_id: user.id,
-            goal_id: goal[0].id,
-            module_code: mods[i],
-            target_grade: "A",
-            difficulty: "Hard",
-          },
-        ]);
-        if (error1) throw error1;
       }
     } catch (error) {
       Alert.alert(error.message);
@@ -98,7 +86,7 @@ export default ModuleSetter = ({ navigation }) => {
             disabled={loading}
             onPress={() => navigation.navigate(routeName)}
           >
-            <Text style={styles.buttonText}>Return</Text>
+            <Text style={styles.buttonText}>Done</Text>
           </TouchableOpacity>
         </View>
       </View>

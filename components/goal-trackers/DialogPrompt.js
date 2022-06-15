@@ -1,5 +1,5 @@
 import Dialog from "react-native-dialog";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { BlurView } from "expo-blur";
 import { useState } from "react";
 
@@ -7,12 +7,21 @@ export default DialogPrompt = ({
   title,
   description,
   placeholder,
+  matches,
   onChangeText,
   onPress,
   visible,
   setVisible,
 }) => {
   const [value, setValue] = useState("");
+
+  const isMatch = (text) => {
+    if (matches) {
+      return matches.filter(m => m.label == text).length != 0;
+    }
+    return true;
+  };
+
   return (
     <View style={styles.container}>
       <Dialog.Container visible={visible} blurComponentIOS={blurComponentIOS}>
@@ -32,7 +41,7 @@ export default DialogPrompt = ({
         <Dialog.Button label="Cancel" onPress={() => setVisible(false)} />
         <Dialog.Button
           label="Complete"
-          onPress={onPress}
+          onPress={() => isMatch(value) ? onPress() : Alert.alert("Invalid letter grade.")}
           disabled={value == ""}
         />
       </Dialog.Container>

@@ -12,23 +12,36 @@ import { orders } from "./GoalTracker";
 const orderBys = [
   { label: "Alphabetical", value: "alphabetical" },
   { label: "Target Grade", value: "targetGrade" },
-  { label: "Difficulty", value: "difficulty" },
   { label: "Date Updated", value: "dateUpdated" },
 ];
 
-const sortItems = (order, orderBy) => {
-  const convertDiff = (difficulty) => {
-    if (difficulty == "None") {
-      return 0;
-    } else if (difficulty == "Easy") {
-      return 1;
-    } else if (difficulty == "Medium") {
-      return 2;
-    } else {
-      return 3;
-    }
-  };
+const grades = [
+  { label: "A+", value: "A+" },
+  { label: "A", value: "A" },
+  { label: "A-", value: "A-" },
+  { label: "B+", value: "B+" },
+  { label: "B", value: "B" },
+  { label: "B-", value: "B-" },
+  { label: "C+", value: "C+" },
+  { label: "C", value: "C" },
+  { label: "C-", value: "C-" },
+  { label: "D+", value: "D+" },
+  { label: "D", value: "D" },
+  { label: "F", value: "F" },
+  { label: "F*", value: "F*" },
+  // { label: "S", value: "S" },
+  // { label: "U", value: "U" },
+];
 
+const compareGrade = (g1, g2) => {
+  const symOrder = { "+": -1, "-": 1, "": 0 };
+  return (
+    g2.charAt(0).localeCompare(g1.charAt(0)) ||
+    symOrder[g2.charAt(1)] - symOrder[g1.charAt(1)]
+  );
+};
+
+const sortItems = (order, orderBy) => {
   const convertDate = (date) => {
     return new Date(date);
   };
@@ -36,53 +49,31 @@ const sortItems = (order, orderBy) => {
   let comparator;
   if (orderBy == "targetGrade") {
     comparator = (a, b) => {
-      return order == "ascending"
-        ? a.targetGrade.localeCompare(b.targetGrade)
-        : b.targetGrade.localeCompare(a.targetGrade);
+      const s1 = a.targetGrade || a.target_grade;
+      const s2 = b.targetGrade || b.target_grade;
+      return order == "ascending" ? compareGrade(s1, s2) : compareGrade(s2, s1);
     };
   } else if (orderBy == "dateUpdated") {
     comparator = (a, b) =>
       order == "ascending"
         ? convertDate(a.updated_at) - convertDate(b.updated_at)
         : convertDate(b.updated_at) - convertDate(a.updated_at);
-  } else if (orderBy == "difficulty") {
-    comparator = (a, b) =>
-      order == "ascending"
-        ? convertDiff(a.difficulty) - convertDiff(b.difficulty)
-        : convertDiff(b.difficulty) - convertDiff(a.difficulty);
   } else if (orderBy == "alphabetical") {
-    comparator = (a, b) =>
-      order == "ascending"
-        ? a.moduleCode.localeCompare(b.moduleCode)
-        : b.moduleCode.localeCompare(a.moduleCode);
+    comparator = (a, b) => {
+      const s1 = a.moduleCode || a.module_code;
+      const s2 = b.moduleCode || b.module_code;
+      return order == "ascending" ? s1.localeCompare(s2) : s2.localeCompare(s1);
+    };
   }
 
   return comparator;
-};
-
-const convertGrade = (grade) => {
-  if (grade == "A+") {
-    return 7;
-  } else if (grade == "A") {
-    return 6;
-  } else if (grade == "A-") {
-    return 5;
-  } else if (grade == "B+") {
-    return 4;
-  } else if (grade == "B") {
-    return 3;
-  } else if (grade == "B-") {
-    return 2;
-  } else {
-    return 1;
-  }
 };
 
 export default Modules = ({ navigation }) => {
   const [data, setData] = useState([]);
   const [order, setOrder] = useState("ascending");
   const [orderBy, setOrderBy] = useState("alphabetical");
-  const [gradeReceived, setGradeReceived] = useState("alphabetical");
+  const [gradeReceived, setGradeReceived] = useState("");
   const user = supabase.auth.user();
   const isFocused = useIsFocused();
   const route = useRoute();
@@ -114,18 +105,17 @@ export default Modules = ({ navigation }) => {
 
       if (error) throw error;
 
-      modules.sort((a, b) => b.module_code.localeCompare(a.module_code));
+      modules.sort(sortItems(order, orderBy)).reverse();
 
       modules.map((module) => {
         setData((prevModule) => {
           return [
             {
               id: module.id,
-              goalId: module.goal_id,
               moduleCode: module.module_code,
               targetGrade: module.target_grade,
               gradeReceived: module.grade_received,
-              difficulty: module.difficulty,
+              updated_at: module.updated_at,
             },
             ...prevModule,
           ];
@@ -168,15 +158,35 @@ export default Modules = ({ navigation }) => {
 
   const updateExperience = async (module) => {
     let addXP = 0;
-    if (module.difficulty == "Hard") {
+    if (module.targetGrade == "A+") {
+      addXP = 2000;
+    } else if (module.targetGrade == "A") {
+      addXP = 1900;
+    } else if (module.targetGrade == "A-") {
+      addXP = 1800;
+    } else if (module.targetGrade == "B+") {
+      addXP = 1700;
+    } else if (module.targetGrade == "B") {
+      addXP = 1600;
+    } else if (module.targetGrade == "B-") {
+      addXP = 1500;
+    } else if (module.targetGrade == "C+") {
+      addXP = 1300;
+    } else if (module.targetGrade == "C") {
+      addXP = 1100;
+    } else if (module.targetGrade == "C-") {
+      addXP = 900;
+    } else if (module.targetGrade == "D+") {
+      addXP = 600;
+    } else if (module.targetGrade == "D") {
       addXP = 400;
-    } else if (module.difficulty == "Medium") {
-      addXP = 300;
-    } else if (module.difficulty == "Easy") {
+    } else if (module.targetGrade == "F") {
       addXP = 200;
+    } else if (module.targetGrade == "F*") {
+      addXP = 100;
     }
 
-    addXP *= convertGrade(gradeReceived) / convertGrade(module.targetGrade);
+    addXP += compareGrade(module.targetGrade, gradeReceived) <= 0 ? 200 : 0;
 
     const newTotalXp = totalXp + addXP;
     const newWisdomXp = wisdomXp + addXP;
@@ -228,20 +238,6 @@ export default Modules = ({ navigation }) => {
   const completeModule = async (module) => {
     try {
       let { data, error } = await supabase
-        .from("goals")
-        .update({
-          completion_status: true,
-          completed_at: new Date().toISOString().toLocaleString(),
-        })
-        .match({ id: module.goalId });
-
-      if (error) throw error;
-    } catch (error) {
-      Alert.alert(error.message);
-    }
-
-    try {
-      let { data, error } = await supabase
         .from("modules")
         .update({
           grade_received: gradeReceived,
@@ -256,7 +252,7 @@ export default Modules = ({ navigation }) => {
     }
 
     updateExperience(module);
-    
+
     setData((modules) => {
       return modules.filter((m) => m != module);
     });
@@ -271,13 +267,6 @@ export default Modules = ({ navigation }) => {
           .match({ id: module.id });
 
         if (error) throw error;
-
-        let { error: error1 } = await supabase
-          .from("goals")
-          .delete()
-          .match({ id: module.goalId });
-
-        if (error1) throw error1;
       } catch (error) {
         Alert.alert(error.message);
       }
@@ -337,3 +326,5 @@ export default Modules = ({ navigation }) => {
     </View>
   );
 };
+
+export { grades };

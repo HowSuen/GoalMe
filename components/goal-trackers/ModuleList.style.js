@@ -34,17 +34,14 @@ export default StyleSheet.create({
     width: 260,
     height: "auto",
     fontSize: 20,
-    marginTop: 6,
+    marginTop: 5,
     marginBottom: 2,
     marginRight: 10,
-  },
-  listSubtextContainer: {
-    marginBottom: 4,
   },
   listSubtext: {
     color: "black",
     fontSize: 12,
-    marginBottom: 1,
+    marginBottom: 5,
   },
   iconContainer: {
     alignItems: "center",

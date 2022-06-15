@@ -156,6 +156,7 @@ export default GoalTracker = ({ navigation }) => {
               content: goal.content,
               description: goal.description,
               type: goal.type,
+              module: goal.module,
               difficulty: goal.difficulty,
               updated_at: goal.updated_at,
             },

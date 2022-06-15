@@ -259,20 +259,24 @@ export default Modules = ({ navigation }) => {
   };
 
   const deleteModule = async (module) => {
-    AlertPrompt("Delete this module?", async () => {
-      try {
-        let { error } = await supabase
-          .from("modules")
-          .delete()
-          .match({ id: module.id });
+    AlertPrompt({
+      title: "Delete this module?",
+      proceedText: "Delete",
+      onPress: async () => {
+        try {
+          let { error } = await supabase
+            .from("modules")
+            .delete()
+            .match({ id: module.id });
 
-        if (error) throw error;
-      } catch (error) {
-        Alert.alert(error.message);
-      }
-      setData((modules) => {
-        return modules.filter((m) => m != module);
-      });
+          if (error) throw error;
+        } catch (error) {
+          Alert.alert(error.message);
+        }
+        setData((modules) => {
+          return modules.filter((m) => m != module);
+        });
+      },
     });
   };
 

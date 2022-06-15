@@ -162,21 +162,29 @@ export default FinanceTracker = ({ navigation }) => {
   };
 
   const completeGoal = async (goal) => {
-    AlertPrompt("Complete this goal?", async () => {
-      completeItem(goal);
-      setData((goals) => {
-        return goals.filter((g) => g != goal);
-      });
-      updateExperience(goal);
+    AlertPrompt({
+      title: "Complete this goal?",
+      proceedText: "Complete",
+      onPress: async () => {
+        completeItem(goal);
+        setData((goals) => {
+          return goals.filter((g) => g != goal);
+        });
+        updateExperience(goal);
+      },
     });
   };
 
   const deleteGoal = async (goal) => {
-    AlertPrompt("Delete this goal?", async () => {
-      deleteItem(goal);
-      setData((goals) => {
-        return goals.filter((g) => g != goal);
-      });
+    AlertPrompt({
+      title: "Delete this goal?",
+      proceedText: "Delete",
+      onPress: async () => {
+        deleteItem(goal);
+        setData((goals) => {
+          return goals.filter((g) => g != goal);
+        });
+      },
     });
   };
 

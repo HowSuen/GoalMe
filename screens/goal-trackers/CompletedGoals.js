@@ -88,27 +88,39 @@ export default CompletedGoals = () => {
   };
 
   const deleteGoal = async (goal) => {
-    AlertPrompt("Delete this goal?", async () => {
-      deleteItem(goal);
-      setData((goals) => {
-        return goals.filter((g) => g != goal);
-      });
+    AlertPrompt({
+      title: "Delete this goal?",
+      proceedText: "Delete",
+      onPress: async () => {
+        deleteItem(goal);
+        setData((goals) => {
+          return goals.filter((g) => g != goal);
+        });
+      },
     });
   };
 
   const redoGoal = async (goal) => {
-    AlertPrompt("Redo this goal?", async () => {
-      redoItem(goal);
-      setData((goals) => {
-        return goals.filter((g) => g != goal);
-      });
+    AlertPrompt({
+      title: "Redo this goal?",
+      proceedText: "Redo",
+      onPress: async () => {
+        redoItem(goal);
+        setData((goals) => {
+          return goals.filter((g) => g != goal);
+        });
+      },
     });
   };
 
   const deleteAllGoals = async () => {
-    AlertPrompt("Delete all completed goals?", async () => {
-      deleteAllItems();
-      setData([]);
+    AlertPrompt({
+      title: "Delete all completed goals?",
+      proceedText: "Delete",
+      onPress: async () => {
+        deleteAllItems();
+        setData([]);
+      },
     });
   };
 

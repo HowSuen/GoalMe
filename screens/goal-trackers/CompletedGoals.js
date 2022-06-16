@@ -48,7 +48,6 @@ export default CompletedGoals = () => {
   const user = supabase.auth.user();
 
   useEffect(() => {
-    setData([]);
     (async () => {
       try {
         let { data: goals, error } = await supabase
@@ -59,6 +58,8 @@ export default CompletedGoals = () => {
         if (error) throw error;
 
         goals.sort(sortItems(order, orderBy)).reverse();
+
+        setData([]);
 
         goals.map((goal) => {
           setData((prevGoal) => {
@@ -88,27 +89,41 @@ export default CompletedGoals = () => {
   };
 
   const deleteGoal = async (goal) => {
-    AlertPrompt("Delete this goal?", async () => {
-      deleteItem(goal);
-      setData((goals) => {
-        return goals.filter((g) => g != goal);
-      });
+    AlertPrompt({
+      title: "Delete this goal?",
+      description: "You can't undo this action.",
+      proceedText: "Delete",
+      onPress: async () => {
+        deleteItem(goal);
+        setData((goals) => {
+          return goals.filter((g) => g != goal);
+        });
+      },
     });
   };
 
   const redoGoal = async (goal) => {
-    AlertPrompt("Redo this goal?", async () => {
-      redoItem(goal);
-      setData((goals) => {
-        return goals.filter((g) => g != goal);
-      });
+    AlertPrompt({
+      title: "Redo this goal?",
+      proceedText: "Redo",
+      onPress: async () => {
+        redoItem(goal);
+        setData((goals) => {
+          return goals.filter((g) => g != goal);
+        });
+      },
     });
   };
 
   const deleteAllGoals = async () => {
-    AlertPrompt("Delete all completed goals?", async () => {
-      deleteAllItems();
-      setData([]);
+    AlertPrompt({
+      title: "Delete all completed goals?",
+      description: "You can't undo this action.",
+      proceedText: "Delete",
+      onPress: async () => {
+        deleteAllItems();
+        setData([]);
+      },
     });
   };
 

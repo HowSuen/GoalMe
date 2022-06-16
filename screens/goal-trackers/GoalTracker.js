@@ -18,6 +18,7 @@ const orderBys = [
   { label: "Date Created", value: "dateCreated" },
   { label: "Date Updated", value: "dateUpdated" },
   { label: "Difficulty", value: "difficulty" },
+  { label: "Alphabetical", value: "alphabetical" },
 ];
 
 const sortItems = (order, orderBy) => {
@@ -74,6 +75,11 @@ const sortItems = (order, orderBy) => {
       order == "ascending"
         ? convertType(a.type) - convertType(b.type)
         : convertType(b.type) - convertType(a.type);
+  } else if (orderBy == "alphabetical") {
+    comparator = (a, b) =>
+      order == "ascending"
+        ? a.content.localeCompare(b.content)
+        : b.content.localeCompare(a.content);
   }
 
   return comparator;
@@ -127,7 +133,6 @@ export default GoalTracker = ({ navigation }) => {
   const [wealthLvl, setWealthLvl] = useState(1);
 
   useEffect(() => {
-    setData([]);
     getGoals();
   }, [isFocused, totalXp]);
 
@@ -142,6 +147,8 @@ export default GoalTracker = ({ navigation }) => {
 
       goals.sort(sortItems(order, orderBy)).reverse();
 
+      setData([]);
+
       goals.map((goal) => {
         setData((prevGoal) => {
           return [
@@ -150,6 +157,7 @@ export default GoalTracker = ({ navigation }) => {
               content: goal.content,
               description: goal.description,
               type: goal.type,
+              module: goal.module,
               difficulty: goal.difficulty,
               updated_at: goal.updated_at,
             },
@@ -280,21 +288,30 @@ export default GoalTracker = ({ navigation }) => {
   };
 
   const completeGoal = async (goal) => {
-    AlertPrompt("Complete this goal?", async () => {
-      completeItem(goal);
-      setData((goals) => {
-        return goals.filter((g) => g != goal);
-      });
-      updateExperience(goal);
+    AlertPrompt({
+      title: "Complete this goal?",
+      proceedText: "Complete",
+      onPress: async () => {
+        completeItem(goal);
+        setData((goals) => {
+          return goals.filter((g) => g != goal);
+        });
+        updateExperience(goal);
+      },
     });
   };
 
   const deleteGoal = async (goal) => {
-    AlertPrompt("Delete this goal?", async () => {
-      deleteItem(goal);
-      setData((goals) => {
-        return goals.filter((g) => g != goal);
-      });
+    AlertPrompt({
+      title: "Delete this goal?",
+      description: "You can't undo this action.",
+      proceedText: "Delete",
+      onPress: async () => {
+        deleteItem(goal);
+        setData((goals) => {
+          return goals.filter((g) => g != goal);
+        });
+      },
     });
   };
 

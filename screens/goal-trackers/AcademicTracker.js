@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Alert, View, FlatList, TouchableOpacity } from "react-native";
+import { Alert, View, FlatList, TouchableOpacity, Text } from "react-native";
 import styles from "./GoalTracker.style";
 import { FontAwesome } from "@expo/vector-icons";
 import GoalList from "../../components/goal-trackers/GoalList";
@@ -35,7 +35,6 @@ export default AcademicTracker = ({ navigation }) => {
   const [wealthLvl, setWealthLvl] = useState(1);
 
   useEffect(() => {
-    setData([]);
     getGoals();
   }, [isFocused, totalXp]);
 
@@ -53,6 +52,8 @@ export default AcademicTracker = ({ navigation }) => {
       if (error) throw error;
 
       goals.sort(sortItems(order, orderBy)).reverse();
+
+      setData([]);
 
       goals.map((goal) => {
         setData((prevGoal) => {
@@ -126,7 +127,6 @@ export default AcademicTracker = ({ navigation }) => {
     setWisdomLvl(newWisdomXp >= wisdomMax ? wisdomLvl + 1 : wisdomLvl);
 
     try {
-      const user = supabase.auth.user();
       if (!user) throw new Error("No user on the session!");
 
       const updates = {
@@ -162,27 +162,44 @@ export default AcademicTracker = ({ navigation }) => {
   };
 
   const completeGoal = async (goal) => {
-    AlertPrompt("Complete this goal?", async () => {
-      completeItem(goal);
-      setData((goals) => {
-        return goals.filter((g) => g != goal);
-      });
-      updateExperience(goal);
+    AlertPrompt({
+      title: "Complete this goal?",
+      proceedText: "Complete",
+      onPress: async () => {
+        completeItem(goal);
+        setData((goals) => {
+          return goals.filter((g) => g != goal);
+        });
+        updateExperience(goal);
+      },
     });
   };
 
   const deleteGoal = async (goal) => {
-    AlertPrompt("Delete this goal?", async () => {
-      deleteItem(goal);
-      setData((goals) => {
-        return goals.filter((g) => g != goal);
-      });
+    AlertPrompt({
+      title: "Delete this goal?",
+      description: "You can't undo this action.",
+      proceedText: "Delete",
+      onPress: async () => {
+        deleteItem(goal);
+        setData((goals) => {
+          return goals.filter((g) => g != goal);
+        });
+      },
     });
   };
 
   return (
     <View style={styles.container}>
       <View>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("Modules");
+          }}
+          style={styles.moduleNavButton}
+        >
+          <Text style={styles.buttonText}>Modules</Text>
+        </TouchableOpacity>
         <FlatList
           data={data}
           ListEmptyComponent={() => <Empty />}

@@ -5,9 +5,9 @@ import {
   Text,
   Keyboard,
 } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "react-native-elements";
-import styles from "./GoalEditor.style";
+import styles from "./ModuleEditor.style";
 import { useRoute } from "@react-navigation/native";
 import {
   TouchableOpacity,
@@ -15,6 +15,9 @@ import {
 } from "react-native-gesture-handler";
 import GoalDropdownList from "../../components/goal-trackers/GoalDropdownList";
 import { types, difficulties } from "./GoalSetter";
+import supabase from "../../lib/supabase";
+
+let modules = [];
 
 export default GoalEditor = ({ navigation }) => {
   const route = useRoute();
@@ -22,19 +25,52 @@ export default GoalEditor = ({ navigation }) => {
   const [content, setContent] = useState(goal.content);
   const [description, setDescription] = useState(goal.description);
   const [type, setType] = useState(goal.type);
+  const [module, setModule] = useState(goal.module);
   const [difficulty, setDifficulty] = useState(goal.difficulty);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    getModules();
+  }, []);
 
   const noStateChange = () => {
     return (
       content == goal.content &&
       description == goal.description &&
       type == goal.type &&
+      module == goal.module &&
       difficulty == goal.difficulty
     );
   };
 
   const hasEmptyValues = () => {
     return content == "" || type == null || difficulty == null;
+  };
+
+  const getModules = async () => {
+    setLoading(true);
+    const user = supabase.auth.user();
+    try {
+      let { data: mods, error } = await supabase
+        .from("modules")
+        .select("module_code")
+        .match({
+          user_id: user.id,
+          completion_status: false,
+        });
+
+      if (error) throw error;
+
+      modules = mods.map((object) => {
+        return {
+          label: object.module_code,
+          value: object.module_code,
+        };
+      });
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+    setLoading(false);
   };
 
   const updateGoal = async (goal) => {
@@ -45,6 +81,7 @@ export default GoalEditor = ({ navigation }) => {
           content: content,
           description: description,
           type: type,
+          module: module,
           difficulty: difficulty,
           updated_at: new Date().toISOString().toLocaleString(),
         })
@@ -89,6 +126,16 @@ export default GoalEditor = ({ navigation }) => {
             items={types}
             onValueChange={(value) => setType(value)}
             placeholder={{ label: "Select a type...", value: null }}
+          />
+        </View>
+        <View style={styles.dropdownContainer}>
+          <Text style={styles.dropdownLabel}>Module</Text>
+          <GoalDropdownList
+            value={type == "Academic" ? module : null}
+            items={modules}
+            onValueChange={(value) => setModule(value)}
+            placeholder={{ label: "Select a module...", value: null }}
+            disabled={loading || type != "Academic"}
           />
         </View>
         <View style={styles.dropdownContainer}>

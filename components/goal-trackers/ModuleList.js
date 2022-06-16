@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, View } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import styles from "./ModuleList.style";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useRoute } from "@react-navigation/native";
@@ -54,11 +54,12 @@ export default ModuleList = ({
           <FontAwesome name="square-o" size={25} color={"black"} />
           <DialogPrompt
             title="Received Grade"
-            description="What grade did you receive for this module?"
+            description="What letter grade did you receive for this module?"
             placeholder="Enter grade here..."
             matches={grades}
             onChangeText={onChangeText}
             onPress={() => completeModule(module)}
+            alertMessage={"Invalid letter grade."}
             visible={visible}
             setVisible={setVisible}
           />
@@ -73,7 +74,7 @@ export default ModuleList = ({
           style={styles.iconContainer}
           onPress={() => deleteModule(module)}
         >
-          <FontAwesome name="trash" size={25} color="black" />
+          <FontAwesome5 name="trash" size={20} color="black" />
         </TouchableOpacity>
       </TouchableOpacity>
     </View>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Alert, View, FlatList, TouchableOpacity } from "react-native";
 import styles from "./GoalTracker.style";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 import ModuleList from "../../components/goal-trackers/ModuleList";
 import Empty from "./Empty";
 import supabase from "../../lib/supabase";
@@ -74,6 +74,7 @@ export default Modules = ({ navigation }) => {
   const [order, setOrder] = useState("ascending");
   const [orderBy, setOrderBy] = useState("alphabetical");
   const [gradeReceived, setGradeReceived] = useState("");
+  const [isFetching, setIsFetching] = useState(false);
   const user = supabase.auth.user();
   const isFocused = useIsFocused();
   const route = useRoute();
@@ -261,7 +262,7 @@ export default Modules = ({ navigation }) => {
 
   const deleteModule = async (module) => {
     AlertPrompt({
-      title: "Delete this module?",
+      title: "Delete This Module?",
       description: "You can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {
@@ -298,6 +299,14 @@ export default Modules = ({ navigation }) => {
               navigation={navigation}
             />
           )}
+          showsVerticalScrollIndicator={false}
+          onRefresh={() => {
+            setIsFetching(true);
+            getModules();
+            setIsFetching(false);
+          }}
+          refreshing={isFetching}
+          
         />
         <View style={styles.bottomContainer}>
           <SortButton
@@ -325,7 +334,7 @@ export default Modules = ({ navigation }) => {
               });
             }}
           >
-            <FontAwesome name="plus" size={20} color="black" />
+            <FontAwesome5 name="plus" size={20} color="black" />
           </TouchableOpacity>
         </View>
       </View>

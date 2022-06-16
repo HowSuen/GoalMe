@@ -60,7 +60,7 @@ export default StyleSheet.create({
     color: "ghostwhite",
     width: 260,
     height: "auto",
-    fontSize: 20,
+    fontSize: 22,
     marginTop: 10,
     marginBottom: 2,
     marginRight: 10,
@@ -71,10 +71,14 @@ export default StyleSheet.create({
     marginBottom: 5,
   },
   iconContainer: {
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     marginRight: 10,
-    height: 40,
-    borderRadius: 10,
+    marginVertical: 7,
+  },
+  trashContainer: {
+    marginVertical: 4,
+    marginTop: 10,
   },
 });

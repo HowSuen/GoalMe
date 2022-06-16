@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Alert, View, FlatList } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 import styles from "./CompletedGoals.style";
 import CompletedList from "../../components/goal-trackers/CompletedList";
 import Empty from "./Empty";
@@ -45,42 +45,46 @@ export default CompletedGoals = () => {
   const [data, setData] = useState([]);
   const [order, setOrder] = useState("ascending");
   const [orderBy, setOrderBy] = useState("dateCompleted");
+  const [isFetching, setIsFetching] = useState(false);
   const user = supabase.auth.user();
 
   useEffect(() => {
-    (async () => {
-      try {
-        let { data: goals, error } = await supabase
-          .from("goals")
-          .select("*")
-          .match({ user_id: user.id, completion_status: true });
-
-        if (error) throw error;
-
-        goals.sort(sortItems(order, orderBy)).reverse();
-
-        setData([]);
-
-        goals.map((goal) => {
-          setData((prevGoal) => {
-            return [
-              {
-                id: goal.id,
-                content: goal.content,
-                description: goal.description,
-                type: goal.type,
-                difficulty: goal.difficulty,
-                completed_at: goal.completed_at,
-              },
-              ...prevGoal,
-            ];
-          });
-        });
-      } catch (error) {
-        Alert.alert(error.message);
-      }
-    })();
+    getGoals();
   }, []);
+
+  const getGoals = async () => {
+    try {
+      let { data: goals, error } = await supabase
+        .from("goals")
+        .select("*")
+        .match({ user_id: user.id, completion_status: true });
+
+      if (error) throw error;
+
+      goals.sort(sortItems(order, orderBy)).reverse();
+
+      setData([]);
+
+      goals.map((goal) => {
+        setData((prevGoal) => {
+          return [
+            {
+              id: goal.id,
+              content: goal.content,
+              description: goal.description,
+              type: goal.type,
+              difficulty: goal.difficulty,
+              recurring: goal.recurring,
+              completed_at: goal.completed_at,
+            },
+            ...prevGoal,
+          ];
+        });
+      });
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+  }
 
   const sortGoals = (order, orderBy) => {
     setData((goals) => {
@@ -90,7 +94,7 @@ export default CompletedGoals = () => {
 
   const deleteGoal = async (goal) => {
     AlertPrompt({
-      title: "Delete this goal?",
+      title: "Delete This Goal?",
       description: "You can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {
@@ -104,7 +108,7 @@ export default CompletedGoals = () => {
 
   const redoGoal = async (goal) => {
     AlertPrompt({
-      title: "Redo this goal?",
+      title: "Redo This Goal?",
       proceedText: "Redo",
       onPress: async () => {
         redoItem(goal);
@@ -117,7 +121,7 @@ export default CompletedGoals = () => {
 
   const deleteAllGoals = async () => {
     AlertPrompt({
-      title: "Delete all completed goals?",
+      title: "Delete All Completed Goals?",
       description: "You can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {
@@ -141,6 +145,13 @@ export default CompletedGoals = () => {
               redoGoal={redoGoal}
             />
           )}
+          showsVerticalScrollIndicator={false}
+          onRefresh={() => {
+            setIsFetching(true);
+            getGoals();
+            setIsFetching(false);
+          }}
+          refreshing={isFetching}
         />
         <View style={styles.bottomContainer}>
           <SortButton
@@ -163,7 +174,7 @@ export default CompletedGoals = () => {
             style={styles.deleteButton}
             onPress={deleteAllGoals}
           >
-            <FontAwesome name="trash" size={25} color="black" />
+            <FontAwesome5 name="trash" size={25} color="black" />
           </TouchableOpacity>
         </View>
       </View>

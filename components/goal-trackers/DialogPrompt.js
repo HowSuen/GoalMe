@@ -10,6 +10,7 @@ export default DialogPrompt = ({
   matches,
   onChangeText,
   onPress,
+  alertMessage,
   visible,
   setVisible,
 }) => {
@@ -28,7 +29,7 @@ export default DialogPrompt = ({
         <Dialog.Title>{title}</Dialog.Title>
         <Dialog.Description>{description}</Dialog.Description>
         <Dialog.Input
-          wrapperStyle={styles.input}
+          wrapperStyle={styles.wrapper}
           style={styles.input}
           placeholder={placeholder}
           placeholderTextColor="darkgray"
@@ -41,7 +42,7 @@ export default DialogPrompt = ({
         <Dialog.Button label="Cancel" onPress={() => setVisible(false)} />
         <Dialog.Button
           label="Complete"
-          onPress={() => isMatch(value) ? onPress() : Alert.alert("Invalid letter grade.")}
+          onPress={() => isMatch(value) ? onPress() : Alert.alert(alertMessage)}
           disabled={value == ""}
         />
       </Dialog.Container>
@@ -61,5 +62,10 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: "ghostwhite",
     color: "black",
+  },
+  wrapper: {
+    backgroundColor: "ghostwhite",
+    borderColor: "black",
+    borderWidth: 1,
   },
 });

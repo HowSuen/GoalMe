@@ -52,4 +52,27 @@ export default StyleSheet.create({
     marginVertical: 5,
     borderRadius: 100,
   },
+  moduleButton: {
+    width: 60,
+    height: 60,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    backgroundColor: "deepskyblue",
+    marginVertical: 5,
+    borderRadius: 100,
+  },
+  moduleNavButton: {
+    alignSelf: "stretch",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "deepskyblue",
+    borderRadius: 10,
+    marginTop: 25,
+  },
+  buttonText: {
+    fontSize: 18,
+    padding: 10,
+    color: "black",
+  },
 });

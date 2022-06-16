@@ -12,6 +12,12 @@ export default StyleSheet.create({
     alignItems: "center",
     paddingTop: 20,
   },
+  moduleText: {
+    fontSize: 18,
+    color: "black",
+    paddingHorizontal: 10,
+    paddingBottom: 20,
+  },
   formContainer: {
     marginTop: 0,
   },

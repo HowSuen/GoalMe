@@ -38,7 +38,10 @@ export default GoalList = ({ goal, completeGoal, deleteGoal, navigation }) => {
             {goal.content.substring(0, 22) +
               (goal.content.length > 22 ? "..." : "")}
           </Text>
-          <Text style={styles.listSubtext}>{goal.difficulty}</Text>
+          <Text style={styles.listSubtext}>
+            {goal.difficulty}
+            {goal.module ? ", " + goal.module : ""}
+          </Text>
         </View>
         <TouchableOpacity
           style={styles.iconContainer}

@@ -10,7 +10,6 @@ export default StyleSheet.create({
   buttonContainer: {
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: 20,
   },
   formContainer: {
     marginTop: 0,
@@ -27,18 +26,6 @@ export default StyleSheet.create({
   textInput: {
     color: "black",
   },
-  dropdownContainer: {
-    paddingBottom: 20,
-    paddingTop: 2,
-    alignSelf: "stretch",
-  },
-  dropdownLabel: {
-    fontSize: 16,
-    fontWeight: "bold",
-    paddingHorizontal: 10,
-    paddingBottom: 10,
-    color: "lightslategrey",
-  },
   buttonText: {
     color: "white",
     fontSize: 17,
@@ -47,15 +34,17 @@ export default StyleSheet.create({
   button: {
     backgroundColor: "dodgerblue",
     padding: 10,
-    width: 150,
+    width: 90,
     borderRadius: 5,
     elevation: 10,
+    marginTop: 15,
   },
   disabledButton: {
     backgroundColor: "gray",
     padding: 10,
-    width: 150,
+    width: 90,
     borderRadius: 5,
     elevation: 10,
+    marginTop: 15,
   },
 });

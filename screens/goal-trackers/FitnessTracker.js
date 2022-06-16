@@ -37,7 +37,6 @@ export default fitnessTracker = ({ navigation }) => {
   const [completed, setCompleted] = useState(0);
 
   useEffect(() => {
-    setData([]);
     getGoals();
   }, [isFocused, totalXp]);
 
@@ -55,6 +54,8 @@ export default fitnessTracker = ({ navigation }) => {
       if (error) throw error;
 
       goals.sort(sortItems(order, orderBy)).reverse();
+
+      setData([]);
 
       goals.map((goal) => {
         setData((prevGoal) => {
@@ -133,7 +134,6 @@ export default fitnessTracker = ({ navigation }) => {
     setCompleted(completed + 1);
 
     try {
-      const user = supabase.auth.user();
       if (!user) throw new Error("No user on the session!");
 
       const updates = {
@@ -173,21 +173,30 @@ export default fitnessTracker = ({ navigation }) => {
   };
 
   const completeGoal = async (goal) => {
-    AlertPrompt("Complete this goal?", async () => {
-      completeItem(goal);
-      setData((goals) => {
-        return goals.filter((g) => g != goal);
-      });
-      updateExperience(goal);
+    AlertPrompt({
+      title: "Complete this goal?",
+      proceedText: "Complete",
+      onPress: async () => {
+        completeItem(goal);
+        setData((goals) => {
+          return goals.filter((g) => g != goal);
+        });
+        updateExperience(goal);
+      },
     });
   };
 
   const deleteGoal = async (goal) => {
-    AlertPrompt("Delete this goal?", async () => {
-      deleteItem(goal);
-      setData((goals) => {
-        return goals.filter((g) => g != goal);
-      });
+    AlertPrompt({
+      title: "Delete this goal?",
+      description: "You can't undo this action.",
+      proceedText: "Delete",
+      onPress: async () => {
+        deleteItem(goal);
+        setData((goals) => {
+          return goals.filter((g) => g != goal);
+        });
+      },
     });
   };
 

@@ -51,9 +51,11 @@ const AchievementList = ({ navigation, session }) => {
   const [completedFit, setCompletedFit] = useState(0);
   const [completedFinance, setCompletedFinance] = useState(0);
 
+  const [isFetching, setIsFetching] = useState(false);
+
   useEffect(() => {
     if (session) {
-      getAchievements().then(() => getExperience()).then(() => updateAchievements);
+      getAchievements().then(() => getExperience()).then(() => updateAchievements());
     }
   }, [session, isFocused]);
 
@@ -104,6 +106,8 @@ const AchievementList = ({ navigation, session }) => {
         setMoney75(data.money75);
         setMoney100(data.money100);
       }
+
+      return data[0];
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -137,6 +141,8 @@ const AchievementList = ({ navigation, session }) => {
         setCompletedFit(data.completedFit);
         setCompletedFinance(data.completedFinance);
       }
+
+      return data[0];
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -501,6 +507,12 @@ const AchievementList = ({ navigation, session }) => {
         renderSectionHeader={({ section }) => (
           <Text style={styles.sectionHeader}>{section.title}</Text>
         )}
+        onRefresh={() => {
+          setIsFetching(true);
+          getAchievements();
+          setIsFetching(false);
+        }}
+        refreshing={isFetching}
       />
     </View>
   );

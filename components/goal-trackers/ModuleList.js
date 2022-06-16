@@ -34,6 +34,7 @@ export default ModuleList = ({
 }) => {
   const route = useRoute();
   const [visible, setVisible] = useState(false);
+  const moduleText = module.moduleCode || module.moduleName;
 
   return (
     <View style={styles.container}>
@@ -65,7 +66,10 @@ export default ModuleList = ({
           />
         </TouchableOpacity>
         <View>
-          <Text style={styles.listText}>{module.moduleCode || module.moduleName}</Text>
+          <Text style={styles.listText}>
+            {moduleText.substring(0, 16) +
+              (moduleText.length > 16 ? "..." : "")}
+          </Text>
           <Text style={styles.listSubtext}>
             Target Grade: {module.targetGrade}
           </Text>

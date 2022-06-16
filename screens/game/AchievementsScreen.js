@@ -1,10 +1,24 @@
 import React from "react";
-import { View, Text, Dimensions } from "react-native";
+import { View, Text, Dimensions, FlatList } from "react-native";
 import { Card, Image } from "react-native-elements";
 import { Bar } from "react-native-progress";
 import styles from "./AchievementsScreen.style";
 
 const AchievementsScreen = ({ navigation, session }) => {
+  const data = [
+    {
+      id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+      title: "First Item",
+    },
+    {
+      id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
+      title: "Second Item",
+    },
+    {
+      id: "58694a0f-3da1-471f-bd96-145571e29d72",
+      title: "Third Item",
+    },
+  ];
 
   return (
     <View style={styles.container}>
@@ -32,6 +46,11 @@ const AchievementsScreen = ({ navigation, session }) => {
         </View>
       </Card>
       <View style={styles.listContainer}>
+        <FlatList
+          data={data}
+          keyExtractor={(goal) => goal.id}
+          renderItem={({ item }) => console.log("hi")}
+        />
       </View>
     </View>
   );

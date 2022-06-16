@@ -18,12 +18,9 @@ export default ModuleSetter = ({ navigation }) => {
   const route = useRoute();
   const { user, routeName } = route.params;
   const [link, setLink] = useState("");
-  const [added, setAdded] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [moduleName, setModuleName] = useState("");
 
   const submitModules = async () => {
-    setLoading(true);
-
     if (link.substring(0, 42) != "https://nusmods.com/timetable/sem-1/share?") {
       return Alert.alert("Invalid link.");
     }
@@ -34,6 +31,7 @@ export default ModuleSetter = ({ navigation }) => {
       .map((s) => s.substring(1));
 
     try {
+      let promise;
       for (let i = 0; i < mods.length; i++) {
         let { data, error } = await supabase.from("modules").insert([
           {
@@ -43,17 +41,27 @@ export default ModuleSetter = ({ navigation }) => {
           },
         ]);
         if (error) throw error;
+        promise = data[0];
       }
+      return promise;
     } catch (error) {
       Alert.alert(error.message);
-    } finally {
-      setLoading(false);
-      setAdded(true);
     }
   };
 
-  const hasEmptyValues = () => {
-    return link == "";
+  const submitModule = async () => {
+    try {
+      let { data, error } = await supabase.from("modules").insert([
+        {
+          user_id: user.id,
+          module_name: moduleName,
+          target_grade: "A",
+        },
+      ]);
+      if (error) throw error;
+    } catch (error) {
+      Alert.alert(error.message);
+    }
   };
 
   return (
@@ -61,8 +69,16 @@ export default ModuleSetter = ({ navigation }) => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
     >
-      <View style={styles.formContainer}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.formContainer}>
+          <View style={styles.instructionContainer}>
+            <Text style={styles.instructionTitle}>Instructions</Text>
+            <Text style={styles.instructionText}>
+              Import your modules by going to {"\n"}
+              NUSMods → Share/Sync → Copy Link, {"\n"}
+              or add your own module.
+            </Text>
+          </View>
           <Input
             style={styles.textInput}
             inputContainerStyle={styles.inputContainer}
@@ -72,28 +88,39 @@ export default ModuleSetter = ({ navigation }) => {
             value={link}
             onChangeText={(text) => setLink(text)}
           />
-        </TouchableWithoutFeedback>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={
-              hasEmptyValues() || added ? styles.disabledButton : styles.button
-            }
-            disabled={hasEmptyValues() || added}
-            onPress={() => {
-              submitModules();
-            }}
-          >
-            <Text style={styles.buttonText}>Add</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={loading ? styles.disabledButton : styles.button}
-            disabled={loading}
-            onPress={() => navigation.navigate(routeName)}
-          >
-            <Text style={styles.buttonText}>Done</Text>
-          </TouchableOpacity>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={link == "" ? styles.disabledButton : styles.button}
+              disabled={link == ""}
+              onPress={() => {
+                submitModules().then(() => navigation.navigate(routeName));
+              }}
+            >
+              <Text style={styles.buttonText}>Import</Text>
+            </TouchableOpacity>
+          </View>
+          <Input
+            style={styles.textInput}
+            inputContainerStyle={styles.inputContainer}
+            label="Module"
+            placeholder="Or add your module here..."
+            placeholderTextColor="darkgray"
+            value={moduleName}
+            onChangeText={(text) => setModuleName(text)}
+          />
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={moduleName == "" ? styles.disabledButton : styles.button}
+              disabled={moduleName == ""}
+              onPress={() => {
+                submitModule().then(() => navigation.navigate(routeName));
+              }}
+            >
+              <Text style={styles.buttonText}>Add</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
 };

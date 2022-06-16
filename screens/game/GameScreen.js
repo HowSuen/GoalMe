@@ -31,8 +31,7 @@ const GameScreen = ({ navigation, session }) => {
               style={styles.achievement}
               source={require("../../assets/achievement_logo_alt.png")}
             />
-            <Text style={styles.achievementText}>Achievements Completed:</Text>
-            <Text style={styles.achievementText}>69</Text>
+            <Text style={styles.achievementText}>Achievements Completed</Text>
           </View>
         </Card>
       </TouchableOpacity>

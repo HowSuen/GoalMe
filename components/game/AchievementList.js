@@ -37,13 +37,30 @@ const AchievementList = ({ navigation, session }) => {
   const [money75, setMoney75] = useState(false);
   const [money100, setMoney100] = useState(false);
 
+  const [totalXp, setTotalXp] = useState(0);
+  const [wisdomXp, setWisdomXp] = useState(0);
+  const [strengthXp, setStrengthXp] = useState(0);
+  const [wealthXp, setWealthXp] = useState(0);
+
+  const [totalLvl, setTotalLvl] = useState(1);
+  const [strengthLvl, setStrengthLvl] = useState(1);
+  const [wisdomLvl, setWisdomLvl] = useState(1);
+  const [wealthLvl, setWealthLvl] = useState(1);
+  const [completed, setCompleted] = useState(0);
+  const [completedAcad, setCompletedAcad] = useState(0);
+  const [completedFit, setCompletedFit] = useState(0);
+  const [completedFinance, setCompletedFinance] = useState(0);
+
   useEffect(() => {
-    if (session) getAchievements();
+    if (session) {
+      getAchievements().then(() => getExperience()).then(() => updateAchievements);
+    }
   }, [session, isFocused]);
+
+  const user = supabase.auth.user();
 
   const getAchievements = async () => {
     try {
-      const user = supabase.auth.user();
       if (!user) throw new Error("No user on the session!");
 
       let { data, error, status } = await supabase
@@ -86,6 +103,198 @@ const AchievementList = ({ navigation, session }) => {
         setMoney50(data.money50);
         setMoney75(data.money75);
         setMoney100(data.money100);
+      }
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+  };
+
+  const getExperience = async () => {
+    try {
+      if (!user) throw new Error("No user on the session!");
+
+      let { data, error, status } = await supabase
+        .from("experience")
+        .select()
+        .eq("id", user.id)
+        .single();
+
+      if (error && status !== 406) {
+        throw error;
+      }
+
+      if (data) {
+        setTotalXp(data.totalXP);
+        setTotalLvl(data.totalLVL);
+        setWisdomXp(data.wisdomXP);
+        setWisdomLvl(data.wisdomLVL);
+        setStrengthXp(data.strengthXP);
+        setStrengthLvl(data.strengthLVL);
+        setWealthXp(data.wealthXP);
+        setWealthLvl(data.wealthLVL);
+        setCompleted(data.completed);
+        setCompletedAcad(data.completedAcad);
+        setCompletedFit(data.completedFit);
+        setCompletedFinance(data.completedFinance);
+      }
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+  };
+
+  const updateAchievements = async () => {
+    let addCount = 0;
+    if (!goal1 && completed >= 1) {
+      setGoal1(true);
+      addCount += 1;
+    }
+    if (!goal50 && completed >= 50) {
+      setGoal50(true);
+      addCount += 1;
+    }
+    if (!goal100 && completed >= 100) {
+      setGoal100(true);
+      addCount += 1;
+    }
+    if (!goal200 && completed >= 200) {
+      setGoal200(true);
+      addCount += 1;
+    }
+    if (!level2 && totalLvl >= 2) {
+      setLevel2(true);
+      addCount += 1;
+    }
+    if (!level5 && totalLvl >= 5) {
+      setLevel5(true);
+      addCount += 1;
+    }
+    if (!level10 && totalLvl >= 10) {
+      setLevel10(true);
+      addCount += 1;
+    }
+    if (!level20 && totalLvl >= 20) {
+      setLevel20(true);
+      addCount += 1;
+    }
+    if (!level30 && totalLvl >= 30) {
+      setLevel30(true);
+      addCount += 1;
+    }
+    if (!acad5 && completedAcad >= 5) {
+      setAcad5(true);
+      addCount += 1;
+    }
+    if (!acad10 && completedAcad >= 10) {
+      setAcad10(true);
+      addCount += 1;
+    }
+    if (!acad25 && completedAcad >= 25) {
+      setAcad25(true);
+      addCount += 1;
+    }
+    if (!acad50 && completedAcad >= 50) {
+      setAcad50(true);
+      addCount += 1;
+    }
+    if (!acad75 && completedAcad >= 75) {
+      setAcad75(true);
+      addCount += 1;
+    }
+    if (!acad100 && completedAcad >= 100) {
+      setAcad100(true);
+      addCount += 1;
+    }
+    if (!fit5 && completedFit >= 5) {
+      setAcad5(true);
+      addCount += 1;
+    }
+    if (!fit10 && completedFit >= 10) {
+      setAcad10(true);
+      addCount += 1;
+    }
+    if (!fit25 && completedFit >= 25) {
+      setAcad25(true);
+      addCount += 1;
+    }
+    if (!fit50 && completedFit >= 50) {
+      setAcad50(true);
+      addCount += 1;
+    }
+    if (!fit75 && completedFit >= 75) {
+      setAcad75(true);
+      addCount += 1;
+    }
+    if (!fit100 && completedFit >= 100) {
+      setAcad100(true);
+      addCount += 1;
+    }
+    if (!money5 && completedFinance >= 5) {
+      setAcad5(true);
+      addCount += 1;
+    }
+    if (!money10 && completedFinance >= 10) {
+      setAcad10(true);
+      addCount += 1;
+    }
+    if (!money25 && completedFinance >= 25) {
+      setAcad25(true);
+      addCount += 1;
+    }
+    if (!money50 && completedFinance >= 50) {
+      setAcad50(true);
+      addCount += 1;
+    }
+    if (!money75 && completedFinance >= 75) {
+      setAcad75(true);
+      addCount += 1;
+    }
+    if (!money100 && completedFinance >= 100) {
+      setAcad100(true);
+      addCount += 1;
+    }
+    setCount(count + addCount);
+    try {
+      if (!user) throw new Error("No user on the session!");
+
+      const updates = {
+        id: user.id,
+        updated_at: new Date().toISOString().toLocaleString(),
+        count: count + addCount,
+        goal1: goal1 || completed >= 1,
+        goal50: goal50 || completed >= 50,
+        goal100: goal100 || completed >= 100,
+        goal200: goal200 || completed >= 200,
+        level2: level2 || totalLvl >= 2,
+        level5: level5 || totalLvl >= 5,
+        level10: level10 || totalLvl >= 10,
+        level20: level20 || totalLvl >= 20,
+        level30: level30 || totalLvl >= 30,
+        acad5: acad5 || completedAcad >= 5,
+        acad10: acad10 || completedAcad >= 10,
+        acad25: acad25 || completedAcad >= 25,
+        acad50: acad50 || completedAcad >= 50,
+        acad75: acad75 || completedAcad >= 75,
+        acad100: acad100 || completedAcad >= 100,
+        fit5: fit5 || completedFit >= 5,
+        fit10: fit10 || completedFit >= 10,
+        fit25: fit25 || completedFit >= 25,
+        fit50: fit50 || completedFit >= 50,
+        fit75: fit75 || completedFit >= 75,
+        fit100: fit100 || completedFit >= 100,
+        money5: money5 || completedFinance >= 5,
+        money10: money10 || completedFinance >= 10,
+        money25: money25 || completedFinance >= 25,
+        money50: money50 || completedFinance >= 50,
+        money75: money75 || completedFinance >= 75,
+        money100: money100 || completedFinance >= 100,
+      };
+
+      let { error } = await supabase
+        .from("achievements")
+        .upsert(updates, { returning: "minimal" });
+
+      if (error) {
+        throw error;
       }
     } catch (error) {
       Alert.alert(error.message);

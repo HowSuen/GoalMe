@@ -191,7 +191,6 @@ const CustomiseAvatar = ({ navigation, session }) => {
   useEffect(() => {
     if (session) {
       getProfile();
-      getAchievements();
     }
   }, [session, isFocused]);
 
@@ -231,6 +230,7 @@ const CustomiseAvatar = ({ navigation, session }) => {
     } catch (error) {
       Alert.alert(error.message);
     }
+    getAchievements();
   };
 
   const updateProfile = async (e) => {

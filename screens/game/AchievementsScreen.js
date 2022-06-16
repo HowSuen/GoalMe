@@ -1,11 +1,45 @@
-import React from "react";
-import { View, Text, Dimensions, SectionList } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, Dimensions } from "react-native";
 import { Card, Image } from "react-native-elements";
 import { Bar } from "react-native-progress";
+import { useIsFocused } from "@react-navigation/native";
+import supabase from "../../lib/supabase";
 import AchievementList from "../../components/game/AchievementList";
 import styles from "./AchievementsScreen.style";
 
 const AchievementsScreen = ({ navigation, session }) => {
+  const user = supabase.auth.user();
+  const isFocused = useIsFocused();
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (session) {
+      getAchievements();
+    }
+  }, [session, isFocused]);
+
+  const getAchievements = async () => {
+    try {
+      if (!user) throw new Error("No user on the session!");
+
+      let { data, error, status } = await supabase
+        .from("achievements")
+        .select()
+        .eq("id", user.id)
+        .single();
+
+      if (error && status !== 406) {
+        throw error;
+      }
+
+      if (data) {
+        setCount(data.count);
+      }
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Card
@@ -23,11 +57,13 @@ const AchievementsScreen = ({ navigation, session }) => {
           />
           <View style={styles.rightContainer}>
             <Text style={styles.achievementText}>
-              Achievements Completed: 420
+              Achievements Completed: {count}
             </Text>
-            <Text style={styles.percentage}>69%</Text>
+            <Text style={styles.percentage}>
+              {Math.round((count / 28) * 100)}%
+            </Text>
             <Bar
-              progress={0.69}
+              progress={Math.round((count / 28) * 100) / 100}
               width={(Dimensions.get("window").width / 10) * 5.6}
               height={8}
               unfilledColor="lightgray"

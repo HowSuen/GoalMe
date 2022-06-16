@@ -186,7 +186,7 @@ const CustomiseAvatar = ({ navigation, session }) => {
   const isFocused = useIsFocused();
 
   const [avatar1, setAvatar1] = useState(false);
-  const [completed, setCompleted] = useState(0);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     if (session) {
@@ -287,7 +287,7 @@ const CustomiseAvatar = ({ navigation, session }) => {
       }
 
       if (data) {
-        setCompleted(data.completed);
+        setCount(data.count);
         setAvatar1(data.avatar1);
       }
     } catch (error) {
@@ -297,7 +297,7 @@ const CustomiseAvatar = ({ navigation, session }) => {
 
   const updateAchievements = async (e) => {
     setAvatar1(true);
-    setCompleted(completed + 1);
+    setCount(count + 1);
 
     try {
       const user = supabase.auth.user();
@@ -307,7 +307,7 @@ const CustomiseAvatar = ({ navigation, session }) => {
         id: user.id,
         updated_at: new Date().toISOString().toLocaleString(),
         avatar1: true,
-        completed: completed + 1,
+        count: count + 1,
       };
 
       let { error } = await supabase
@@ -324,7 +324,7 @@ const CustomiseAvatar = ({ navigation, session }) => {
 
   const onSave = async (e) => {
     updateProfile(e);
-    updateAchievements(e);
+    if (!avatar1) updateAchievements(e);
     navigation.navigate("Account");
   };
 

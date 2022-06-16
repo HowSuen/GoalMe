@@ -7,7 +7,7 @@ import Achievement from "./Achievement";
 const AchievementList = ({ navigation, session }) => {
   const isFocused = useIsFocused();
 
-  const [completed, setCompleted] = useState(0);
+  const [count, setCount] = useState(0);
   const [avatar1, setAvatar1] = useState(false);
   const [goal1, setGoal1] = useState(false);
   const [goal50, setGoal50] = useState(false);
@@ -57,7 +57,7 @@ const AchievementList = ({ navigation, session }) => {
       }
 
       if (data) {
-        setCompleted(data.completed);
+        setCount(data.count);
         setAvatar1(data.avatar1);
         setGoal1(data.goal1);
         setGoal50(data.goal50);

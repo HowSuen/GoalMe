@@ -25,16 +25,11 @@ export default FinanceTracker = ({ navigation }) => {
   const route = useRoute();
 
   const [totalXp, setTotalXp] = useState(0);
-  const [wisdomXp, setWisdomXp] = useState(0);
-  const [strengthXp, setStrengthXp] = useState(0);
   const [wealthXp, setWealthXp] = useState(0);
-
   const [totalLvl, setTotalLvl] = useState(1);
-  const [strengthLvl, setStrengthLvl] = useState(1);
-  const [wisdomLvl, setWisdomLvl] = useState(1);
   const [wealthLvl, setWealthLvl] = useState(1);
-
   const [completed, setCompleted] = useState(0);
+  const [completedFinance, setCompletedFinance] = useState(0);
 
   useEffect(() => {
     getGoals();
@@ -95,13 +90,10 @@ export default FinanceTracker = ({ navigation }) => {
       if (data) {
         setTotalXp(data.totalXP);
         setTotalLvl(data.totalLVL);
-        setWisdomXp(data.wisdomXP);
-        setWisdomLvl(data.wisdomLVL);
-        setStrengthXp(data.strengthXP);
-        setStrengthLvl(data.strengthLVL);
         setWealthXp(data.wealthXP);
         setWealthLvl(data.wealthLVL);
         setCompleted(data.completed);
+        setCompletedFinance(data.completedFinance);
       }
     } catch (error) {
       Alert.alert(error.message);
@@ -130,6 +122,7 @@ export default FinanceTracker = ({ navigation }) => {
     );
     setWealthLvl(newWealthXp >= wealthMax ? wealthLvl + 1 : wealthLvl);
     setCompleted(completed + 1);
+    setCompletedFinance(completedFinance + 1);
 
     try {
       if (!user) throw new Error("No user on the session!");
@@ -139,14 +132,11 @@ export default FinanceTracker = ({ navigation }) => {
         updated_at: new Date().toISOString().toLocaleString(),
         totalXP: newTotalXp >= totalMax ? newTotalXp % totalMax : newTotalXp,
         totalLVL: newTotalXp >= totalMax ? totalLvl + 1 : totalLvl,
-        wisdomXP: wisdomXp,
-        wisdomLVL: wisdomLvl,
-        strengthXP: strengthXp,
-        strengthLVL: strengthLvl,
         wealthXP:
           newWealthXp >= wealthMax ? newWealthXp % wealthMax : newWealthXp,
         wealthLVL: newWealthXp >= wealthMax ? wealthLvl + 1 : wealthLvl,
         completed: completed + 1,
+        completedFinance: completedFinance + 1,
       };
 
       let { error } = await supabase

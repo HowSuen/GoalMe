@@ -24,6 +24,10 @@ export default ModuleSetter = ({ navigation }) => {
   const submitModules = async () => {
     setLoading(true);
 
+    if (link.substring(0, 42) != "https://nusmods.com/timetable/sem-1/share?") {
+      return Alert.alert("Invalid link.");
+    }
+
     let mods = []
       .concat(link.match(/\?.+?(?=\=)/g))
       .concat(link.match(/&\w*/g))
@@ -63,7 +67,7 @@ export default ModuleSetter = ({ navigation }) => {
             style={styles.textInput}
             inputContainerStyle={styles.inputContainer}
             label="Link"
-            placeholder="Paste your NUSMods link..."
+            placeholder="Paste your link from NUSMods here..."
             placeholderTextColor="darkgray"
             value={link}
             onChangeText={(text) => setLink(text)}

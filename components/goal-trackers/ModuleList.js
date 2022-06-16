@@ -59,6 +59,7 @@ export default ModuleList = ({
             matches={grades}
             onChangeText={onChangeText}
             onPress={() => completeModule(module)}
+            alertMessage={"Invalid letter grade."}
             visible={visible}
             setVisible={setVisible}
           />

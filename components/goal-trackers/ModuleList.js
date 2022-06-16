@@ -65,7 +65,7 @@ export default ModuleList = ({
           />
         </TouchableOpacity>
         <View>
-          <Text style={styles.listText}>{module.moduleCode}</Text>
+          <Text style={styles.listText}>{module.moduleCode || module.moduleName}</Text>
           <Text style={styles.listSubtext}>
             Target Grade: {module.targetGrade}
           </Text>

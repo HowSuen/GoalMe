@@ -23,6 +23,23 @@ export default StyleSheet.create({
     alignSelf: "stretch",
     backgroundColor: "white",
   },
+  instructionContainer: {
+    paddingHorizontal: 10,
+    alignSelf: "stretch",
+    paddingBottom: 10,
+  },
+  instructionTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "gray",
+  },
+  instructionText: {
+    fontSize: 16,
+    paddingTop: 5,
+    paddingBottom: 10,
+    lineHeight: 25,
+    color: "black",
+  },
   textInput: {
     color: "black",
   },
@@ -37,7 +54,8 @@ export default StyleSheet.create({
     width: 90,
     borderRadius: 5,
     elevation: 10,
-    marginTop: 15,
+    marginTop: 8,
+    marginBottom: 20,
   },
   disabledButton: {
     backgroundColor: "gray",
@@ -45,6 +63,7 @@ export default StyleSheet.create({
     width: 90,
     borderRadius: 5,
     elevation: 10,
-    marginTop: 15,
+    marginTop: 8,
+    marginBottom: 20,
   },
 });

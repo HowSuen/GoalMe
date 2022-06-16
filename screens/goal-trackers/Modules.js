@@ -60,8 +60,8 @@ const sortItems = (order, orderBy) => {
         : convertDate(b.updated_at) - convertDate(a.updated_at);
   } else if (orderBy == "alphabetical") {
     comparator = (a, b) => {
-      const s1 = a.moduleCode || a.module_code;
-      const s2 = b.moduleCode || b.module_code;
+      const s1 = a.moduleCode || a.module_code || a.moduleName || a.module_name;
+      const s2 = b.moduleCode || b.module_code || b.moduleName || b.module_name;
       return order == "ascending" ? s1.localeCompare(s2) : s2.localeCompare(s1);
     };
   }
@@ -112,6 +112,8 @@ export default Modules = ({ navigation }) => {
             {
               id: module.id,
               moduleCode: module.module_code,
+              moduleName: module.module_name,
+              description: module.description,
               targetGrade: module.target_grade,
               gradeReceived: module.grade_received,
               updated_at: module.updated_at,

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Pressable, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { Card, Image } from "react-native-elements";
 import LevelBar from "../../components/game/LevelBar";
 import MainLevel from "../../components/game/MainLevel";

@@ -96,7 +96,7 @@ export default ModuleSetter = ({ navigation }) => {
                 submitModules().then(() => navigation.navigate(routeName));
               }}
             >
-              <Text style={styles.buttonText}>Add</Text>
+              <Text style={styles.buttonText}>Import</Text>
             </TouchableOpacity>
           </View>
           <Input

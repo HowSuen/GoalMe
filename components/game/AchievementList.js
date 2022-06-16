@@ -55,7 +55,9 @@ const AchievementList = ({ navigation, session }) => {
 
   useEffect(() => {
     if (session) {
-      getAchievements().then(() => getExperience()).then(() => updateAchievements());
+      getAchievements().then(() =>
+        getExperience().then(() => updateAchievements().then(() => null))
+      );
     }
   }, [session, isFocused]);
 
@@ -107,7 +109,7 @@ const AchievementList = ({ navigation, session }) => {
         setMoney100(data.money100);
       }
 
-      return data[0];
+      return data;
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -142,7 +144,7 @@ const AchievementList = ({ navigation, session }) => {
         setCompletedFinance(data.completedFinance);
       }
 
-      return data[0];
+      return data;
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -295,13 +297,15 @@ const AchievementList = ({ navigation, session }) => {
         money100: money100 || completedFinance >= 100,
       };
 
-      let { error } = await supabase
+      let { data, error } = await supabase
         .from("achievements")
         .upsert(updates, { returning: "minimal" });
 
       if (error) {
         throw error;
       }
+
+      return data;
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -509,8 +513,11 @@ const AchievementList = ({ navigation, session }) => {
         )}
         onRefresh={() => {
           setIsFetching(true);
-          getAchievements();
-          setIsFetching(false);
+          getAchievements().then(() =>
+            getExperience().then(() =>
+              updateAchievements().then(() => setIsFetching(false))
+            )
+          );
         }}
         refreshing={isFetching}
       />

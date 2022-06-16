@@ -89,7 +89,6 @@ export default Modules = ({ navigation }) => {
   const [wealthLvl, setWealthLvl] = useState(1);
 
   useEffect(() => {
-    setData([]);
     getModules();
   }, [isFocused, totalXp]);
 
@@ -106,6 +105,8 @@ export default Modules = ({ navigation }) => {
       if (error) throw error;
 
       modules.sort(sortItems(order, orderBy)).reverse();
+
+      setData([]);
 
       modules.map((module) => {
         setData((prevModule) => {
@@ -261,6 +262,7 @@ export default Modules = ({ navigation }) => {
   const deleteModule = async (module) => {
     AlertPrompt({
       title: "Delete this module?",
+      description: "You can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {
         try {

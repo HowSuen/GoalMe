@@ -59,7 +59,7 @@ export default GoalTrackerNavigator = () => {
         options={({ route }) => ({
           headerTitle: !inModules(route) ? "Academic Goals" : "Modules",
           headerStyle: {
-            backgroundColor: !inModules(route) ? "royalblue" : "orange",
+            backgroundColor: !inModules(route) ? "royalblue" : "deepskyblue",
           },
           drawerActiveBackgroundColor: "royalblue",
           drawerLabel: "Academic Goals",

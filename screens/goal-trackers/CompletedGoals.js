@@ -48,7 +48,6 @@ export default CompletedGoals = () => {
   const user = supabase.auth.user();
 
   useEffect(() => {
-    setData([]);
     (async () => {
       try {
         let { data: goals, error } = await supabase
@@ -59,6 +58,8 @@ export default CompletedGoals = () => {
         if (error) throw error;
 
         goals.sort(sortItems(order, orderBy)).reverse();
+
+        setData([]);
 
         goals.map((goal) => {
           setData((prevGoal) => {
@@ -90,6 +91,7 @@ export default CompletedGoals = () => {
   const deleteGoal = async (goal) => {
     AlertPrompt({
       title: "Delete this goal?",
+      description: "You can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {
         deleteItem(goal);
@@ -116,6 +118,7 @@ export default CompletedGoals = () => {
   const deleteAllGoals = async () => {
     AlertPrompt({
       title: "Delete all completed goals?",
+      description: "You can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {
         deleteAllItems();

@@ -1,7 +1,7 @@
 import { Alert } from "react-native";
 
-export default AlertPrompt = ({ title, proceedText, onPress }) => {
-  return Alert.alert(title, "", [
+export default AlertPrompt = ({ title, description, proceedText, onPress }) => {
+  return Alert.alert(title, description || "", [
     {
       text: "Cancel",
     },

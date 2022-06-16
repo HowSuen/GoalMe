@@ -35,7 +35,6 @@ export default fitnessTracker = ({ navigation }) => {
   const [wealthLvl, setWealthLvl] = useState(1);
 
   useEffect(() => {
-    setData([]);
     getGoals();
   }, [isFocused, totalXp]);
 
@@ -53,6 +52,8 @@ export default fitnessTracker = ({ navigation }) => {
       if (error) throw error;
 
       goals.sort(sortItems(order, orderBy)).reverse();
+
+      setData([]);
 
       goals.map((goal) => {
         setData((prevGoal) => {
@@ -183,6 +184,7 @@ export default fitnessTracker = ({ navigation }) => {
   const deleteGoal = async (goal) => {
     AlertPrompt({
       title: "Delete this goal?",
+      description: "You can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {
         deleteItem(goal);

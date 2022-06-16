@@ -15,7 +15,7 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "orange",
+    backgroundColor: "deepskyblue",
   },
   boxContainer: {
     alignItems: "center",

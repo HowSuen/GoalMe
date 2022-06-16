@@ -37,8 +37,4 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  listContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-  }
 });

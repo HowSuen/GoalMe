@@ -58,7 +58,7 @@ export default GoalEditor = ({ navigation }) => {
     try {
       let { data: mods, error } = await supabase
         .from("modules")
-        .select("module_code")
+        .select("module_code, module_name")
         .match({
           user_id: user.id,
           completion_status: false,
@@ -68,8 +68,8 @@ export default GoalEditor = ({ navigation }) => {
 
       modules = mods.map((object) => {
         return {
-          label: object.module_code,
-          value: object.module_code,
+          label: object.module_code || object.module_name,
+          value: object.module_code || object.module_name,
         };
       });
     } catch (error) {

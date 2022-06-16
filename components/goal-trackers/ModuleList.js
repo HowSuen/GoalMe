@@ -54,7 +54,7 @@ export default ModuleList = ({
           <FontAwesome name="square-o" size={25} color={"black"} />
           <DialogPrompt
             title="Received Grade"
-            description="What grade did you receive for this module?"
+            description="What letter grade did you receive for this module?"
             placeholder="Enter grade here..."
             matches={grades}
             onChangeText={onChangeText}

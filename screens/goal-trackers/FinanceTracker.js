@@ -164,7 +164,7 @@ export default FinanceTracker = ({ navigation }) => {
 
   const completeGoal = async (goal) => {
     AlertPrompt({
-      title: "Complete this goal?",
+      title: "Complete This Goal?",
       proceedText: "Complete",
       onPress: async () => {
         const recurringGoal = completeItem(goal);
@@ -180,7 +180,7 @@ export default FinanceTracker = ({ navigation }) => {
 
   const deleteGoal = async (goal) => {
     AlertPrompt({
-      title: "Delete this goal?",
+      title: "Delete This Goal?",
       description: "You can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {

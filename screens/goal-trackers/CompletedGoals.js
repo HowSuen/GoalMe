@@ -94,7 +94,7 @@ export default CompletedGoals = () => {
 
   const deleteGoal = async (goal) => {
     AlertPrompt({
-      title: "Delete this goal?",
+      title: "Delete This Goal?",
       description: "You can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {
@@ -108,7 +108,7 @@ export default CompletedGoals = () => {
 
   const redoGoal = async (goal) => {
     AlertPrompt({
-      title: "Redo this goal?",
+      title: "Redo This Goal?",
       proceedText: "Redo",
       onPress: async () => {
         redoItem(goal);
@@ -121,7 +121,7 @@ export default CompletedGoals = () => {
 
   const deleteAllGoals = async () => {
     AlertPrompt({
-      title: "Delete all completed goals?",
+      title: "Delete All Completed Goals?",
       description: "You can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {

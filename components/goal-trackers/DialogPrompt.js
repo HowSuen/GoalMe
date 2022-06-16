@@ -28,7 +28,7 @@ export default DialogPrompt = ({
         <Dialog.Title>{title}</Dialog.Title>
         <Dialog.Description>{description}</Dialog.Description>
         <Dialog.Input
-          wrapperStyle={styles.input}
+          wrapperStyle={styles.wrapper}
           style={styles.input}
           placeholder={placeholder}
           placeholderTextColor="darkgray"
@@ -61,5 +61,10 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: "ghostwhite",
     color: "black",
+  },
+  wrapper: {
+    backgroundColor: "ghostwhite",
+    borderColor: "black",
+    borderWidth: 1,
   },
 });

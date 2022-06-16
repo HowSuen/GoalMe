@@ -262,7 +262,7 @@ export default Modules = ({ navigation }) => {
 
   const deleteModule = async (module) => {
     AlertPrompt({
-      title: "Delete this module?",
+      title: "Delete This Module?",
       description: "You can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {

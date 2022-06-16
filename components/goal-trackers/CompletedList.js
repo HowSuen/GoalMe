@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, View } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import styles from "./GoalList.style";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -26,17 +26,24 @@ export default CompletedList = ({ goal, redoGoal, deleteGoal }) => {
         </TouchableOpacity>
         <View>
           <Text style={styles.listText}>
-            {goal.content.substring(0, 22) +
-              (goal.content.length > 22 ? "..." : "")}
+            {goal.content.substring(0, 19) +
+              (goal.content.length > 19 ? "..." : "")}
           </Text>
           <Text style={styles.listSubtext}>{goal.difficulty}</Text>
         </View>
-        <TouchableOpacity
-          style={styles.iconContainer}
-          onPress={() => deleteGoal(goal)}
-        >
-          <FontAwesome name="trash" size={25} color="black" />
-        </TouchableOpacity>
+        <View style={styles.iconContainer}>
+          <FontAwesome
+            name="repeat"
+            size={15}
+            color={goal.recurring ? "white" : "transparent"}
+          />
+          <TouchableOpacity
+            style={styles.trashContainer}
+            onPress={() => deleteGoal(goal)}
+          >
+            <FontAwesome5 name="trash" size={20} color="black" />
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );

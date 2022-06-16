@@ -9,6 +9,7 @@ import GoalSetter from "../screens/goal-trackers/GoalSetter";
 import Modules from "../screens/goal-trackers/Modules";
 import ModuleEditor from "../screens/goal-trackers/ModuleEditor";
 import ModuleSetter from "../screens/goal-trackers/ModuleSetter";
+import { Platform } from "react-native";
 
 const Stack = createNativeStackNavigator();
 
@@ -57,7 +58,7 @@ export default GoalNavigator = ({ route, navigation }) => {
         name="Modules"
         component={Modules}
         options={{
-          headerShown: true,
+          headerShown: Platform.OS === "ios" ? true : false,
           headerTitle: "",
           headerStyle: { backgroundColor: "ghostwhite" },
           headerTintColor: "black",
@@ -80,7 +81,7 @@ export default GoalNavigator = ({ route, navigation }) => {
       <Stack.Screen
         name="ModuleEditor"
         options={{
-          headerShown: true,
+          headerShown: Platform.OS === "ios" ? true : false,
           headerTitle: "",
           headerStyle: { backgroundColor: "ghostwhite" },
           headerTintColor: "black",

@@ -29,6 +29,11 @@ const difficulties = [
   { label: "Hard", value: "Hard" },
 ];
 
+const recurrings = [
+  { label: "No", value: false },
+  { label: "Yes", value: true },
+];
+
 export default GoalSetter = ({ navigation }) => {
   const route = useRoute();
   const { user, routeName, defaultType } = route.params;
@@ -36,6 +41,7 @@ export default GoalSetter = ({ navigation }) => {
   const [description, setDescription] = useState("");
   const [type, setType] = useState(defaultType);
   const [difficulty, setDifficulty] = useState("None");
+  const [recurring, setRecurring] = useState(false);
 
   const submitGoal = async () => {
     try {
@@ -46,6 +52,7 @@ export default GoalSetter = ({ navigation }) => {
           description: description,
           type: type,
           difficulty: difficulty,
+          recurring: recurring,
         },
       ]);
       if (error) throw error;
@@ -55,7 +62,9 @@ export default GoalSetter = ({ navigation }) => {
   };
 
   const hasEmptyValues = () => {
-    return content == "" || type == null || difficulty == null;
+    return (
+      content == "" || type == null || difficulty == null || recurring == null
+    );
   };
 
   return (
@@ -104,6 +113,14 @@ export default GoalSetter = ({ navigation }) => {
             placeholder={{ label: "Select a difficulty...", value: null }}
           />
         </View>
+        <View style={styles.dropdownContainer}>
+          <Text style={styles.dropdownLabel}>Recurring?</Text>
+          <GoalDropdownList
+            value={recurring}
+            items={recurrings}
+            onValueChange={(value) => setRecurring(value)}
+          />
+        </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={hasEmptyValues() ? styles.disabledButton : styles.button}
@@ -121,4 +138,4 @@ export default GoalSetter = ({ navigation }) => {
   );
 };
 
-export { types, difficulties };
+export { types, difficulties, recurrings };

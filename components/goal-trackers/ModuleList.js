@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, View } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import styles from "./ModuleList.style";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useRoute } from "@react-navigation/native";
@@ -73,7 +73,7 @@ export default ModuleList = ({
           style={styles.iconContainer}
           onPress={() => deleteModule(module)}
         >
-          <FontAwesome name="trash" size={25} color="black" />
+          <FontAwesome5 name="trash" size={20} color="black" />
         </TouchableOpacity>
       </TouchableOpacity>
     </View>

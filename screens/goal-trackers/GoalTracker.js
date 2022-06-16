@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Alert, View, FlatList, TouchableOpacity } from "react-native";
 import styles from "./GoalTracker.style";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 import GoalList from "../../components/goal-trackers/GoalList";
 import Empty from "./Empty";
 import supabase from "../../lib/supabase";
@@ -96,6 +96,25 @@ const completeItem = async (item) => {
       .match({ id: item.id });
 
     if (error) throw error;
+
+    const userId = data[0].user_id;
+
+    if (item.recurring) {
+      let { data, error } = await supabase.from("goals").insert([
+        {
+          user_id: userId,
+          content: item.content,
+          description: item.description,
+          type: item.type,
+          difficulty: item.difficulty,
+          recurring: item.recurring,
+        },
+      ]);
+
+      if (error) throw error;
+
+      return data[0];
+    }
   } catch (error) {
     Alert.alert(error.message);
   }
@@ -118,6 +137,7 @@ export default GoalTracker = ({ navigation }) => {
   const [data, setData] = useState([]);
   const [order, setOrder] = useState("ascending");
   const [orderBy, setOrderBy] = useState("dateCreated");
+  const [isFetching, setIsFetching] = useState(false);
   const user = supabase.auth.user();
   const isFocused = useIsFocused();
   const route = useRoute();
@@ -159,6 +179,7 @@ export default GoalTracker = ({ navigation }) => {
               type: goal.type,
               module: goal.module,
               difficulty: goal.difficulty,
+              recurring: goal.recurring,
               updated_at: goal.updated_at,
             },
             ...prevGoal,
@@ -282,9 +303,7 @@ export default GoalTracker = ({ navigation }) => {
   };
 
   const sortGoals = (order, orderBy) => {
-    setData((goals) => {
-      return goals.sort(sortItems(order, orderBy));
-    });
+    setData((goals) => goals.sort(sortItems(order, orderBy)));
   };
 
   const completeGoal = async (goal) => {
@@ -292,10 +311,12 @@ export default GoalTracker = ({ navigation }) => {
       title: "Complete this goal?",
       proceedText: "Complete",
       onPress: async () => {
-        completeItem(goal);
-        setData((goals) => {
-          return goals.filter((g) => g != goal);
-        });
+        const recurringGoal = completeItem(goal)
+        if (goal.recurring) {
+          recurringGoal.then(() => getGoals());
+        } else {
+          setData((goals) => goals.filter((g) => g != goal));
+        }
         updateExperience(goal);
       },
     });
@@ -308,9 +329,7 @@ export default GoalTracker = ({ navigation }) => {
       proceedText: "Delete",
       onPress: async () => {
         deleteItem(goal);
-        setData((goals) => {
-          return goals.filter((g) => g != goal);
-        });
+        setData((goals) => goals.filter((g) => g != goal));
       },
     });
   };
@@ -330,6 +349,13 @@ export default GoalTracker = ({ navigation }) => {
               navigation={navigation}
             />
           )}
+          showsVerticalScrollIndicator={false}
+          onRefresh={() => {
+            setIsFetching(true);
+            getGoals();
+            setIsFetching(false);
+          }}
+          refreshing={isFetching}
         />
         <View style={styles.bottomContainer}>
           <SortButton
@@ -358,7 +384,7 @@ export default GoalTracker = ({ navigation }) => {
               });
             }}
           >
-            <FontAwesome name="plus" size={20} color="black" />
+            <FontAwesome5 name="plus" size={20} color="black" />
           </TouchableOpacity>
         </View>
       </View>

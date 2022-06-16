@@ -61,6 +61,7 @@ export default AcademicTracker = ({ navigation }) => {
               content: goal.content,
               description: goal.description,
               type: goal.type,
+              module: goal.module,
               difficulty: goal.difficulty,
               recurring: goal.recurring,
               updated_at: goal.updated_at,

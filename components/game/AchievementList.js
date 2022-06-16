@@ -52,14 +52,21 @@ const AchievementList = ({ navigation, session }) => {
   const [completedFinance, setCompletedFinance] = useState(0);
 
   const [isFetching, setIsFetching] = useState(false);
+  const [exFinished, setExFinished] = useState(false);
+  const [achFinished, setAchFinished] = useState(false);
+  const [state, setState] = useState({});
 
   useEffect(() => {
     if (session) {
-      getAchievements().then(() =>
-        getExperience().then(() => updateAchievements().then(() => null))
-      );
+      getAchievements().then(() => getExperience());
     }
-  }, [session, isFocused]);
+    if (exFinished && achFinished) {
+      updateAchievements();
+    }
+    return () => {
+      setState({});
+    };
+  }, [session, isFocused, completed]);
 
   const user = supabase.auth.user();
 
@@ -109,10 +116,11 @@ const AchievementList = ({ navigation, session }) => {
         setMoney100(data.money100);
       }
 
-      return data;
+      // return data;
     } catch (error) {
       Alert.alert(error.message);
     }
+    setAchFinished(true);
   };
 
   const getExperience = async () => {
@@ -144,10 +152,11 @@ const AchievementList = ({ navigation, session }) => {
         setCompletedFinance(data.completedFinance);
       }
 
-      return data;
+      // return data;
     } catch (error) {
       Alert.alert(error.message);
     }
+    setExFinished(true);
   };
 
   const updateAchievements = async () => {
@@ -260,14 +269,43 @@ const AchievementList = ({ navigation, session }) => {
       setAcad100(true);
       addCount += 1;
     }
-    setCount(count + addCount);
+    if (avatar1) addCount += 1;
+    if (goal1) addCount += 1;
+    if (goal50) addCount += 1;
+    if (goal100) addCount += 1;
+    if (goal200) addCount += 1;
+    if (level2) addCount += 1;
+    if (level5) addCount += 1;
+    if (level10) addCount += 1;
+    if (level20) addCount += 1;
+    if (level30) addCount += 1;
+    if (acad5) addCount += 1;
+    if (acad10) addCount += 1;
+    if (acad25) addCount += 1;
+    if (acad50) addCount += 1;
+    if (acad75) addCount += 1;
+    if (acad100) addCount += 1;
+    if (fit5) addCount += 1;
+    if (fit10) addCount += 1;
+    if (fit25) addCount += 1;
+    if (fit50) addCount += 1;
+    if (fit75) addCount += 1;
+    if (fit100) addCount += 1;
+    if (money5) addCount += 1;
+    if (money10) addCount += 1;
+    if (money25) addCount += 1;
+    if (money50) addCount += 1;
+    if (money75) addCount += 1;
+    if (money100) addCount += 1;
+
+    setCount(addCount);
     try {
       if (!user) throw new Error("No user on the session!");
 
       const updates = {
         id: user.id,
         updated_at: new Date().toISOString().toLocaleString(),
-        count: count + addCount,
+        count: addCount,
         goal1: goal1 || completed >= 1,
         goal50: goal50 || completed >= 50,
         goal100: goal100 || completed >= 100,
@@ -305,10 +343,12 @@ const AchievementList = ({ navigation, session }) => {
         throw error;
       }
 
-      return data;
+      // return data;
     } catch (error) {
       Alert.alert(error.message);
     }
+    setAchFinished(false);
+    setExFinished(false);
   };
 
   const data = [

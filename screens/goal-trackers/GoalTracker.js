@@ -253,10 +253,10 @@ export default GoalTracker = ({ navigation }) => {
 
     const newTotalXp = totalXp + addXP;
 
-    const totalMax = Math.round(Math.pow(totalLvl / 0.07, 2));
-    const wisdomMax = Math.round(Math.pow(wisdomLvl / 0.07, 2));
-    const strengthMax = Math.round(Math.pow(strengthLvl / 0.07, 2));
-    const wealthMax = Math.round(Math.pow(wealthLvl / 0.07, 2));
+    const totalMax = Math.round(Math.pow(totalLvl / 0.05, 1.6));
+    const wisdomMax = Math.round(Math.pow(wisdomLvl / 0.05, 1.6));
+    const strengthMax = Math.round(Math.pow(strengthLvl / 0.05, 1.6));
+    const wealthMax = Math.round(Math.pow(wealthLvl / 0.05, 1.6));
 
     setTotalXp(newTotalXp >= totalMax ? newTotalXp % totalMax : newTotalXp);
     setTotalLvl(newTotalXp >= totalMax ? totalLvl + 1 : totalLvl);

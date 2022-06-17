@@ -114,8 +114,8 @@ export default FinanceTracker = ({ navigation }) => {
 
     const newTotalXp = totalXp + addXP;
     const newWealthXp = wealthXp + addXP;
-    const totalMax = Math.round(Math.pow(totalLvl / 0.07, 2));
-    const wealthMax = Math.round(Math.pow(wealthLvl / 0.07, 2));
+    const totalMax = Math.round(Math.pow(totalLvl / 0.05, 1.6));
+    const wealthMax = Math.round(Math.pow(wealthLvl / 0.05, 1.6));
 
     setTotalXp(newTotalXp >= totalMax ? newTotalXp % totalMax : newTotalXp);
     setTotalLvl(newTotalXp >= totalMax ? totalLvl + 1 : totalLvl);

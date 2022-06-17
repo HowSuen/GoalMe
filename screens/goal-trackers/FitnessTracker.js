@@ -114,8 +114,8 @@ export default fitnessTracker = ({ navigation }) => {
 
     const newTotalXp = totalXp + addXP;
     const newStrengthXp = strengthXp + addXP;
-    const totalMax = Math.round(Math.pow(totalLvl / 0.07, 2));
-    const strengthMax = Math.round(Math.pow(strengthLvl / 0.07, 2));
+    const totalMax = Math.round(Math.pow(totalLvl / 0.05, 1.6));
+    const strengthMax = Math.round(Math.pow(strengthLvl / 0.05, 1.6));
 
     setTotalXp(newTotalXp >= totalMax ? newTotalXp % totalMax : newTotalXp);
     setTotalLvl(newTotalXp >= totalMax ? totalLvl + 1 : totalLvl);

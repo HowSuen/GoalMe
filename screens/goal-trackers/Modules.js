@@ -189,8 +189,8 @@ export default Modules = ({ navigation }) => {
 
     const newTotalXp = totalXp + addXP;
     const newWisdomXp = wisdomXp + addXP;
-    const totalMax = Math.round(Math.pow(totalLvl / 0.07, 2));
-    const wisdomMax = Math.round(Math.pow(wisdomLvl / 0.07, 2));
+    const totalMax = Math.round(Math.pow(totalLvl / 0.05, 1.6));
+    const wisdomMax = Math.round(Math.pow(wisdomLvl / 0.05, 1.6));
 
     setTotalXp(newTotalXp >= totalMax ? newTotalXp % totalMax : newTotalXp);
     setTotalLvl(newTotalXp >= totalMax ? totalLvl + 1 : totalLvl);

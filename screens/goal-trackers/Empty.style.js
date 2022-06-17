@@ -4,7 +4,7 @@ export default StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 130,
+    marginTop: 50,
   },
 
   emptyImage: {

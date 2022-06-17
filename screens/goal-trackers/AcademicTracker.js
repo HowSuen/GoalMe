@@ -27,13 +27,10 @@ export default AcademicTracker = ({ navigation }) => {
 
   const [totalXp, setTotalXp] = useState(0);
   const [wisdomXp, setWisdomXp] = useState(0);
-  const [strengthXp, setStrengthXp] = useState(0);
-  const [wealthXp, setWealthXp] = useState(0);
-
   const [totalLvl, setTotalLvl] = useState(1);
-  const [strengthLvl, setStrengthLvl] = useState(1);
   const [wisdomLvl, setWisdomLvl] = useState(1);
-  const [wealthLvl, setWealthLvl] = useState(1);
+  const [completed, setCompleted] = useState(0);
+  const [completedAcad, setCompletedAcad] = useState(0);
 
   useEffect(() => {
     getGoals();
@@ -64,6 +61,7 @@ export default AcademicTracker = ({ navigation }) => {
               content: goal.content,
               description: goal.description,
               type: goal.type,
+              module: goal.module,
               difficulty: goal.difficulty,
               recurring: goal.recurring,
               updated_at: goal.updated_at,
@@ -97,10 +95,8 @@ export default AcademicTracker = ({ navigation }) => {
         setTotalLvl(data.totalLVL);
         setWisdomXp(data.wisdomXP);
         setWisdomLvl(data.wisdomLVL);
-        setStrengthXp(data.strengthXP);
-        setStrengthLvl(data.strengthLVL);
-        setWealthXp(data.wealthXP);
-        setWealthLvl(data.wealthLVL);
+        setCompleted(data.completed);
+        setCompletedAcad(data.completedAcad);
       }
     } catch (error) {
       Alert.alert(error.message);
@@ -127,6 +123,8 @@ export default AcademicTracker = ({ navigation }) => {
       newWisdomXp >= wisdomMax ? newWisdomXp % wisdomMax : newWisdomXp
     );
     setWisdomLvl(newWisdomXp >= wisdomMax ? wisdomLvl + 1 : wisdomLvl);
+    setCompleted(completed + 1);
+    setCompletedAcad(completedAcad + 1);
 
     try {
       if (!user) throw new Error("No user on the session!");
@@ -139,10 +137,8 @@ export default AcademicTracker = ({ navigation }) => {
         wisdomXP:
           newWisdomXp >= wisdomMax ? newWisdomXp % wisdomMax : newWisdomXp,
         wisdomLVL: newWisdomXp >= wisdomMax ? wisdomLvl + 1 : wisdomLvl,
-        strengthXP: strengthXp,
-        strengthLVL: strengthLvl,
-        wealthXP: wealthXp,
-        wealthLVL: wealthLvl,
+        completed: completed + 1,
+        completedAcad: completedAcad + 1,
       };
 
       let { error } = await supabase

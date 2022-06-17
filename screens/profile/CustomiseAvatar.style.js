@@ -11,7 +11,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "stretch",
     marginTop: 5,
-    marginBottom: 10,
+    marginBottom: Platform.OS === "ios" ? 50 : 10,
   },
   saveButton: {
     marginRight: 20,
@@ -32,6 +32,7 @@ export default StyleSheet.create({
   },
   menu: {
     backgroundColor: "ghostwhite",
+    marginBottom: Platform.OS === "ios" ? 20 : 0,
   },
   label: {
     fontSize: 17,

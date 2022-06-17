@@ -151,6 +151,10 @@ export default GoalTracker = ({ navigation }) => {
   const [strengthLvl, setStrengthLvl] = useState(1);
   const [wisdomLvl, setWisdomLvl] = useState(1);
   const [wealthLvl, setWealthLvl] = useState(1);
+  const [completed, setCompleted] = useState(0);
+  const [completedAcad, setCompletedAcad] = useState(0);
+  const [completedFit, setCompletedFit] = useState(0);
+  const [completedFinance, setCompletedFinance] = useState(0);
 
   useEffect(() => {
     getGoals();
@@ -215,6 +219,10 @@ export default GoalTracker = ({ navigation }) => {
         setStrengthLvl(data.strengthLVL);
         setWealthXp(data.wealthXP);
         setWealthLvl(data.wealthLVL);
+        setCompleted(data.completed);
+        setCompletedAcad(data.completedAcad);
+        setCompletedFit(data.completedFit);
+        setCompletedFinance(data.completedFinance);
       }
     } catch (error) {
       Alert.alert(error.message);
@@ -266,6 +274,10 @@ export default GoalTracker = ({ navigation }) => {
       newWealthXp >= wealthMax ? newWealthXp % wealthMax : newWealthXp
     );
     setWealthLvl(newWealthXp >= wealthMax ? wealthLvl + 1 : wealthLvl);
+    setCompleted(completed + 1);
+    setCompletedAcad(goal.type == "Academic" ? completedAcad + 1 : completedAcad);
+    setCompletedFit(goal.type == "Fitness" ? completedFit + 1 : completedFit);
+    setCompletedFinance(goal.type == "Finance" ? completedFinance + 1 : completedFinance);
 
     try {
       const user = supabase.auth.user();
@@ -288,6 +300,10 @@ export default GoalTracker = ({ navigation }) => {
         wealthXP:
           newWealthXp >= wealthMax ? newWealthXp % wealthMax : newWealthXp,
         wealthLVL: newWealthXp >= wealthMax ? wealthLvl + 1 : wealthLvl,
+        completed: completed + 1,
+        completedAcad: goal.type == "Academic" ? completedAcad + 1 : completedAcad,
+        completedFit: goal.type == "Fitness" ? completedFit + 1 : completedFit,
+        completedFinance: goal.type == "Finance" ? completedFinance + 1 : completedFinance,
       };
 
       let { error } = await supabase

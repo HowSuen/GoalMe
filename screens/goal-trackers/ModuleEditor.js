@@ -20,9 +20,10 @@ export default ModuleEditor = ({ navigation }) => {
   const route = useRoute();
   const { routeName, module } = route.params;
   const [targetGrade, setTargetGrade] = useState(module.targetGrade);
+  const [description, setDescription] = useState(module.description);
 
   const noStateChange = () => {
-    return targetGrade == module.targetGrade;
+    return description == module.description && targetGrade == module.targetGrade;
   };
 
   const hasEmptyValues = () => {
@@ -34,6 +35,7 @@ export default ModuleEditor = ({ navigation }) => {
       let { error } = await supabase
         .from("modules")
         .update({
+          description: description,
           target_grade: targetGrade,
           updated_at: new Date().toISOString().toLocaleString(),
         })
@@ -53,14 +55,20 @@ export default ModuleEditor = ({ navigation }) => {
       <View style={styles.formContainer}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <Text style={styles.dropdownLabel}>Module</Text>
-          <Text style={styles.moduleText}>{module.moduleCode}</Text>
-          {/* <Input
+          <Text style={styles.moduleText}>
+            {module.moduleCode || module.moduleName}
+          </Text>
+          <Input
             style={styles.textInput}
             inputContainerStyle={styles.inputContainer}
-            label="Target Grade"
-            value={targetGrade}
-            onChangeText={(text) => setTargetGrade(text)}
-          /> */}
+            label="Description"
+            placeholder="Add an optional description..."
+            placeholderTextColor="lightgray"
+            value={description}
+            onChangeText={(text) => setDescription(text)}
+            multiline={true}
+            maxHeight={160}
+          />
         </TouchableWithoutFeedback>
         <View style={styles.dropdownContainer}>
           <Text style={styles.dropdownLabel}>Target Grade</Text>

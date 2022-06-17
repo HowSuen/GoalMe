@@ -60,8 +60,8 @@ const sortItems = (order, orderBy) => {
         : convertDate(b.updated_at) - convertDate(a.updated_at);
   } else if (orderBy == "alphabetical") {
     comparator = (a, b) => {
-      const s1 = a.moduleCode || a.module_code;
-      const s2 = b.moduleCode || b.module_code;
+      const s1 = a.moduleCode || a.module_code || a.moduleName || a.module_name;
+      const s2 = b.moduleCode || b.module_code || b.moduleName || b.module_name;
       return order == "ascending" ? s1.localeCompare(s2) : s2.localeCompare(s1);
     };
   }
@@ -81,13 +81,10 @@ export default Modules = ({ navigation }) => {
 
   const [totalXp, setTotalXp] = useState(0);
   const [wisdomXp, setWisdomXp] = useState(0);
-  const [strengthXp, setStrengthXp] = useState(0);
-  const [wealthXp, setWealthXp] = useState(0);
-
   const [totalLvl, setTotalLvl] = useState(1);
-  const [strengthLvl, setStrengthLvl] = useState(1);
   const [wisdomLvl, setWisdomLvl] = useState(1);
-  const [wealthLvl, setWealthLvl] = useState(1);
+  const [completed, setCompleted] = useState(0);
+  const [completedAcad, setCompletedAcad] = useState(0);
 
   useEffect(() => {
     getModules();
@@ -115,6 +112,8 @@ export default Modules = ({ navigation }) => {
             {
               id: module.id,
               moduleCode: module.module_code,
+              moduleName: module.module_name,
+              description: module.description,
               targetGrade: module.target_grade,
               gradeReceived: module.grade_received,
               updated_at: module.updated_at,
@@ -148,10 +147,8 @@ export default Modules = ({ navigation }) => {
         setTotalLvl(data.totalLVL);
         setWisdomXp(data.wisdomXP);
         setWisdomLvl(data.wisdomLVL);
-        setStrengthXp(data.strengthXP);
-        setStrengthLvl(data.strengthLVL);
-        setWealthXp(data.wealthXP);
-        setWealthLvl(data.wealthLVL);
+        setCompleted(data.completed);
+        setCompletedAcad(data.completedAcad);
       }
     } catch (error) {
       Alert.alert(error.message);
@@ -201,6 +198,8 @@ export default Modules = ({ navigation }) => {
       newWisdomXp >= wisdomMax ? newWisdomXp % wisdomMax : newWisdomXp
     );
     setWisdomLvl(newWisdomXp >= wisdomMax ? wisdomLvl + 1 : wisdomLvl);
+    setCompleted(completed + 1);
+    setCompletedAcad(completedAcad + 1);
 
     try {
       if (!user) throw new Error("No user on the session!");
@@ -213,10 +212,8 @@ export default Modules = ({ navigation }) => {
         wisdomXP:
           newWisdomXp >= wisdomMax ? newWisdomXp % wisdomMax : newWisdomXp,
         wisdomLVL: newWisdomXp >= wisdomMax ? wisdomLvl + 1 : wisdomLvl,
-        strengthXP: strengthXp,
-        strengthLVL: strengthLvl,
-        wealthXP: wealthXp,
-        wealthLVL: wealthLvl,
+        completed: completed + 1,
+        completedAcad: completedAcad + 1,
       };
 
       let { error } = await supabase

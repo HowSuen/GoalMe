@@ -71,6 +71,7 @@ const AchievementList = ({ navigation, session }) => {
   const user = supabase.auth.user();
 
   const getAchievements = async () => {
+    let promise;
     try {
       if (!user) throw new Error("No user on the session!");
 
@@ -116,14 +117,16 @@ const AchievementList = ({ navigation, session }) => {
         setMoney100(data.money100);
       }
 
-      // return data;
+      promise = data;
     } catch (error) {
       Alert.alert(error.message);
     }
     setAchFinished(true);
+    return promise;
   };
 
   const getExperience = async () => {
+    let promise;
     try {
       if (!user) throw new Error("No user on the session!");
 
@@ -152,14 +155,16 @@ const AchievementList = ({ navigation, session }) => {
         setCompletedFinance(data.completedFinance);
       }
 
-      // return data;
+      promise = data;
     } catch (error) {
       Alert.alert(error.message);
     }
     setExFinished(true);
+    return promise;
   };
 
   const updateAchievements = async () => {
+    let promise;
     let addCount = 0;
     if (!goal1 && completed >= 1) {
       setGoal1(true);
@@ -343,12 +348,13 @@ const AchievementList = ({ navigation, session }) => {
         throw error;
       }
 
-      // return data;
+      promise = data;
     } catch (error) {
       Alert.alert(error.message);
     }
     setAchFinished(false);
     setExFinished(false);
+    return promise;
   };
 
   const data = [

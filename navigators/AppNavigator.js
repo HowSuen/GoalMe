@@ -82,6 +82,9 @@ export default AppNavigator = ({ session }) => {
               );
             },
           }}
+          listeners={({ navigation }) => ({
+            blur: () => navigation.setParams({ screen: "GameScreen" }),
+          })}
         >
           {({ navigation }) =>
             GameNavigator({ navigation: navigation, session: session })

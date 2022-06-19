@@ -57,10 +57,10 @@ const AchievementCount = ({ navigation, session }) => {
             Achievements Completed: {count}
           </Text>
           <Text style={styles.percentage}>
-            {Math.round((count / 28) * 100)}%
+            {Math.round((count / 40) * 100)}%
           </Text>
           <Bar
-            progress={Math.round((count / 28) * 100) / 100}
+            progress={Math.round((count / 40) * 100) / 100}
             width={(Dimensions.get("window").width / 10) * 5.6}
             height={8}
             unfilledColor="lightgray"

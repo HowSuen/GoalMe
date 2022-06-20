@@ -1,19 +1,28 @@
 import { useIsFocused } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
-import { VictoryBar, VictoryChart, VictoryTheme } from "victory-native";
+import {
+  VictoryBar,
+  VictoryChart,
+  VictoryPie,
+  VictoryTheme,
+} from "victory-native";
 import supabase from "../../lib/supabase";
+import { Text } from "react-native-elements";
 
 export default ProgressChecker = () => {
   const user = supabase.auth.user();
   const isFocused = useIsFocused();
-  const [experience, setExperience] = useState(null);
+  const [experience, setExperience] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    getExperience().then((exp) => setExperience(exp));
+    // getExperience().then((exp) => setExperience(exp));
   }, [isFocused]);
 
   const getExperience = async () => {
+    setLoading(true);
+    let exp = [];
     try {
       if (!user) throw new Error("No user on the session!");
 
@@ -27,24 +36,36 @@ export default ProgressChecker = () => {
         throw error;
       }
 
-      let exp = [];
       Object.entries(data).forEach(([key, value] = entry) => {
         exp.push({ thing: key, number: value });
       });
-      
-      return exp;
     } catch (error) {
       Alert.alert(error.message);
     }
+    setLoading(false);
+    return exp;
   };
+
+  const data = [
+    { x: "General", y: 4 },
+    { x: "Academic", y: 7 },
+    { x: "Fitness", y: 5 },
+    { x: "Finance", y: 6 },
+  ];
 
   return (
     <View style={styles.container}>
-      {experience && (
-        <VictoryChart width={400} theme={VictoryTheme.material}>
-          <VictoryBar data={experience} x="thing" y="number" />
-        </VictoryChart>
+      {!loading && (
+        <VictoryPie
+          data={data}
+          colorScale={["mediumseagreen", "royalblue", "tomato", "goldenrod"]}
+          labelPlacement={"perpendicular"}
+          labelPosition={"centroid"}
+          width={400}
+          theme={VictoryTheme.material}
+        />
       )}
+      <Text style={{ fontSize: 20 }}>Sample</Text>
     </View>
   );
 };

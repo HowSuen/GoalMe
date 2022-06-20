@@ -296,36 +296,35 @@ const CustomiseAvatar = ({ navigation, session }) => {
     }
   };
 
-  const updateAchievements = async (e) => {
-    setAvatar1(true);
-    setCount(count + 1);
+  // const updateAchievements = async (e) => {
+  //   setAvatar1(true);
+  //   setCount(count + 1);
 
-    try {
-      const user = supabase.auth.user();
-      if (!user) throw new Error("No user on the session!");
+  //   try {
+  //     const user = supabase.auth.user();
+  //     if (!user) throw new Error("No user on the session!");
 
-      const updates = {
-        id: user.id,
-        updated_at: new Date().toISOString().toLocaleString(),
-        avatar1: true,
-        count: count + 1,
-      };
+  //     const updates = {
+  //       id: user.id,
+  //       updated_at: new Date().toISOString().toLocaleString(),
+  //       avatar1: true,
+  //       count: count + 1,
+  //     };
 
-      let { error } = await supabase
-        .from("achievements")
-        .upsert(updates, { returning: "minimal" });
+  //     let { error } = await supabase
+  //       .from("achievements")
+  //       .upsert(updates, { returning: "minimal" });
 
-      if (error) {
-        throw error;
-      }
-    } catch (error) {
-      Alert.alert(error.message);
-    }
-  };
+  //     if (error) {
+  //       throw error;
+  //     }
+  //   } catch (error) {
+  //     Alert.alert(error.message);
+  //   }
+  // };
 
   const onSave = async (e) => {
     updateProfile(e);
-    // if (!avatar1) updateAchievements(e);
     navigation.navigate("Account");
   };
 

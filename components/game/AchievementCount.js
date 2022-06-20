@@ -31,7 +31,11 @@ const AchievementCount = ({ navigation, session }) => {
       }
 
       if (data) {
-        setCount(data.count);
+        let num = 0;
+        for (let [key, value] of Object.entries(data)) {
+          if (key != "count" && value == true) num++;
+        }
+        setCount(num);
       }
     } catch (error) {
       Alert.alert(error.message);

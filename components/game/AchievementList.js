@@ -64,17 +64,17 @@ const AchievementList = ({ navigation, session }) => {
   const [completedFinance, setCompletedFinance] = useState(0);
 
   const [isFetching, setIsFetching] = useState(false);
-  const [exFinished, setExFinished] = useState(false);
-  const [achFinished, setAchFinished] = useState(false);
+  // const [exFinished, setExFinished] = useState(false);
+  // const [achFinished, setAchFinished] = useState(false);
   const [state, setState] = useState({});
 
   useEffect(() => {
     if (session) {
       getAchievements().then(() => getExperience());
     }
-    if (exFinished && achFinished) {
-      updateAchievements();
-    }
+    // if (exFinished && achFinished) {
+    //   updateAchievements();
+    // }
     return () => {
       setState({});
     };
@@ -145,7 +145,7 @@ const AchievementList = ({ navigation, session }) => {
     } catch (error) {
       Alert.alert(error.message);
     }
-    setAchFinished(true);
+    // setAchFinished(true);
     return promise;
   };
 
@@ -183,7 +183,7 @@ const AchievementList = ({ navigation, session }) => {
     } catch (error) {
       Alert.alert(error.message);
     }
-    setExFinished(true);
+    // setExFinished(true);
     return promise;
   };
 
@@ -728,9 +728,7 @@ const AchievementList = ({ navigation, session }) => {
         onRefresh={() => {
           setIsFetching(true);
           getAchievements().then(() =>
-            getExperience().then(() =>
-              updateAchievements().then(() => setIsFetching(false))
-            )
+            getExperience().then(() => () => setIsFetching(false))
           );
         }}
         refreshing={isFetching}

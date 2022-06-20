@@ -257,6 +257,7 @@ const CustomiseAvatar = ({ navigation, session }) => {
         hatColor: hatColor,
         mouth: mouth,
         lipColor: lipColor,
+        updated_at: new Date().toISOString().toLocaleString(),
       };
 
       let { error } = await supabase
@@ -324,7 +325,7 @@ const CustomiseAvatar = ({ navigation, session }) => {
 
   const onSave = async (e) => {
     updateProfile(e);
-    if (!avatar1) updateAchievements(e);
+    // if (!avatar1) updateAchievements(e);
     navigation.navigate("Account");
   };
 

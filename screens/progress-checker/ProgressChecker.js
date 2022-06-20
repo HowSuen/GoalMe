@@ -16,6 +16,11 @@ export default ProgressChecker = () => {
   const [experience, setExperience] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const [completed, setCompleted] = useState(0);
+  const [completedAcad, setCompletedAcad] = useState(0);
+  const [completedFit, setCompletedFit] = useState(0);
+  const [completedFinance, setCompletedFinance] = useState(0);
+
   useEffect(() => {
     // getExperience().then((exp) => setExperience(exp));
   }, [isFocused]);
@@ -45,6 +50,54 @@ export default ProgressChecker = () => {
     setLoading(false);
     return exp;
   };
+
+  // const getExperience = async () => {
+  //   try {
+  //     if (!user) throw new Error("No user on the session!");
+
+  //     let { data, error, status } = await supabase
+  //       .from("experience")
+  //       .select("completed, completedAcad, completedFit, completedFinance")
+  //       .match({ id: user.id })
+  //       .single();
+
+  //     if (error && status !== 406) {
+  //       throw error;
+  //     }
+
+  //     let exp = [];
+  //     Object.entries(data).forEach(([key, value] = entry) => {
+  //       exp.push({ thing: key, number: value });
+  //     });
+      
+  //     return exp;
+  //     // let exp = [];
+  //     // Object.entries(data).forEach(([key, value] = entry) => {
+  //     //   exp.push({ thing: key, number: value });
+  //     // });
+
+  //     // return exp;
+
+  //     if (data) {
+  //       setCompleted(data.completed);
+  //       setCompletedAcad(data.completedAcad);
+  //       setCompletedFit(data.completedFit);
+  //       setCompletedFinance(data.completedFinance);
+
+  //       const exp = [
+  //         { thing: "Total", number: data.completed },
+  //         { thing: "Academic", number: data.completedAcad },
+  //         { thing: "Fitness", number: data.completedFit },
+  //         { thing: "Finance", number: data.completedFinance },
+  //       ];
+
+  //       setExperience(exp);
+  //     }
+  //   } catch (error) {
+  //     Alert.alert(error.message);
+  //   }
+  //   // return true;
+  // };
 
   const data = [
     { x: "General", y: 4 },

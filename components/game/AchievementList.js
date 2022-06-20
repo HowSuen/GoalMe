@@ -728,7 +728,7 @@ const AchievementList = ({ navigation, session }) => {
         onRefresh={() => {
           setIsFetching(true);
           getAchievements().then(() =>
-            getExperience().then(() => () => setIsFetching(false))
+            getExperience().then(() => setIsFetching(false))
           );
         }}
         refreshing={isFetching}

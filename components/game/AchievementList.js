@@ -7,7 +7,7 @@ import Achievement from "./Achievement";
 const AchievementList = ({ navigation, session }) => {
   const isFocused = useIsFocused();
 
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
   const [avatar1, setAvatar1] = useState(false);
   const [goal1, setGoal1] = useState(false);
   const [goal50, setGoal50] = useState(false);
@@ -36,6 +36,18 @@ const AchievementList = ({ navigation, session }) => {
   const [money50, setMoney50] = useState(false);
   const [money75, setMoney75] = useState(false);
   const [money100, setMoney100] = useState(false);
+  const [wislvl5, setWislvl5] = useState(false);
+  const [wislvl10, setWislvl10] = useState(false);
+  const [wislvl20, setWislvl20] = useState(false);
+  const [wislvl30, setWislvl30] = useState(false);
+  const [fitlvl5, setFitlvl5] = useState(false);
+  const [fitlvl10, setFitlvl10] = useState(false);
+  const [fitlvl20, setFitlvl20] = useState(false);
+  const [fitlvl30, setFitlvl30] = useState(false);
+  const [finlvl5, setFinlvl5] = useState(false);
+  const [finlvl10, setFinlvl10] = useState(false);
+  const [finlvl20, setFinlvl20] = useState(false);
+  const [finlvl30, setFinlvl30] = useState(false);
 
   const [totalXp, setTotalXp] = useState(0);
   const [wisdomXp, setWisdomXp] = useState(0);
@@ -52,16 +64,11 @@ const AchievementList = ({ navigation, session }) => {
   const [completedFinance, setCompletedFinance] = useState(0);
 
   const [isFetching, setIsFetching] = useState(false);
-  const [exFinished, setExFinished] = useState(false);
-  const [achFinished, setAchFinished] = useState(false);
   const [state, setState] = useState({});
 
   useEffect(() => {
     if (session) {
-      getAchievements().then(() => getExperience());
-    }
-    if (exFinished && achFinished) {
-      updateAchievements();
+      getAchievements().then(() => getExperience().then(() => null));
     }
     return () => {
       setState({});
@@ -86,7 +93,7 @@ const AchievementList = ({ navigation, session }) => {
       }
 
       if (data) {
-        setCount(data.count);
+        // setCount(data.count);
         setAvatar1(data.avatar1);
         setGoal1(data.goal1);
         setGoal50(data.goal50);
@@ -115,13 +122,24 @@ const AchievementList = ({ navigation, session }) => {
         setMoney50(data.money50);
         setMoney75(data.money75);
         setMoney100(data.money100);
+        setWislvl5(data.wislvl5);
+        setWislvl10(data.wislvl10);
+        setWislvl20(data.wislvl20);
+        setWislvl30(data.wislvl30);
+        setFitlvl5(data.fitlvl5);
+        setFitlvl10(data.fitlvl10);
+        setFitlvl20(data.fitlvl20);
+        setFitlvl30(data.fitlvl30);
+        setFinlvl5(data.finlvl5);
+        setFinlvl10(data.finlvl10);
+        setFinlvl20(data.finlvl20);
+        setFinlvl30(data.finlvl30);
       }
 
       promise = data;
     } catch (error) {
       Alert.alert(error.message);
     }
-    setAchFinished(true);
     return promise;
   };
 
@@ -159,203 +177,274 @@ const AchievementList = ({ navigation, session }) => {
     } catch (error) {
       Alert.alert(error.message);
     }
-    setExFinished(true);
     return promise;
   };
 
-  const updateAchievements = async () => {
-    let promise;
-    let addCount = 0;
-    if (!goal1 && completed >= 1) {
-      setGoal1(true);
-      addCount += 1;
-    }
-    if (!goal50 && completed >= 50) {
-      setGoal50(true);
-      addCount += 1;
-    }
-    if (!goal100 && completed >= 100) {
-      setGoal100(true);
-      addCount += 1;
-    }
-    if (!goal200 && completed >= 200) {
-      setGoal200(true);
-      addCount += 1;
-    }
-    if (!level2 && totalLvl >= 2) {
-      setLevel2(true);
-      addCount += 1;
-    }
-    if (!level5 && totalLvl >= 5) {
-      setLevel5(true);
-      addCount += 1;
-    }
-    if (!level10 && totalLvl >= 10) {
-      setLevel10(true);
-      addCount += 1;
-    }
-    if (!level20 && totalLvl >= 20) {
-      setLevel20(true);
-      addCount += 1;
-    }
-    if (!level30 && totalLvl >= 30) {
-      setLevel30(true);
-      addCount += 1;
-    }
-    if (!acad5 && completedAcad >= 5) {
-      setAcad5(true);
-      addCount += 1;
-    }
-    if (!acad10 && completedAcad >= 10) {
-      setAcad10(true);
-      addCount += 1;
-    }
-    if (!acad25 && completedAcad >= 25) {
-      setAcad25(true);
-      addCount += 1;
-    }
-    if (!acad50 && completedAcad >= 50) {
-      setAcad50(true);
-      addCount += 1;
-    }
-    if (!acad75 && completedAcad >= 75) {
-      setAcad75(true);
-      addCount += 1;
-    }
-    if (!acad100 && completedAcad >= 100) {
-      setAcad100(true);
-      addCount += 1;
-    }
-    if (!fit5 && completedFit >= 5) {
-      setAcad5(true);
-      addCount += 1;
-    }
-    if (!fit10 && completedFit >= 10) {
-      setAcad10(true);
-      addCount += 1;
-    }
-    if (!fit25 && completedFit >= 25) {
-      setAcad25(true);
-      addCount += 1;
-    }
-    if (!fit50 && completedFit >= 50) {
-      setAcad50(true);
-      addCount += 1;
-    }
-    if (!fit75 && completedFit >= 75) {
-      setAcad75(true);
-      addCount += 1;
-    }
-    if (!fit100 && completedFit >= 100) {
-      setAcad100(true);
-      addCount += 1;
-    }
-    if (!money5 && completedFinance >= 5) {
-      setAcad5(true);
-      addCount += 1;
-    }
-    if (!money10 && completedFinance >= 10) {
-      setAcad10(true);
-      addCount += 1;
-    }
-    if (!money25 && completedFinance >= 25) {
-      setAcad25(true);
-      addCount += 1;
-    }
-    if (!money50 && completedFinance >= 50) {
-      setAcad50(true);
-      addCount += 1;
-    }
-    if (!money75 && completedFinance >= 75) {
-      setAcad75(true);
-      addCount += 1;
-    }
-    if (!money100 && completedFinance >= 100) {
-      setAcad100(true);
-      addCount += 1;
-    }
-    if (avatar1) addCount += 1;
-    if (goal1) addCount += 1;
-    if (goal50) addCount += 1;
-    if (goal100) addCount += 1;
-    if (goal200) addCount += 1;
-    if (level2) addCount += 1;
-    if (level5) addCount += 1;
-    if (level10) addCount += 1;
-    if (level20) addCount += 1;
-    if (level30) addCount += 1;
-    if (acad5) addCount += 1;
-    if (acad10) addCount += 1;
-    if (acad25) addCount += 1;
-    if (acad50) addCount += 1;
-    if (acad75) addCount += 1;
-    if (acad100) addCount += 1;
-    if (fit5) addCount += 1;
-    if (fit10) addCount += 1;
-    if (fit25) addCount += 1;
-    if (fit50) addCount += 1;
-    if (fit75) addCount += 1;
-    if (fit100) addCount += 1;
-    if (money5) addCount += 1;
-    if (money10) addCount += 1;
-    if (money25) addCount += 1;
-    if (money50) addCount += 1;
-    if (money75) addCount += 1;
-    if (money100) addCount += 1;
+  // const updateAchievements = async () => {
+  //   let promise;
+  //   let addCount = 0;
+  //   if (!goal1 && completed >= 1) {
+  //     setGoal1(true);
+  //     addCount += 1;
+  //   }
+  //   if (!goal50 && completed >= 50) {
+  //     setGoal50(true);
+  //     addCount += 1;
+  //   }
+  //   if (!goal100 && completed >= 100) {
+  //     setGoal100(true);
+  //     addCount += 1;
+  //   }
+  //   if (!goal200 && completed >= 200) {
+  //     setGoal200(true);
+  //     addCount += 1;
+  //   }
+  //   if (!level2 && totalLvl >= 2) {
+  //     setLevel2(true);
+  //     addCount += 1;
+  //   }
+  //   if (!level5 && totalLvl >= 5) {
+  //     setLevel5(true);
+  //     addCount += 1;
+  //   }
+  //   if (!level10 && totalLvl >= 10) {
+  //     setLevel10(true);
+  //     addCount += 1;
+  //   }
+  //   if (!level20 && totalLvl >= 20) {
+  //     setLevel20(true);
+  //     addCount += 1;
+  //   }
+  //   if (!level30 && totalLvl >= 30) {
+  //     setLevel30(true);
+  //     addCount += 1;
+  //   }
+  //   if (!acad5 && completedAcad >= 5) {
+  //     setAcad5(true);
+  //     addCount += 1;
+  //   }
+  //   if (!acad10 && completedAcad >= 10) {
+  //     setAcad10(true);
+  //     addCount += 1;
+  //   }
+  //   if (!acad25 && completedAcad >= 25) {
+  //     setAcad25(true);
+  //     addCount += 1;
+  //   }
+  //   if (!acad50 && completedAcad >= 50) {
+  //     setAcad50(true);
+  //     addCount += 1;
+  //   }
+  //   if (!acad75 && completedAcad >= 75) {
+  //     setAcad75(true);
+  //     addCount += 1;
+  //   }
+  //   if (!acad100 && completedAcad >= 100) {
+  //     setAcad100(true);
+  //     addCount += 1;
+  //   }
+  //   if (!fit5 && completedFit >= 5) {
+  //     setAcad5(true);
+  //     addCount += 1;
+  //   }
+  //   if (!fit10 && completedFit >= 10) {
+  //     setAcad10(true);
+  //     addCount += 1;
+  //   }
+  //   if (!fit25 && completedFit >= 25) {
+  //     setAcad25(true);
+  //     addCount += 1;
+  //   }
+  //   if (!fit50 && completedFit >= 50) {
+  //     setAcad50(true);
+  //     addCount += 1;
+  //   }
+  //   if (!fit75 && completedFit >= 75) {
+  //     setAcad75(true);
+  //     addCount += 1;
+  //   }
+  //   if (!fit100 && completedFit >= 100) {
+  //     setAcad100(true);
+  //     addCount += 1;
+  //   }
+  //   if (!money5 && completedFinance >= 5) {
+  //     setAcad5(true);
+  //     addCount += 1;
+  //   }
+  //   if (!money10 && completedFinance >= 10) {
+  //     setAcad10(true);
+  //     addCount += 1;
+  //   }
+  //   if (!money25 && completedFinance >= 25) {
+  //     setAcad25(true);
+  //     addCount += 1;
+  //   }
+  //   if (!money50 && completedFinance >= 50) {
+  //     setAcad50(true);
+  //     addCount += 1;
+  //   }
+  //   if (!money75 && completedFinance >= 75) {
+  //     setAcad75(true);
+  //     addCount += 1;
+  //   }
+  //   if (!money100 && completedFinance >= 100) {
+  //     setAcad100(true);
+  //     addCount += 1;
+  //   }
+  //   if (!wislvl5 && wisdomLvl >= 5) {
+  //     setWislvl5(true);
+  //     addCount += 1;
+  //   }
+  //   if (!wislvl10 && wisdomLvl >= 10) {
+  //     setWislvl10(true);
+  //     addCount += 1;
+  //   }
+  //   if (!wislvl20 && wisdomLvl >= 20) {
+  //     setWislvl20(true);
+  //     addCount += 1;
+  //   }
+  //   if (!wislvl30 && wisdomLvl >= 30) {
+  //     setWislvl30(true);
+  //     addCount += 1;
+  //   }
+  //   if (!fitlvl5 && strengthLvl >= 5) {
+  //     setFitlvl5(true);
+  //     addCount += 1;
+  //   }
+  //   if (!fitlvl10 && strengthLvl >= 10) {
+  //     setFitlvl10(true);
+  //     addCount += 1;
+  //   }
+  //   if (!fitlvl20 && strengthLvl >= 20) {
+  //     setFitlvl20(true);
+  //     addCount += 1;
+  //   }
+  //   if (!fitlvl30 && strengthLvl >= 30) {
+  //     setFitlvl30(true);
+  //     addCount += 1;
+  //   }
+  //   if (!finlvl5 && wealthLvl >= 5) {
+  //     setFinlvl5(true);
+  //     addCount += 1;
+  //   }
+  //   if (!finlvl10 && wealthLvl >= 10) {
+  //     setFinlvl10(true);
+  //     addCount += 1;
+  //   }
+  //   if (!finlvl20 && wealthLvl >= 20) {
+  //     setFinlvl20(true);
+  //     addCount += 1;
+  //   }
+  //   if (!finlvl30 && wealthLvl >= 30) {
+  //     setFinlvl30(true);
+  //     addCount += 1;
+  //   }
+  //   if (avatar1) addCount += 1;
+  //   if (goal1) addCount += 1;
+  //   if (goal50) addCount += 1;
+  //   if (goal100) addCount += 1;
+  //   if (goal200) addCount += 1;
+  //   if (level2) addCount += 1;
+  //   if (level5) addCount += 1;
+  //   if (level10) addCount += 1;
+  //   if (level20) addCount += 1;
+  //   if (level30) addCount += 1;
+  //   if (acad5) addCount += 1;
+  //   if (acad10) addCount += 1;
+  //   if (acad25) addCount += 1;
+  //   if (acad50) addCount += 1;
+  //   if (acad75) addCount += 1;
+  //   if (acad100) addCount += 1;
+  //   if (fit5) addCount += 1;
+  //   if (fit10) addCount += 1;
+  //   if (fit25) addCount += 1;
+  //   if (fit50) addCount += 1;
+  //   if (fit75) addCount += 1;
+  //   if (fit100) addCount += 1;
+  //   if (money5) addCount += 1;
+  //   if (money10) addCount += 1;
+  //   if (money25) addCount += 1;
+  //   if (money50) addCount += 1;
+  //   if (money75) addCount += 1;
+  //   if (money100) addCount += 1;
+  //   if (wislvl5) addCount += 1;
+  //   if (wislvl10) addCount += 1;
+  //   if (wislvl20) addCount += 1;
+  //   if (wislvl30) addCount += 1;
+  //   if (fitlvl5) addCount += 1;
+  //   if (fitlvl10) addCount += 1;
+  //   if (fitlvl20) addCount += 1;
+  //   if (fitlvl30) addCount += 1;
+  //   if (finlvl5) addCount += 1;
+  //   if (finlvl10) addCount += 1;
+  //   if (finlvl20) addCount += 1;
+  //   if (finlvl30) addCount += 1;
 
-    setCount(addCount);
-    try {
-      if (!user) throw new Error("No user on the session!");
+  //   setCount(addCount);
+  //   try {
+  //     if (!user) throw new Error("No user on the session!");
 
-      const updates = {
-        id: user.id,
-        updated_at: new Date().toISOString().toLocaleString(),
-        count: addCount,
-        goal1: goal1 || completed >= 1,
-        goal50: goal50 || completed >= 50,
-        goal100: goal100 || completed >= 100,
-        goal200: goal200 || completed >= 200,
-        level2: level2 || totalLvl >= 2,
-        level5: level5 || totalLvl >= 5,
-        level10: level10 || totalLvl >= 10,
-        level20: level20 || totalLvl >= 20,
-        level30: level30 || totalLvl >= 30,
-        acad5: acad5 || completedAcad >= 5,
-        acad10: acad10 || completedAcad >= 10,
-        acad25: acad25 || completedAcad >= 25,
-        acad50: acad50 || completedAcad >= 50,
-        acad75: acad75 || completedAcad >= 75,
-        acad100: acad100 || completedAcad >= 100,
-        fit5: fit5 || completedFit >= 5,
-        fit10: fit10 || completedFit >= 10,
-        fit25: fit25 || completedFit >= 25,
-        fit50: fit50 || completedFit >= 50,
-        fit75: fit75 || completedFit >= 75,
-        fit100: fit100 || completedFit >= 100,
-        money5: money5 || completedFinance >= 5,
-        money10: money10 || completedFinance >= 10,
-        money25: money25 || completedFinance >= 25,
-        money50: money50 || completedFinance >= 50,
-        money75: money75 || completedFinance >= 75,
-        money100: money100 || completedFinance >= 100,
-      };
+  //     const updates = {
+  //       id: user.id,
+  //       updated_at: new Date().toISOString().toLocaleString(),
+  //       count: addCount,
+  //       goal1: goal1 || completed >= 1,
+  //       goal50: goal50 || completed >= 50,
+  //       goal100: goal100 || completed >= 100,
+  //       goal200: goal200 || completed >= 200,
+  //       level2: level2 || totalLvl >= 2,
+  //       level5: level5 || totalLvl >= 5,
+  //       level10: level10 || totalLvl >= 10,
+  //       level20: level20 || totalLvl >= 20,
+  //       level30: level30 || totalLvl >= 30,
+  //       acad5: acad5 || completedAcad >= 5,
+  //       acad10: acad10 || completedAcad >= 10,
+  //       acad25: acad25 || completedAcad >= 25,
+  //       acad50: acad50 || completedAcad >= 50,
+  //       acad75: acad75 || completedAcad >= 75,
+  //       acad100: acad100 || completedAcad >= 100,
+  //       fit5: fit5 || completedFit >= 5,
+  //       fit10: fit10 || completedFit >= 10,
+  //       fit25: fit25 || completedFit >= 25,
+  //       fit50: fit50 || completedFit >= 50,
+  //       fit75: fit75 || completedFit >= 75,
+  //       fit100: fit100 || completedFit >= 100,
+  //       money5: money5 || completedFinance >= 5,
+  //       money10: money10 || completedFinance >= 10,
+  //       money25: money25 || completedFinance >= 25,
+  //       money50: money50 || completedFinance >= 50,
+  //       money75: money75 || completedFinance >= 75,
+  //       money100: money100 || completedFinance >= 100,
+  //       wislvl5: wislvl5 || wisdomLvl >= 5,
+  //       wislvl10: wislvl10 || wisdomLvl >= 10,
+  //       wislvl20: wislvl20 || wisdomLvl >= 20,
+  //       wislvl30: wislvl30 || wisdomLvl >= 30,
+  //       fitlvl5: fitlvl5 || strengthLvl >= 5,
+  //       fitlvl10: fitlvl10 || strengthLvl >= 10,
+  //       fitlvl20: fitlvl20 || strengthLvl >= 20,
+  //       fitlvl30: fitlvl30 || strengthLvl >= 30,
+  //       finlvl5: finlvl5 || wealthLvl >= 5,
+  //       finlvl10: finlvl10 || wealthLvl >= 10,
+  //       finlvl20: finlvl20 || wealthLvl >= 20,
+  //       finlvl30: finlvl30 || wealthLvl >= 30,
+  //     };
 
-      let { data, error } = await supabase
-        .from("achievements")
-        .upsert(updates, { returning: "minimal" });
+  //     let { data, error } = await supabase
+  //       .from("achievements")
+  //       .upsert(updates, { returning: "minimal" });
 
-      if (error) {
-        throw error;
-      }
+  //     if (error) {
+  //       throw error;
+  //     }
 
-      promise = data;
-    } catch (error) {
-      Alert.alert(error.message);
-    }
-    setAchFinished(false);
-    setExFinished(false);
-    return promise;
-  };
+  //     promise = data;
+  //   } catch (error) {
+  //     Alert.alert(error.message);
+  //   }
+  //   setAchFinished(false);
+  //   setExFinished(false);
+  //   return promise;
+  // };
 
   const data = [
     {
@@ -462,6 +551,30 @@ const AchievementList = ({ navigation, session }) => {
           description: "Complete 100 Academic goals",
           completed: acad100,
         },
+        {
+          id: 28,
+          name: "Smart",
+          description: "Reach Level 5 Wisdom",
+          completed: wislvl5,
+        },
+        {
+          id: 29,
+          name: "Wise One",
+          description: "Reach Level 10 Wisdom",
+          completed: wislvl10,
+        },
+        {
+          id: 30,
+          name: "Sharpest Tool in the Shed",
+          description: "Reach Level 20 Wisdom",
+          completed: wislvl20,
+        },
+        {
+          id: 31,
+          name: "200IQ",
+          description: "Reach Level 30 Wisdom",
+          completed: wislvl30,
+        },
       ],
     },
     {
@@ -481,13 +594,13 @@ const AchievementList = ({ navigation, session }) => {
         },
         {
           id: 18,
-          name: "On the Grind",
+          name: "On the Sigma Grind",
           description: "Complete 25 Fitness goals",
           completed: fit25,
         },
         {
           id: 19,
-          name: "Sigma",
+          name: "Gigachad",
           description: "Complete 50 Fitness goals",
           completed: fit50,
         },
@@ -502,6 +615,30 @@ const AchievementList = ({ navigation, session }) => {
           name: "Avenger Level Threat",
           description: "Complete 100 Fitness goals",
           completed: fit100,
+        },
+        {
+          id: 32,
+          name: "Fighter",
+          description: "Reach Level 5 Strength",
+          completed: fitlvl5,
+        },
+        {
+          id: 33,
+          name: "Warrior",
+          description: "Reach Level 10 Strength",
+          completed: fitlvl10,
+        },
+        {
+          id: 34,
+          name: "The Rock",
+          description: "Reach Level 20 Strength",
+          completed: fitlvl20,
+        },
+        {
+          id: 35,
+          name: "Built Different",
+          description: "Reach Level 30 Strength",
+          completed: fitlvl30,
         },
       ],
     },
@@ -544,6 +681,30 @@ const AchievementList = ({ navigation, session }) => {
           description: "Complete 100 Financial goals",
           completed: money100,
         },
+        {
+          id: 36,
+          name: "Cash Me Ousside",
+          description: "Reach Level 5 Wealth",
+          completed: finlvl5,
+        },
+        {
+          id: 37,
+          name: "Duke",
+          description: "Reach Level 10 Wealth",
+          completed: finlvl10,
+        },
+        {
+          id: 38,
+          name: "CEO",
+          description: "Reach Level 20 Wealth",
+          completed: finlvl20,
+        },
+        {
+          id: 39,
+          name: "Tycoon",
+          description: "Reach Level 30 Wealth",
+          completed: finlvl30,
+        },
       ],
     },
   ];
@@ -560,9 +721,7 @@ const AchievementList = ({ navigation, session }) => {
         onRefresh={() => {
           setIsFetching(true);
           getAchievements().then(() =>
-            getExperience().then(() =>
-              updateAchievements().then(() => setIsFetching(false))
-            )
+            getExperience().then(() => setIsFetching(false))
           );
         }}
         refreshing={isFetching}

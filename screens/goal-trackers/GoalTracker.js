@@ -106,6 +106,7 @@ const completeItem = async (item) => {
           content: item.content,
           description: item.description,
           type: item.type,
+          module: item.module,
           difficulty: item.difficulty,
           recurring: item.recurring,
         },

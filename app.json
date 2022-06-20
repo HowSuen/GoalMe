@@ -3,8 +3,9 @@
     "name": "GoalMe",
     "slug": "GoalMe",
     "version": "1.0.0",
+    "sdkVersion": "45.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/goalme-app-icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -18,9 +19,11 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.goalme.goalme",
       "supportsTablet": true
     },
     "android": {
+      "package": "com.goalme.goalme",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"

@@ -44,10 +44,10 @@ export default GoalNavigator = ({ route, navigation }) => {
         name="GoalEditor"
         options={{
           headerShown: true,
-          headerTitle: "",
+          headerTitle: Platform.OS === "ios" ? "" : "Edit Goal",
           headerStyle: { backgroundColor: "ghostwhite" },
           headerTintColor: "black",
-          headerShadowVisible: false,
+          headerShadowVisible: Platform.OS !== "ios",
           presentation: "card",
           headerTitleAlign: "center",
         }}
@@ -68,7 +68,7 @@ export default GoalNavigator = ({ route, navigation }) => {
       <Stack.Screen
         name="ModuleSetter"
         options={{
-          headerShown: true,
+          headerShown: Platform.OS === "ios" ? true : false,
           headerTitle: "Add Your Modules",
           headerStyle: { backgroundColor: "ghostwhite" },
           headerTintColor: "black",

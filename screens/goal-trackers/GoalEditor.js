@@ -101,10 +101,7 @@ export default GoalEditor = ({ navigation }) => {
 
   return (
     <ScrollView style={{ backgroundColor: "ghostwhite" }}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.container}
-      >
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <View style={styles.formContainer}>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <Input
@@ -125,59 +122,59 @@ export default GoalEditor = ({ navigation }) => {
               multiline={true}
               maxHeight={160}
             />
+            <View style={styles.dropdownContainer}>
+              <Text style={styles.dropdownLabel}>Type</Text>
+              <GoalDropdownList
+                value={type}
+                items={types}
+                onValueChange={(value) => setType(value)}
+                placeholder={{ label: "Select a type...", value: null }}
+              />
+            </View>
+            <View style={styles.dropdownContainer}>
+              <Text style={styles.dropdownLabel}>Module</Text>
+              <GoalDropdownList
+                value={type == "Academic" ? module : null}
+                items={modules}
+                onValueChange={(value) => setModule(value)}
+                placeholder={{ label: "Select a module...", value: null }}
+                disabled={loading || type != "Academic"}
+              />
+            </View>
+            <View style={styles.dropdownContainer}>
+              <Text style={styles.dropdownLabel}>Difficulty</Text>
+              <GoalDropdownList
+                value={difficulty}
+                items={difficulties}
+                onValueChange={(value) => setDifficulty(value)}
+                placeholder={{ label: "Select a difficulty...", value: null }}
+              />
+            </View>
+            <View style={styles.dropdownContainer}>
+              <Text style={styles.dropdownLabel}>Recurring?</Text>
+              <GoalDropdownList
+                value={recurring}
+                items={recurrings}
+                onValueChange={(value) => setRecurring(value)}
+              />
+            </View>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={
+                  noStateChange() || hasEmptyValues()
+                    ? styles.disabledButton
+                    : styles.button
+                }
+                disabled={noStateChange() || hasEmptyValues()}
+                onPress={() => {
+                  updateGoal(goal);
+                  navigation.navigate(routeName);
+                }}
+              >
+                <Text style={styles.buttonText}>Save Changes</Text>
+              </TouchableOpacity>
+            </View>
           </TouchableWithoutFeedback>
-          <View style={styles.dropdownContainer}>
-            <Text style={styles.dropdownLabel}>Type</Text>
-            <GoalDropdownList
-              value={type}
-              items={types}
-              onValueChange={(value) => setType(value)}
-              placeholder={{ label: "Select a type...", value: null }}
-            />
-          </View>
-          <View style={styles.dropdownContainer}>
-            <Text style={styles.dropdownLabel}>Module</Text>
-            <GoalDropdownList
-              value={type == "Academic" ? module : null}
-              items={modules}
-              onValueChange={(value) => setModule(value)}
-              placeholder={{ label: "Select a module...", value: null }}
-              disabled={loading || type != "Academic"}
-            />
-          </View>
-          <View style={styles.dropdownContainer}>
-            <Text style={styles.dropdownLabel}>Difficulty</Text>
-            <GoalDropdownList
-              value={difficulty}
-              items={difficulties}
-              onValueChange={(value) => setDifficulty(value)}
-              placeholder={{ label: "Select a difficulty...", value: null }}
-            />
-          </View>
-          <View style={styles.dropdownContainer}>
-            <Text style={styles.dropdownLabel}>Recurring?</Text>
-            <GoalDropdownList
-              value={recurring}
-              items={recurrings}
-              onValueChange={(value) => setRecurring(value)}
-            />
-          </View>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={
-                noStateChange() || hasEmptyValues()
-                  ? styles.disabledButton
-                  : styles.button
-              }
-              disabled={noStateChange() || hasEmptyValues()}
-              onPress={() => {
-                updateGoal(goal);
-                navigation.navigate(routeName);
-              }}
-            >
-              <Text style={styles.buttonText}>Save Changes</Text>
-            </TouchableOpacity>
-          </View>
         </View>
       </KeyboardAvoidingView>
     </ScrollView>

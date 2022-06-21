@@ -4,6 +4,7 @@ import {
   Text,
   Alert,
   Keyboard,
+  ScrollView,
 } from "react-native";
 import { useState } from "react";
 import { Input } from "react-native-elements";
@@ -68,73 +69,72 @@ export default GoalSetter = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
-      <View style={styles.formContainer}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <Input
-            style={styles.textInput}
-            inputContainerStyle={styles.inputContainer}
-            label="Goal"
-            placeholder="Add a goal..."
-            placeholderTextColor="darkgray"
-            value={content}
-            onChangeText={(text) => setContent(text)}
-          />
-          <Input
-            style={styles.textInput}
-            inputContainerStyle={styles.inputContainer}
-            label="Description"
-            placeholder="Add an optional description..."
-            placeholderTextColor="darkgray"
-            value={description}
-            onChangeText={(text) => setDescription(text)}
-            multiline={true}
-            maxHeight={160}
-          />
-        </TouchableWithoutFeedback>
-        <View style={styles.dropdownContainer}>
-          <Text style={styles.dropdownLabel}>Type</Text>
-          <GoalDropdownList
-            value={type}
-            items={types}
-            onValueChange={(value) => setType(value)}
-            placeholder={{ label: "Select a type...", value: null }}
-          />
+    <ScrollView style={{ backgroundColor: "ghostwhite" }}>
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        <View style={styles.formContainer}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <Input
+              style={styles.textInput}
+              inputContainerStyle={styles.inputContainer}
+              label="Goal"
+              placeholder="Add a goal..."
+              placeholderTextColor="darkgray"
+              value={content}
+              onChangeText={(text) => setContent(text)}
+            />
+            <Input
+              style={styles.textInput}
+              inputContainerStyle={styles.inputContainer}
+              label="Description"
+              placeholder="Add an optional description..."
+              placeholderTextColor="darkgray"
+              value={description}
+              onChangeText={(text) => setDescription(text)}
+              multiline={true}
+              maxHeight={160}
+            />
+            <View style={styles.dropdownContainer}>
+              <Text style={styles.dropdownLabel}>Type</Text>
+              <GoalDropdownList
+                value={type}
+                items={types}
+                onValueChange={(value) => setType(value)}
+                placeholder={{ label: "Select a type...", value: null }}
+              />
+            </View>
+            <View style={styles.dropdownContainer}>
+              <Text style={styles.dropdownLabel}>Difficulty</Text>
+              <GoalDropdownList
+                value={difficulty}
+                items={difficulties}
+                onValueChange={(value) => setDifficulty(value)}
+                placeholder={{ label: "Select a difficulty...", value: null }}
+              />
+            </View>
+            <View style={styles.dropdownContainer}>
+              <Text style={styles.dropdownLabel}>Recurring?</Text>
+              <GoalDropdownList
+                value={recurring}
+                items={recurrings}
+                onValueChange={(value) => setRecurring(value)}
+              />
+            </View>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={hasEmptyValues() ? styles.disabledButton : styles.button}
+                disabled={hasEmptyValues()}
+                onPress={() => {
+                  submitGoal();
+                  navigation.navigate(routeName);
+                }}
+              >
+                <Text style={styles.buttonText}>Add</Text>
+              </TouchableOpacity>
+            </View>
+          </TouchableWithoutFeedback>
         </View>
-        <View style={styles.dropdownContainer}>
-          <Text style={styles.dropdownLabel}>Difficulty</Text>
-          <GoalDropdownList
-            value={difficulty}
-            items={difficulties}
-            onValueChange={(value) => setDifficulty(value)}
-            placeholder={{ label: "Select a difficulty...", value: null }}
-          />
-        </View>
-        <View style={styles.dropdownContainer}>
-          <Text style={styles.dropdownLabel}>Recurring?</Text>
-          <GoalDropdownList
-            value={recurring}
-            items={recurrings}
-            onValueChange={(value) => setRecurring(value)}
-          />
-        </View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={hasEmptyValues() ? styles.disabledButton : styles.button}
-            disabled={hasEmptyValues()}
-            onPress={() => {
-              submitGoal();
-              navigation.navigate(routeName);
-            }}
-          >
-            <Text style={styles.buttonText}>Add</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 

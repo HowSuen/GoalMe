@@ -10,8 +10,7 @@ const showHeaderAndroid = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route);
   if (
     routeName == "GoalEditor" ||
-    routeName == "GoalSetter" ||
-    routeName == "ModuleSetter"
+    routeName == "GoalSetter"
   ) {
     return false;
   }

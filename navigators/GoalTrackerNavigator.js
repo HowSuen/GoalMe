@@ -8,7 +8,11 @@ const Drawer = createDrawerNavigator();
 
 const showHeaderAndroid = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route);
-  if (routeName == "GoalEditor" || routeName == "GoalSetter") {
+  if (
+    routeName == "GoalEditor" ||
+    routeName == "GoalSetter" ||
+    routeName == "ModuleSetter"
+  ) {
     return false;
   }
   return true;
@@ -63,7 +67,6 @@ export default GoalTrackerNavigator = () => {
           },
           drawerActiveBackgroundColor: "royalblue",
           drawerLabel: "Academic Goals",
-          
         })}
       >
         {({ route, navigation }) =>

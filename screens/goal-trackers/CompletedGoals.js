@@ -74,6 +74,7 @@ export default CompletedGoals = () => {
               description: goal.description,
               type: goal.type,
               difficulty: goal.difficulty,
+              module: goal.module,
               recurring: goal.recurring,
               completed_at: goal.completed_at,
             },

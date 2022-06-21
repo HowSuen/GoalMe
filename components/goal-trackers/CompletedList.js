@@ -29,7 +29,10 @@ export default CompletedList = ({ goal, redoGoal, deleteGoal }) => {
             {goal.content.substring(0, 19) +
               (goal.content.length > 19 ? "..." : "")}
           </Text>
-          <Text style={styles.listSubtext}>{goal.difficulty}</Text>
+          <Text style={styles.listSubtext}>
+            {goal.difficulty}
+            {goal.module ? "; " + goal.module : ""}
+          </Text>
         </View>
         <View style={styles.iconContainer}>
           <FontAwesome

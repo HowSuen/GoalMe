@@ -157,31 +157,31 @@ export default Modules = ({ navigation }) => {
 
   const updateExperience = async (module) => {
     let addXP = 0;
-    if (module.targetGrade == "A+") {
+    if (module.gradeReceived == "A+") {
       addXP = 2000;
-    } else if (module.targetGrade == "A") {
+    } else if (module.gradeReceived == "A") {
       addXP = 1900;
-    } else if (module.targetGrade == "A-") {
+    } else if (module.gradeReceived == "A-") {
       addXP = 1800;
-    } else if (module.targetGrade == "B+") {
+    } else if (module.gradeReceived == "B+") {
       addXP = 1700;
-    } else if (module.targetGrade == "B") {
+    } else if (module.gradeReceived == "B") {
       addXP = 1600;
-    } else if (module.targetGrade == "B-") {
+    } else if (module.gradeReceived == "B-") {
       addXP = 1500;
-    } else if (module.targetGrade == "C+") {
+    } else if (module.gradeReceived == "C+") {
       addXP = 1300;
-    } else if (module.targetGrade == "C") {
+    } else if (module.gradeReceived == "C") {
       addXP = 1100;
-    } else if (module.targetGrade == "C-") {
+    } else if (module.gradeReceived == "C-") {
       addXP = 900;
-    } else if (module.targetGrade == "D+") {
+    } else if (module.gradeReceived == "D+") {
       addXP = 600;
-    } else if (module.targetGrade == "D") {
+    } else if (module.gradeReceived == "D") {
       addXP = 400;
-    } else if (module.targetGrade == "F") {
+    } else if (module.gradeReceived == "F") {
       addXP = 200;
-    } else if (module.targetGrade == "F*") {
+    } else if (module.gradeReceived == "F*") {
       addXP = 100;
     }
 

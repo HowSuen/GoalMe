@@ -6,7 +6,7 @@ const countCompletedAchievements = (data) => {
   return num;
 };
 
-const test_objects = [
+const test_goals = [
   {
     id: "test1",
     acad10: false,
@@ -143,15 +143,15 @@ const test_objects = [
 
 // Test 1
 test("countCompletedAchievements correctly returns 0 for user with zero achievements", () => {
-  expect(countCompletedAchievements(test_objects[0])).toBe(0);
+  expect(countCompletedAchievements(test_goals[0])).toBe(0);
 });
 
 //  Test 2
 test("countCompletedAchievements correctly returns 2 for user with two achievements", () => {
-  expect(countCompletedAchievements(test_objects[1])).toBe(2);
+  expect(countCompletedAchievements(test_goals[1])).toBe(2);
 });
 
 // Test 3
 test("countCompletedAchievements correctly returns 40 for user with every achievements", () => {
-  expect(countCompletedAchievements(test_objects[2])).toBe(40);
+  expect(countCompletedAchievements(test_goals[2])).toBe(40);
 });

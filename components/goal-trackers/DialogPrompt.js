@@ -1,5 +1,5 @@
 import Dialog from "react-native-dialog";
-import { View, StyleSheet, Alert } from "react-native";
+import { View, StyleSheet, Alert, Platform } from "react-native";
 import { BlurView } from "expo-blur";
 import { useState } from "react";
 
@@ -60,12 +60,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   input: {
-    backgroundColor: "ghostwhite",
+    backgroundColor: "transparent",
     color: "black",
   },
   wrapper: {
-    backgroundColor: "ghostwhite",
-    borderColor: "black",
+    backgroundColor: "transparent",
+    borderColor: Platform.OS === "ios" ? "black" : "white",
     borderWidth: 1,
   },
 });

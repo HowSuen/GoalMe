@@ -157,47 +157,59 @@ export default Modules = ({ navigation }) => {
 
   const updateExperience = async (module) => {
     let addXP = 0;
-    if (module.targetGrade == "A+") {
+    if (gradeReceived == "A+") {
       addXP = 2000;
-    } else if (module.targetGrade == "A") {
+    } else if (gradeReceived == "A") {
       addXP = 1900;
-    } else if (module.targetGrade == "A-") {
+    } else if (gradeReceived == "A-") {
       addXP = 1800;
-    } else if (module.targetGrade == "B+") {
+    } else if (gradeReceived == "B+") {
       addXP = 1700;
-    } else if (module.targetGrade == "B") {
+    } else if (gradeReceived == "B") {
       addXP = 1600;
-    } else if (module.targetGrade == "B-") {
+    } else if (gradeReceived == "B-") {
       addXP = 1500;
-    } else if (module.targetGrade == "C+") {
+    } else if (gradeReceived == "C+") {
       addXP = 1300;
-    } else if (module.targetGrade == "C") {
+    } else if (gradeReceived == "C") {
       addXP = 1100;
-    } else if (module.targetGrade == "C-") {
+    } else if (gradeReceived == "C-") {
       addXP = 900;
-    } else if (module.targetGrade == "D+") {
+    } else if (gradeReceived == "D+") {
       addXP = 600;
-    } else if (module.targetGrade == "D") {
+    } else if (gradeReceived == "D") {
       addXP = 400;
-    } else if (module.targetGrade == "F") {
+    } else if (gradeReceived == "F") {
       addXP = 200;
-    } else if (module.targetGrade == "F*") {
+    } else if (gradeReceived == "F*") {
       addXP = 100;
     }
 
     addXP += compareGrade(module.targetGrade, gradeReceived) <= 0 ? 200 : 0;
 
-    const newTotalXp = totalXp + addXP;
-    const newWisdomXp = wisdomXp + addXP;
-    const totalMax = Math.round(Math.pow(totalLvl / 0.05, 1.6));
-    const wisdomMax = Math.round(Math.pow(wisdomLvl / 0.05, 1.6));
+    let newTotalXp = totalXp + addXP;
+    let newWisdomXp = wisdomXp + addXP;
+    let totalMax = Math.round(Math.pow(totalLvl / 0.05, 1.6));
+    let wisdomMax = Math.round(Math.pow(wisdomLvl / 0.05, 1.6));
 
-    setTotalXp(newTotalXp >= totalMax ? newTotalXp % totalMax : newTotalXp);
-    setTotalLvl(newTotalXp >= totalMax ? totalLvl + 1 : totalLvl);
-    setWisdomXp(
-      newWisdomXp >= wisdomMax ? newWisdomXp % wisdomMax : newWisdomXp
-    );
-    setWisdomLvl(newWisdomXp >= wisdomMax ? wisdomLvl + 1 : wisdomLvl);
+    let addLVL = 0;
+    while (newTotalXp >= totalMax) {
+      newTotalXp -= totalMax;
+      addLVL += 1;
+      totalMax = Math.round(Math.pow((totalLvl + addLVL) / 0.05, 1.6));
+    }
+
+    let addWisdomLVL = 0;
+    while (newWisdomXp >= wisdomMax) {
+      newWisdomXp -= wisdomMax;
+      addWisdomLVL += 1;
+      wisdomMax = Math.round(Math.pow((wisdomLvl + addWisdomLVL) / 0.05, 1.6));
+    }
+
+    setTotalXp(newTotalXp);
+    setTotalLvl(totalLvl + addLVL);
+    setWisdomXp(newWisdomXp);
+    setWisdomLvl(wisdomLvl + addWisdomLVL);
     setCompleted(completed + 1);
     setCompletedAcad(completedAcad + 1);
 
@@ -207,11 +219,10 @@ export default Modules = ({ navigation }) => {
       const updates = {
         id: user.id,
         updated_at: new Date().toISOString().toLocaleString(),
-        totalXP: newTotalXp >= totalMax ? newTotalXp % totalMax : newTotalXp,
-        totalLVL: newTotalXp >= totalMax ? totalLvl + 1 : totalLvl,
-        wisdomXP:
-          newWisdomXp >= wisdomMax ? newWisdomXp % wisdomMax : newWisdomXp,
-        wisdomLVL: newWisdomXp >= wisdomMax ? wisdomLvl + 1 : wisdomLvl,
+        totalXP: newTotalXp,
+        totalLVL: totalLvl + addLVL,
+        wisdomXP: newWisdomXp,
+        wisdomLVL: wisdomLvl + addWisdomLVL,
         completed: completed + 1,
         completedAcad: completedAcad + 1,
       };
@@ -303,7 +314,6 @@ export default Modules = ({ navigation }) => {
             setIsFetching(false);
           }}
           refreshing={isFetching}
-          
         />
         <View style={styles.bottomContainer}>
           <SortButton

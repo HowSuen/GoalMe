@@ -60,12 +60,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   input: {
-    backgroundColor: "transparent",
-    color: "black",
+    backgroundColor: Platform.OS === "ios" ? "black" : "transparent",
+    color: Platform.OS === "ios" ? "white" : "black",
   },
   wrapper: {
-    backgroundColor: "transparent",
-    borderColor: Platform.OS === "ios" ? "black" : "white",
-    borderWidth: 1,
+    backgroundColor: Platform.OS === "ios" ? "black" : "transparent",
   },
 });

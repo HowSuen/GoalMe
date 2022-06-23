@@ -11,7 +11,7 @@ const PasswordSecureInput = ({
     <View style={styles.verticallySpaced}>
       <Input
         style={styles.textInput}
-        label="Password"
+        label={placeholder}
         leftIcon={{ type: "font-awesome", name: "lock", color: "black" }}
         onChangeText={onChangeText}
         value={password}

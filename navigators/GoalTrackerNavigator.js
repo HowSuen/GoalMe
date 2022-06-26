@@ -43,6 +43,7 @@ export default GoalTrackerNavigator = () => {
         drawerStyle: { backgroundColor: "ghostwhite" },
         unmountOnBlur: true,
       })}
+      useLegacyImplementation={true}
     >
       <Drawer.Screen
         name="Goal Tracker"

@@ -78,6 +78,7 @@ export default Modules = ({ navigation }) => {
   const user = supabase.auth.user();
   const isFocused = useIsFocused();
   const route = useRoute();
+  const [state, setState] = useState({});
 
   const [totalXp, setTotalXp] = useState(0);
   const [wisdomXp, setWisdomXp] = useState(0);
@@ -88,6 +89,9 @@ export default Modules = ({ navigation }) => {
 
   useEffect(() => {
     getModules();
+    return () => {
+      setState({});
+    };
   }, [isFocused, totalXp]);
 
   const getModules = async () => {

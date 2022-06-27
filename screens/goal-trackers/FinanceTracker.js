@@ -24,6 +24,7 @@ export default FinanceTracker = ({ navigation }) => {
   const user = supabase.auth.user();
   const isFocused = useIsFocused();
   const route = useRoute();
+  const [state, setState] = useState({});
 
   const [totalXp, setTotalXp] = useState(0);
   const [wealthXp, setWealthXp] = useState(0);
@@ -34,6 +35,9 @@ export default FinanceTracker = ({ navigation }) => {
 
   useEffect(() => {
     getGoals();
+    return () => {
+      setState({});
+    };
   }, [isFocused, totalXp]);
 
   const getGoals = async () => {

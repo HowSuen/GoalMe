@@ -28,6 +28,8 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-native": "^0.68.2",
+    "react-native-actions-sheet": "^0.7.2",
+    "react-native-actions-sheet-picker": "^0.3.4",
     "react-native-animated-bar": "^0.2.0",
     "react-native-bigheads": "^1.1.0",
     "react-native-dialog": "^9.2.2",

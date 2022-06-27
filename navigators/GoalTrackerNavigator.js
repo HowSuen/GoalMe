@@ -8,10 +8,7 @@ const Drawer = createDrawerNavigator();
 
 const showHeaderAndroid = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route);
-  if (
-    routeName == "GoalEditor" ||
-    routeName == "GoalSetter"
-  ) {
+  if (routeName == "GoalEditor" || routeName == "GoalSetter") {
     return false;
   }
   return true;
@@ -27,6 +24,11 @@ const inModules = (route) => {
     return true;
   }
   return false;
+};
+
+const inExercise = (route) => {
+  const routeName = getFocusedRouteNameFromRoute(route);
+  return routeName == "Exercise" || routeName == "ExerciseSetter";
 };
 
 export default GoalTrackerNavigator = () => {
@@ -75,12 +77,14 @@ export default GoalTrackerNavigator = () => {
       </Drawer.Screen>
       <Drawer.Screen
         name="Fitness Tracker"
-        options={{
-          headerStyle: { backgroundColor: "tomato" },
+        options={({ route }) => ({
+          headerStyle: {
+            backgroundColor: !inExercise(route) ? "tomato" : "plum",
+          },
           drawerActiveBackgroundColor: "tomato",
-          headerTitle: "Fitness Goals",
+          headerTitle: !inExercise(route) ? "Fitness Goals" : "Exercise",
           drawerLabel: "Fitness Goals",
-        }}
+        })}
       >
         {({ route, navigation }) =>
           GoalNavigator({ route: route, navigation: navigation })

@@ -9,6 +9,8 @@ import GoalSetter from "../screens/goal-trackers/GoalSetter";
 import Modules from "../screens/goal-trackers/Modules";
 import ModuleEditor from "../screens/goal-trackers/ModuleEditor";
 import ModuleSetter from "../screens/goal-trackers/ModuleSetter";
+import Exercise from "../screens/goal-trackers/Exercise";
+import ExerciseSetter from "../screens/goal-trackers/ExerciseSetter";
 import { Platform } from "react-native";
 
 const Stack = createNativeStackNavigator();
@@ -91,6 +93,30 @@ export default GoalNavigator = ({ route, navigation }) => {
         }}
       >
         {() => <ModuleEditor route={route} navigation={navigation} />}
+      </Stack.Screen>
+      <Stack.Screen
+        name="Exercise"
+        component={Exercise}
+        options={{
+          headerShown: Platform.OS === "ios" ? true : false,
+          headerTitle: "",
+          headerStyle: { backgroundColor: "ghostwhite" },
+          headerTintColor: "black",
+          headerShadowVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="ExerciseSetter"
+        options={{
+          headerShown: Platform.OS === "ios" ? true : false,
+          headerTitle: "Add Your Exercise",
+          headerStyle: { backgroundColor: "ghostwhite" },
+          headerTintColor: "black",
+          presentation: "modal",
+          headerTitleAlign: "center",
+        }}
+      >
+        {() => <ExerciseSetter route={route} navigation={navigation} />}
       </Stack.Screen>
     </Stack.Navigator>
   );

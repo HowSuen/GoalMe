@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Alert, View, FlatList, TouchableOpacity } from "react-native";
+import { Alert, View, FlatList, TouchableOpacity, Text } from "react-native";
 import styles from "./GoalTracker.style";
 import { FontAwesome5 } from "@expo/vector-icons";
 import GoalList from "../../components/goal-trackers/GoalList";
@@ -24,6 +24,7 @@ export default fitnessTracker = ({ navigation }) => {
   const user = supabase.auth.user();
   const isFocused = useIsFocused();
   const route = useRoute();
+  const [state, setState] = useState({});
 
   const [totalXp, setTotalXp] = useState(0);
   const [strengthXp, setStrengthXp] = useState(0);
@@ -34,6 +35,9 @@ export default fitnessTracker = ({ navigation }) => {
 
   useEffect(() => {
     getGoals();
+    return () => {
+      setState({});
+    };
   }, [isFocused, totalXp]);
 
   const getGoals = async () => {
@@ -143,7 +147,7 @@ export default fitnessTracker = ({ navigation }) => {
         strengthLVL:
           newStrengthXp >= strengthMax ? strengthLvl + 1 : strengthLvl,
         completed: completed + 1,
-        completedFit: completedFit + 1
+        completedFit: completedFit + 1,
       };
 
       let { error } = await supabase
@@ -193,6 +197,14 @@ export default fitnessTracker = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("Exercise");
+          }}
+          style={styles.exerciseNavButton}
+        >
+          <Text style={styles.buttonText}>Exercises</Text>
+        </TouchableOpacity>
         <FlatList
           data={data}
           ListEmptyComponent={() => <Empty />}

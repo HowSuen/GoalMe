@@ -1,16 +1,20 @@
 import { Dimensions, StyleSheet } from "react-native";
 
 export default StyleSheet.create({
+  scrollview: {
+    flex: 1,
+    backgroundColor: "ghostwhite"
+  },
   container: {
     padding: 15,
-    justifyContent: "flex-start",
-    flex: 1,
+    justifyContent: "center",
     backgroundColor: "ghostwhite",
+    paddingBottom: 5,
   },
   buttonContainer: {
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: 20,
+    padding: 10,
   },
   formContainer: {
     marginVertical: 20,
@@ -47,25 +51,54 @@ export default StyleSheet.create({
   button: {
     backgroundColor: "dodgerblue",
     padding: 10,
-    width: 90,
+    width: (Dimensions.get("window").width / 10) * 5,
     borderRadius: 5,
-    elevation: 10,
+    elevation: 5,
   },
   disabledButton: {
     backgroundColor: "gray",
     padding: 10,
-    width: 90,
+    width: (Dimensions.get("window").width / 10) * 5,
     borderRadius: 5,
-    elevation: 10,
+    elevation: 5,
   },
   exercise: {
     flexDirection: "row",
     justifyContent: "space-between"
   },
   inputCOntainerSmall: {
-    width: (Dimensions.get("window").width / 10) * 3,
+    width: (Dimensions.get("window").width / 10) * 2.5,
+    alignItems: "center",
   },
-  inputCOntainerSmall2: {
-    width: (Dimensions.get("window").width / 10) * 4.5,
+  timerButton: {
+    width: (Dimensions.get("window").width / 10) * 2,
+    backgroundColor: "white",
+    height: 50,
+    borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "gray"
+  },
+  timerText: {
+    fontSize: 20,
+    color: "black",
+  },
+  colon: {
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  timerContainer: {
+    flexDirection: "row",
+  },
+  defaultContainer: {
+    marginVertical: 100,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  defaultText: {
+    fontSize: 20,
+    color: "black",
+    marginVertical: 20,
   }
 });

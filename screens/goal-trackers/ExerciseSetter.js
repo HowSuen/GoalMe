@@ -71,6 +71,7 @@ export default ExerciseSetter = ({ navigation }) => {
           weight: weight,
           rep: rep,
           set: set,
+          volume: calculateVolume(weight, rep, set),
         },
       ]);
       if (error) throw error;
@@ -83,6 +84,13 @@ export default ExerciseSetter = ({ navigation }) => {
     return type == "run"
       ? exercise_name == "" || distance == "0" || (min == "0" && sec == "00")
       : exercise_name == "" || weight == "0" || rep == "0" || set == "0";
+  };
+
+  const calculateVolume = (weight, rep, set) => {
+    const w = parseInt(weight);
+    const r = parseInt(rep);
+    const s = parseInt(set);
+    return (w * r * s).toString();
   };
 
   return (

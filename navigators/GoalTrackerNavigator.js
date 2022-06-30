@@ -28,7 +28,11 @@ const inModules = (route) => {
 
 const inExercise = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route);
-  return routeName == "Exercise" || routeName == "ExerciseSetter";
+  return (
+    routeName == "Exercise" ||
+    routeName == "ExerciseSetter" ||
+    routeName == "ExerciseEditor"
+  );
 };
 
 export default GoalTrackerNavigator = () => {

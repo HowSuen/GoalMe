@@ -8,7 +8,7 @@ import Empty from "./Empty";
 import supabase from "../../lib/supabase";
 import SortButton from "../../components/goal-trackers/SortButton";
 import ExerciseList from "../../components/goal-trackers/ExerciseList";
-
+import AlertPrompt from "../../components/goal-trackers/AlertPrompt";
 
 const orderBys = [
   { label: "Alphabetical", value: "alphabetical" },
@@ -249,17 +249,17 @@ export default Exercise = ({ navigation }) => {
     <View style={styles.container}>
       <View>
         <FlatList
-          data={[]}
+          data={data}
           ListEmptyComponent={() => <Empty text={"No exercises added."} />}
           keyExtractor={(exercise) => exercise.id}
-            // renderItem={({ item }) => (
-            //   <ExerciseList
-            //     module={item}
-            //     deleteModule={deleteExercise}
-            //     completeModule={completeExercise}
-            //     navigation={navigation}
-            //   />
-            // )}
+          renderItem={({ item }) => (
+            <ExerciseList
+              exercise={item}
+              deleteExercise={deleteExercise}
+              completeExercise={completeExercise}
+              navigation={navigation}
+            />
+          )}
           showsVerticalScrollIndicator={false}
           onRefresh={() => {
             setIsFetching(true);

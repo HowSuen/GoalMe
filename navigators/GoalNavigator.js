@@ -10,6 +10,7 @@ import Modules from "../screens/goal-trackers/Modules";
 import ModuleEditor from "../screens/goal-trackers/ModuleEditor";
 import ModuleSetter from "../screens/goal-trackers/ModuleSetter";
 import Exercise from "../screens/goal-trackers/Exercise";
+import ExerciseEditor from "../screens/goal-trackers/ExerciseEditor";
 import ExerciseSetter from "../screens/goal-trackers/ExerciseSetter";
 import { Platform } from "react-native";
 
@@ -117,6 +118,20 @@ export default GoalNavigator = ({ route, navigation }) => {
         }}
       >
         {() => <ExerciseSetter route={route} navigation={navigation} />}
+      </Stack.Screen>
+      <Stack.Screen
+        name="ExerciseEditor"
+        options={{
+          headerShown: Platform.OS === "ios" ? true : false,
+          headerTitle: "",
+          headerStyle: { backgroundColor: "ghostwhite" },
+          headerTintColor: "black",
+          headerShadowVisible: false,
+          presentation: "card",
+          headerTitleAlign: "center",
+        }}
+      >
+        {() => <ExerciseEditor route={route} navigation={navigation} />}
       </Stack.Screen>
     </Stack.Navigator>
   );

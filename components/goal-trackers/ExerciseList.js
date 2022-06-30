@@ -1,28 +1,14 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
-import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
+import {
+  FontAwesome,
+  FontAwesome5,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useRoute } from "@react-navigation/native";
-import DialogPrompt from "./DialogPrompt";
+import AlertPrompt from "./AlertPrompt";
 import { useState } from "react";
-
-const grades = [
-  { label: "A+", value: "A+" },
-  { label: "A", value: "A" },
-  { label: "A-", value: "A-" },
-  { label: "B+", value: "B+" },
-  { label: "B", value: "B" },
-  { label: "B-", value: "B-" },
-  { label: "C+", value: "C+" },
-  { label: "C", value: "C" },
-  { label: "C-", value: "C-" },
-  { label: "D+", value: "D+" },
-  { label: "D", value: "D" },
-  { label: "F", value: "F" },
-  { label: "F*", value: "F*" },
-  // { label: "S", value: "S" },
-  // { label: "U", value: "U" },
-];
 
 export default ExerciseList = ({
   exercise,
@@ -31,13 +17,16 @@ export default ExerciseList = ({
   navigation,
 }) => {
   const route = useRoute();
-  const [visible, setVisible] = useState(false);
   const exerciseText = exercise.exercise_name;
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        style={styles.exerciseListContainer}
+        style={
+          exercise.type == "run"
+            ? styles.runListContainer
+            : styles.weightListContainer
+        }
         onPress={() =>
           navigation.navigate("ExerciseEditor", {
             routeName: route.name,
@@ -46,35 +35,46 @@ export default ExerciseList = ({
         }
       >
         <TouchableOpacity
-          title=""
-          onPress={() => setVisible(true)}
           style={styles.boxContainer}
+          onPress={async () => {
+            AlertPrompt({
+              title: "Complete this Exercise?",
+              proceedText: "Complete",
+              onPress: () => completeExercise(exercise),
+            });
+          }}
         >
           <FontAwesome name="square-o" size={25} color={"black"} />
-          <DialogPrompt
-            title="Received Grade"
-            description="What letter grade did you receive for this module?"
-            placeholder="Enter grade here..."
-            matches={grades}
-            onChangeText={onChangeText}
-            onPress={() => completeModule(exercise)}
-            alertMessage={"Invalid letter grade."}
-            visible={visible}
-            setVisible={setVisible}
-          />
         </TouchableOpacity>
         <View>
           <Text style={styles.listText}>
-            {exerciseText.substring(0, 16) +
+            <MaterialCommunityIcons
+              name={exercise.type == "run" ? "run-fast" : "weight-lifter"}
+              size={20}
+            />
+            {" " +
+              exerciseText.substring(0, 16) +
               (exerciseText.length > 16 ? "..." : "")}
           </Text>
           <Text style={styles.listSubtext}>
-            Target Grade: {exercise.targetGrade}
+            {exercise.type == "run"
+              ? "Distance: " +
+                exercise.distance +
+                ", Time: " +
+                exercise.min +
+                ":" +
+                exercise.sec
+              : "Weight: " +
+                exercise.weight +
+                ", Reps: " +
+                exercise.rep +
+                ", Sets: " +
+                exercise.set}
           </Text>
         </View>
         <TouchableOpacity
           style={styles.iconContainer}
-          onPress={() => deleteModule(exercise)}
+          onPress={() => deleteExercise(exercise)}
         >
           <FontAwesome5 name="trash" size={20} color="black" />
         </TouchableOpacity>
@@ -91,14 +91,23 @@ const styles = StyleSheet.create({
     width: "auto",
     marginTop: 25,
   },
-  exerciseListContainer: {
+  runListContainer: {
     height: "auto",
     width: 350,
     borderRadius: 10,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "deepskyblue",
+    backgroundColor: "#cc99ff",
+  },
+  weightListContainer: {
+    height: "auto",
+    width: 350,
+    borderRadius: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#ff6699",
   },
   boxContainer: {
     alignItems: "center",

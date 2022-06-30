@@ -12,7 +12,7 @@ import AlertPrompt from "../../components/goal-trackers/AlertPrompt";
 
 const orderBys = [
   { label: "Alphabetical", value: "alphabetical" },
-  { label: "Volume", value: "volume" },
+  { label: "Type", value: "type" },
   { label: "Date Updated", value: "dateUpdated" },
 ];
 
@@ -22,11 +22,11 @@ const sortItems = (order, orderBy) => {
   };
 
   let comparator;
-  if (orderBy == "volume") {
+  if (orderBy == "type") {
     comparator = (a, b) => {
-      const s1 = a.volume;
-      const s2 = b.volume;
-      return order == "ascending" ? s1 - s2 : s2 - s1;
+      const s1 = a.type;
+      const s2 = b.type;
+      return order == "ascending" ? s1.localeCompare(s2) : s2.localeCompare(s1);
     };
   } else if (orderBy == "dateUpdated") {
     comparator = (a, b) =>
@@ -274,7 +274,7 @@ export default Exercise = ({ navigation }) => {
             items={orderBys}
             onValueChange={(orderBy) => {
               setOrderBy(orderBy);
-              //   sortModules(order, orderBy);
+              sortExercises(order, orderBy);
             }}
           />
           <SortButton
@@ -282,7 +282,7 @@ export default Exercise = ({ navigation }) => {
             items={orders}
             onValueChange={(order) => {
               setOrder(order);
-              //   sortModules(order, orderBy);
+              sortExercises(order, orderBy);
             }}
           />
           <TouchableOpacity

@@ -35,6 +35,15 @@ const inExercise = (route) => {
   );
 };
 
+const inWallet = (route) => {
+  const routeName = getFocusedRouteNameFromRoute(route);
+  return (
+    routeName == "Wallet" ||
+    routeName == "WalletSetter" ||
+    routeName == "WalletEditor"
+  );
+};
+
 export default GoalTrackerNavigator = () => {
   return (
     <Drawer.Navigator
@@ -96,12 +105,14 @@ export default GoalTrackerNavigator = () => {
       </Drawer.Screen>
       <Drawer.Screen
         name="Finance Tracker"
-        options={{
-          headerStyle: { backgroundColor: "goldenrod" },
+        options={({ route }) => ({
+          headerStyle: {
+            backgroundColor: !inWallet(route) ? "goldenrod" : "darkgoldenrod",
+          },
           drawerActiveBackgroundColor: "goldenrod",
-          headerTitle: "Finance Goals",
+          headerTitle: !inWallet(route) ? "Finance Goals" : "Wallet",
           drawerLabel: "Finance Goals",
-        }}
+        })}
       >
         {({ route, navigation }) =>
           GoalNavigator({ route: route, navigation: navigation })

@@ -12,6 +12,7 @@ import ModuleSetter from "../screens/goal-trackers/ModuleSetter";
 import Exercise from "../screens/goal-trackers/Exercise";
 import ExerciseEditor from "../screens/goal-trackers/ExerciseEditor";
 import ExerciseSetter from "../screens/goal-trackers/ExerciseSetter";
+import Wallet from "../screens/goal-trackers/Wallet";
 import { Platform } from "react-native";
 
 const Stack = createNativeStackNavigator();
@@ -133,6 +134,17 @@ export default GoalNavigator = ({ route, navigation }) => {
       >
         {() => <ExerciseEditor route={route} navigation={navigation} />}
       </Stack.Screen>
+      <Stack.Screen
+        name="Wallet"
+        component={Wallet}
+        options={{
+          headerShown: Platform.OS === "ios" ? true : false,
+          headerTitle: "",
+          headerStyle: { backgroundColor: "ghostwhite" },
+          headerTintColor: "black",
+          headerShadowVisible: false,
+        }}
+      />
     </Stack.Navigator>
   );
 };

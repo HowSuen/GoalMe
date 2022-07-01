@@ -173,14 +173,16 @@ export default ModuleEditor = ({ navigation }) => {
               multiline={true}
               maxHeight={160}
             />
-            <View style={styles.dropdownContainer}>
-              <Text style={styles.dropdownLabel}>Recurring?</Text>
-              <GoalDropdownList
-                value={recurring}
-                items={recurrings}
-                onValueChange={(value) => setRecurring(value)}
-              />
-            </View>
+          </TouchableWithoutFeedback>
+          <View style={styles.dropdownContainer}>
+            <Text style={styles.dropdownLabel}>Recurring?</Text>
+            <GoalDropdownList
+              value={recurring}
+              items={recurrings}
+              onValueChange={(value) => setRecurring(value)}
+            />
+          </View>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             {exercise.type == "run" ? (
               <View style={styles.exercise}>
                 <View style={styles.inputContainerSmall}>

@@ -1,45 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Alert, View, FlatList, TouchableOpacity } from "react-native";
-import styles from "./GoalTracker.style";
+import { useIsFocused, useRoute } from "@react-navigation/native";
 import { FontAwesome5 } from "@expo/vector-icons";
-import ModuleList from "../../components/goal-trackers/ModuleList";
+import { orders } from "./GoalTracker";
+import styles from "./GoalTracker.style";
 import Empty from "./Empty";
 import supabase from "../../lib/supabase";
-import { useIsFocused, useRoute } from "@react-navigation/native";
 import SortButton from "../../components/goal-trackers/SortButton";
-import { orders } from "./GoalTracker";
+import ExerciseList from "../../components/goal-trackers/ExerciseList";
+import AlertPrompt from "../../components/goal-trackers/AlertPrompt";
 
 const orderBys = [
   { label: "Alphabetical", value: "alphabetical" },
-  { label: "Target Grade", value: "targetGrade" },
+  { label: "Type", value: "type" },
   { label: "Date Updated", value: "dateUpdated" },
 ];
-
-const grades = [
-  { label: "A+", value: "A+" },
-  { label: "A", value: "A" },
-  { label: "A-", value: "A-" },
-  { label: "B+", value: "B+" },
-  { label: "B", value: "B" },
-  { label: "B-", value: "B-" },
-  { label: "C+", value: "C+" },
-  { label: "C", value: "C" },
-  { label: "C-", value: "C-" },
-  { label: "D+", value: "D+" },
-  { label: "D", value: "D" },
-  { label: "F", value: "F" },
-  { label: "F*", value: "F*" },
-  // { label: "S", value: "S" },
-  // { label: "U", value: "U" },
-];
-
-const compareGrade = (g1, g2) => {
-  const symOrder = { "+": -1, "-": 1, "": 0 };
-  return (
-    g2.charAt(0).localeCompare(g1.charAt(0)) ||
-    symOrder[g2.charAt(1)] - symOrder[g1.charAt(1)]
-  );
-};
 
 const sortItems = (order, orderBy) => {
   const convertDate = (date) => {
@@ -47,11 +22,11 @@ const sortItems = (order, orderBy) => {
   };
 
   let comparator;
-  if (orderBy == "targetGrade") {
+  if (orderBy == "type") {
     comparator = (a, b) => {
-      const s1 = a.targetGrade || a.target_grade;
-      const s2 = b.targetGrade || b.target_grade;
-      return order == "ascending" ? compareGrade(s1, s2) : compareGrade(s2, s1);
+      const s1 = a.type;
+      const s2 = b.type;
+      return order == "ascending" ? s1.localeCompare(s2) : s2.localeCompare(s1);
     };
   } else if (orderBy == "dateUpdated") {
     comparator = (a, b) =>
@@ -60,20 +35,19 @@ const sortItems = (order, orderBy) => {
         : convertDate(b.updated_at) - convertDate(a.updated_at);
   } else if (orderBy == "alphabetical") {
     comparator = (a, b) => {
-      const s1 = a.moduleCode || a.module_code || a.moduleName || a.module_name;
-      const s2 = b.moduleCode || b.module_code || b.moduleName || b.module_name;
+      const s1 = a.exercise_name;
+      const s2 = b.exercise_name;
       return order == "ascending" ? s1.localeCompare(s2) : s2.localeCompare(s1);
     };
   }
-
   return comparator;
 };
 
-export default Modules = ({ navigation }) => {
+export default Exercise = ({ navigation }) => {
   const [data, setData] = useState([]);
   const [order, setOrder] = useState("ascending");
   const [orderBy, setOrderBy] = useState("alphabetical");
-  const [gradeReceived, setGradeReceived] = useState("");
+
   const [isFetching, setIsFetching] = useState(false);
   const user = supabase.auth.user();
   const isFocused = useIsFocused();
@@ -81,48 +55,53 @@ export default Modules = ({ navigation }) => {
   const [state, setState] = useState({});
 
   const [totalXp, setTotalXp] = useState(0);
-  const [wisdomXp, setWisdomXp] = useState(0);
+  const [strengthXp, setStrengthXp] = useState(0);
   const [totalLvl, setTotalLvl] = useState(1);
-  const [wisdomLvl, setWisdomLvl] = useState(1);
+  const [strengthLvl, setStrengthLvl] = useState(1);
   const [completed, setCompleted] = useState(0);
-  const [completedAcad, setCompletedAcad] = useState(0);
+  const [completedFit, setCompletedFit] = useState(0);
 
   useEffect(() => {
-    getModules();
+    getExercises();
     return () => {
       setState({});
     };
   }, [isFocused, totalXp]);
 
-  const getModules = async () => {
+  const getExercises = async () => {
     try {
-      let { data: modules, error } = await supabase
-        .from("modules")
+      let { data: exercises, error } = await supabase
+        .from("exercises")
         .select("*")
         .match({
           user_id: user.id,
           completion_status: false,
         });
-
       if (error) throw error;
 
-      modules.sort(sortItems(order, orderBy)).reverse();
+      exercises.sort(sortItems(order, orderBy)).reverse();
 
       setData([]);
 
-      modules.map((module) => {
-        setData((prevModule) => {
+      exercises.map((exercise) => {
+        setData((prevExercise) => {
           return [
             {
-              id: module.id,
-              moduleCode: module.module_code,
-              moduleName: module.module_name,
-              description: module.description,
-              targetGrade: module.target_grade,
-              gradeReceived: module.grade_received,
-              updated_at: module.updated_at,
+              id: exercise.id,
+              type: exercise.type,
+              exercise_name: exercise.exercise_name,
+              description: exercise.description,
+              distance: exercise.distance,
+              min: exercise.min,
+              sec: exercise.sec,
+              weight: exercise.weight,
+              rep: exercise.rep,
+              set: exercise.set,
+              volume: exercise.volume,
+              updated_at: exercise.updated_at,
+              recurring: exercise.recurring,
             },
-            ...prevModule,
+            ...prevExercise,
           ];
         });
       });
@@ -149,52 +128,23 @@ export default Modules = ({ navigation }) => {
       if (data) {
         setTotalXp(data.totalXP);
         setTotalLvl(data.totalLVL);
-        setWisdomXp(data.wisdomXP);
-        setWisdomLvl(data.wisdomLVL);
+        setStrengthXp(data.strengthXP);
+        setStrengthLvl(data.strengthLVL);
         setCompleted(data.completed);
-        setCompletedAcad(data.completedAcad);
+        setCompletedFit(data.completedFit);
       }
     } catch (error) {
       Alert.alert(error.message);
     }
   };
 
-  const updateExperience = async (module) => {
-    let addXP = 0;
-    if (gradeReceived == "A+") {
-      addXP = 2000;
-    } else if (gradeReceived == "A") {
-      addXP = 1900;
-    } else if (gradeReceived == "A-") {
-      addXP = 1800;
-    } else if (gradeReceived == "B+") {
-      addXP = 1700;
-    } else if (gradeReceived == "B") {
-      addXP = 1600;
-    } else if (gradeReceived == "B-") {
-      addXP = 1500;
-    } else if (gradeReceived == "C+") {
-      addXP = 1300;
-    } else if (gradeReceived == "C") {
-      addXP = 1100;
-    } else if (gradeReceived == "C-") {
-      addXP = 900;
-    } else if (gradeReceived == "D+") {
-      addXP = 600;
-    } else if (gradeReceived == "D") {
-      addXP = 400;
-    } else if (gradeReceived == "F") {
-      addXP = 200;
-    } else if (gradeReceived == "F*") {
-      addXP = 100;
-    }
-
-    addXP += compareGrade(module.targetGrade, gradeReceived) <= 0 ? 200 : 0;
+  const updateExperience = async (exercise) => {
+    let addXP = 500; // temporary amount
 
     let newTotalXp = totalXp + addXP;
-    let newWisdomXp = wisdomXp + addXP;
+    let newStrengthXp = strengthXp + addXP;
     let totalMax = Math.round(Math.pow(totalLvl / 0.05, 1.6));
-    let wisdomMax = Math.round(Math.pow(wisdomLvl / 0.05, 1.6));
+    let strengthMax = Math.round(Math.pow(strengthLvl / 0.05, 1.6));
 
     let addLVL = 0;
     while (newTotalXp >= totalMax) {
@@ -203,19 +153,21 @@ export default Modules = ({ navigation }) => {
       totalMax = Math.round(Math.pow((totalLvl + addLVL) / 0.05, 1.6));
     }
 
-    let addWisdomLVL = 0;
-    while (newWisdomXp >= wisdomMax) {
-      newWisdomXp -= wisdomMax;
-      addWisdomLVL += 1;
-      wisdomMax = Math.round(Math.pow((wisdomLvl + addWisdomLVL) / 0.05, 1.6));
+    let addStrengthLVL = 0;
+    while (newStrengthXp >= strengthMax) {
+      newStrengthXp -= strengthMax;
+      addStrengthLVL += 1;
+      strengthMax = Math.round(
+        Math.pow((strengthLvl + addStrengthLVL) / 0.05, 1.6)
+      );
     }
 
     setTotalXp(newTotalXp);
     setTotalLvl(totalLvl + addLVL);
-    setWisdomXp(newWisdomXp);
-    setWisdomLvl(wisdomLvl + addWisdomLVL);
+    setStrengthXp(newStrengthXp);
+    setStrengthLvl(strengthLvl + addStrengthLVL);
     setCompleted(completed + 1);
-    setCompletedAcad(completedAcad + 1);
+    setCompletedFit(completedFit + 1);
 
     try {
       if (!user) throw new Error("No user on the session!");
@@ -225,10 +177,10 @@ export default Modules = ({ navigation }) => {
         updated_at: new Date().toISOString().toLocaleString(),
         totalXP: newTotalXp,
         totalLVL: totalLvl + addLVL,
-        wisdomXP: newWisdomXp,
-        wisdomLVL: wisdomLvl + addWisdomLVL,
+        strengthXP: newStrengthXp,
+        strengthLVL: strengthLvl + addStrengthLVL,
         completed: completed + 1,
-        completedAcad: completedAcad + 1,
+        completedFit: completedFit + 1,
       };
 
       let { error } = await supabase
@@ -243,53 +195,89 @@ export default Modules = ({ navigation }) => {
     }
   };
 
-  const sortModules = (order, orderBy) => {
-    setData((modules) => {
-      return modules.sort(sortItems(order, orderBy));
+  const sortExercises = (order, orderBy) => {
+    setData((exercises) => {
+      return exercises.sort(sortItems(order, orderBy));
     });
   };
 
-  const completeModule = async (module) => {
+  const completeItem = async (exercise) => {
     try {
       let { data, error } = await supabase
-        .from("modules")
+        .from("exercises")
         .update({
-          grade_received: gradeReceived,
           completion_status: true,
           completed_at: new Date().toISOString().toLocaleString(),
         })
-        .match({ id: module.id });
+        .match({ id: exercise.id });
 
       if (error) throw error;
+
+      const userId = data[0].user_id;
+
+      if (exercise.recurring) {
+        let { data, error } = await supabase.from("exercises").insert([
+          {
+            user_id: userId,
+            type: exercise.type,
+            exercise_name: exercise.exercise_name,
+            description: exercise.description,
+            distance: exercise.distance,
+            min: exercise.min,
+            sec: exercise.sec,
+            weight: exercise.weight,
+            rep: exercise.rep,
+            set: exercise.set,
+            volume: exercise.volume,
+            recurring: exercise.recurring,
+          },
+        ]);
+
+        if (error) throw error;
+
+        return data[0];
+      }
     } catch (error) {
       Alert.alert(error.message);
     }
+  };
 
-    updateExperience(module);
-
-    setData((modules) => {
-      return modules.filter((m) => m != module);
+  const completeExercise = async (exercise) => {
+    AlertPrompt({
+      title: "Complete this Exercise?",
+      proceedText: "Complete",
+      onPress: () => {
+        const recurringExercise = completeItem(exercise);
+        if (exercise.recurring) {
+          recurringExercise.then(() => getExercises());
+        } else {
+          setData((exercises) => {
+            return exercises.filter((e) => e != exercise);
+          });
+        }
+        updateExperience(exercise);
+      },
     });
   };
 
-  const deleteModule = async (module) => {
+  const deleteExercise = async (exercise) => {
     AlertPrompt({
-      title: "Delete This Module?",
+      title: "Delete This Exercise?",
       description: "You can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {
         try {
           let { error } = await supabase
-            .from("modules")
+            .from("exercises")
             .delete()
-            .match({ id: module.id });
+            .match({ id: exercise.id });
 
           if (error) throw error;
         } catch (error) {
           Alert.alert(error.message);
         }
-        setData((modules) => {
-          return modules.filter((m) => m != module);
+        setData((exercises) => {
+          return exercises.filter((e) => e != exercise);
         });
       },
     });
@@ -300,21 +288,20 @@ export default Modules = ({ navigation }) => {
       <View>
         <FlatList
           data={data}
-          ListEmptyComponent={() => <Empty text={"No modules added."} />}
-          keyExtractor={(module) => module.id}
+          ListEmptyComponent={() => <Empty text={"No exercises added."} />}
+          keyExtractor={(exercise) => exercise.id}
           renderItem={({ item }) => (
-            <ModuleList
-              module={item}
-              deleteModule={deleteModule}
-              completeModule={completeModule}
-              onChangeText={(text) => setGradeReceived(text)}
+            <ExerciseList
+              exercise={item}
+              deleteExercise={deleteExercise}
+              completeExercise={completeExercise}
               navigation={navigation}
             />
           )}
           showsVerticalScrollIndicator={false}
           onRefresh={() => {
             setIsFetching(true);
-            getModules();
+            getExercises();
             setIsFetching(false);
           }}
           refreshing={isFetching}
@@ -325,7 +312,7 @@ export default Modules = ({ navigation }) => {
             items={orderBys}
             onValueChange={(orderBy) => {
               setOrderBy(orderBy);
-              sortModules(order, orderBy);
+              sortExercises(order, orderBy);
             }}
           />
           <SortButton
@@ -333,13 +320,13 @@ export default Modules = ({ navigation }) => {
             items={orders}
             onValueChange={(order) => {
               setOrder(order);
-              sortModules(order, orderBy);
+              sortExercises(order, orderBy);
             }}
           />
           <TouchableOpacity
-            style={styles.moduleButton}
+            style={styles.exerciseButton}
             onPress={() => {
-              navigation.navigate("ModuleSetter", {
+              navigation.navigate("ExerciseSetter", {
                 user: user,
                 routeName: route.name,
               });
@@ -352,5 +339,3 @@ export default Modules = ({ navigation }) => {
     </View>
   );
 };
-
-export { grades, sortItems };

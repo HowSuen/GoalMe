@@ -47,9 +47,13 @@ export default CompletedGoals = () => {
   const [orderBy, setOrderBy] = useState("dateCompleted");
   const [isFetching, setIsFetching] = useState(false);
   const user = supabase.auth.user();
+  const [state, setState] = useState({});
 
   useEffect(() => {
     getGoals();
+    return () => {
+      setState({});
+    };
   }, []);
 
   const getGoals = async () => {

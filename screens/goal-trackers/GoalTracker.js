@@ -142,6 +142,7 @@ export default GoalTracker = ({ navigation }) => {
   const user = supabase.auth.user();
   const isFocused = useIsFocused();
   const route = useRoute();
+  const [state, setState] = useState({});
 
   const [totalXp, setTotalXp] = useState(0);
   const [wisdomXp, setWisdomXp] = useState(0);
@@ -159,6 +160,9 @@ export default GoalTracker = ({ navigation }) => {
 
   useEffect(() => {
     getGoals();
+    return () => {
+      setState({});
+    };
   }, [isFocused, totalXp]);
 
   const getGoals = async () => {

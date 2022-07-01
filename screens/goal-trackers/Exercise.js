@@ -99,6 +99,7 @@ export default Exercise = ({ navigation }) => {
               set: exercise.set,
               volume: exercise.volume,
               updated_at: exercise.updated_at,
+              recurring: exercise.recurring,
             },
             ...prevExercise,
           ];
@@ -200,7 +201,7 @@ export default Exercise = ({ navigation }) => {
     });
   };
 
-  const completeExercise = async (exercise) => {
+  const completeItem = async (exercise) => {
     try {
       let { data, error } = await supabase
         .from("exercises")
@@ -211,14 +212,48 @@ export default Exercise = ({ navigation }) => {
         .match({ id: exercise.id });
 
       if (error) throw error;
+
+      if (exercise.recurring) {
+        let { data, error } = await supabase.from("exercises").insert([
+          {
+            user_id: exercise.user_id,
+            type: exercise.type,
+            exercise_name: exercise.exercise_name,
+            description: exercise.description,
+            distance: exercise.distance,
+            min: exercise.min,
+            sec: exercise.sec,
+            weight: exercise.weight,
+            rep: exercise.rep,
+            set: exercise.set,
+            recurring: exercise.recurring,
+          },
+        ]);
+
+        if (error) throw error;
+
+        return data[0];
+      }
     } catch (error) {
       Alert.alert(error.message);
     }
+  };
 
-    updateExperience(exercise);
-
-    setData((exercises) => {
-      return exercises.filter((e) => e != exercise);
+  const completeExercise = async (exercise) => {
+    AlertPrompt({
+      title: "Complete this Exercise?",
+      proceedText: "Complete",
+      onPress: () => {
+        const recurringExercise = completeItem(exercise);
+        if (exercise.recurring) {
+          recurringExercise.then(() => getExercises());
+        } else {
+          setData((exercises) => {
+            return exercises.filter((e) => e != exercise);
+          });
+        }
+        updateExperience(exercise);
+      },
     });
   };
 

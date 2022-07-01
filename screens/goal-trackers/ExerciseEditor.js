@@ -16,8 +16,14 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import styles from "./ExerciseEditor.style";
 import { Picker, onOpen } from "react-native-actions-sheet-picker";
+import GoalDropdownList from "../../components/goal-trackers/GoalDropdownList";
 import minutes from "./timer/minutes.json";
 import seconds from "./timer/seconds.json";
+
+const recurrings = [
+  { label: "No", value: false },
+  { label: "Yes", value: true },
+];
 
 export default ModuleEditor = ({ navigation }) => {
   const route = useRoute();
@@ -25,6 +31,7 @@ export default ModuleEditor = ({ navigation }) => {
 
   const [exercise_name, setExerciseName] = useState(exercise.exercise_name);
   const [description, setDescription] = useState(exercise.description);
+  const [recurring, setRecurring] = useState(exercise.recurring);
 
   const [distance, setDistance] = useState(exercise.distance);
   const [min, setMin] = useState(exercise.min);
@@ -39,13 +46,15 @@ export default ModuleEditor = ({ navigation }) => {
       return (
         runNoStateChange() &&
         exercise_name == exercise.exercise_name &&
-        description == exercise.description
+        description == exercise.description &&
+        recurring == exercise.recurring
       );
     } else if (exercise.type == "weight") {
       return (
         weightNoStateChange() &&
         exercise_name == exercise.exercise_name &&
-        description == exercise.description
+        description == exercise.description &&
+        recurring == exercise.recurring
       );
     }
   };
@@ -88,6 +97,7 @@ export default ModuleEditor = ({ navigation }) => {
           min: min,
           sec: sec,
           updated_at: new Date().toISOString().toLocaleString(),
+          recurring: recurring,
         })
         .match({ id: exercise.id });
 
@@ -109,6 +119,7 @@ export default ModuleEditor = ({ navigation }) => {
           set: set,
           volume: calculateVolume(weight, rep, set),
           updated_at: new Date().toISOString().toLocaleString(),
+          recurring: recurring,
         })
         .match({ id: exercise.id });
 
@@ -162,9 +173,17 @@ export default ModuleEditor = ({ navigation }) => {
               multiline={true}
               maxHeight={160}
             />
+            <View style={styles.dropdownContainer}>
+              <Text style={styles.dropdownLabel}>Recurring?</Text>
+              <GoalDropdownList
+                value={recurring}
+                items={recurrings}
+                onValueChange={(value) => setRecurring(value)}
+              />
+            </View>
             {exercise.type == "run" ? (
               <View style={styles.exercise}>
-                <View style={styles.inputCOntainerSmall}>
+                <View style={styles.inputContainerSmall}>
                   <Input
                     keyboardType="number-pad"
                     style={styles.timerText}
@@ -177,7 +196,7 @@ export default ModuleEditor = ({ navigation }) => {
                   />
                 </View>
                 <View style={styles.timerContainer}>
-                  <View style={styles.inputCOntainerSmall}>
+                  <View style={styles.inputContainerSmall}>
                     <Text style={styles.dropdownLabel}>Minutes</Text>
                     <TouchableOpacity
                       onPress={() => {
@@ -191,7 +210,7 @@ export default ModuleEditor = ({ navigation }) => {
                   <View style={styles.colon}>
                     <Text style={styles.timerText}>:</Text>
                   </View>
-                  <View style={styles.inputCOntainerSmall}>
+                  <View style={styles.inputContainerSmall}>
                     <Text style={styles.dropdownLabel}>Seconds</Text>
                     <TouchableOpacity
                       onPress={() => {
@@ -206,7 +225,7 @@ export default ModuleEditor = ({ navigation }) => {
               </View>
             ) : (
               <View style={styles.exercise}>
-                <View style={styles.inputCOntainerSmall}>
+                <View style={styles.inputContainerSmall}>
                   <Input
                     keyboardType="number-pad"
                     style={styles.timerText}
@@ -218,7 +237,7 @@ export default ModuleEditor = ({ navigation }) => {
                     value={weight}
                   />
                 </View>
-                <View style={styles.inputCOntainerSmall}>
+                <View style={styles.inputContainerSmall}>
                   <Input
                     keyboardType="number-pad"
                     style={styles.timerText}
@@ -230,7 +249,7 @@ export default ModuleEditor = ({ navigation }) => {
                     value={rep}
                   />
                 </View>
-                <View style={styles.inputCOntainerSmall}>
+                <View style={styles.inputContainerSmall}>
                   <Input
                     keyboardType="number-pad"
                     style={styles.timerText}
@@ -246,7 +265,11 @@ export default ModuleEditor = ({ navigation }) => {
             )}
             <View style={styles.buttonContainer}>
               <TouchableOpacity
-                style={hasEmptyValues() ? styles.disabledButton : styles.button}
+                style={
+                  hasEmptyValues() || noStateChange()
+                    ? styles.disabledButton
+                    : styles.button
+                }
                 disabled={hasEmptyValues() || noStateChange()}
                 onPress={() => {
                   exercise.type == "run"

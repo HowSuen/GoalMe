@@ -25,6 +25,11 @@ const types = [
   { label: "Weight", value: "weight" },
 ];
 
+const recurrings = [
+  { label: "No", value: false },
+  { label: "Yes", value: true },
+];
+
 export default ExerciseSetter = ({ navigation }) => {
   const route = useRoute();
   const { user, routeName } = route.params;
@@ -32,6 +37,7 @@ export default ExerciseSetter = ({ navigation }) => {
   const [type, setType] = useState("");
   const [exercise_name, setExerciseName] = useState("");
   const [description, setDescription] = useState("");
+  const [recurring, setRecurring] = useState(false);
 
   const [distance, setDistance] = useState("0");
   const [min, setMin] = useState("0");
@@ -52,6 +58,7 @@ export default ExerciseSetter = ({ navigation }) => {
           distance: distance,
           min: min,
           sec: sec,
+          recurring: recurring,
         },
       ]);
       if (error) throw error;
@@ -72,6 +79,7 @@ export default ExerciseSetter = ({ navigation }) => {
           rep: rep,
           set: set,
           volume: calculateVolume(weight, rep, set),
+          recurring: recurring,
         },
       ]);
       if (error) throw error;
@@ -147,9 +155,19 @@ export default ExerciseSetter = ({ navigation }) => {
                 multiline={true}
                 maxHeight={160}
               />
+            </TouchableWithoutFeedback>
+            <View style={styles.dropdownContainer}>
+              <Text style={styles.dropdownLabel}>Recurring?</Text>
+              <GoalDropdownList
+                value={recurring}
+                items={recurrings}
+                onValueChange={(value) => setRecurring(value)}
+              />
+            </View>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
               {type == "run" ? (
                 <View style={styles.exercise}>
-                  <View style={styles.inputCOntainerSmall}>
+                  <View style={styles.inputContainerSmall}>
                     <Input
                       keyboardType="number-pad"
                       style={styles.timerText}
@@ -161,7 +179,7 @@ export default ExerciseSetter = ({ navigation }) => {
                     />
                   </View>
                   <View style={styles.timerContainer}>
-                    <View style={styles.inputCOntainerSmall}>
+                    <View style={styles.inputContainerSmall}>
                       <Text style={styles.dropdownLabel}>Minutes</Text>
                       <TouchableOpacity
                         onPress={() => {
@@ -175,7 +193,7 @@ export default ExerciseSetter = ({ navigation }) => {
                     <View style={styles.colon}>
                       <Text style={styles.timerText}>:</Text>
                     </View>
-                    <View style={styles.inputCOntainerSmall}>
+                    <View style={styles.inputContainerSmall}>
                       <Text style={styles.dropdownLabel}>Seconds</Text>
                       <TouchableOpacity
                         onPress={() => {
@@ -190,7 +208,7 @@ export default ExerciseSetter = ({ navigation }) => {
                 </View>
               ) : (
                 <View style={styles.exercise}>
-                  <View style={styles.inputCOntainerSmall}>
+                  <View style={styles.inputContainerSmall}>
                     <Input
                       keyboardType="number-pad"
                       style={styles.timerText}
@@ -201,7 +219,7 @@ export default ExerciseSetter = ({ navigation }) => {
                       onChangeText={(value) => setWeight(value)}
                     />
                   </View>
-                  <View style={styles.inputCOntainerSmall}>
+                  <View style={styles.inputContainerSmall}>
                     <Input
                       keyboardType="number-pad"
                       style={styles.timerText}
@@ -212,7 +230,7 @@ export default ExerciseSetter = ({ navigation }) => {
                       onChangeText={(value) => setRep(value)}
                     />
                   </View>
-                  <View style={styles.inputCOntainerSmall}>
+                  <View style={styles.inputContainerSmall}>
                     <Input
                       keyboardType="number-pad"
                       style={styles.timerText}

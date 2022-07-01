@@ -7,8 +7,6 @@ import {
 } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useRoute } from "@react-navigation/native";
-import AlertPrompt from "./AlertPrompt";
-import { useState } from "react";
 
 export default ExerciseList = ({
   exercise,
@@ -36,13 +34,7 @@ export default ExerciseList = ({
       >
         <TouchableOpacity
           style={styles.boxContainer}
-          onPress={async () => {
-            AlertPrompt({
-              title: "Complete this Exercise?",
-              proceedText: "Complete",
-              onPress: () => completeExercise(exercise),
-            });
-          }}
+          onPress={() => completeExercise(exercise)}
         >
           <FontAwesome name="square-o" size={25} color={"black"} />
         </TouchableOpacity>
@@ -72,12 +64,19 @@ export default ExerciseList = ({
                 exercise.set}
           </Text>
         </View>
-        <TouchableOpacity
-          style={styles.iconContainer}
-          onPress={() => deleteExercise(exercise)}
-        >
-          <FontAwesome5 name="trash" size={20} color="black" />
-        </TouchableOpacity>
+        <View style={styles.iconContainer}>
+          <FontAwesome
+            name="repeat"
+            size={15}
+            color={exercise.recurring ? "white" : "transparent"}
+          />
+          <TouchableOpacity
+            style={styles.iconContainer}
+            onPress={() => deleteExercise(exercise)}
+          >
+            <FontAwesome5 name="trash" size={20} color="black" />
+          </TouchableOpacity>
+        </View>
       </TouchableOpacity>
     </View>
   );

@@ -71,7 +71,7 @@ export default ExerciseList = ({
             color={exercise.recurring ? "white" : "transparent"}
           />
           <TouchableOpacity
-            style={styles.iconContainer}
+            style={styles.trashContainer}
             onPress={() => deleteExercise(exercise)}
           >
             <FontAwesome5 name="trash" size={20} color="black" />
@@ -138,7 +138,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginRight: 10,
-    height: 40,
-    borderRadius: 10,
+  },
+  trashContainer: {
+    marginTop: 10,
   },
 });

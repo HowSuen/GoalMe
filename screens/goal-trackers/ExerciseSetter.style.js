@@ -51,14 +51,14 @@ export default StyleSheet.create({
   button: {
     backgroundColor: "dodgerblue",
     padding: 10,
-    width: (Dimensions.get("window").width / 10) * 5,
+    width: 90,
     borderRadius: 5,
     elevation: 5,
   },
   disabledButton: {
     backgroundColor: "gray",
     padding: 10,
-    width: (Dimensions.get("window").width / 10) * 5,
+    width: 90,
     borderRadius: 5,
     elevation: 5,
   },

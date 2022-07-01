@@ -213,10 +213,12 @@ export default Exercise = ({ navigation }) => {
 
       if (error) throw error;
 
+      const userId = data[0].user_id;
+
       if (exercise.recurring) {
         let { data, error } = await supabase.from("exercises").insert([
           {
-            user_id: exercise.user_id,
+            user_id: userId,
             type: exercise.type,
             exercise_name: exercise.exercise_name,
             description: exercise.description,
@@ -226,6 +228,7 @@ export default Exercise = ({ navigation }) => {
             weight: exercise.weight,
             rep: exercise.rep,
             set: exercise.set,
+            volume: exercise.volume,
             recurring: exercise.recurring,
           },
         ]);

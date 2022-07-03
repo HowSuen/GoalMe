@@ -2,6 +2,7 @@ import { Dimensions, StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   container: {
+    flex: 1,
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
@@ -12,15 +13,28 @@ export default StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
+  listContainer: {
+    flex: 1.3,
+    backgroundColor: "white",
+    borderWidth: 0.8,
+    borderColor: "lightgray",
+    borderRadius: 5,
+    margin: 10,
+  },
   walletContainer: {
+    flex: 0.5,
     alignItems: "center",
-    borderColor: "black",
-    borderBottomWidth: 1,
-    // width: 350,
+    borderWidth: 0.8,
+    borderColor: "lightgray",
+    borderRadius: 5,
+    paddingTop: 20,
+    margin: 10,
+    marginBottom: 0,
+    backgroundColor: "white"
   },
   walletImage: {
-    width: 250,
-    height: 250,
+    width: 100,
+    height: 100,
   },
   walletButton: {
     width: 60,
@@ -48,16 +62,16 @@ export default StyleSheet.create({
   emptyContainer: {
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 50,
+    marginTop: 120,
     width: 350,
   },
   emptyImage: {
-    width: 80,
-    height: 80,
+    width: 60,
+    height: 60,
   },
   emptyText: {
     color: "black",
     marginTop: 10,
-    fontSize: 18,
+    fontSize: 16,
   },
 });

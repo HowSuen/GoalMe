@@ -347,67 +347,43 @@ export default Wallet = ({ navigation }) => {
         <View style={styles.walletContainer}>
           <Image
             style={styles.walletImage}
-            source={require("../../assets/money_jar.png")}
+            source={require("../../assets/wallet.png")}
           />
         </View>
-        <FlatList
-        //   style={{backgroundColor: "red"}}
-          data={data}
-          ListEmptyComponent={() => (
-            <View style={styles.emptyContainer}>
-              <Image
-                style={styles.emptyImage}
-                source={require("../../assets/bankrupt.png")}
+        <View style={styles.listContainer}>
+          <View>
+            <Text>History</Text>
+          </View>
+          <FlatList
+            // style={{ backgroundColor: "red" }}
+            data={data}
+            ListEmptyComponent={() => (
+              <View style={styles.emptyContainer}>
+                <Image
+                  style={styles.emptyImage}
+                  source={require("../../assets/bankrupt.png")}
+                />
+                <Text style={styles.emptyText}>No wallet history</Text>
+              </View>
+            )}
+            keyExtractor={(exercise) => exercise.id}
+            renderItem={({ item }) => (
+              <ExerciseList
+                exercise={item}
+                deleteExercise={deleteExercise}
+                completeExercise={completeExercise}
+                navigation={navigation}
               />
-              <Text style={styles.emptyText}>No wallet history</Text>
-            </View>
-          )}
-          keyExtractor={(exercise) => exercise.id}
-          renderItem={({ item }) => (
-            <ExerciseList
-              exercise={item}
-              deleteExercise={deleteExercise}
-              completeExercise={completeExercise}
-              navigation={navigation}
-            />
-          )}
-          showsVerticalScrollIndicator={false}
-          onRefresh={() => {
-            setIsFetching(true);
-            getExercises();
-            setIsFetching(false);
-          }}
-          refreshing={isFetching}
-        />
-        {/* <View style={styles.bottomContainer}>
-          <SortButton
-            value={orderBy}
-            items={orderBys}
-            onValueChange={(orderBy) => {
-              setOrderBy(orderBy);
-              sortExercises(order, orderBy);
+            )}
+            showsVerticalScrollIndicator={false}
+            onRefresh={() => {
+              setIsFetching(true);
+              getExercises();
+              setIsFetching(false);
             }}
+            refreshing={isFetching}
           />
-          <SortButton
-            value={order}
-            items={orders}
-            onValueChange={(order) => {
-              setOrder(order);
-              sortExercises(order, orderBy);
-            }}
-          />
-          <TouchableOpacity
-            style={styles.walletButton}
-            onPress={() => {
-              navigation.navigate("ExerciseSetter", {
-                user: user,
-                routeName: route.name,
-              });
-            }}
-          >
-            <FontAwesome5 name="plus" size={20} color="black" />
-          </TouchableOpacity>
-        </View> */}
+        </View>
       </View>
     </View>
   );

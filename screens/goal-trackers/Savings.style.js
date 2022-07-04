@@ -62,16 +62,16 @@ export default StyleSheet.create({
   emptyContainer: {
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 120,
+    marginTop: Dimensions.get("window").height / 4,
     width: 350,
   },
   emptyImage: {
-    width: 60,
-    height: 60,
+    width: 100,
+    height: 100,
   },
   emptyText: {
     color: "black",
-    marginTop: 10,
-    fontSize: 16,
+    marginTop: 20,
+    fontSize: 20,
   },
 });

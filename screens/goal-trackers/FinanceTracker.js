@@ -194,11 +194,11 @@ export default FinanceTracker = ({ navigation }) => {
       <View>
       <TouchableOpacity
           onPress={() => {
-            navigation.navigate("Wallet");
+            navigation.navigate("Savings");
           }}
           style={styles.walletNavButton}
         >
-          <Text style={styles.buttonText}>Wallet</Text>
+          <Text style={styles.buttonText}>Savings</Text>
         </TouchableOpacity>
         <FlatList
           data={data}

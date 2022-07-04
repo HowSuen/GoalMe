@@ -35,12 +35,12 @@ const inExercise = (route) => {
   );
 };
 
-const inWallet = (route) => {
+const inSavings = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route);
   return (
-    routeName == "Wallet" ||
-    routeName == "WalletSetter" ||
-    routeName == "WalletEditor"
+    routeName == "Savings" ||
+    routeName == "SavingsSetter" ||
+    routeName == "SavingsEditor"
   );
 };
 
@@ -107,10 +107,10 @@ export default GoalTrackerNavigator = () => {
         name="Finance Tracker"
         options={({ route }) => ({
           headerStyle: {
-            backgroundColor: !inWallet(route) ? "goldenrod" : "darkgoldenrod",
+            backgroundColor: !inSavings(route) ? "goldenrod" : "darkgoldenrod",
           },
           drawerActiveBackgroundColor: "goldenrod",
-          headerTitle: !inWallet(route) ? "Finance Goals" : "Wallet",
+          headerTitle: !inSavings(route) ? "Finance Goals" : "Savings",
           drawerLabel: "Finance Goals",
         })}
       >

@@ -12,7 +12,8 @@ import ModuleSetter from "../screens/goal-trackers/ModuleSetter";
 import Exercise from "../screens/goal-trackers/Exercise";
 import ExerciseEditor from "../screens/goal-trackers/ExerciseEditor";
 import ExerciseSetter from "../screens/goal-trackers/ExerciseSetter";
-import Wallet from "../screens/goal-trackers/Wallet";
+import Savings from "../screens/goal-trackers/Savings";
+import SavingsSetter from "../screens/goal-trackers/SavingsSetter";
 import { Platform } from "react-native";
 
 const Stack = createNativeStackNavigator();
@@ -135,8 +136,8 @@ export default GoalNavigator = ({ route, navigation }) => {
         {() => <ExerciseEditor route={route} navigation={navigation} />}
       </Stack.Screen>
       <Stack.Screen
-        name="Wallet"
-        component={Wallet}
+        name="Savings"
+        component={Savings}
         options={{
           headerShown: Platform.OS === "ios" ? true : false,
           headerTitle: "",
@@ -145,6 +146,19 @@ export default GoalNavigator = ({ route, navigation }) => {
           headerShadowVisible: false,
         }}
       />
+      <Stack.Screen
+        name="SavingsSetter"
+        options={{
+          headerShown: Platform.OS === "ios" ? true : false,
+          headerTitle: "Create New Saving Goal",
+          headerStyle: { backgroundColor: "ghostwhite" },
+          headerTintColor: "black",
+          presentation: "modal",
+          headerTitleAlign: "center",
+        }}
+      >
+        {() => <SavingsSetter route={route} navigation={navigation} />}
+      </Stack.Screen>
     </Stack.Navigator>
   );
 };

@@ -57,7 +57,7 @@ const MainLevel = ({ session }) => {
       <View style={styles.experience}>
         <Text style={styles.generalLvl}>LEVEL</Text>
         <Bar
-          progress={totalXp / Math.round(Math.pow(totalLvl / 0.07, 2))}
+          progress={totalXp / Math.round(Math.pow(totalLvl / 0.05, 1.6))}
           height={16}
           width={(Dimensions.get("window").width / 10) * 7}
           unfilledColor="lightgray"

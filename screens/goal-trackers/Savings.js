@@ -11,11 +11,10 @@ import { useIsFocused, useRoute } from "@react-navigation/native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { orders } from "./GoalTracker";
 import styles from "./Savings.style";
-import Empty from "./Empty";
 import supabase from "../../lib/supabase";
 import SortButton from "../../components/goal-trackers/SortButton";
 import AlertPrompt from "../../components/goal-trackers/AlertPrompt";
-import { Card } from "react-native-elements";
+import SavingList from "../../components/goal-trackers/SavingList";
 
 const orderBys = [
   { label: "Alphabetical", value: "alphabetical" },
@@ -304,14 +303,14 @@ export default Savings = ({ navigation }) => {
             </View>
           )}
           keyExtractor={(saving) => saving.id}
-          // renderItem={({ item }) => (
-          //   <ExerciseList
-          //     exercise={item}
-          //     deleteExercise={deleteExercise}
-          //     completeExercise={completeExercise}
-          //     navigation={navigation}
-          //   />
-          // )}
+          renderItem={({ item }) => (
+            <SavingList
+              saving={item}
+              // deleteSaving={deleteSaving}
+              // completeSaving={completeSaving}
+              navigation={navigation}
+            />
+          )}
           showsVerticalScrollIndicator={false}
           onRefresh={() => {
             setIsFetching(true);

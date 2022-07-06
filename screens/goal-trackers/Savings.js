@@ -42,8 +42,8 @@ const sortItems = (order, orderBy) => {
         : convertDate(b.updated_at) - convertDate(a.updated_at);
   } else if (orderBy == "alphabetical") {
     comparator = (a, b) => {
-      const s1 = a.exercise_name;
-      const s2 = b.exercise_name;
+      const s1 = a.name;
+      const s2 = b.name;
       return order == "ascending" ? s1.localeCompare(s2) : s2.localeCompare(s1);
     };
   }
@@ -69,54 +69,48 @@ export default Savings = ({ navigation }) => {
   const [completedFinance, setCompletedFinance] = useState(0);
 
   useEffect(() => {
-    // getExercises();
+    getSavings();
     return () => {
       setState({});
     };
   }, [isFocused, totalXp]);
 
-  //   const getExercises = async () => {
-  //     try {
-  //       let { data: exercises, error } = await supabase
-  //         .from("exercises")
-  //         .select("*")
-  //         .match({
-  //           user_id: user.id,
-  //           completion_status: false,
-  //         });
-  //       if (error) throw error;
+  const getSavings = async () => {
+    try {
+      let { data: savings, error } = await supabase
+        .from("savings")
+        .select("*")
+        .match({
+          user_id: user.id,
+          completion_status: false,
+        });
+      if (error) throw error;
 
-  //       exercises.sort(sortItems(order, orderBy)).reverse();
+      savings.sort(sortItems(order, orderBy)).reverse();
 
-  //       setData([]);
+      setData([]);
 
-  //       exercises.map((exercise) => {
-  //         setData((prevExercise) => {
-  //           return [
-  //             {
-  //               id: exercise.id,
-  //               type: exercise.type,
-  //               exercise_name: exercise.exercise_name,
-  //               description: exercise.description,
-  //               distance: exercise.distance,
-  //               min: exercise.min,
-  //               sec: exercise.sec,
-  //               weight: exercise.weight,
-  //               rep: exercise.rep,
-  //               set: exercise.set,
-  //               volume: exercise.volume,
-  //               updated_at: exercise.updated_at,
-  //               recurring: exercise.recurring,
-  //             },
-  //             ...prevExercise,
-  //           ];
-  //         });
-  //       });
-  //     } catch (error) {
-  //       Alert.alert(error.message);
-  //     }
-  //     getExperience();
-  //   };
+      savings.map((saving) => {
+        setData((prevSavings) => {
+          return [
+            {
+              id: saving.id,
+              name: saving.name,
+              description: saving.description,
+              amount: saving.amount,
+              curr_amount: saving.curr_amount,
+              updated_at: saving.updated_at,
+              // recurring: saving.recurring,
+            },
+            ...prevSavings,
+          ];
+        });
+      });
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+    getExperience();
+  };
 
   const getExperience = async () => {
     try {
@@ -145,7 +139,7 @@ export default Savings = ({ navigation }) => {
     }
   };
 
-  const updateExperience = async (exercise) => {
+  const updateExperience = async (saving) => {
     let addXP = 500; // temporary amount
 
     let newTotalXp = totalXp + addXP;
@@ -206,93 +200,91 @@ export default Savings = ({ navigation }) => {
     });
   };
 
-  //   const completeItem = async (exercise) => {
-  //     try {
-  //       let { data, error } = await supabase
-  //         .from("exercises")
-  //         .update({
-  //           completion_status: true,
-  //           completed_at: new Date().toISOString().toLocaleString(),
-  //         })
-  //         .match({ id: exercise.id });
+  const completeItem = async (saving) => {
+    try {
+      let { data, error } = await supabase
+        .from("savings")
+        .update({
+          completion_status: true,
+          completed_at: new Date().toISOString().toLocaleString(),
+        })
+        .match({ id: saving.id });
 
-  //       if (error) throw error;
+      if (error) throw error;
 
-  //       const userId = data[0].user_id;
+      const userId = data[0].user_id;
 
-  //       if (exercise.recurring) {
-  //         let { data, error } = await supabase.from("exercises").insert([
-  //           {
-  //             user_id: userId,
-  //             type: exercise.type,
-  //             exercise_name: exercise.exercise_name,
-  //             description: exercise.description,
-  //             distance: exercise.distance,
-  //             min: exercise.min,
-  //             sec: exercise.sec,
-  //             weight: exercise.weight,
-  //             rep: exercise.rep,
-  //             set: exercise.set,
-  //             volume: exercise.volume,
-  //             recurring: exercise.recurring,
-  //           },
-  //         ]);
+      // if (saving.recurring) {
+      //   let { data, error } = await supabase.from("savings").insert([
+      //     {
+      //       user_id: userId,
+      //       name: saving.name,
+      //       description: saving.description,
+      //       amount: saving.amount,
+      //       curr_amount: saving.curr_amount,
+      //       updated_at: saving.updated_at,
+      //       recurring: saving.recurring,
+      //     },
+      //   ]);
 
-  //         if (error) throw error;
+      //   if (error) throw error;
 
-  //         return data[0];
-  //       }
-  //     } catch (error) {
-  //       Alert.alert(error.message);
-  //     }
-  //   };
+      //   return data[0];
+      // }
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+  };
 
-  //   const completeExercise = async (exercise) => {
-  //     AlertPrompt({
-  //       title: "Complete this Exercise?",
-  //       proceedText: "Complete",
-  //       onPress: () => {
-  //         const recurringExercise = completeItem(exercise);
-  //         if (exercise.recurring) {
-  //           recurringExercise.then(() => getExercises());
-  //         } else {
-  //           setData((exercises) => {
-  //             return exercises.filter((e) => e != exercise);
-  //           });
-  //         }
-  //         updateExperience(exercise);
-  //       },
-  //     });
-  //   };
+  const completeSaving = async (saving) => {
+    AlertPrompt({
+      title: "Complete this Saving Goal?",
+      proceedText: "Complete",
+      onPress: () => {
+        // const recurringSaving = completeItem(saving);
+        // if (saving.recurring) {
+        //   recurringSaving.then(() => getSavings());
+        // } else {
+        //   setData((savings) => {
+        //     return savings.filter((e) => e != saving);
+        //   });
+        // }
+        setData((savings) => {
+          return savings.filter((e) => e != saving);
+        });
+        updateExperience(saving);
+      },
+    });
+  };
 
-  //   const deleteExercise = async (exercise) => {
-  //     AlertPrompt({
-  //       title: "Delete This Exercise?",
-  //       description: "You can't undo this action.",
-  //       proceedText: "Delete",
-  //       onPress: async () => {
-  //         try {
-  //           let { error } = await supabase
-  //             .from("exercises")
-  //             .delete()
-  //             .match({ id: exercise.id });
+  const deleteSaving = async (saving) => {
+    AlertPrompt({
+      title: "Delete This Saving Goal?",
+      description: "You can't undo this action.",
+      proceedText: "Delete",
+      onPress: async () => {
+        try {
+          let { error } = await supabase
+            .from("savings")
+            .delete()
+            .match({ id: saving.id });
 
-  //           if (error) throw error;
-  //         } catch (error) {
-  //           Alert.alert(error.message);
-  //         }
-  //         setData((exercises) => {
-  //           return exercises.filter((e) => e != exercise);
-  //         });
-  //       },
-  //     });
-  //   };
+          if (error) throw error;
+        } catch (error) {
+          Alert.alert(error.message);
+        }
+        setData((savings) => {
+          return savings.filter((e) => e != saving);
+        });
+      },
+    });
+  };
 
   return (
     <View style={styles.container}>
       <View>
         <FlatList
-          data={[]}
+          data={data}
           ListEmptyComponent={() => (
             <View style={styles.emptyContainer}>
               <Image
@@ -306,15 +298,15 @@ export default Savings = ({ navigation }) => {
           renderItem={({ item }) => (
             <SavingList
               saving={item}
-              // deleteSaving={deleteSaving}
-              // completeSaving={completeSaving}
+              deleteSaving={deleteSaving}
+              completeSaving={completeSaving}
               navigation={navigation}
             />
           )}
           showsVerticalScrollIndicator={false}
           onRefresh={() => {
             setIsFetching(true);
-            // getExercises();
+            getSavings();
             setIsFetching(false);
           }}
           refreshing={isFetching}

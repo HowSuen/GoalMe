@@ -37,6 +37,7 @@ export default SavingsSetter = ({ navigation }) => {
           name: name,
           description: description,
           amount: amount,
+          curr_amount: 0,
           //   recurring: recurring,
         },
       ]);
@@ -85,7 +86,7 @@ export default SavingsSetter = ({ navigation }) => {
           />
           <Input
             keyboardType="number-pad"
-            style={styles.textText}
+            style={styles.textInput}
             inputContainerStyle={styles.inputContainer}
             label="Saving Amount"
             placeholder="Add amount to save..."
@@ -98,7 +99,7 @@ export default SavingsSetter = ({ navigation }) => {
               style={hasEmptyValues() ? styles.disabledButton : styles.button}
               disabled={hasEmptyValues()}
               onPress={() => {
-                // submitGoal();
+                submitSaving();
                 navigation.navigate(routeName);
               }}
             >

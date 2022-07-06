@@ -13,6 +13,7 @@ import Exercise from "../screens/goal-trackers/Exercise";
 import ExerciseEditor from "../screens/goal-trackers/ExerciseEditor";
 import ExerciseSetter from "../screens/goal-trackers/ExerciseSetter";
 import Savings from "../screens/goal-trackers/Savings";
+import SavingsEditor from "../screens/goal-trackers/SavingsEditor";
 import SavingsSetter from "../screens/goal-trackers/SavingsSetter";
 import { Platform } from "react-native";
 
@@ -158,6 +159,20 @@ export default GoalNavigator = ({ route, navigation }) => {
         }}
       >
         {() => <SavingsSetter route={route} navigation={navigation} />}
+      </Stack.Screen>
+      <Stack.Screen
+        name="SavingsEditor"
+        options={{
+          headerShown: Platform.OS === "ios" ? true : false,
+          headerTitle: "",
+          headerStyle: { backgroundColor: "ghostwhite" },
+          headerTintColor: "black",
+          headerShadowVisible: false,
+          presentation: "card",
+          headerTitleAlign: "center",
+        }}
+      >
+        {() => <SavingsEditor route={route} navigation={navigation} />}
       </Stack.Screen>
     </Stack.Navigator>
   );

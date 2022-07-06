@@ -162,7 +162,7 @@ export default SavingsEditor = ({ navigation }) => {
                   <Text style={styles.savedText}>SAVED</Text>
                   <View style={{ flexDirection: "row" }}>
                     <Text style={styles.savedNumber}>
-                      {isNegative(curr_amount ? "-" : "")}$
+                      {isNegative(curr_amount) ? "-" : ""}$
                     </Text>
                     <Text style={styles.savedNumber}>
                       {calculateAbsolute(curr_amount)}

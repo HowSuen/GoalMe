@@ -15,9 +15,25 @@ export default SavingList = ({
   const savingText = saving.name;
 
   const calculateProgress = (saving) => {
-    const curr = saving.curr_amount;
-    const total = saving.amount;
-    return curr / total;
+    const curr = parseInt(saving.curr_amount, 10);
+    const total = parseInt(saving.amount, 10);
+    if (curr >= total) {
+      return 1;
+    } else if (curr <= 0) {
+      return 0;
+    } else {
+      return curr / total;
+    }
+  };
+
+  const isNegative = (amt) => {
+    return parseInt(amt, 10) < 0;
+  };
+
+  const calculateAbsolute = (number) => {
+    const num = parseInt(number, 10);
+    const abs = Math.abs(num);
+    return abs.toString();
   };
 
   return (
@@ -48,12 +64,23 @@ export default SavingList = ({
               width={null}
               height={5}
               unfilledColor="#555555"
-              color={"#ffd700"}
+              color={
+                saving.curr_amount >= saving.amount ? "springgreen" : "#ffd700"
+              }
               borderWidth={0}
               animationConfig={{ bounciness: 50 }}
             />
             <View style={styles.progressText}>
-              <Text style={styles.amountText}>${saving.curr_amount}</Text>
+              <Text
+                style={
+                  saving.curr_amount >= saving.amount
+                    ? styles.fullAmountText
+                    : styles.amountText
+                }
+              >
+                {isNegative(saving.curr_amount) ? "-" : ""}$
+                {calculateAbsolute(saving.curr_amount)}
+              </Text>
               <Text style={styles.goalText}>${saving.amount}</Text>
             </View>
           </View>
@@ -122,6 +149,11 @@ const styles = StyleSheet.create({
   // },
   amountText: {
     color: "gold",
+    fontSize: 14,
+    marginVertical: 2,
+  },
+  fullAmountText: {
+    color: "springgreen",
     fontSize: 14,
     marginVertical: 2,
   },

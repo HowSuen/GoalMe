@@ -1,19 +1,10 @@
 import { useIsFocused } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { Alert, StyleSheet, View, TouchableOpacity } from "react-native";
-import {
-  VictoryBar,
-  VictoryChart,
-  VictoryPie,
-  VictoryTheme,
-} from "victory-native";
-import supabase from "../../lib/supabase";
-import { Text } from "react-native-elements";
-import { Button } from "react-native-elements";
-import CompletedChart from "../../components/progress-checker/CompletedChart";
+import { StyleSheet, View } from "react-native";
+import { Card } from "react-native-elements";
+import CompletedGoalsChart from "../../components/progress-checker/CompletedGoalsChart";
 
 export default ProgressChecker = () => {
-  const user = supabase.auth.user();
   const isFocused = useIsFocused();
 
   const [state, setState] = useState({});
@@ -26,7 +17,9 @@ export default ProgressChecker = () => {
 
   return (
     <View style={styles.container}>
-      <CompletedChart/>
+      <Card containerStyle={{ padding: 0 }}>
+        <CompletedGoalsChart />
+      </Card>
     </View>
   );
 };
@@ -39,4 +32,3 @@ const styles = StyleSheet.create({
     backgroundColor: "ghostwhite",
   },
 });
-

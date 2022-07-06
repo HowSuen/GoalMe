@@ -15,8 +15,8 @@ export default SavingList = ({
   const savingText = saving.name;
 
   const calculateProgress = (saving) => {
-    const curr = parseInt(saving.curr_amount, 10);
-    const total = parseInt(saving.amount, 10);
+    const curr = parseFloat(saving.curr_amount.replace(",", ""), 10);
+    const total = parseFloat(saving.amount.replace(",", ""), 10);
     if (curr >= total) {
       return 1;
     } else if (curr <= 0) {
@@ -27,13 +27,24 @@ export default SavingList = ({
   };
 
   const isNegative = (amt) => {
-    return parseInt(amt, 10) < 0;
+    return parseFloat(amt.replace(",", ""), 10) < 0;
   };
 
   const calculateAbsolute = (number) => {
-    const num = parseInt(number, 10);
+    const num = parseFloat(number.replace(",", ""), 10);
     const abs = Math.abs(num);
     return abs.toString();
+  };
+
+  const currencyFormat = (str) => {
+    const num = parseFloat(str.replace(",", ""), 10);
+    return "$" + num.toPrecision().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  };
+
+  const completed = () => {
+    const curr = parseFloat(saving.curr_amount.replace(",", ""), 10);
+    const total = parseFloat(saving.amount.replace(",", ""), 10);
+    return curr >= total;
   };
 
   return (
@@ -50,8 +61,13 @@ export default SavingList = ({
         <TouchableOpacity
           style={styles.boxContainer}
           onPress={() => completeSaving(saving)}
+          disabled={!completed()}
         >
-          <FontAwesome name="square-o" size={25} color={"black"} />
+          <FontAwesome
+            name="square-o"
+            size={25}
+            color={completed() ? "black" : "#555555"}
+          />
         </TouchableOpacity>
         <View style={styles.barContainer}>
           <Text style={styles.listText}>
@@ -64,24 +80,20 @@ export default SavingList = ({
               width={null}
               height={5}
               unfilledColor="#555555"
-              color={
-                saving.curr_amount >= saving.amount ? "springgreen" : "#ffd700"
-              }
+              color={completed() ? "springgreen" : "#ffd700"}
               borderWidth={0}
               animationConfig={{ bounciness: 50 }}
             />
             <View style={styles.progressText}>
               <Text
-                style={
-                  saving.curr_amount >= saving.amount
-                    ? styles.fullAmountText
-                    : styles.amountText
-                }
+                style={completed() ? styles.fullAmountText : styles.amountText}
               >
-                {isNegative(saving.curr_amount) ? "-" : ""}$
-                {calculateAbsolute(saving.curr_amount)}
+                {isNegative(saving.curr_amount) ? "-" : ""}
+                {currencyFormat(calculateAbsolute(saving.curr_amount))}
               </Text>
-              <Text style={styles.goalText}>${saving.amount}</Text>
+              <Text style={styles.goalText}>
+                {currencyFormat(saving.amount)}
+              </Text>
             </View>
           </View>
         </View>

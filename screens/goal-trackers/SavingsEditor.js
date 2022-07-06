@@ -53,8 +53,8 @@ export default SavingsEditor = ({ navigation }) => {
   };
 
   const calculateProgress = () => {
-    const curr = parseInt(curr_amount, 10);
-    const total = parseInt(amount, 10);
+    const curr = parseFloat(curr_amount.replace(",", ""), 10);
+    const total = parseFloat(amount.replace(",", ""), 10);
     if (curr >= total) {
       return 1;
     } else if (curr <= 0) {
@@ -65,7 +65,7 @@ export default SavingsEditor = ({ navigation }) => {
   };
 
   const isNegative = (amt) => {
-    return parseInt(amt, 10) < 0;
+    return parseFloat(amt.replace(",", ""), 10) < 0;
   };
 
   const convertInteger = (percentage) => {
@@ -73,8 +73,8 @@ export default SavingsEditor = ({ navigation }) => {
   };
 
   const calculateRemaining = () => {
-    const curr = parseInt(curr_amount, 10);
-    const total = parseInt(amount, 10);
+    const curr = parseFloat(curr_amount.replace(",", ""), 10);
+    const total = parseFloat(amount.replace(",", ""), 10);
     if (curr >= total) {
       return "0";
     }
@@ -83,9 +83,19 @@ export default SavingsEditor = ({ navigation }) => {
   };
 
   const calculateAbsolute = (number) => {
-    const num = parseInt(number, 10);
+    const num = parseFloat(number.replace(",", ""), 10);
     const abs = Math.abs(num);
     return abs.toString();
+  };
+
+  const currencyFormat = (str) => {
+    const num = parseFloat(str.replace(",", ""), 10);
+    return "$" + num.toPrecision().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  };
+
+  const currencyFormatWithoutS = (str) => {
+    const num = parseFloat(str.replace(",", ""), 10);
+    return num.toPrecision().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
   };
 
   const updateSaving = async (saving) => {
@@ -95,7 +105,7 @@ export default SavingsEditor = ({ navigation }) => {
         .update({
           name: name,
           description: description,
-          amount: amount,
+          amount: currencyFormatWithoutS(amount),
           curr_amount: curr_amount,
           updated_at: new Date().toISOString().toLocaleString(),
           // recurring: recurring,
@@ -126,15 +136,15 @@ export default SavingsEditor = ({ navigation }) => {
   };
 
   const sumAmount = (add, amt) => {
-    const additional_amt = parseInt(add, 10);
-    const original_amt = parseInt(amt, 10);
+    const additional_amt = parseFloat(add.replace(",", ""), 10);
+    const original_amt = parseFloat(amt.replace(",", ""), 10);
     const total_amt = additional_amt + original_amt;
     return total_amt.toString();
   };
 
   const minusAmount = (minus, amt) => {
-    const minus_amt = parseInt(minus, 10);
-    const original_amt = parseInt(amt, 10);
+    const minus_amt = parseFloat(minus.replace(",", ""), 10);
+    const original_amt = parseFloat(amt.replace(",", ""), 10);
     const total_amt = original_amt - minus_amt;
     return total_amt.toString();
   };
@@ -162,10 +172,10 @@ export default SavingsEditor = ({ navigation }) => {
                   <Text style={styles.savedText}>SAVED</Text>
                   <View style={{ flexDirection: "row" }}>
                     <Text style={styles.savedNumber}>
-                      {isNegative(curr_amount) ? "-" : ""}$
+                      {isNegative(curr_amount) ? "-" : ""}
                     </Text>
                     <Text style={styles.savedNumber}>
-                      {calculateAbsolute(curr_amount)}
+                      {currencyFormat(calculateAbsolute(curr_amount))}
                     </Text>
                   </View>
                 </View>
@@ -186,7 +196,7 @@ export default SavingsEditor = ({ navigation }) => {
                 <View style={styles.savedContainer}>
                   <Text style={styles.remainingText}>REMAINING</Text>
                   <Text style={styles.remainingNumber}>
-                    ${calculateRemaining()}
+                    {currencyFormat(calculateRemaining())}
                   </Text>
                 </View>
               </View>
@@ -230,7 +240,7 @@ export default SavingsEditor = ({ navigation }) => {
                     if (isSaving) {
                       new_amount = sumAmount(value, curr_amount);
                     } else {
-                      new_amount = minusAmount(value, curr_amount)
+                      new_amount = minusAmount(value, curr_amount);
                     }
                     setCurrAmount(new_amount);
                     updateSavingCurrAmount(saving, new_amount);

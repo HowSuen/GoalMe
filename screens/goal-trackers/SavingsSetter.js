@@ -29,6 +29,11 @@ export default SavingsSetter = ({ navigation }) => {
   const [amount, setAmount] = useState("");
   //   const [recurring, setRecurring] = useState(false);
 
+  const currencyFormat = (str) => {
+    const num = parseFloat(str.replace(",", ""), 10);
+    return num.toPrecision().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  };
+
   const submitSaving = async () => {
     try {
       let { data, error } = await supabase.from("savings").insert([
@@ -36,7 +41,7 @@ export default SavingsSetter = ({ navigation }) => {
           user_id: user.id,
           name: name,
           description: description,
-          amount: amount,
+          amount: currencyFormat(amount),
           curr_amount: 0,
           //   recurring: recurring,
         },

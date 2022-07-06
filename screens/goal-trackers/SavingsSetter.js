@@ -58,7 +58,6 @@ export default SavingsSetter = ({ navigation }) => {
 
   return (
     <ScrollView style={styles.scrollview}>
-      <AndroidTitle title="Create new saving goal" />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}
@@ -67,8 +66,8 @@ export default SavingsSetter = ({ navigation }) => {
           <Input
             style={styles.textInput}
             inputContainerStyle={styles.inputContainer}
-            label="Goal"
-            placeholder="Add a goal..."
+            label="Saving Goal"
+            placeholder="Add a saving goal..."
             placeholderTextColor="darkgray"
             value={name}
             onChangeText={(text) => setName(text)}

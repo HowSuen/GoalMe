@@ -19,13 +19,23 @@ export default ProgressChecker = () => {
   }, [isFocused]);
 
   return (
-    <View style={styles.container} >
+    <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <Card containerStyle={{ padding: 0 }}>
+          <Text style={styles.title}>Goals</Text>
           <CompletedGoalsChart />
         </Card>
         <Card containerStyle={{ padding: 0 }}>
+          <Text style={styles.title}>Modules</Text>
           <CompletedModulesChart />
+        </Card>
+        <Card containerStyle={{ padding: 0 }}>
+          <Text style={styles.title}>Exercises</Text>
+          <CompletedGoalsChart />
+        </Card>
+        <Card containerStyle={{ padding: 0 }}>
+          <Text style={styles.title}>Savings</Text>
+          <CompletedGoalsChart />
         </Card>
       </ScrollView>
     </View>
@@ -38,10 +48,14 @@ const styles = StyleSheet.create({
     backgroundColor: "ghostwhite",
     paddingTop: 60,
   },
+  title: {
+    fontSize: 25,
+    fontWeight: "bold",
+    padding: 10,
+  },
   scrollView: {
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "ghostwhite",
   },
-  
 });

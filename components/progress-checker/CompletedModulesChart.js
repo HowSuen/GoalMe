@@ -106,7 +106,7 @@ export default CompletedModulesChart = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Completed Module Grades</Text>
+      <Text style={styles.text}>Grades</Text>
       <VictoryChart
         height={300}
         width={400}
@@ -114,9 +114,7 @@ export default CompletedModulesChart = () => {
         animate={{
           duration: 500,
         }}
-        // domain={{y: [0, 20]}}
         domainPadding={50}
-        // padding={60}
       >
         <VictoryAxis
           dependentAxis={true}
@@ -125,8 +123,13 @@ export default CompletedModulesChart = () => {
               return y;
             }
           }}
+          label="Number of Modules"
+          style={{ axisLabel: { padding: 25 } }}
         />
-        <VictoryAxis />
+        <VictoryAxis
+          label="Grades Received"
+          style={{ axisLabel: { padding: 30 } }}
+        />
         <VictoryBar
           style={{ data: { fill: "deepskyblue" } }}
           animate={{
@@ -144,11 +147,12 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "center",
-    marginVertical: 20,
+    paddingBottom: 5,
   },
   text: {
     fontSize: 20,
     color: "black",
-    marginBottom: -20,
+    marginTop: 10,
+    marginBottom: -30,
   },
 });

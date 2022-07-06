@@ -69,7 +69,7 @@ export default CompletedGoalsChart = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Number of Goals Completed</Text>
+      <Text style={styles.text}>Number Completed</Text>
       <Svg width={400} height={400}>
         <VictoryLabel
           x={200}
@@ -86,7 +86,7 @@ export default CompletedGoalsChart = () => {
           width={400}
           height={400}
           innerRadius={({ radius }) => radius / 2}
-          labelPlacement="vertical"
+          labelPlacement="perpendicular"
           labelPosition="centroid"
           labelRadius={({ radius }) => (11 / 16) * radius}
           labels={({ datum }) => Math.floor(datum.y)}
@@ -96,15 +96,30 @@ export default CompletedGoalsChart = () => {
               strokeWidth: 0,
             },
             labels: {
-              fontSize: 20,
+              fontSize: 18,
               fill: "black",
             },
           }}
           categories={{
             x: ["General", "Academic", "Fitness", "Finance"],
           }}
-          data={data}
+          data={data.filter((obj) => obj.y != 0)}
           standalone={false}
+          events={[{
+            target: "data",
+            eventHandlers: {
+              onPressIn: () => {
+                return [
+                  {
+                    target: "labels",
+                    mutation: ({ datum, text }) => {
+                      return text == datum.y ? { text: datum.x } : { text: datum.y };
+                    }
+                  }
+                ];
+              }
+            }
+          }]}
         />
       </Svg>
     </View>

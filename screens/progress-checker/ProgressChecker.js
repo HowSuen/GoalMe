@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     paddingTop: 60,
   },
   title: {
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: "bold",
     padding: 10,
   },

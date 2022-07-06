@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   text: {
-    fontSize: 20,
+    fontSize: 18,
     color: "black",
     marginTop: 10,
     marginBottom: -30,

@@ -74,7 +74,7 @@ export default CompletedGoalsChart = () => {
         <VictoryLabel
           x={200}
           y={200}
-          style={{ fontSize: 20 }}
+          style={{ fontSize: 18 }}
           textAnchor={"middle"}
           text={"Total: " + completedTotal}
         />
@@ -96,7 +96,7 @@ export default CompletedGoalsChart = () => {
               strokeWidth: 0,
             },
             labels: {
-              fontSize: 18,
+              fontSize: 16,
               fill: "black",
             },
           }}
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     marginBottom: -30,
   },
   text: {
-    fontSize: 20,
+    fontSize: 18,
     color: "black",
     marginTop: 10,
     marginBottom: -30,

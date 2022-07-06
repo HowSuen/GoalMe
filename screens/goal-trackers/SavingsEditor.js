@@ -230,7 +230,7 @@ export default SavingsEditor = ({ navigation }) => {
                   setPromptVisible(true);
                 }}
               >
-                <Text style={styles.buttonText}>Edit Saving</Text>
+                <Text style={styles.buttonText}>Edit Savings</Text>
                 <SavingPrompt
                   numberRegex={numberRegex}
                   updateCurrAmount={(value, isSaving) => {

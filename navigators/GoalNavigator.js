@@ -113,7 +113,7 @@ export default GoalNavigator = ({ route, navigation }) => {
         name="ExerciseSetter"
         options={{
           headerShown: Platform.OS === "ios" ? true : false,
-          headerTitle: "Add Your Exercise",
+          headerTitle: "Add an Exercise",
           headerStyle: { backgroundColor: "ghostwhite" },
           headerTintColor: "black",
           presentation: "modal",
@@ -151,7 +151,7 @@ export default GoalNavigator = ({ route, navigation }) => {
         name="SavingsSetter"
         options={{
           headerShown: Platform.OS === "ios" ? true : false,
-          headerTitle: "Create New Saving Goal",
+          headerTitle: "Add a Saving Goal",
           headerStyle: { backgroundColor: "ghostwhite" },
           headerTintColor: "black",
           presentation: "modal",

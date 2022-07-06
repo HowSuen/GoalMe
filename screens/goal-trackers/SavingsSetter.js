@@ -92,7 +92,7 @@ export default SavingsSetter = ({ navigation }) => {
             keyboardType="number-pad"
             style={styles.textInput}
             inputContainerStyle={styles.inputContainer}
-            label="Saving Amount"
+            label="Saving Amount ($)"
             placeholder="Add amount to save..."
             placeholderTextColor="darkgray"
             onChangeText={(value) => setAmount(value)}

@@ -66,7 +66,7 @@ export default SavingList = ({
           <FontAwesome
             name="square-o"
             size={25}
-            color={completed() ? "black" : "#555555"}
+            color={completed() ? "black" : "transparent"}
           />
         </TouchableOpacity>
         <View style={styles.barContainer}>
@@ -80,7 +80,7 @@ export default SavingList = ({
               width={null}
               height={5}
               unfilledColor="#555555"
-              color={completed() ? "springgreen" : "#ffd700"}
+              color={completed() ? "springgreen" : "yellow"}
               borderWidth={0}
               animationConfig={{ bounciness: 50 }}
             />
@@ -131,13 +131,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "darkgoldenrod",
+    backgroundColor: "darkorange",
   },
   boxContainer: {
     alignItems: "center",
     justifyContent: "center",
     paddingLeft: 10,
-    marginVertical: 17,
+    marginVertical: 20,
   },
   barContainer: {
     width: 270,
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   listText: {
     color: "white",
     fontSize: 20,
-    marginBottom: 2,
+    marginVertical: 5,
   },
   progressText: {
     flexDirection: "row",
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   //   marginTop: 10,
   // },
   amountText: {
-    color: "gold",
+    color: "yellow",
     fontSize: 14,
     marginVertical: 2,
   },
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     marginVertical: 2,
   },
   goalText: {
-    color: "white",
+    color: "black",
     fontSize: 14,
     marginVertical: 2,
   },

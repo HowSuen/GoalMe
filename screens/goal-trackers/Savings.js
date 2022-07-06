@@ -238,7 +238,7 @@ export default Savings = ({ navigation }) => {
 
   const completeSaving = async (saving) => {
     AlertPrompt({
-      title: "Complete this Saving Goal?",
+      title: "Complete This Saving Goal?",
       proceedText: "Complete",
       onPress: () => {
         // const recurringSaving = completeItem(saving);

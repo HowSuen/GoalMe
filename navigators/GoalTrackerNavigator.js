@@ -107,7 +107,7 @@ export default GoalTrackerNavigator = () => {
         name="Finance Tracker"
         options={({ route }) => ({
           headerStyle: {
-            backgroundColor: !inSavings(route) ? "goldenrod" : "darkgoldenrod",
+            backgroundColor: !inSavings(route) ? "goldenrod" : "darkorange",
           },
           drawerActiveBackgroundColor: "goldenrod",
           headerTitle: !inSavings(route) ? "Finance Goals" : "Savings",

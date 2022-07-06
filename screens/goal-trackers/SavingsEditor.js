@@ -159,7 +159,7 @@ export default SavingsEditor = ({ navigation }) => {
           <View style={styles.progressContainer}>
             <Circle
               progress={calculateProgress()}
-              color="darkgoldenrod"
+              color="darkorange"
               size={300}
               thickness={10}
             />
@@ -184,7 +184,7 @@ export default SavingsEditor = ({ navigation }) => {
                   <View style={{ flexDirection: "row" }}>
                     <Text style={styles.savedNumber}>$</Text>
                     <TextInput
-                      keyboardType="number-pad"
+                      keyboardType="numeric"
                       style={styles.savedNumber}
                       onChangeText={setAmount}
                       value={amount}
@@ -203,9 +203,8 @@ export default SavingsEditor = ({ navigation }) => {
             </View>
           </View>
           <Input
-            style={styles.titleText}
-            containerStyle={{ marginBottom: -20 }}
-            inputContainerStyle={styles.titleContainer}
+            style={styles.textInput}
+            inputContainerStyle={styles.inputContainer}
             label="Goal"
             placeholder="Edit goal name..."
             placeholderTextColor="darkgray"
@@ -214,7 +213,6 @@ export default SavingsEditor = ({ navigation }) => {
           />
           <Input
             style={styles.textInput}
-            containerStyle={{ marginBottom: -20 }}
             inputContainerStyle={styles.inputContainer}
             label="Description"
             placeholder="Edit description..."
@@ -232,7 +230,7 @@ export default SavingsEditor = ({ navigation }) => {
                   setPromptVisible(true);
                 }}
               >
-                <Text style={styles.buttonText}>Add Saving</Text>
+                <Text style={styles.buttonText}>Edit Saving</Text>
                 <SavingPrompt
                   numberRegex={numberRegex}
                   updateCurrAmount={(value, isSaving) => {

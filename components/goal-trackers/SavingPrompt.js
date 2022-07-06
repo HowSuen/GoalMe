@@ -2,7 +2,7 @@ import Dialog from "react-native-dialog";
 import { View, StyleSheet, Alert, Platform } from "react-native";
 import { BlurView } from "expo-blur";
 import { useState, useEffect } from "react";
-import { CheckBox } from "react-native-elements";
+import { CheckBox, Text } from "react-native-elements";
 
 export default SavingPrompt = ({
   numberRegex,
@@ -21,10 +21,16 @@ export default SavingPrompt = ({
   return (
     <View style={styles.container}>
       <Dialog.Container visible={visible} blurComponentIOS={blurComponentIOS}>
-        <Dialog.Title>Add New Savings or Withdraw</Dialog.Title>
+        <Dialog.Title>Save or Withdraw Money</Dialog.Title>
         <View style={{ flexDirection: "row" }}>
           <CheckBox
-            title="Saving"
+            title={
+              Platform.OS == "ios" ? (
+                <Text style={styles.checkBoxText}>Save</Text>
+              ) : (
+                "Save"
+              )
+            }
             checked={saving}
             checkedColor="green"
             checkedIcon="dot-circle-o"
@@ -37,9 +43,18 @@ export default SavingPrompt = ({
               setSaving(true);
               setWithdraw(false);
             }}
+            containerStyle={
+              Platform.OS == "ios" ? styles.checkBox : { minWidth: 110 }
+            }
           />
           <CheckBox
-            title="Withdraw"
+            title={
+              Platform.OS == "ios" ? (
+                <Text style={styles.checkBoxText}>Withdraw</Text>
+              ) : (
+                "Withdraw"
+              )
+            }
             checked={withdraw}
             center
             checkedIcon="dot-circle-o"
@@ -53,15 +68,19 @@ export default SavingPrompt = ({
               setWithdraw(true);
               setSaving(false);
             }}
+            containerStyle={
+              Platform.OS == "ios" ? styles.checkBox : { minWidth: 110 }
+            }
           />
         </View>
         <Dialog.Input
-          keyboardType="number-pad"
-          label="Amount"
-          wrapperStyle={Platform.OS === "ios" ? styles.iosWrapper : styles.wrapper}
+          keyboardType="numeric"
+          wrapperStyle={
+            Platform.OS === "ios" ? styles.iosWrapper : styles.wrapper
+          }
           style={Platform.OS === "ios" ? styles.iosInput : styles.input}
-          placeholder="Enter Amount"
-          placeholderTextColor="darkgray"
+          placeholder="Enter Amount..."
+          placeholderTextColor="gray"
           value={value}
           onChangeText={(text) => {
             setValue(text);
@@ -70,7 +89,7 @@ export default SavingPrompt = ({
         ></Dialog.Input>
         <Dialog.Button label="Cancel" onPress={() => setVisible(false)} />
         <Dialog.Button
-          label="Complete"
+          label="Done"
           onPress={() =>
             numberRegex(value)
               ? updateCurrAmount(value, saving)
@@ -97,20 +116,30 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 16,
   },
+  checkBox: {
+    backgroundColor: "transparent",
+    borderWidth: 0,
+  },
+  checkBoxText: {
+    color: "white",
+    fontSize: 15,
+    fontWeight: "bold",
+    marginLeft: 8,
+  },
   iosInput: {
-    backgroundColor: "black",
-    color:"white",
+    backgroundColor: "white",
+    color: "black",
     fontSize: 16,
   },
   wrapper: {
-    backgroundColor: Platform.OS === "ios" ? "black" : "#fafafa",
-    borderWidth: Platform.OS === "ios" ? 0 : 1,
+    backgroundColor: "#fafafa",
+    borderWidth: 1,
     borderColor: "#eeeeee",
     paddingLeft: 5,
     paddingTop: 2,
     maxWidth: 255,
   },
   iosWrapper: {
-    backgroundColor: "black",
+    backgroundColor: "white",
   },
 });

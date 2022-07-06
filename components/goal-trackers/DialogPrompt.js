@@ -32,7 +32,7 @@ export default DialogPrompt = ({
           wrapperStyle={styles.wrapper}
           style={styles.input}
           placeholder={placeholder}
-          placeholderTextColor="darkgray"
+          placeholderTextColor="gray"
           value={value}
           onChangeText={(text) => {
             onChangeText(text);
@@ -60,10 +60,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   input: {
-    backgroundColor: Platform.OS === "ios" ? "black" : "transparent",
-    color: Platform.OS === "ios" ? "white" : "black",
+    backgroundColor: Platform.OS === "ios" ? "white" : "transparent",
+    color: "black",
   },
   wrapper: {
-    backgroundColor: Platform.OS === "ios" ? "black" : "transparent",
+    backgroundColor: Platform.OS === "ios" ? "white" : "transparent",
   },
 });

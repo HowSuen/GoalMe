@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, Platform, StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   scrollview: {
@@ -22,7 +22,8 @@ export default StyleSheet.create({
   },
   circlePercentage: {
     fontSize: 80,
-    color: "darkgoldenrod",
+    color: "darkorange",
+    marginTop: 40,
   },
   editIcon: {
     position: "absolute",
@@ -34,7 +35,7 @@ export default StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 4,
     borderWidth: 1,
-    borderColor: "darkgoldenrod",
+    borderColor: "darkorange",
     alignSelf: "auto",
     backgroundColor: "transparent",
   },
@@ -44,13 +45,14 @@ export default StyleSheet.create({
   },
   titleText: {
     fontSize: 20,
-    color: "darkgoldenrod",
+    color: "darkorange",
     fontWeight: "bold",
   },
   goalContainer: {
     flexDirection: "row",
     alignItems: "space-around",
     justifyContent: "space-around",
+    marginTop: Platform.OS === "ios" ? 10 : 0,
   },
   savedContainer: {
     alignItems: "center",
@@ -66,7 +68,7 @@ export default StyleSheet.create({
     textAlign: "center",
     fontSize: 22,
     fontWeight: "bold",
-    color: "darkgoldenrod"
+    color: "darkorange"
   },
   remainingText: {
     fontSize: 14,
@@ -76,7 +78,7 @@ export default StyleSheet.create({
     textAlign: "center",
     fontSize: 20,
     fontWeight: "bold",
-    color: "darkgoldenrod"
+    color: "darkorange"
   },
   remainingContainer: {
     flexDirection: "row",
@@ -94,24 +96,19 @@ export default StyleSheet.create({
     padding: 3,
     borderWidth: 1,
     borderRadius: 5,
-    borderColor: "darkgoldenrod",
+    borderColor: "darkorange",
   },
   descriptionText: {
     fontSize: 16,
   },
   inputContainer: {
-    marginTop: 8,
+    marginTop: 10,
     paddingVertical: 3,
     paddingHorizontal: 10,
     borderRadius: 4,
     borderWidth: 1,
-    borderColor: "darkgoldenrod",
     alignSelf: "stretch",
-    backgroundColor: "transparent",
-  },
-  test: {
-    width: 100,
-    alignSelf: "center"
+    backgroundColor: "white",
   },
   textInput: {
     color: "black",
@@ -127,7 +124,7 @@ export default StyleSheet.create({
     textAlign: "center",
   },
   button: {
-    backgroundColor: "darkgoldenrod",
+    backgroundColor: "darkorange",
     padding: 10,
     width: 150,
     borderRadius: 5,

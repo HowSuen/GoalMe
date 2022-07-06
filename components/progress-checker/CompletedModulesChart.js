@@ -106,7 +106,7 @@ export default CompletedModulesChart = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Modules Completed</Text>
+      <Text style={styles.text}>Completed Module Grades</Text>
       <VictoryChart
         height={300}
         width={400}

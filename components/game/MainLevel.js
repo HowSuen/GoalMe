@@ -49,7 +49,7 @@ const MainLevel = ({ session }) => {
         <Badge
           value={totalLvl}
           status="success"
-          badgeStyle={{ width: 30, height: 30, borderRadius: 30 }}
+          badgeStyle={{ minWidth: 30, height: 30, borderRadius: 30 }}
           textStyle={{ fontSize: 20, fontWeight: "bold" }}
           containerStyle={{ marginTop: -20 }}
         />

@@ -9,7 +9,7 @@ export default StyleSheet.create({
   },
   buttonContainer: {
     justifyContent: "center",
-    alignItems: "stretch",
+    alignItems: "center",
     marginTop: 5,
     marginBottom: Platform.OS === "ios" ? 50 : 10,
   },
@@ -22,6 +22,7 @@ export default StyleSheet.create({
     backgroundColor: "dodgerblue",
     borderRadius: 5,
     elevation: 5,
+    width: 90,
   },
   avatar: {
     flexDirection: "column",

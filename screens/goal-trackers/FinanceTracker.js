@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Alert, View, FlatList, TouchableOpacity } from "react-native";
+import { Alert, View, FlatList, TouchableOpacity, Text } from "react-native";
 import styles from "./GoalTracker.style";
 import { FontAwesome5 } from "@expo/vector-icons";
 import GoalList from "../../components/goal-trackers/GoalList";
@@ -192,6 +192,14 @@ export default FinanceTracker = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View>
+      <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("Savings");
+          }}
+          style={styles.walletNavButton}
+        >
+          <Text style={styles.buttonText}>Savings</Text>
+        </TouchableOpacity>
         <FlatList
           data={data}
           ListEmptyComponent={() => <Empty />}

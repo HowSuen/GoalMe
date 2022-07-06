@@ -12,6 +12,9 @@ import ModuleSetter from "../screens/goal-trackers/ModuleSetter";
 import Exercise from "../screens/goal-trackers/Exercise";
 import ExerciseEditor from "../screens/goal-trackers/ExerciseEditor";
 import ExerciseSetter from "../screens/goal-trackers/ExerciseSetter";
+import Savings from "../screens/goal-trackers/Savings";
+import SavingsEditor from "../screens/goal-trackers/SavingsEditor";
+import SavingsSetter from "../screens/goal-trackers/SavingsSetter";
 import { Platform } from "react-native";
 
 const Stack = createNativeStackNavigator();
@@ -110,7 +113,7 @@ export default GoalNavigator = ({ route, navigation }) => {
         name="ExerciseSetter"
         options={{
           headerShown: Platform.OS === "ios" ? true : false,
-          headerTitle: "Add Your Exercise",
+          headerTitle: "Add an Exercise",
           headerStyle: { backgroundColor: "ghostwhite" },
           headerTintColor: "black",
           presentation: "modal",
@@ -132,6 +135,44 @@ export default GoalNavigator = ({ route, navigation }) => {
         }}
       >
         {() => <ExerciseEditor route={route} navigation={navigation} />}
+      </Stack.Screen>
+      <Stack.Screen
+        name="Savings"
+        component={Savings}
+        options={{
+          headerShown: Platform.OS === "ios" ? true : false,
+          headerTitle: "",
+          headerStyle: { backgroundColor: "ghostwhite" },
+          headerTintColor: "black",
+          headerShadowVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="SavingsSetter"
+        options={{
+          headerShown: Platform.OS === "ios" ? true : false,
+          headerTitle: "Add a Saving Goal",
+          headerStyle: { backgroundColor: "ghostwhite" },
+          headerTintColor: "black",
+          presentation: "modal",
+          headerTitleAlign: "center",
+        }}
+      >
+        {() => <SavingsSetter route={route} navigation={navigation} />}
+      </Stack.Screen>
+      <Stack.Screen
+        name="SavingsEditor"
+        options={{
+          headerShown: Platform.OS === "ios" ? true : false,
+          headerTitle: "",
+          headerStyle: { backgroundColor: "ghostwhite" },
+          headerTintColor: "black",
+          headerShadowVisible: false,
+          presentation: "card",
+          headerTitleAlign: "center",
+        }}
+      >
+        {() => <SavingsEditor route={route} navigation={navigation} />}
       </Stack.Screen>
     </Stack.Navigator>
   );

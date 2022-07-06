@@ -49,7 +49,7 @@ const MainLevel = ({ session }) => {
         <Badge
           value={totalLvl}
           status="success"
-          badgeStyle={{ width: 30, height: 30, borderRadius: 30 }}
+          badgeStyle={{ minWidth: 30, height: 30, borderRadius: 30 }}
           textStyle={{ fontSize: 20, fontWeight: "bold" }}
           containerStyle={{ marginTop: -20 }}
         />
@@ -57,7 +57,7 @@ const MainLevel = ({ session }) => {
       <View style={styles.experience}>
         <Text style={styles.generalLvl}>LEVEL</Text>
         <Bar
-          progress={totalXp / Math.round(Math.pow(totalLvl / 0.07, 2))}
+          progress={totalXp / Math.round(Math.pow(totalLvl / 0.05, 1.6))}
           height={16}
           width={(Dimensions.get("window").width / 10) * 7}
           unfilledColor="lightgray"

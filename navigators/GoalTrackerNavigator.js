@@ -35,6 +35,15 @@ const inExercise = (route) => {
   );
 };
 
+const inSavings = (route) => {
+  const routeName = getFocusedRouteNameFromRoute(route);
+  return (
+    routeName == "Savings" ||
+    routeName == "SavingsSetter" ||
+    routeName == "SavingsEditor"
+  );
+};
+
 export default GoalTrackerNavigator = () => {
   return (
     <Drawer.Navigator
@@ -96,12 +105,14 @@ export default GoalTrackerNavigator = () => {
       </Drawer.Screen>
       <Drawer.Screen
         name="Finance Tracker"
-        options={{
-          headerStyle: { backgroundColor: "goldenrod" },
+        options={({ route }) => ({
+          headerStyle: {
+            backgroundColor: !inSavings(route) ? "goldenrod" : "darkorange",
+          },
           drawerActiveBackgroundColor: "goldenrod",
-          headerTitle: "Finance Goals",
+          headerTitle: !inSavings(route) ? "Finance Goals" : "Savings",
           drawerLabel: "Finance Goals",
-        }}
+        })}
       >
         {({ route, navigation }) =>
           GoalNavigator({ route: route, navigation: navigation })

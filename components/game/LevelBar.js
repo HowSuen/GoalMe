@@ -77,10 +77,10 @@ const LevelBar = ({ type, session }) => {
         <Bar
           progress={
             type == "WISDOM"
-              ? wisdomXp / Math.round(Math.pow(wisdomLvl / 0.07, 2))
+              ? wisdomXp / Math.round(Math.pow(wisdomLvl / 0.05, 1.6))
               : type == "STRENGTH"
-              ? strengthXp / Math.round(Math.pow(strengthLvl / 0.07, 2))
-              : wealthXp / Math.round(Math.pow(wealthLvl / 0.07, 2))
+              ? strengthXp / Math.round(Math.pow(strengthLvl / 0.05, 1.6))
+              : wealthXp / Math.round(Math.pow(wealthLvl / 0.05, 1.6))
           }
           width={xpBarWidth}
           height={16}

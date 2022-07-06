@@ -1,113 +1,141 @@
 import { useIsFocused } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
-import { VictoryPie, VictoryTheme } from "victory-native";
+import {
+  VictoryBar,
+  VictoryChart,
+  VictoryTheme,
+  VictoryAxis,
+} from "victory-native";
 import supabase from "../../lib/supabase";
 import { Text } from "react-native-elements";
 
-export default CompletedChart = () => {
+const grades = [
+  { label: "A+", value: "A+" },
+  { label: "A", value: "A" },
+  { label: "A-", value: "A-" },
+  { label: "B+", value: "B+" },
+  { label: "B", value: "B" },
+  { label: "B-", value: "B-" },
+  { label: "C+", value: "C+" },
+  { label: "C", value: "C" },
+  { label: "C-", value: "C-" },
+  { label: "D+", value: "D+" },
+  { label: "D", value: "D" },
+  { label: "F", value: "F" },
+  { label: "F*", value: "F*" },
+  // { label: "S", value: "S" },
+  // { label: "U", value: "U" },
+];
+
+export default CompletedModulesChart = () => {
   const user = supabase.auth.user();
   const isFocused = useIsFocused();
 
-  const [completedGen, setCompletedGen] = useState(0);
-  const [completedAcad, setCompletedAcad] = useState(0);
-  const [completedFit, setCompletedFit] = useState(0);
-  const [completedFinance, setCompletedFinance] = useState(0);
-  const [completedTotal, setCompletedTotal] = useState(0);
+  const [completedMods, setCompletedMods] = useState([
+    { x: "F*", y: 0 },
+    { x: "F", y: 0 },
+    { x: "D", y: 0 },
+    { x: "D+", y: 0 },
+    { x: "C-", y: 0 },
+    { x: "C", y: 0 },
+    { x: "C+", y: 0 },
+    { x: "B-", y: 0 },
+    { x: "B", y: 0 },
+    { x: "B+", y: 0 },
+    { x: "A-", y: 0 },
+    { x: "A", y: 0 },
+    { x: "A+", y: 0 },
+  ]);
 
-  const data = [
-    { x: "General", y: completedGen, fill: "mediumseagreen" },
-    { x: "Academic", y: completedAcad, fill: "royalblue" },
-    { x: "Fitness", y: completedFit, fill: "tomato" },
-    { x: "Finance", y: completedFinance, fill: "goldenrod" },
+  const defaultData = [
+    { x: "F*", y: 0 },
+    { x: "F", y: 0 },
+    { x: "D", y: 0 },
+    { x: "D+", y: 0 },
+    { x: "C-", y: 0 },
+    { x: "C", y: 0 },
+    { x: "C+", y: 0 },
+    { x: "B-", y: 0 },
+    { x: "B", y: 0 },
+    { x: "B+", y: 0 },
+    { x: "A-", y: 0 },
+    { x: "A", y: 0 },
+    { x: "A+", y: 0 },
   ];
 
   useEffect(() => {
     getData();
-  }, [
-    isFocused,
-    completedGen,
-    completedAcad,
-    completedFit,
-    completedFinance,
-    completedTotal,
-  ]);
+  }, [isFocused, completedMods]);
 
   const getData = async () => {
+    let mods = [...defaultData];
+
     try {
       if (!user) throw new Error("No user on the session!");
 
       let { data, error, status } = await supabase
-        .from("experience")
-        .select("completed, completedAcad, completedFit, completedFinance")
-        .match({ id: user.id })
-        .single();
+        .from("modules")
+        .select("module_code, module_name, grade_received")
+        .match({ user_id: user.id, completion_status: true });
 
       if (error && status !== 406) {
         throw error;
       }
 
-      Object.entries(data).forEach(([key, value] = entry) => {
-        if (key == "completed") {
-          setCompletedTotal(value);
-        } else if (key == "completedAcad") {
-          setCompletedAcad(value);
-        } else if (key == "completedFit") {
-          setCompletedFit(value);
-        } else if (key == "completedFinance") {
-          setCompletedFinance(value);
+      for (let obj of data) {
+        for (let mod of mods) {
+          if (obj.grade_received == mod.x) {
+            mod.y++;
+          }
         }
-      });
-      setCompletedGen(
-        completedTotal - completedAcad - completedFit - completedFinance
-      );
+      }
+
+      let stateChanged = false;
+      for (let i = 0; i < mods.length; i++) {
+        if (mods[i].y != completedMods[i].y) {
+          stateChanged = true;
+          break;
+        }
+      }
+      if (stateChanged) setCompletedMods(mods);
     } catch (error) {
       Alert.alert(error.message);
     }
   };
 
   return (
-    // <VictoryChart
-    //   height={300}
-    //   style={{
-    //     parent: {
-    //       justifyContent: "stretch",
-    //     },
-    //   }}
-    //   theme={VictoryTheme.material}
-    //   animate={{
-    //     duration: 500,
-    //   }}
-    //   // domain={{y: [0, 20]}}
-    //   domainPadding={20}
-    //   // padding={60}
-    // >
     <View style={styles.container}>
-      <Text style={styles.text}>Number of Goals Completed</Text>
-      <VictoryPie
+      <Text style={styles.text}>Modules Completed</Text>
+      <VictoryChart
+        height={300}
+        width={400}
         theme={VictoryTheme.material}
         animate={{
           duration: 500,
         }}
-        labelPlacement="vertical"
-        labelPosition="centroid"
-        labelRadius={({ radius }) => radius - 30}
-        labels={({ datum }) => Math.floor(datum.y)}
-        style={{
-          data: {
-            fill: ({ datum }) => datum.fill,
-            strokeWidth: 0,
-          },
-          labels: {
-            fontSize: 20,
-            fill: "black",
-          },
-        }}
-        categories={{
-          x: ["General", "Academic", "Fitness", "Finance"],
-        }}
-        data={data}
-      />
+        // domain={{y: [0, 20]}}
+        domainPadding={50}
+        // padding={60}
+      >
+        <VictoryAxis
+          dependentAxis={true}
+          tickFormat={(y) => {
+            if (y == Math.floor(y)) {
+              return y;
+            }
+          }}
+        />
+        <VictoryAxis />
+        <VictoryBar
+          style={{ data: { fill: "deepskyblue" } }}
+          animate={{
+            duration: 500,
+          }}
+          labels={({ datum }) => Math.floor(datum.y)}
+          data={completedMods.filter((obj) => obj.y != 0)}
+        />
+      </VictoryChart>
     </View>
   );
 };
@@ -116,7 +144,6 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "ghostwhite",
     marginVertical: 20,
   },
   text: {

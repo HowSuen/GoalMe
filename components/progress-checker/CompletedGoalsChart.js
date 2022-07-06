@@ -88,7 +88,7 @@ export default CompletedGoalsChart = () => {
           innerRadius={({ radius }) => radius / 2}
           labelPlacement="vertical"
           labelPosition="centroid"
-          labelRadius={({ radius }) => (3 / 4) * radius}
+          labelRadius={({ radius }) => (11 / 16) * radius}
           labels={({ datum }) => Math.floor(datum.y)}
           style={{
             data: {

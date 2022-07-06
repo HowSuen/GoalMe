@@ -11,21 +11,6 @@ import ProgressChecker from "../screens/progress-checker/ProgressChecker";
 
 const Tab = createBottomTabNavigator();
 
-const TempProgressChecker = () => {
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "ghostwhite",
-      }}
-    >
-      <Text style={{ color: "black" }}>Progress Checker!</Text>
-    </View>
-  );
-};
-
 export default AppNavigator = ({ session }) => {
   return (
     <NavigationContainer styles={styles.container}>

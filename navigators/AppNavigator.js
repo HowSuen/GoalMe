@@ -85,6 +85,7 @@ export default AppNavigator = ({ session }) => {
         <Tab.Screen
           name="Game"
           options={{
+            tabBarActiveTintColor: "#3A637A",
             tabBarIcon: ({ focused, color, size }) => {
               return (
                 <Ionicons

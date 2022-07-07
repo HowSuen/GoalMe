@@ -8,17 +8,38 @@ import styles from "./GameScreen.style";
 const GameScreen = ({ navigation, session }) => {
   return (
     <View style={styles.container}>
-      <Card containerStyle={{ padding: 5 }}>
+      <Card
+        containerStyle={{
+          padding: 5,
+          backgroundColor: "rgba(245,242,234,1.0)",
+          elevation: 15,
+          borderRadius: 10,
+        }}
+      >
         <MainLevel session={session} />
       </Card>
-      <Card containerStyle={{ padding: 5 }}>
+      <Card
+        containerStyle={{
+          padding: 5,
+          backgroundColor: "rgba(245,242,234,1.0)",
+          elevation: 10,
+          borderRadius: 10,
+        }}
+      >
         <View style={styles.levelContainer}>
           <LevelBar type="WISDOM" session={session} />
           <LevelBar type="STRENGTH" session={session} />
           <LevelBar type="WEALTH" session={session} />
         </View>
       </Card>
-      <Card containerStyle={{ padding: 5 }}>
+      <Card
+        containerStyle={{
+          padding: 5,
+          backgroundColor: "rgba(245,242,234,1.0)",
+          elevation: 10,
+          borderRadius: 10,
+        }}
+      >
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("Game", {

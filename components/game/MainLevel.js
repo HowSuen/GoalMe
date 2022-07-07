@@ -58,12 +58,13 @@ const MainLevel = ({ session }) => {
         <Text style={styles.generalLvl}>LEVEL</Text>
         <Bar
           progress={totalXp / Math.round(Math.pow(totalLvl / 0.05, 1.6))}
-          height={16}
+          height={14}
           width={(Dimensions.get("window").width / 10) * 7}
-          unfilledColor="lightgray"
-          color={"mediumspringgreen"}
+          unfilledColor="#BFC5CC"
+          color={"mediumseagreen"}
           borderWidth={0}
-          animationConfig={{ bounciness: 5 }}
+          animationConfig={{ bounciness: 10 }}
+          borderRadius={20}
         />
       </View>
     </View>

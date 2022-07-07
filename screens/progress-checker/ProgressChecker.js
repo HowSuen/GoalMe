@@ -1,6 +1,6 @@
 import { useIsFocused } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { Platform, TouchableOpacity, View } from "react-native";
 import { Card, Text, Image } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import styles from "./ProgressChecker.style";
@@ -20,12 +20,12 @@ export default ProgressChecker = ({ navigation }) => {
     <View style={styles.container}>
       <Card
         containerStyle={{
-          padding: 5,
+          padding: Platform.OS == "ios" ? 5 : 0,
           borderRadius: 10,
           backgroundColor: "mediumseagreen",
-          elevation: 50,
+          elevation: 10,
           borderColor: "mediumseagreen",
-          marginTop: 30,
+          marginVertical: Platform.OS == "ios" ? 0 : 20,
         }}
       >
         <TouchableOpacity
@@ -41,11 +41,12 @@ export default ProgressChecker = ({ navigation }) => {
       </Card>
       <Card
         containerStyle={{
-          padding: 5,
+          padding: Platform.OS == "ios" ? 5 : 0,
           borderRadius: 10,
           backgroundColor: "#27A4F2",
-          elevation: 40,
+          elevation: 10,
           borderColor: "#27A4F2",
+          marginVertical: Platform.OS == "ios" ? 0 : 20,
         }}
       >
         <TouchableOpacity
@@ -61,12 +62,12 @@ export default ProgressChecker = ({ navigation }) => {
       </Card>
       <Card
         containerStyle={{
-          padding: 5,
+          padding: Platform.OS == "ios" ? 5 : 0,
           borderRadius: 10,
           backgroundColor: "plum",
-          elevation: 20,
+          elevation: 10,
           borderColor: "plum",
-          marginTop: 20,
+          marginVertical: Platform.OS == "ios" ? 0 : 20,
         }}
       >
         <TouchableOpacity
@@ -82,11 +83,12 @@ export default ProgressChecker = ({ navigation }) => {
       </Card>
       <Card
         containerStyle={{
-          padding: 5,
+          padding: Platform.OS == "ios" ? 5 : 0,
           borderRadius: 10,
           backgroundColor: "rgb(255,176,58)",
           elevation: 10,
           borderColor: "rgb(255,176,58)",
+          marginVertical: Platform.OS == "ios" ? 0 : 20,
         }}
       >
         <TouchableOpacity

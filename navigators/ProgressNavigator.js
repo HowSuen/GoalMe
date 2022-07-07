@@ -35,7 +35,7 @@ export default ProgressNavigator = ({ navigation }) => {
                 source={require("../assets/goals-progress.png")}
                 resizeMode="contain"
               />{" "}
-              GOALS
+              Goals
             </Text>
           ),
           headerStyle: { backgroundColor: "mediumseagreen" },
@@ -66,7 +66,7 @@ export default ProgressNavigator = ({ navigation }) => {
                 source={require("../assets/modules-progress.png")}
                 resizeMode="contain"
               />{" "}
-              GOALS
+              Modules
             </Text>
           ),
           headerStyle: { backgroundColor: "#27A4F2" },
@@ -97,7 +97,7 @@ export default ProgressNavigator = ({ navigation }) => {
                 source={require("../assets/exercises-progress.png")}
                 resizeMode="contain"
               />{" "}
-              GOALS
+              Exercises
             </Text>
           ),
           headerStyle: { backgroundColor: "plum" },
@@ -128,7 +128,7 @@ export default ProgressNavigator = ({ navigation }) => {
                 source={require("../assets/savings-progress.png")}
                 resizeMode="contain"
               />{" "}
-              GOALS
+              Savings
             </Text>
           ),
           headerStyle: { backgroundColor: "rgb(255,176,58)" },

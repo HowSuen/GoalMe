@@ -96,11 +96,12 @@ const LevelBar = ({ type, session }) => {
               : wealthXp / Math.round(Math.pow(wealthLvl / 0.05, 1.6))
           }
           width={xpBarWidth}
-          height={16}
-          unfilledColor="lightgray"
+          height={14}
+          unfilledColor="#BFC5CC"
           color={type == "LEVEL" ? "mediumspringgreen" : color}
           borderWidth={0}
-          animationConfig={{ bounciness: 5 }}
+          animationConfig={{ bounciness: 10 }}
+          borderRadius={20}
         />
       </View>
     </View>

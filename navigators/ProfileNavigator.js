@@ -11,16 +11,28 @@ const Stack = createNativeStackNavigator();
 export default ProfileNavigator = ({ navigation, session }) => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Account">
+      <Stack.Screen
+        name="Account"
+        options={{
+          headerShown: true,
+          headerTitle: "Profile",
+          headerStyle: { backgroundColor: "dodgerblue" },
+          headerTintColor: "white",
+          headerShadowVisible: true,
+          presentation: "modal",
+          headerTitleAlign: "center",
+        }}
+      >
         {() => <Account session={session} navigation={navigation} />}
       </Stack.Screen>
       <Stack.Screen
         name="CustomiseAvatar"
         options={{
           headerShown: true,
-          headerTitle: "Customise your Avatar",
-          headerStyle: { backgroundColor: "ghostwhite" },
-          headerTintColor: "black",
+          headerShadowVisible: true,
+          headerTitle: "Avatar",
+          headerStyle: { backgroundColor: "dodgerblue" },
+          headerTintColor: "white",
           presentation: "modal",
           headerTitleAlign: "center",
           headerRight: () => (
@@ -28,7 +40,7 @@ export default ProfileNavigator = ({ navigation, session }) => {
               onPress={() =>
                 Alert.alert(
                   "Avatar Customisation",
-                  "Notes:\n- Party Hat is not affected by colours.\n- T-Shirt Graphic only applies to Shirt, Dress Shirt, V-Neck and Tank Top.\n\nEnjoy customising!" ,
+                  "Notes:\n- Party Hat is not affected by colours.\n- T-Shirt Graphic only applies to Shirt, Dress Shirt, V-Neck and Tank Top.\n\nEnjoy customising!",
                   [
                     {
                       text: "OK",
@@ -37,7 +49,7 @@ export default ProfileNavigator = ({ navigation, session }) => {
                 )
               }
             >
-              <FontAwesome name="question-circle-o" size={30} />
+              <FontAwesome name="question-circle-o" size={30} color="white" />
             </TouchableOpacity>
           ),
         }}

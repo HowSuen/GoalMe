@@ -291,7 +291,7 @@ export default Savings = ({ navigation }) => {
                 style={styles.emptyImage}
                 source={require("../../assets/bankrupt.png")}
               />
-              <Text style={styles.emptyText}>No wallet history</Text>
+              <Text style={styles.emptyText}>No savings added.</Text>
             </View>
           )}
           keyExtractor={(saving) => saving.id}

@@ -79,8 +79,8 @@ export default SavingList = ({
               progress={calculateProgress(saving)}
               width={null}
               height={5}
-              unfilledColor="chocolate"
-              color={completed() ? "springgreen" : "yellow"}
+              unfilledColor="#FFF0A5"
+              color={completed() ? "rgb(91,130,75)" : "rgb(182,74,38)"}
               borderWidth={0}
               animationConfig={{ bounciness: 50 }}
             />
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "darkorange",
+    backgroundColor: "rgb(255,176,58)",
   },
   boxContainer: {
     alignItems: "center",
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     width: 270,
   },
   listText: {
-    color: "white",
+    color: "#40343B",
     fontSize: 20,
     marginVertical: 5,
   },
@@ -160,17 +160,17 @@ const styles = StyleSheet.create({
   //   marginTop: 10,
   // },
   amountText: {
-    color: "yellow",
+    color: "rgb(182,74,38)",
     fontSize: 14,
     marginVertical: 2,
   },
   fullAmountText: {
-    color: "springgreen",
+    color: "rgb(91,130,75)",
     fontSize: 14,
     marginVertical: 2,
   },
   goalText: {
-    color: "black",
+    color: "#40343B",
     fontSize: 14,
     marginVertical: 2,
   },

@@ -3,9 +3,10 @@ import { View, Text, Dimensions, StyleSheet, Alert } from "react-native";
 import { Bar } from "react-native-progress";
 import { useIsFocused } from "@react-navigation/native";
 import supabase from "../../lib/supabase";
+import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 
 const width = (Dimensions.get("window").width / 10) * 9;
-const xpBarWidth = (Dimensions.get("window").width / 10) * 5.5;
+const xpBarWidth = (Dimensions.get("window").width / 10) * 5.2;
 
 const LevelBar = ({ type, session }) => {
   const isFocused = useIsFocused();
@@ -65,7 +66,19 @@ const LevelBar = ({ type, session }) => {
 
   return (
     <View style={styles.experience}>
-      <Text style={[styles.generalLvl, { color: color }]}>{type}</Text>
+      <Text style={[styles.generalLvl, { color: color }]}>
+        {type}{" "}
+        <FontAwesome5
+          name={
+            type == "WISDOM"
+              ? "hat-wizard"
+              : type == "STRENGTH"
+              ? "fist-raised"
+              : "balance-scale"
+          }
+          size={16}
+        />
+      </Text>
       <View style={styles.bar}>
         <Text style={[styles.generalLvl, { color: color }]}>
           {type == "WISDOM"

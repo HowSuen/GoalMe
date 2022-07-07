@@ -159,7 +159,7 @@ export default SavingsEditor = ({ navigation }) => {
           <View style={styles.progressContainer}>
             <Circle
               progress={calculateProgress()}
-              color="darkorange"
+              color="rgb(255,176,58)"
               size={300}
               thickness={10}
             />

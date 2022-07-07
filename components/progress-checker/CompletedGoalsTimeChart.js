@@ -79,8 +79,8 @@ export default CompletedGoalsTimeChart = () => {
     <View style={styles.container}>
       <Text style={styles.text}>Goals Achieved in The Past Week</Text>
       <VictoryChart
-        height={400}
-        width={400}
+        height={350}
+        width={350}
         theme={VictoryTheme.material}
         animate={{
           duration: 500,

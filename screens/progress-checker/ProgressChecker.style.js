@@ -29,8 +29,9 @@ export default StyleSheet.create({
     backgroundColor: "ghostwhite",
   },
   topRowContainer: {
+    flex: 1,
     flexDirection: "row",
-    alignItems: "center",
+    justifyContent: "center",
   },
   topRowCard: {
     paddingVertical: 20,

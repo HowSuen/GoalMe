@@ -126,7 +126,7 @@ export default ModulesProgress = () => {
             <Text style={{ alignSelf: "center" }}>Most Common Grade</Text>
           </Card>
         </View>
-        <Card containerStyle={{ padding: -20 }}>
+        <Card containerStyle={{ padding: 0, alignSelf: "stretch" }}>
           <CompletedModulesChart />
         </Card>
       </ScrollView>

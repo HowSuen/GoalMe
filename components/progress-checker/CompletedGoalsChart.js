@@ -85,8 +85,8 @@ export default CompletedGoalsChart = () => {
         animate={{
           duration: 500,
         }}
-        width={400}
-        height={400}
+        width={350}
+        height={350}
         innerRadius={({ radius }) => radius / 2}
         labelPlacement="vertical"
         labelPosition="centroid"

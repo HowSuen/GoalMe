@@ -99,7 +99,7 @@ export default CompletedModulesChart = () => {
       <Text style={styles.text}>Grades</Text>
       <VictoryChart
         height={350}
-        width={400}
+        width={350}
         theme={VictoryTheme.material}
         animate={{
           duration: 500,

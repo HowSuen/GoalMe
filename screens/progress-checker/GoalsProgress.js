@@ -75,10 +75,10 @@ export default GoalsProgress = ({ navigation }) => {
             <Text style={{ alignSelf: "center" }}>Ongoing Goal{pending != 1 ? "s" : ""}</Text>
           </Card>
         </View>
-        <Card containerStyle={{ padding: 0 }}>
+        <Card containerStyle={{ padding: 0, alignSelf: "stretch" }}>
           <CompletedGoalsChart />
         </Card>
-        <Card containerStyle={{ padding: 0 }}>
+        <Card containerStyle={{ padding: 0, alignSelf: "stretch" }}>
           <CompletedGoalsTimeChart />
         </Card>
       </ScrollView>

@@ -353,4 +353,4 @@ export default Modules = ({ navigation }) => {
   );
 };
 
-export { grades, sortItems };
+export { grades, sortItems, compareGrade };

@@ -78,7 +78,7 @@ export default GoalTrackerNavigator = () => {
         options={({ route }) => ({
           headerTitle: !inModules(route) ? "Academic Goals" : "Modules",
           headerStyle: {
-            backgroundColor: !inModules(route) ? "royalblue" : "deepskyblue",
+            backgroundColor: !inModules(route) ? "royalblue" : "#27A4F2",
           },
           drawerActiveBackgroundColor: "royalblue",
           drawerLabel: "Academic Goals",
@@ -107,7 +107,7 @@ export default GoalTrackerNavigator = () => {
         name="Finance Tracker"
         options={({ route }) => ({
           headerStyle: {
-            backgroundColor: !inSavings(route) ? "goldenrod" : "darkorange",
+            backgroundColor: !inSavings(route) ? "goldenrod" : "rgb(255,176,58)",
           },
           drawerActiveBackgroundColor: "goldenrod",
           headerTitle: !inSavings(route) ? "Finance Goals" : "Savings",

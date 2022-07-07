@@ -42,7 +42,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
-    backgroundColor: "darkorange",
+    backgroundColor: "rgb(255,176,58)",
     marginVertical: 5,
     borderRadius: 100,
   },
@@ -50,7 +50,7 @@ export default StyleSheet.create({
     alignSelf: "stretch",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "darkorange",
+    backgroundColor: "rgb(255,176,58)",
     borderRadius: 10,
     marginTop: 25,
   },
@@ -62,16 +62,16 @@ export default StyleSheet.create({
   emptyContainer: {
     alignItems: "center",
     justifyContent: "center",
-    marginTop: Dimensions.get("window").height / 4,
+    marginTop: 150,
     width: 350,
   },
   emptyImage: {
-    width: 100,
-    height: 100,
+    width: 200,
+    height: 200,
   },
   emptyText: {
     color: "black",
     marginTop: 20,
-    fontSize: 20,
+    fontSize: 28,
   },
 });

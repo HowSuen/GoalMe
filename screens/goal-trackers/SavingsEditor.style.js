@@ -63,6 +63,7 @@ export default StyleSheet.create({
     textAlign: "center",
     fontSize: 18,
     fontWeight: "bold",
+    color: "#40343B",
   },
   savedNumber: {
     textAlign: "center",
@@ -72,7 +73,8 @@ export default StyleSheet.create({
   },
   remainingText: {
     fontSize: 14,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    color: "#40343B",
   },
   remainingNumber: {
     textAlign: "center",
@@ -96,7 +98,7 @@ export default StyleSheet.create({
     padding: 3,
     borderWidth: 1,
     borderRadius: 5,
-    borderColor: "darkorange",
+    borderColor: "rgb(255,176,58)",
   },
   descriptionText: {
     fontSize: 16,
@@ -119,12 +121,12 @@ export default StyleSheet.create({
     paddingBottom: 7,
   },
   buttonText: {
-    color: "white",
+    color: "#40343B",
     fontSize: 17,
     textAlign: "center",
   },
   button: {
-    backgroundColor: "darkorange",
+    backgroundColor: "rgb(255,176,58)",
     padding: 10,
     width: 150,
     borderRadius: 5,

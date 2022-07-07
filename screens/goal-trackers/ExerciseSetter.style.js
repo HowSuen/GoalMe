@@ -44,12 +44,12 @@ export default StyleSheet.create({
     color: "lightslategrey",
   },
   buttonText: {
-    color: "white",
+    color: "#232B42",
     fontSize: 17,
     textAlign: "center",
   },
   button: {
-    backgroundColor: "dodgerblue",
+    backgroundColor: "plum",
     padding: 10,
     width: 90,
     borderRadius: 5,

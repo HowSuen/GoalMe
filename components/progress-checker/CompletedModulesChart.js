@@ -98,7 +98,7 @@ export default CompletedModulesChart = () => {
     <View style={styles.container}>
       <Text style={styles.text}>Grades</Text>
       <VictoryChart
-        height={400}
+        height={350}
         width={400}
         theme={VictoryTheme.material}
         animate={{

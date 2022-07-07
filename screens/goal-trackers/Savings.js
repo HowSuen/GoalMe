@@ -212,7 +212,7 @@ export default Savings = ({ navigation }) => {
 
       if (error) throw error;
 
-      const userId = data[0].user_id;
+      // const userId = data[0].user_id;
 
       // if (saving.recurring) {
       //   let { data, error } = await supabase.from("savings").insert([
@@ -249,6 +249,7 @@ export default Savings = ({ navigation }) => {
         //     return savings.filter((e) => e != saving);
         //   });
         // }
+        completeItem(saving);
         setData((savings) => {
           return savings.filter((e) => e != saving);
         });

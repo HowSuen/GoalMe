@@ -32,22 +32,6 @@ export default CompletedModulesChart = () => {
   const user = supabase.auth.user();
   const isFocused = useIsFocused();
 
-  const [completedMods, setCompletedMods] = useState([
-    { x: "F*", y: 0 },
-    { x: "F", y: 0 },
-    { x: "D", y: 0 },
-    { x: "D+", y: 0 },
-    { x: "C-", y: 0 },
-    { x: "C", y: 0 },
-    { x: "C+", y: 0 },
-    { x: "B-", y: 0 },
-    { x: "B", y: 0 },
-    { x: "B+", y: 0 },
-    { x: "A-", y: 0 },
-    { x: "A", y: 0 },
-    { x: "A+", y: 0 },
-  ]);
-
   const defaultData = [
     { x: "F*", y: 0 },
     { x: "F", y: 0 },
@@ -63,6 +47,8 @@ export default CompletedModulesChart = () => {
     { x: "A", y: 0 },
     { x: "A+", y: 0 },
   ];
+
+  const [completedMods, setCompletedMods] = useState([]);
 
   useEffect(() => {
     getData();
@@ -91,14 +77,18 @@ export default CompletedModulesChart = () => {
         }
       }
 
-      let stateChanged = false;
-      for (let i = 0; i < mods.length; i++) {
-        if (mods[i].y != completedMods[i].y) {
-          stateChanged = true;
-          break;
+      if (completedMods.length == 0) {
+        setCompletedMods(mods);
+      } else {
+        let stateChanged = false;
+        for (let i = 0; i < mods.length; i++) {
+          if (mods[i].y != completedMods[i].y) {
+            stateChanged = true;
+            break;
+          }
         }
+        if (stateChanged) setCompletedMods(mods);
       }
-      if (stateChanged) setCompletedMods(mods);
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -108,13 +98,12 @@ export default CompletedModulesChart = () => {
     <View style={styles.container}>
       <Text style={styles.text}>Grades</Text>
       <VictoryChart
-        height={300}
+        height={400}
         width={400}
         theme={VictoryTheme.material}
         animate={{
           duration: 500,
         }}
-        domainPadding={50}
       >
         <VictoryAxis
           dependentAxis={true}
@@ -124,11 +113,12 @@ export default CompletedModulesChart = () => {
             }
           }}
           label="Number of Modules"
-          style={{ axisLabel: { padding: 25 } }}
+          style={{ axisLabel: { padding: 30, fontWeight: "bold" } }}
         />
         <VictoryAxis
           label="Grades Received"
-          style={{ axisLabel: { padding: 30 } }}
+          style={{ axisLabel: { padding: 30, fontWeight: "bold" } }}
+          domainPadding={40}
         />
         <VictoryBar
           style={{ data: { fill: "#27A4F2" } }}
@@ -136,7 +126,11 @@ export default CompletedModulesChart = () => {
             duration: 500,
           }}
           labels={({ datum }) => Math.floor(datum.y)}
-          data={completedMods.filter((obj) => obj.y != 0)}
+          data={
+            completedMods.filter((obj) => obj.y != 0).length == 0
+              ? completedMods
+              : completedMods.filter((obj) => obj.y != 0)
+          }
         />
       </VictoryChart>
     </View>
@@ -150,9 +144,9 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   text: {
-    fontSize: 18,
+    fontSize: 20,
     color: "black",
     marginTop: 10,
-    marginBottom: -30,
+    marginBottom: -20,
   },
 });

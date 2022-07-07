@@ -48,6 +48,8 @@ export default CompletedGoalsChart = () => {
         throw error;
       }
 
+      if (!data) return;
+
       Object.entries(data).forEach(([key, value] = entry) => {
         if (key == "completed") {
           setCompletedTotal(value);
@@ -69,43 +71,48 @@ export default CompletedGoalsChart = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Number Completed</Text>
-      <Svg width={400} height={400}>
-        <VictoryLabel
+      <Text style={styles.text}>Number of Goals Achieved</Text>
+      {/* <Svg width={400} height={400}> */}
+      {/* <VictoryLabel
           x={200}
           y={200}
           style={{ fontSize: 18 }}
           textAnchor={"middle"}
           text={"Total: " + completedTotal}
-        />
-        <VictoryPie
-          theme={VictoryTheme.material}
-          animate={{
-            duration: 500,
-          }}
-          width={400}
-          height={400}
-          innerRadius={({ radius }) => radius / 2}
-          labelPlacement="perpendicular"
-          labelPosition="centroid"
-          labelRadius={({ radius }) => (11 / 16) * radius}
-          labels={({ datum }) => Math.floor(datum.y)}
-          style={{
-            data: {
-              fill: ({ datum }) => datum.fill,
-              strokeWidth: 0,
-            },
-            labels: {
-              fontSize: 16,
-              fill: "black",
-            },
-          }}
-          categories={{
-            x: ["General", "Academic", "Fitness", "Finance"],
-          }}
-          data={data.filter((obj) => obj.y != 0)}
-          standalone={false}
-          events={[{
+        /> */}
+      <VictoryPie
+        theme={VictoryTheme.material}
+        animate={{
+          duration: 500,
+        }}
+        width={400}
+        height={400}
+        innerRadius={({ radius }) => radius / 2}
+        labelPlacement="vertical"
+        labelPosition="centroid"
+        labels={({ datum }) => Math.floor(datum.y)}
+        labelRadius={({ radius }) => (11 / 16) * radius}
+        style={{
+          data: {
+            fill: ({ datum }) => datum.fill,
+            strokeWidth: 0,
+          },
+          labels: {
+            fontSize: 18,
+            fontWeight: "bold",
+            fill: "black",
+          },
+        }}
+        categories={{
+          x: ["General", "Academic", "Fitness", "Finance"],
+        }}
+        data={
+          data.filter((obj) => obj.y != 0).length == 0
+            ? data
+            : data.filter((obj) => obj.y != 0)
+        }
+        events={[
+          {
             target: "data",
             eventHandlers: {
               onPressIn: () => {
@@ -113,15 +120,24 @@ export default CompletedGoalsChart = () => {
                   {
                     target: "labels",
                     mutation: ({ datum, text }) => {
-                      return text == datum.y ? { text: datum.x } : { text: datum.y };
-                    }
-                  }
+                      return text == datum.y
+                        ? {
+                            text: datum.x,
+                            // style: { fontSize: 14 },
+                          }
+                        : {
+                            text: datum.y,
+                            // style: { fontSize: 18 },
+                          };
+                    },
+                  },
                 ];
-              }
-            }
-          }]}
-        />
-      </Svg>
+              },
+            },
+          },
+        ]}
+      />
+      {/* </Svg> */}
     </View>
   );
 };
@@ -133,7 +149,7 @@ const styles = StyleSheet.create({
     marginBottom: -30,
   },
   text: {
-    fontSize: 18,
+    fontSize: 20,
     color: "black",
     marginTop: 10,
     marginBottom: -30,

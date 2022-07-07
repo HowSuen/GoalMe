@@ -9,7 +9,7 @@ import styles from "./AppNavigator.style";
 import GoalTrackerNavigator from "./GoalTrackerNavigator";
 import ProfileNavigator from "./ProfileNavigator";
 import GameNavigator from "./GameNavigator";
-import ProgressChecker from "../screens/progress-checker/ProgressChecker";
+import ProgressNavigator from "./ProgressNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -81,7 +81,7 @@ export default AppNavigator = ({ session }) => {
         </Tab.Screen>
         <Tab.Screen name="Progress">
           {({ navigation }) =>
-            ProgressChecker({ navigation: navigation, session: session })
+            ProgressNavigator({ navigation: navigation })
           }
         </Tab.Screen>
         <Tab.Screen

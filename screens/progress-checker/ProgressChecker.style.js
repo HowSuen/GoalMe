@@ -20,8 +20,8 @@ export default StyleSheet.create({
     paddingTop: 10,
   },
   cardIcon: {
-    width: 100,
-    height: 100,
+    width: 90,
+    height: 90,
   },
   scrollView: {
     justifyContent: "center",
@@ -33,7 +33,7 @@ export default StyleSheet.create({
     alignItems: "center",
   },
   topRowCard: {
-    padding: 20,
+    paddingVertical: 20,
     flex: 1,
     alignSelf: "stretch",
   },

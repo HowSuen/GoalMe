@@ -25,14 +25,13 @@ export default ExercisesProgress = () => {
       let { data, error, status } = await supabase
         .from("exercises")
         .select("id")
-        .match({ user_id: user.id, completion_status: true })
+        .match({ user_id: user.id, completion_status: true });
 
       if (error && status !== 406) {
         throw error;
       }
 
       setCompleted((data || []).length);
-
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -64,11 +63,15 @@ export default ExercisesProgress = () => {
         <View style={styles.topRowContainer}>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{completed}</Text>
-            <Text style={{ alignSelf: "center" }}>Exercise{completed != 1 ? "s" : ""} Completed</Text>
+            <Text style={{ alignSelf: "center" }}>
+              Exercise{completed != 1 ? "s" : ""} Completed
+            </Text>
           </Card>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{pending}</Text>
-            <Text style={{ alignSelf: "center" }}>Ongoing Exercise{pending != 1 ? "s" : ""}</Text>
+            <Text style={{ alignSelf: "center" }}>
+              Ongoing Exercise{pending != 1 ? "s" : ""}
+            </Text>
           </Card>
         </View>
         <Card containerStyle={{ padding: 0 }}>

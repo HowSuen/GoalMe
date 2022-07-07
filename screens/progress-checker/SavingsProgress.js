@@ -25,14 +25,13 @@ export default SavingsProgress = () => {
       let { data, error, status } = await supabase
         .from("savings")
         .select("id")
-        .match({ user_id: user.id, completion_status: true })
+        .match({ user_id: user.id, completion_status: true });
 
       if (error && status !== 406) {
         throw error;
       }
 
       setCompleted((data || []).length);
-
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -64,13 +63,15 @@ export default SavingsProgress = () => {
         <View style={styles.topRowContainer}>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{completed}</Text>
-            <Text style={{ alignSelf: "center" }}>Saving Goal{completed != 1 ? "s" : ""}</Text>
-            <Text style={{ alignSelf: "center" }}>Achieved</Text>
+            <Text style={{ alignSelf: "center" }}>
+              Saving Goal{completed != 1 ? "s" : ""} Achieved
+            </Text>
           </Card>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{pending}</Text>
-            <Text style={{ alignSelf: "center" }}>Ongoing Saving</Text>
-            <Text style={{ alignSelf: "center" }}>Goal{pending != 1 ? "s" : ""}</Text>
+            <Text style={{ alignSelf: "center" }}>
+              Ongoing Saving Goal{pending != 1 ? "s" : ""}
+            </Text>
           </Card>
         </View>
         <Card containerStyle={{ padding: 0 }}>

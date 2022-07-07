@@ -32,6 +32,21 @@ export default CompletedGoalsTimeChart = () => {
     getData();
   }, [isFocused, days]);
 
+  const getDayOfWeek = (date) => {
+    const dayOfWeek = new Date(date).getDay();
+    return isNaN(dayOfWeek)
+      ? null
+      : [
+          "Sun",
+          "Mon",
+          "Tue",
+          "Wed",
+          "Thu",
+          "Fri",
+          "Sat",
+        ][dayOfWeek];
+  };
+
   const getData = async () => {
     let d = [...defaultData];
 
@@ -55,7 +70,8 @@ export default CompletedGoalsTimeChart = () => {
       data = data
         .map((obj) => new Date(obj.completed_at))
         .sort((a, b) => a.date - b.date)
-        .map((d) => d.toLocaleDateString("en-us", { weekday: "short" }));
+        // .map((d) => d.toLocaleDateString("en-gb", { weekday: "short" }));
+        .map(d => getDayOfWeek(d));
 
       for (let i = 0; i < data.length; i++) {
         d.filter((o) => o.x == data[i])[0].y++;

@@ -80,9 +80,7 @@ export default AppNavigator = ({ session }) => {
           }
         </Tab.Screen>
         <Tab.Screen name="Progress">
-          {({ navigation }) =>
-            ProgressNavigator({ navigation: navigation })
-          }
+          {({ navigation }) => ProgressNavigator({ navigation: navigation })}
         </Tab.Screen>
         <Tab.Screen
           name="Game"

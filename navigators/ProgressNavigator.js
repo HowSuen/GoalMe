@@ -22,13 +22,20 @@ export default ProgressNavigator = ({ navigation }) => {
           headerShown: true,
           // headerTitle: "GOALS",
           headerTitle: (props) => (
-            <Text style={{fontSize: 20, fontWeight: "500", justifyContent: "center", alignItems: "center"}}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: "500",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <Image
-                style={{width: 30, height: 28,}}
+                style={{ width: 30, height: 28 }}
                 source={require("../assets/goals-progress.png")}
                 resizeMode="contain"
-              />
-              {" "}GOALS
+              />{" "}
+              GOALS
             </Text>
           ),
           headerStyle: { backgroundColor: "mediumseagreen" },
@@ -46,13 +53,20 @@ export default ProgressNavigator = ({ navigation }) => {
           headerShown: true,
           // headerTitle: "MODULES",
           headerTitle: (props) => (
-            <Text style={{fontSize: 20, fontWeight: "500", justifyContent: "center", alignItems: "center"}}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: "500",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <Image
-                style={{width: 30, height: 28,}}
+                style={{ width: 30, height: 28 }}
                 source={require("../assets/modules-progress.png")}
                 resizeMode="contain"
-              />
-              {" "}GOALS
+              />{" "}
+              GOALS
             </Text>
           ),
           headerStyle: { backgroundColor: "#27A4F2" },
@@ -70,13 +84,20 @@ export default ProgressNavigator = ({ navigation }) => {
           headerShown: true,
           // headerTitle: "EXERCISES",
           headerTitle: (props) => (
-            <Text style={{fontSize: 20, fontWeight: "500", justifyContent: "center", alignItems: "center"}}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: "500",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <Image
-                style={{width: 30, height: 28,}}
+                style={{ width: 30, height: 28 }}
                 source={require("../assets/exercises-progress.png")}
                 resizeMode="contain"
-              />
-              {" "}GOALS
+              />{" "}
+              GOALS
             </Text>
           ),
           headerStyle: { backgroundColor: "plum" },
@@ -94,13 +115,20 @@ export default ProgressNavigator = ({ navigation }) => {
           headerShown: true,
           // headerTitle: "SAVINGS",
           headerTitle: (props) => (
-            <Text style={{fontSize: 20, fontWeight: "500", justifyContent: "center", alignItems: "center"}}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: "500",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <Image
-                style={{width: 30, height: 28,}}
+                style={{ width: 30, height: 28 }}
                 source={require("../assets/savings-progress.png")}
                 resizeMode="contain"
-              />
-              {" "}GOALS
+              />{" "}
+              GOALS
             </Text>
           ),
           headerStyle: { backgroundColor: "rgb(255,176,58)" },

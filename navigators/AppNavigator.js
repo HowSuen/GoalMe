@@ -1,7 +1,9 @@
 import React from "react";
-import { View, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  NavigationContainer,
+  getFocusedRouteNameFromRoute,
+} from "@react-navigation/native";
 import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 import styles from "./AppNavigator.style";
 import GoalTrackerNavigator from "./GoalTrackerNavigator";
@@ -10,6 +12,23 @@ import GameNavigator from "./GameNavigator";
 import ProgressChecker from "../screens/progress-checker/ProgressChecker";
 
 const Tab = createBottomTabNavigator();
+
+const goalsColor = (route) => {
+  const routeName = getFocusedRouteNameFromRoute(route);
+  if (routeName == "Goal Tracker") {
+    return "mediumseagreen";
+  } else if (routeName == "Academic Tracker") {
+    return "royalblue";
+  } else if (routeName == "Fitness Tracker") {
+    return "tomato";
+  } else if (routeName == "Finance Tracker") {
+    return "goldenrod";
+  } else if (routeName == "Completed Goals") {
+    return "mediumaquamarine";
+  } else {
+    return "mediumseagreen";
+  }
+};
 
 export default AppNavigator = ({ session }) => {
   return (
@@ -49,7 +68,13 @@ export default AppNavigator = ({ session }) => {
           headerShown: false,
         })}
       >
-        <Tab.Screen name="Goals" options={{ headerShown: false }}>
+        <Tab.Screen
+          name="Goals"
+          options={({ route, navigation }) => ({
+            headerShown: false,
+            tabBarActiveTintColor: goalsColor(route),
+          })}
+        >
           {({ route, navigation }) =>
             GoalTrackerNavigator({ route: route, navigation: navigation })
           }

@@ -35,7 +35,7 @@ export default CompletedGoalsTimeChart = () => {
   const getData = async () => {
     let d = [...defaultData];
 
-    const sevenDaysAgo = new Date(Date.now() - 20 * 24 * 60 * 60 * 1000);
+    const sevenDaysAgo = new Date(Date.now() - 6 * 24 * 60 * 60 * 1000);
 
     sevenDaysAgo.setHours(0, 0, 0, 0);
 

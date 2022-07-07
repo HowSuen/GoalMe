@@ -70,7 +70,7 @@ export default ModulesProgress = () => {
         arr.forEach((o) => (store[o] ? (store[o] += 1) : (store[o] = 1)));
         return Object.keys(store)
           .sort((a, b) => store[b] - store[a])
-          .sort((a, b) =>compareGrade(b, a))[0];
+          .sort((a, b) => compareGrade(b, a))[0];
       };
 
       setModeGrade(mode(data.map((o) => o.grade_received)));
@@ -101,7 +101,7 @@ export default ModulesProgress = () => {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
-        <TitleCard type="Modules" />
+        {/* <TitleCard type="Modules" /> */}
         <View style={styles.topRowContainer}>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{completed}</Text>
@@ -126,7 +126,14 @@ export default ModulesProgress = () => {
             <Text style={{ alignSelf: "center" }}>Most Common Grade</Text>
           </Card>
         </View>
-        <Card containerStyle={{ padding: 0, alignSelf: "stretch" }}>
+        <Card
+          containerStyle={{
+            padding: 0,
+            alignSelf: "stretch",
+            elevation: 5,
+            borderRadius: 5,
+          }}
+        >
           <CompletedModulesChart />
         </Card>
       </ScrollView>

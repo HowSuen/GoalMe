@@ -59,7 +59,7 @@ export default ExercisesProgress = () => {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
-        <TitleCard type="Exercises" />
+        {/* <TitleCard type="Exercises" /> */}
         <View style={styles.topRowContainer}>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{completed}</Text>
@@ -74,7 +74,14 @@ export default ExercisesProgress = () => {
             </Text>
           </Card>
         </View>
-        <Card containerStyle={{ padding: 0, alignSelf: "stretch" }}>
+        <Card
+          containerStyle={{
+            padding: 0,
+            alignSelf: "stretch",
+            elevation: 5,
+            borderRadius: 5,
+          }}
+        >
           <CompletedModulesChart />
         </Card>
       </ScrollView>

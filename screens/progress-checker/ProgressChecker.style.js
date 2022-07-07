@@ -28,7 +28,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "ghostwhite",
-    paddingVertical: Platform.OS === "ios" ? 0: 10,
+    paddingBottom: Platform.OS === "ios" ? 0: 10,
   },
   topRowContainer: {
     flex: 1,

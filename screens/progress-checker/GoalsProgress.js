@@ -68,21 +68,39 @@ export default GoalsProgress = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
-        <TitleCard type="Goals"/>
+        {/* <TitleCard type="Goals"/> */}
         <View style={styles.topRowContainer}>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{completed}</Text>
-            <Text style={{ alignSelf: "center" }}>Goal{completed != 1 ? "s" : ""} Achieved</Text>
+            <Text style={{ alignSelf: "center" }}>
+              Goal{completed != 1 ? "s" : ""} Achieved
+            </Text>
           </Card>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{pending}</Text>
-            <Text style={{ alignSelf: "center" }}>Ongoing Goal{pending != 1 ? "s" : ""}</Text>
+            <Text style={{ alignSelf: "center" }}>
+              Ongoing Goal{pending != 1 ? "s" : ""}
+            </Text>
           </Card>
         </View>
-        <Card containerStyle={{ padding: 0, alignSelf: "stretch" }}>
+        <Card
+          containerStyle={{
+            padding: 0,
+            alignSelf: "stretch",
+            elevation: 5,
+            borderRadius: 5,
+          }}
+        >
           <CompletedGoalsChart />
         </Card>
-        <Card containerStyle={{ padding: 0, alignSelf: "stretch" }}>
+        <Card
+          containerStyle={{
+            padding: 0,
+            alignSelf: "stretch",
+            elevation: 5,
+            borderRadius: 5,
+          }}
+        >
           <CompletedGoalsTimeChart />
         </Card>
       </ScrollView>

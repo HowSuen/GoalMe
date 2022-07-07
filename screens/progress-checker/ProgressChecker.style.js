@@ -27,6 +27,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "ghostwhite",
+    paddingVertical: Platform.OS === "ios" ? 0: 10,
   },
   topRowContainer: {
     flex: 1,
@@ -37,6 +38,9 @@ export default StyleSheet.create({
     paddingVertical: 20,
     flex: 1,
     alignSelf: "stretch",
+    borderRadius: 5,
+    elevation: 5,
+    marginHorizontal: 12.5,
   },
   topRowCardText: {
     justifyContent: "center",

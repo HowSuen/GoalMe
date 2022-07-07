@@ -42,8 +42,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: 100,
-    height: 100,
+    width: Platform.OS === "ios" ? 100 : 50,
+    height: Platform.OS === "ios" ? 100 : 50,
     marginVertical: 5,
     marginHorizontal: 10,
   },

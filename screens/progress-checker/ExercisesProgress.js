@@ -74,7 +74,7 @@ export default ExercisesProgress = () => {
             </Text>
           </Card>
         </View>
-        <Card containerStyle={{ padding: 0 }}>
+        <Card containerStyle={{ padding: 0, alignSelf: "stretch" }}>
           <CompletedModulesChart />
         </Card>
       </ScrollView>

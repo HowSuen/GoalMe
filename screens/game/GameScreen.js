@@ -18,23 +18,22 @@ const GameScreen = ({ navigation, session }) => {
           <LevelBar type="WEALTH" session={session} />
         </View>
       </Card>
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate("Game", {
-            screen: "Achievements",
-          })
-        }
-      >
-        <Card containerStyle={{ padding: 5 }}>
-          <View style={styles.achievementContainer}>
-            <Image
-              style={styles.achievement}
-              source={require("../../assets/achievement_logo_alt.png")}
-            />
-            <Text style={styles.achievementText}>Achievements Completed</Text>
-          </View>
-        </Card>
-      </TouchableOpacity>
+      <Card containerStyle={{ padding: 5 }}>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("Game", {
+              screen: "Achievements",
+            })
+          }
+          style={styles.achievementContainer}
+        >
+          <Image
+            style={styles.achievement}
+            source={require("../../assets/achievement_logo_alt.png")}
+          />
+          <Text style={styles.achievementText}>Achievements Completed</Text>
+        </TouchableOpacity>
+      </Card>
     </View>
   );
 };

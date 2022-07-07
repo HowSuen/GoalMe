@@ -7,6 +7,7 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: "ghostwhite",
     justifyContent: "center",
+    alignItems: "center",
   },
   cardContainer: {
     justifyContent: "center",
@@ -20,8 +21,8 @@ export default StyleSheet.create({
     paddingTop: 10,
   },
   cardIcon: {
-    width: 90,
-    height: 90,
+    width: Platform.OS === "ios" ? 90 : 80,
+    height: Platform.OS === "ios" ? 90 : 80,
   },
   scrollView: {
     justifyContent: "center",
@@ -38,9 +39,8 @@ export default StyleSheet.create({
     paddingVertical: 20,
     flex: 1,
     alignSelf: "stretch",
-    borderRadius: 5,
+    borderRadius: Platform.OS === "ios" ? 0 : 5,
     elevation: 5,
-    marginHorizontal: 12.5,
   },
   topRowCardText: {
     justifyContent: "center",

@@ -18,52 +18,88 @@ export default ProgressChecker = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate("GoalsProgress")}>
-        <Card containerStyle={{ padding: 5 }}>
-          <View style={styles.cardContainer}>
-            <Image
-              style={styles.cardIcon}
-              source={require("../../assets/goals-progress.png")}
-            />
-            <Text style={styles.cardText}>Goals</Text>
-          </View>
-        </Card>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("ModulesProgress")}>
-        <Card containerStyle={{ padding: 5 }}>
-          <View style={styles.cardContainer}>
-            <Image
-              style={styles.cardIcon}
-              source={require("../../assets/modules-progress.png")}
-            />
-            <Text style={styles.cardText}>Modules</Text>
-          </View>
-        </Card>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("ExercisesProgress")}
+      <Card
+        containerStyle={{
+          padding: 5,
+          borderRadius: 10,
+          backgroundColor: "mediumseagreen",
+          elevation: 50,
+          borderColor: "mediumseagreen",
+          marginTop: 30,
+        }}
       >
-        <Card containerStyle={{ padding: 5 }}>
-          <View style={styles.cardContainer}>
-            <Image
-              style={styles.cardIcon}
-              source={require("../../assets/exercises-progress.png")}
-            />
-            <Text style={styles.cardText}>Exercises</Text>
-          </View>
-        </Card>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("SavingsProgress")}>
-        <Card containerStyle={{ padding: 5 }}>
-          <View style={styles.cardContainer}>
-            <Image
-              style={styles.cardIcon}
-              source={require("../../assets/savings-progress.png")}
-            />
-            <Text style={styles.cardText}>Savings</Text>
-          </View>
-        </Card>
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("GoalsProgress")}
+          style={styles.cardContainer}
+        >
+          <Image
+            style={styles.cardIcon}
+            source={require("../../assets/goals-progress.png")}
+          />
+          <Text style={styles.cardText}>Goals</Text>
+        </TouchableOpacity>
+      </Card>
+      <Card
+        containerStyle={{
+          padding: 5,
+          borderRadius: 10,
+          backgroundColor: "#27A4F2",
+          elevation: 40,
+          borderColor: "#27A4F2",
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => navigation.navigate("ModulesProgress")}
+          style={styles.cardContainer}
+        >
+          <Image
+            style={styles.cardIcon}
+            source={require("../../assets/modules-progress.png")}
+          />
+          <Text style={styles.cardText}>Modules</Text>
+        </TouchableOpacity>
+      </Card>
+      <Card
+        containerStyle={{
+          padding: 5,
+          borderRadius: 10,
+          backgroundColor: "plum",
+          elevation: 20,
+          borderColor: "plum",
+          marginTop: 20,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => navigation.navigate("ExercisesProgress")}
+          style={styles.cardContainer}
+        >
+          <Image
+            style={styles.cardIcon}
+            source={require("../../assets/exercises-progress.png")}
+          />
+          <Text style={styles.cardText}>Exercises</Text>
+        </TouchableOpacity>
+      </Card>
+      <Card
+        containerStyle={{
+          padding: 5,
+          borderRadius: 10,
+          backgroundColor: "rgb(255,176,58)",
+          elevation: 10,
+          borderColor: "rgb(255,176,58)",
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => navigation.navigate("SavingsProgress")}
+          style={styles.cardContainer}
+        >
+          <Image
+            style={styles.cardIcon}
+            source={require("../../assets/savings-progress.png")}
+          />
+          <Text style={styles.cardText}>Savings</Text>
+        </TouchableOpacity>
+      </Card>
     </View>
   );
 };

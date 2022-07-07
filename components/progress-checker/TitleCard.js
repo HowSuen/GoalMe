@@ -2,13 +2,14 @@ import React from "react";
 import { StyleSheet, View, Text, Dimensions } from "react-native";
 import { Card, Image } from "react-native-elements";
 
-export default TitleCard = ({ type }) => {
+export default TitleCard = ({ type, color }) => {
   return (
     <Card
       containerStyle={{
         padding: 5,
         paddingRight: 10,
         marginTop: 0,
+        backgroundColor: color || "white",
       }}
     >
       <View style={styles.container}>

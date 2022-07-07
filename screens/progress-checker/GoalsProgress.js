@@ -14,10 +14,14 @@ export default GoalsProgress = ({ navigation }) => {
 
   const [completed, setCompleted] = useState(0);
   const [pending, setPending] = useState(0);
+  const [state, setState] = useState({});
 
   useEffect(() => {
     getCompleted();
     getPending();
+    return () => {
+      setState({});
+    };
   }, [isFocused]);
 
   const getCompleted = async () => {
@@ -64,7 +68,7 @@ export default GoalsProgress = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
-        <TitleCard type="Goals" />
+        <TitleCard type="Goals"/>
         <View style={styles.topRowContainer}>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{completed}</Text>

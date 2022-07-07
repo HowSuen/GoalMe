@@ -131,7 +131,7 @@ export default CompletedModulesChart = () => {
           style={{ axisLabel: { padding: 30 } }}
         />
         <VictoryBar
-          style={{ data: { fill: "deepskyblue" } }}
+          style={{ data: { fill: "#27A4F2" } }}
           animate={{
             duration: 500,
           }}

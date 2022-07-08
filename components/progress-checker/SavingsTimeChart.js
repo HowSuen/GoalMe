@@ -135,7 +135,7 @@ export default SavingsTimeChart = () => {
           }}
         />
         <VictoryArea
-          style={{ data: { fill: "darkmagenta", opacity: 0.6 } }}
+          style={{ data: { fill: "darkgoldenrod", opacity: 0.6 } }}
           animate={{
             duration: 500,
           }}

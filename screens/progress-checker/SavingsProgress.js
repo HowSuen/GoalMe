@@ -58,18 +58,21 @@ export default SavingsProgress = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
         {/* <TitleCard type="Savings" /> */}
         <View style={styles.topRowContainer}>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{completed}</Text>
-            <Text style={{ alignSelf: "center" }}>
+            <Text style={{ alignSelf: "center", fontSize: 12 }}>
               Saving Goal{completed != 1 ? "s" : ""} Achieved
             </Text>
           </Card>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{pending}</Text>
-            <Text style={{ alignSelf: "center" }}>
+            <Text style={{ alignSelf: "center", fontSize: 11 }}>
               Ongoing Saving Goal{pending != 1 ? "s" : ""}
             </Text>
           </Card>

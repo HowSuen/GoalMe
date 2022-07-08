@@ -58,7 +58,10 @@ export default ExercisesProgress = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
         {/* <TitleCard type="Exercises" /> */}
         <View style={styles.topRowContainer}>
           <Card containerStyle={styles.topRowCard}>

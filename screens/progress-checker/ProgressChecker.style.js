@@ -39,7 +39,8 @@ export default StyleSheet.create({
     paddingVertical: 20,
     flex: 1,
     alignSelf: "stretch",
-    borderRadius: Platform.OS === "ios" ? 0 : 5,
+    justifyContent: "center",
+    borderRadius: 5,
     elevation: 5,
   },
   topRowCardText: {

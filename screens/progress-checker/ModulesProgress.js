@@ -16,27 +16,35 @@ export default ModulesProgress = () => {
   const [pending, setPending] = useState(0);
   const [highestGrade, setHighestGrade] = useState("No Data");
   const [modeGrade, setModeGrade] = useState("No Data");
+  const [targetReached, setTargetReached] = useState(0);
+  const [aboveA, setAboveA] = useState(0);
 
   useEffect(() => {
-    getCompleted();
+    getExpData();
     getPending();
     getGrades();
   }, [isFocused]);
 
-  const getCompleted = async () => {
+  const getExpData = async () => {
     try {
       if (!user) throw new Error("No user on the session!");
 
       let { data, error, status } = await supabase
-        .from("modules")
-        .select("module_code, module_name, grade_received")
-        .match({ user_id: user.id, completion_status: true });
+        .from("experience")
+        .select("completedMod, modsTargetReached, aboveA, highestGrade")
+        .match({ id: user.id })
+        .single();
 
       if (error && status !== 406) {
         throw error;
       }
 
-      setCompleted((data || []).length);
+      if (!data) return;
+
+      setCompleted(data.completedMod);
+      setTargetReached(data.modsTargetReached);
+      setAboveA(data.aboveA);
+      if (data.highestGrade) setHighestGrade(data.highestGrade);
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -57,20 +65,28 @@ export default ModulesProgress = () => {
 
       if (!data) return;
 
-      setHighestGrade(
-        data.reduce((a, b) => {
-          const s1 = a.grade_received || "";
-          const s2 = b.grade_received || "";
-          return compareGrade(s1, s2) < 0 ? s1 : s2;
-        })
-      );
+      // setHighestGrade(
+      //   data
+      //     .map((o) => o.grade_received)
+      //     .reduce((a, b) => {
+      //       return compareGrade(a, b) < 0 ? b : a;
+      //     })
+      // );
+
+      // setNumA(
+      //   data
+      //     .map((o) => o.grade_received)
+      //     .reduce((a, b) => {
+      //       return compareGrade(b, "A") >= 0 ? a + 1 : a;
+      //     }, 0)
+      // );
 
       const mode = (arr) => {
         const store = {};
         arr.forEach((o) => (store[o] ? (store[o] += 1) : (store[o] = 1)));
-        return Object.keys(store)
-          .sort((a, b) => store[b] - store[a])
-          .sort((a, b) => compareGrade(b, a))[0];
+        return Object.keys(store).sort((a, b) =>
+          store[b] - store[a] == 0 ? compareGrade(b, a) : store[b] - store[a]
+        )[0];
       };
 
       setModeGrade(mode(data.map((o) => o.grade_received)));
@@ -92,7 +108,9 @@ export default ModulesProgress = () => {
         throw error;
       }
 
-      setPending((data || []).length);
+      if (!data) return;
+
+      setPending(data.length);
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -100,12 +118,15 @@ export default ModulesProgress = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
         {/* <TitleCard type="Modules" /> */}
         <View style={styles.topRowContainer}>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{completed}</Text>
-            <Text style={{ alignSelf: "center" }}>
+            <Text style={{ alignSelf: "center", fontSize: 13 }}>
               Module{completed != 1 ? "s" : ""} Completed
             </Text>
           </Card>
@@ -118,12 +139,28 @@ export default ModulesProgress = () => {
         </View>
         <View style={styles.topRowContainer}>
           <Card containerStyle={styles.topRowCard}>
+            <Text style={styles.topRowCardText}>{targetReached}</Text>
+            <Text style={{ alignSelf: "center", fontSize: 10 }}>
+              Target Grade{targetReached != 1 ? "s" : ""} Achieved
+            </Text>
+          </Card>
+          <Card containerStyle={styles.topRowCard}>
+            <Text style={styles.topRowCardText}>{aboveA}</Text>
+            <Text style={{ alignSelf: "center" }}>
+              A{aboveA != 1 ? "'s and" : "or"} above
+            </Text>
+          </Card>
+        </View>
+        <View style={styles.topRowContainer}>
+          <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{highestGrade}</Text>
             <Text style={{ alignSelf: "center" }}>Highest Grade</Text>
           </Card>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{modeGrade}</Text>
-            <Text style={{ alignSelf: "center" }}>Most Common Grade</Text>
+            <Text style={{ alignSelf: "center", fontSize: 12 }}>
+              Most Common Grade
+            </Text>
           </Card>
         </View>
         <Card

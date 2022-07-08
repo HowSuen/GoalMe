@@ -34,6 +34,9 @@ const grades = [
 ];
 
 const compareGrade = (g1, g2) => {
+  if (!g1) return -1;
+  if (!g2) return 1;
+
   const symOrder = { "+": -1, "-": 1, "": 0 };
   return (
     g2.charAt(0).localeCompare(g1.charAt(0)) ||
@@ -86,6 +89,10 @@ export default Modules = ({ navigation }) => {
   const [wisdomLvl, setWisdomLvl] = useState(1);
   const [completed, setCompleted] = useState(0);
   const [completedAcad, setCompletedAcad] = useState(0);
+  const [completedMod, setCompletedMod] = useState(0);
+  const [modsTargetReached, setModsTargetReached] = useState(0);
+  const [aboveA, setAboveA] = useState(0);
+  const [highestGrade, setHighestGrade] = useState(null)
 
   useEffect(() => {
     getModules();
@@ -153,6 +160,10 @@ export default Modules = ({ navigation }) => {
         setWisdomLvl(data.wisdomLVL);
         setCompleted(data.completed);
         setCompletedAcad(data.completedAcad);
+        setCompletedMod(data.completedMod);
+        setModsTargetReached(data.modsTargetReached);
+        setAboveA(data.aboveA);
+        setHighestGrade(data.highestGrade);
       }
     } catch (error) {
       Alert.alert(error.message);
@@ -189,7 +200,15 @@ export default Modules = ({ navigation }) => {
       addXP = 100;
     }
 
-    addXP += compareGrade(module.targetGrade, gradeReceived) <= 0 ? 200 : 0;
+    let addMod = 0;
+    if (compareGrade(module.targetGrade, gradeReceived) <= 0) {
+      addXP += 200;
+      addMod += 1;
+    }
+
+    let addA = compareGrade(gradeReceived, "A") >= 0 ? 1 : 0;
+
+    let grade = compareGrade(highestGrade, gradeReceived) < 0 ? gradeReceived : highestGrade;
 
     let newTotalXp = totalXp + addXP;
     let newWisdomXp = wisdomXp + addXP;
@@ -216,6 +235,10 @@ export default Modules = ({ navigation }) => {
     setWisdomLvl(wisdomLvl + addWisdomLVL);
     setCompleted(completed + 1);
     setCompletedAcad(completedAcad + 1);
+    setCompletedMod(completedMod + 1);
+    setModsTargetReached(modsTargetReached + addMod);
+    setAboveA(aboveA + addA);
+    setHighestGrade(grade);
 
     try {
       if (!user) throw new Error("No user on the session!");
@@ -229,6 +252,10 @@ export default Modules = ({ navigation }) => {
         wisdomLVL: wisdomLvl + addWisdomLVL,
         completed: completed + 1,
         completedAcad: completedAcad + 1,
+        completedMod: completedMod + 1,
+        modsTargetReached: modsTargetReached + addMod,
+        aboveA: aboveA + addA,
+        highestGrade: grade,
       };
 
       let { error } = await supabase

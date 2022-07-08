@@ -25,7 +25,7 @@ export default ProgressChecker = ({ navigation }) => {
           backgroundColor: "mediumseagreen",
           elevation: 10,
           borderColor: "mediumseagreen",
-          marginVertical: Platform.OS == "ios" ? 0 : 20,
+          marginVertical: 20,
         }}
       >
         <TouchableOpacity
@@ -46,7 +46,7 @@ export default ProgressChecker = ({ navigation }) => {
           backgroundColor: "#27A4F2",
           elevation: 10,
           borderColor: "#27A4F2",
-          marginVertical: Platform.OS == "ios" ? 0 : 20,
+          marginVertical: 20,
         }}
       >
         <TouchableOpacity
@@ -67,7 +67,7 @@ export default ProgressChecker = ({ navigation }) => {
           backgroundColor: "plum",
           elevation: 10,
           borderColor: "plum",
-          marginVertical: Platform.OS == "ios" ? 0 : 20,
+          marginVertical: 20,
         }}
       >
         <TouchableOpacity
@@ -88,7 +88,7 @@ export default ProgressChecker = ({ navigation }) => {
           backgroundColor: "rgb(255,176,58)",
           elevation: 10,
           borderColor: "rgb(255,176,58)",
-          marginVertical: Platform.OS == "ios" ? 0 : 20,
+          marginVertical: 20,
         }}
       >
         <TouchableOpacity

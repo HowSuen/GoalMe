@@ -38,9 +38,10 @@ export default GoalsProgress = ({ navigation }) => {
         throw error;
       }
 
-      let num = data ? data.completed : 0;
+      if (!data) return;
 
-      setCompleted(num);
+      setCompleted(data.completed);
+
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -59,7 +60,10 @@ export default GoalsProgress = ({ navigation }) => {
         throw error;
       }
 
-      setPending((data || []).length);
+      if (!data) return;
+
+      setPending(data.length);
+      
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -67,7 +71,10 @@ export default GoalsProgress = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
         {/* <TitleCard type="Goals"/> */}
         <View style={styles.topRowContainer}>
           <Card containerStyle={styles.topRowCard}>

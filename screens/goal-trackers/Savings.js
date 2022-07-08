@@ -167,7 +167,7 @@ export default Savings = ({ navigation }) => {
       wealthMax = Math.round(Math.pow((wealthLvl + addWealthLVL) / 0.05, 1.6));
     }
 
-    let amount = parseFloat(saving.amount);
+    let amount = parseFloat(saving.amount, 10);
 
     setTotalXp(newTotalXp);
     setTotalLvl(totalLvl + addLVL);

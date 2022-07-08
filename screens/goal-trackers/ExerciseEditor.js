@@ -80,9 +80,9 @@ export default ModuleEditor = ({ navigation }) => {
   };
 
   const calculateVolume = (weight, rep, set) => {
-    const w = parseInt(weight);
-    const r = parseInt(rep);
-    const s = parseInt(set);
+    const w = parseFloat(weight, 10);
+    const r = parseFloat(rep, 10);
+    const s = parseFloat(set, 10);
     return (w * r * s).toString();
   };
 

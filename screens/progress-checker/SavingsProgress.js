@@ -12,8 +12,8 @@ export default SavingsProgress = () => {
 
   const [completed, setCompleted] = useState(0);
   const [pending, setPending] = useState(0);
-  const [totalSavings, setTotalSavings] = useState("No Data");
-  const [highestSavings, setHighestSavings] = useState("No Data");
+  const [totalSavings, setTotalSavings] = useState(0);
+  const [highestSavings, setHighestSavings] = useState(0);
 
   useEffect(() => {
     getExpData();
@@ -37,8 +37,8 @@ export default SavingsProgress = () => {
       if (!data) return;
 
       setCompleted(data.completedSavings);
-      if (data.totalSavings > 0) setTotalSavings(data.totalSavings);
-      if (data.highestSavings > 0) setHighestSavings(data.highestSavings);
+      setTotalSavings(data.totalSavings);
+      setHighestSavings(data.highestSavings);
     } catch (error) {
       Alert.alert(error.message);
     }

@@ -12,8 +12,10 @@ export default ExercisesProgress = () => {
 
   const [completed, setCompleted] = useState(0);
   const [pending, setPending] = useState(0);
-  const [maxRunDist, setMaxRunDist] = useState("No Data");
-  const [maxWeightVol, setMaxWeightVol] = useState("No Data");
+  const [maxRunDist, setMaxRunDist] = useState(0);
+  const [totalRunDist, setTotalRunDist] = useState(0);
+  const [maxWeight, setMaxWeight] = useState(0);
+  const [maxWeightVol, setMaxWeightVol] = useState(0);
 
   useEffect(() => {
     getExpData();
@@ -26,7 +28,9 @@ export default ExercisesProgress = () => {
 
       let { data, error, status } = await supabase
         .from("experience")
-        .select("completedExercise, maxRunDist, maxWeightVol")
+        .select(
+          "completedExercise, maxRunDist, totalRunDist, maxWeightVol, maxWeight"
+        )
         .match({ id: user.id })
         .single();
 
@@ -37,8 +41,10 @@ export default ExercisesProgress = () => {
       if (!data) return;
 
       setCompleted(data.completedExercise);
-      if (data.maxRunDist > 0) setMaxRunDist(data.maxRunDist);
-      if (data.maxWeightVol > 0) setMaxWeightVol(data.maxWeightVol);
+      setMaxRunDist(data.maxRunDist);
+      setTotalRunDist(data.totalRunDist);
+      setMaxWeight(data.maxWeight);
+      setMaxWeightVol(data.maxWeightVol);
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -101,6 +107,40 @@ export default ExercisesProgress = () => {
               numberOfLines={1}
             >
               Longest Distance Ran
+            </Text>
+          </Card>
+          <Card containerStyle={styles.topRowCard}>
+            <Text
+              style={styles.topRowCardText}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
+              {totalRunDist} km
+            </Text>
+            <Text
+              style={{ alignSelf: "center" }}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
+              Total Distance Ran
+            </Text>
+          </Card>
+        </View>
+        <View style={styles.topRowContainer}>
+          <Card containerStyle={styles.topRowCard}>
+            <Text
+              style={styles.topRowCardText}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
+              {maxWeight} kg
+            </Text>
+            <Text
+              style={{ alignSelf: "center" }}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
+              Heaviest Weight Lifted
             </Text>
           </Card>
           <Card containerStyle={styles.topRowCard}>

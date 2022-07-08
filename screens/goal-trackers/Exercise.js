@@ -62,6 +62,8 @@ export default Exercise = ({ navigation }) => {
   const [completedFit, setCompletedFit] = useState(0);
   const [completedExercise, setCompletedExercise] = useState(0);
   const [maxRunDist, setMaxRunDist] = useState(0);
+  const [totalRunDist, setTotalRunDist] = useState(0);
+  const [maxWeight, setMaxWeight] = useState(0);
   const [maxWeightVol, setMaxWeightVol] = useState(0);
 
   useEffect(() => {
@@ -137,6 +139,8 @@ export default Exercise = ({ navigation }) => {
         setCompletedFit(data.completedFit);
         setCompletedExercise(data.completedExercise);
         setMaxRunDist(data.maxRunDist);
+        setTotalRunDist(data.totalRunDist);
+        setMaxWeight(data.maxWeight);
         setMaxWeightVol(data.maxWeightVol);
       }
     } catch (error) {
@@ -168,6 +172,8 @@ export default Exercise = ({ navigation }) => {
       );
     }
 
+    const totalDist = totalRunDist + parseFloat(exercise.distance) || 0;
+
     setTotalXp(newTotalXp);
     setTotalLvl(totalLvl + addLVL);
     setStrengthXp(newStrengthXp);
@@ -176,7 +182,9 @@ export default Exercise = ({ navigation }) => {
     setCompletedFit(completedFit + 1);
     setCompletedExercise(completedExercise + 1);
     setMaxRunDist(Math.max(maxRunDist, exercise.distance));
+    setTotalRunDist(totalDist);
     setMaxWeightVol(Math.max(maxWeightVol, exercise.volume));
+    setMaxWeight(Math.max(maxWeight, exercise.weight));
 
     try {
       if (!user) throw new Error("No user on the session!");
@@ -192,6 +200,8 @@ export default Exercise = ({ navigation }) => {
         completedFit: completedFit + 1,
         completedExercise: completedExercise + 1,
         maxRunDist: Math.max(maxRunDist, exercise.distance),
+        totalRunDist: totalDist,
+        maxWeight: Math.max(maxWeight, exercise.weight),
         maxWeightVol: Math.max(maxWeightVol, exercise.volume),
       };
 

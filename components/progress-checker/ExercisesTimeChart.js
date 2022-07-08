@@ -10,7 +10,7 @@ import {
 import supabase from "../../lib/supabase";
 import { Text } from "react-native-elements";
 
-export default CompletedGoalsTimeChart = () => {
+export default ExercisesTimeChart = () => {
   const user = supabase.auth.user();
   const isFocused = useIsFocused();
 
@@ -36,15 +36,7 @@ export default CompletedGoalsTimeChart = () => {
     const dayOfWeek = new Date(date).getDay();
     return isNaN(dayOfWeek)
       ? null
-      : [
-          "Sun",
-          "Mon",
-          "Tue",
-          "Wed",
-          "Thu",
-          "Fri",
-          "Sat",
-        ][dayOfWeek];
+      : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][dayOfWeek];
   };
 
   const getData = async () => {
@@ -58,7 +50,7 @@ export default CompletedGoalsTimeChart = () => {
       if (!user) throw new Error("No user on the session!");
 
       let { data, error, status } = await supabase
-        .from("goals")
+        .from("exercises")
         .select("completed_at")
         .match({ user_id: user.id, completion_status: true })
         .gt("completed_at", sevenDaysAgo.toISOString());
@@ -68,10 +60,13 @@ export default CompletedGoalsTimeChart = () => {
       }
 
       data = data
-        .map((obj) => new Date(obj.completed_at))
-        .sort((a, b) => a.date - b.date)
-        // .map((d) => d.toLocaleDateString("en-gb", { weekday: "short" }));
-        .map(d => getDayOfWeek(d));
+        .map((obj) =>
+          new Date(obj.completed_at).toLocaleString("en-US", {
+            timeZone: "Asia/Singapore",
+          })
+        )
+        .sort()
+        .map((date) => getDayOfWeek(date));
 
       for (let i = 0; i < data.length; i++) {
         d.filter((o) => o.x == data[i])[0].y++;
@@ -93,7 +88,7 @@ export default CompletedGoalsTimeChart = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Goals Achieved in The Past Week</Text>
+      <Text style={styles.text}>Daily Exercises</Text>
       <VictoryChart
         height={350}
         width={350}
@@ -110,7 +105,7 @@ export default CompletedGoalsTimeChart = () => {
               return y;
             }
           }}
-          label="Number Achieved"
+          label="Number Completed"
           style={{ axisLabel: { padding: 30, fontWeight: "bold" } }}
         />
         <VictoryAxis
@@ -120,7 +115,7 @@ export default CompletedGoalsTimeChart = () => {
           }}
         />
         <VictoryArea
-          style={{ data: { fill: "darkcyan", opacity: 0.7 } }}
+          style={{ data: { fill: "darkmagenta", opacity: 0.6 } }}
           animate={{
             duration: 500,
           }}
@@ -140,6 +135,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
+    fontWeight: "bold",
     color: "black",
     marginTop: 10,
     marginBottom: -30,

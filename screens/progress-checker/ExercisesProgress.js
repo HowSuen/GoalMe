@@ -4,7 +4,7 @@ import { View } from "react-native";
 import { Card, Text } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import styles from "./ProgressChecker.style";
-import CompletedModulesChart from "../../components/progress-checker/CompletedModulesChart";
+import ExercisesTimeChart from "../../components/progress-checker/ExercisesTimeChart";
 
 export default ExercisesProgress = () => {
   const user = supabase.auth.user();
@@ -88,14 +88,34 @@ export default ExercisesProgress = () => {
         </View>
         <View style={styles.topRowContainer}>
           <Card containerStyle={styles.topRowCard}>
-            <Text style={styles.topRowCardText}>{maxRunDist} km</Text>
-            <Text style={{ alignSelf: "center", fontSize: 12 }}>
+            <Text
+              style={styles.topRowCardText}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
+              {maxRunDist} km
+            </Text>
+            <Text
+              style={{ alignSelf: "center" }}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
               Longest Distance Ran
             </Text>
           </Card>
           <Card containerStyle={styles.topRowCard}>
-            <Text style={styles.topRowCardText}>{maxWeightVol} kg</Text>
-            <Text style={{ alignSelf: "center", fontSize: 11 }}>
+            <Text
+              style={styles.topRowCardText}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
+              {maxWeightVol} kg
+            </Text>
+            <Text
+              style={{ alignSelf: "center" }}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
               Highest Weight Volume
             </Text>
           </Card>
@@ -108,7 +128,7 @@ export default ExercisesProgress = () => {
             borderRadius: 5,
           }}
         >
-          <CompletedModulesChart />
+          <ExercisesTimeChart />
         </Card>
       </ScrollView>
     </View>

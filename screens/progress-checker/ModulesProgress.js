@@ -4,7 +4,7 @@ import { Alert, View } from "react-native";
 import { Card, Text } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import styles from "./ProgressChecker.style";
-import CompletedModulesChart from "../../components/progress-checker/CompletedModulesChart";
+import ModulesChart from "../../components/progress-checker/ModulesChart";
 import TitleCard from "../../components/progress-checker/TitleCard";
 import { compareGrade } from "../goal-trackers/Modules";
 
@@ -126,7 +126,11 @@ export default ModulesProgress = () => {
         <View style={styles.topRowContainer}>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{completed}</Text>
-            <Text style={{ alignSelf: "center", fontSize: 13 }}>
+            <Text
+              style={{ alignSelf: "center" }}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
               Module{completed != 1 ? "s" : ""} Completed
             </Text>
           </Card>
@@ -140,14 +144,18 @@ export default ModulesProgress = () => {
         <View style={styles.topRowContainer}>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{targetReached}</Text>
-            <Text style={{ alignSelf: "center", fontSize: 10 }}>
+            <Text
+              style={{ alignSelf: "center" }}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
               Target Grade{targetReached != 1 ? "s" : ""} Achieved
             </Text>
           </Card>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{aboveA}</Text>
             <Text style={{ alignSelf: "center" }}>
-              A{aboveA != 1 ? "'s and" : "or"} above
+              A{aboveA != 1 ? "'s and" : "or"} Above
             </Text>
           </Card>
         </View>
@@ -158,7 +166,11 @@ export default ModulesProgress = () => {
           </Card>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{modeGrade}</Text>
-            <Text style={{ alignSelf: "center", fontSize: 12 }}>
+            <Text
+              style={{ alignSelf: "center" }}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
               Most Common Grade
             </Text>
           </Card>
@@ -171,7 +183,7 @@ export default ModulesProgress = () => {
             borderRadius: 5,
           }}
         >
-          <CompletedModulesChart />
+          <ModulesChart />
         </Card>
       </ScrollView>
     </View>

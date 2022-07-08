@@ -67,6 +67,9 @@ export default Savings = ({ navigation }) => {
   const [wealthLvl, setWealthLvl] = useState(1);
   const [completed, setCompleted] = useState(0);
   const [completedFinance, setCompletedFinance] = useState(0);
+  const [completedSavings, setCompletedSavings] = useState(0);
+  const [totalSavings, setTotalSavings] = useState(0);
+  const [highestSavings, setHighestSavings] = useState(0);
 
   useEffect(() => {
     getSavings();
@@ -133,6 +136,9 @@ export default Savings = ({ navigation }) => {
         setWealthLvl(data.wealthLVL);
         setCompleted(data.completed);
         setCompletedFinance(data.completedFinance);
+        setCompletedSavings(data.completedSavings);
+        setTotalSavings(data.totalSavings);
+        setHighestSavings(data.highestSavings);
       }
     } catch (error) {
       Alert.alert(error.message);
@@ -161,12 +167,17 @@ export default Savings = ({ navigation }) => {
       wealthMax = Math.round(Math.pow((wealthLvl + addWealthLVL) / 0.05, 1.6));
     }
 
+    let amount = parseFloat(saving.amount);
+
     setTotalXp(newTotalXp);
     setTotalLvl(totalLvl + addLVL);
     setWealthXp(newWealthXp);
     setWealthLvl(wealthLvl + addWealthLVL);
     setCompleted(completed + 1);
     setCompletedFinance(completedFinance + 1);
+    setCompletedSavings(completedSavings + 1);
+    setTotalSavings(totalSavings + amount);
+    setHighestSavings(Math.max(highestSavings, amount));
 
     try {
       if (!user) throw new Error("No user on the session!");
@@ -180,6 +191,9 @@ export default Savings = ({ navigation }) => {
         wealthLVL: wealthLvl + addWealthLVL,
         completed: completed + 1,
         completedFinance: completedFinance + 1,
+        completedSavings: completedSavings + 1,
+        totalSavings: totalSavings + amount,
+        highestSavings: Math.max(highestSavings, amount),
       };
 
       let { error } = await supabase

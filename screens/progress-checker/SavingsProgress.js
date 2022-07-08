@@ -4,7 +4,7 @@ import { View } from "react-native";
 import { Card, Text } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import styles from "./ProgressChecker.style";
-import CompletedModulesChart from "../../components/progress-checker/CompletedModulesChart";
+import SavingsTimeChart from "../../components/progress-checker/SavingsTimeChart";
 
 export default SavingsProgress = () => {
   const user = supabase.auth.user();
@@ -12,26 +12,33 @@ export default SavingsProgress = () => {
 
   const [completed, setCompleted] = useState(0);
   const [pending, setPending] = useState(0);
+  const [totalSavings, setTotalSavings] = useState("No Data");
+  const [highestSavings, setHighestSavings] = useState("No Data");
 
   useEffect(() => {
-    getCompleted();
+    getExpData();
     getPending();
   }, [isFocused]);
 
-  const getCompleted = async () => {
+  const getExpData = async () => {
     try {
       if (!user) throw new Error("No user on the session!");
 
       let { data, error, status } = await supabase
-        .from("savings")
-        .select("id")
-        .match({ user_id: user.id, completion_status: true });
+        .from("experience")
+        .select("completedSavings, totalSavings, highestSavings")
+        .match({ id: user.id })
+        .single();
 
       if (error && status !== 406) {
         throw error;
       }
 
-      setCompleted((data || []).length);
+      if (!data) return;
+
+      setCompleted(data.completedSavings);
+      if (data.totalSavings > 0) setTotalSavings(data.totalSavings);
+      if (data.highestSavings > 0) setHighestSavings(data.highestSavings);
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -50,7 +57,9 @@ export default SavingsProgress = () => {
         throw error;
       }
 
-      setPending((data || []).length);
+      if (!data) return;
+
+      setPending(data.length);
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -62,19 +71,49 @@ export default SavingsProgress = () => {
         contentContainerStyle={styles.scrollView}
         showsVerticalScrollIndicator={false}
       >
-        {/* <TitleCard type="Savings" /> */}
+        {/* <TitleCard type="Exercises" /> */}
         <View style={styles.topRowContainer}>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{completed}</Text>
-            <Text style={{ alignSelf: "center", fontSize: 12 }}>
+            <Text
+              style={{ alignSelf: "center" }}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
               Saving Goal{completed != 1 ? "s" : ""} Achieved
             </Text>
           </Card>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{pending}</Text>
-            <Text style={{ alignSelf: "center", fontSize: 11 }}>
+            <Text
+              style={{ alignSelf: "center" }}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
               Ongoing Saving Goal{pending != 1 ? "s" : ""}
             </Text>
+          </Card>
+        </View>
+        <View style={styles.topRowContainer}>
+          <Card containerStyle={styles.topRowCard}>
+            <Text
+              style={styles.topRowCardText}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
+              ${totalSavings}
+            </Text>
+            <Text style={{ alignSelf: "center" }}>Total Saved</Text>
+          </Card>
+          <Card containerStyle={styles.topRowCard}>
+            <Text
+              style={styles.topRowCardText}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
+              ${highestSavings}
+            </Text>
+            <Text style={{ alignSelf: "center" }}>Highest Saved</Text>
           </Card>
         </View>
         <Card
@@ -85,7 +124,7 @@ export default SavingsProgress = () => {
             borderRadius: 5,
           }}
         >
-          <CompletedModulesChart />
+          <SavingsTimeChart />
         </Card>
       </ScrollView>
     </View>

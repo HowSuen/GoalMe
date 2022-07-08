@@ -28,7 +28,7 @@ const grades = [
   // { label: "U", value: "U" },
 ];
 
-export default CompletedModulesChart = () => {
+export default ModulesChart = () => {
   const user = supabase.auth.user();
   const isFocused = useIsFocused();
 
@@ -145,6 +145,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
+    fontWeight: "bold",
     color: "black",
     marginTop: 10,
     marginBottom: -20,

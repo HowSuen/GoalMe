@@ -52,15 +52,15 @@ export default ExerciseList = ({
             {exercise.type == "run"
               ? "Distance: " +
                 exercise.distance +
-                ", Time: " +
+                "km; Time: " +
                 exercise.min +
                 ":" +
                 exercise.sec
               : "Weight: " +
                 exercise.weight +
-                ", Reps: " +
+                "kg; Reps: " +
                 exercise.rep +
-                ", Sets: " +
+                "; Sets: " +
                 exercise.set}
           </Text>
         </View>

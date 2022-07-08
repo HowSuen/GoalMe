@@ -173,7 +173,7 @@ export default ExerciseSetter = ({ navigation }) => {
                       style={styles.timerText}
                       inputContainerStyle={styles.inputContainer}
                       label="Distance"
-                      placeholder="0"
+                      placeholder="km"
                       placeholderTextColor="darkgray"
                       onChangeText={(value) => setDistance(value)}
                     />

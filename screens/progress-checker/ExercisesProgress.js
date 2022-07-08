@@ -12,26 +12,33 @@ export default ExercisesProgress = () => {
 
   const [completed, setCompleted] = useState(0);
   const [pending, setPending] = useState(0);
+  const [maxRunDist, setMaxRunDist] = useState("No Data");
+  const [maxWeightVol, setMaxWeightVol] = useState("No Data");
 
   useEffect(() => {
-    getCompleted();
+    getExpData();
     getPending();
   }, [isFocused]);
 
-  const getCompleted = async () => {
+  const getExpData = async () => {
     try {
       if (!user) throw new Error("No user on the session!");
 
       let { data, error, status } = await supabase
-        .from("exercises")
-        .select("id")
-        .match({ user_id: user.id, completion_status: true });
+        .from("experience")
+        .select("completedExercise, maxRunDist, maxWeightVol")
+        .match({ id: user.id })
+        .single();
 
       if (error && status !== 406) {
         throw error;
       }
 
-      setCompleted((data || []).length);
+      if (!data) return;
+
+      setCompleted(data.completedExercise);
+      if (data.maxRunDist > 0) setMaxRunDist(data.maxRunDist);
+      if (data.maxWeightVol > 0) setMaxWeightVol(data.maxWeightVol);
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -50,7 +57,9 @@ export default ExercisesProgress = () => {
         throw error;
       }
 
-      setPending((data || []).length);
+      if (!data) return;
+
+      setPending(data.length);
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -66,7 +75,7 @@ export default ExercisesProgress = () => {
         <View style={styles.topRowContainer}>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{completed}</Text>
-            <Text style={{ alignSelf: "center" }}>
+            <Text style={{ alignSelf: "center", fontSize: 12 }}>
               Exercise{completed != 1 ? "s" : ""} Completed
             </Text>
           </Card>
@@ -74,6 +83,20 @@ export default ExercisesProgress = () => {
             <Text style={styles.topRowCardText}>{pending}</Text>
             <Text style={{ alignSelf: "center" }}>
               Ongoing Exercise{pending != 1 ? "s" : ""}
+            </Text>
+          </Card>
+        </View>
+        <View style={styles.topRowContainer}>
+          <Card containerStyle={styles.topRowCard}>
+            <Text style={styles.topRowCardText}>{maxRunDist} km</Text>
+            <Text style={{ alignSelf: "center", fontSize: 12 }}>
+              Longest Distance Ran
+            </Text>
+          </Card>
+          <Card containerStyle={styles.topRowCard}>
+            <Text style={styles.topRowCardText}>{maxWeightVol} kg</Text>
+            <Text style={{ alignSelf: "center", fontSize: 11 }}>
+              Highest Weight Volume
             </Text>
           </Card>
         </View>

@@ -12,8 +12,18 @@ const Stack = createNativeStackNavigator();
 
 export default ProgressNavigator = ({ navigation }) => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="ProgressChecker">
+    <Stack.Navigator>
+      <Stack.Screen
+        name="ProgressChecker"
+        options={{
+          headerTitle: "Progress",
+          headerStyle: { backgroundColor: "mediumseagreen" },
+          headerTintColor: "black",
+          headerShadowVisible: true,
+          presentation: "card",
+          headerTitleAlign: "center",
+        }}
+      >
         {() => <ProgressChecker navigation={navigation} />}
       </Stack.Screen>
       <Stack.Screen

@@ -155,7 +155,7 @@ export default ModulesProgress = () => {
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{aboveA}</Text>
             <Text style={{ alignSelf: "center" }}>
-              A{aboveA != 1 ? "'s and" : "or"} Above
+              A{aboveA != 1 ? "'s and" : " or"} Above
             </Text>
           </Card>
         </View>

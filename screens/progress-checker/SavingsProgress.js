@@ -14,10 +14,12 @@ export default SavingsProgress = () => {
   const [pending, setPending] = useState(0);
   const [totalSavings, setTotalSavings] = useState(0);
   const [highestSavings, setHighestSavings] = useState(0);
+  const [oneYearSavings, setOneYearSavings] = useState(0);
 
   useEffect(() => {
     getExpData();
     getPending();
+    getOneYearSum();
   }, [isFocused]);
 
   const getExpData = async () => {
@@ -65,6 +67,38 @@ export default SavingsProgress = () => {
     }
   };
 
+  const getOneYearSum = async () => {
+    let sum = 0;
+  
+    const oneYearAgo = new Date(Date.now() - 364 * 24 * 60 * 60 * 1000);
+  
+    oneYearAgo.setMonth(oneYearAgo.getMonth() + 1, 1);
+    oneYearAgo.setHours(0, 0, 0, 0);
+  
+    try {
+      if (!user) throw new Error("No user on the session!");
+  
+      let { data, error, status } = await supabase
+        .from("savings")
+        .select("completed_at, curr_amount")
+        .match({ user_id: user.id, completion_status: true })
+        .gt("completed_at", oneYearAgo.toISOString());
+  
+      if (error && status !== 406) {
+        throw error;
+      }
+
+      sum = data
+        .map((o) => parseFloat(o.curr_amount, 10))
+        .reduce((a, b) => a + b);
+  
+      setOneYearSavings(sum);
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+  };
+  
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -111,9 +145,15 @@ export default SavingsProgress = () => {
               adjustsFontSizeToFit={true}
               numberOfLines={1}
             >
-              ${highestSavings}
+              ${oneYearSavings}
             </Text>
-            <Text style={{ alignSelf: "center" }}>Highest Saved</Text>
+            <Text
+              style={{ alignSelf: "center" }}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
+              Saved in The Past Year
+            </Text>
           </Card>
         </View>
         <Card

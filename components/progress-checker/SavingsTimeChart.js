@@ -14,6 +14,8 @@ export default SavingsTimeChart = () => {
   const user = supabase.auth.user();
   const isFocused = useIsFocused();
 
+  const today = new Date().toLocaleDateString("en-us", { weekday: "short" });
+
   const defaultData = [
     { x: "Jan", y: 0 },
     { x: "Feb", y: 0 },
@@ -28,8 +30,6 @@ export default SavingsTimeChart = () => {
     { x: "Nov", y: 0 },
     { x: "Dec", y: 0 },
   ];
-
-  const today = new Date().toLocaleDateString("en-us", { weekday: "short" });
 
   const [months, setMonths] = useState(defaultData);
 

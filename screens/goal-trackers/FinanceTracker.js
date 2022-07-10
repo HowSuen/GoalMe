@@ -15,6 +15,7 @@ import {
   deleteItem,
 } from "./GoalTracker";
 import AlertPrompt from "../../components/goal-trackers/AlertPrompt";
+import { Image } from "react-native-elements";
 
 export default FinanceTracker = ({ navigation }) => {
   const [data, setData] = useState([]);
@@ -198,7 +199,14 @@ export default FinanceTracker = ({ navigation }) => {
           }}
           style={styles.walletNavButton}
         >
-          <Text style={styles.buttonText}>Savings</Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Image
+              style={{ width: 30, height: 28 }}
+              source={require("../../assets/savings-progress.png")}
+              resizeMode="contain"
+            />
+            <Text style={styles.buttonText}>Savings</Text>
+          </View>
         </TouchableOpacity>
         <FlatList
           data={data}

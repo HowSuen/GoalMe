@@ -76,7 +76,10 @@ export default ModuleEditor = ({ navigation }) => {
   const hasEmptyValues = () => {
     return exercise.type == "run"
       ? exercise_name == "" || distance == "0" || (min == "0" && sec == "00")
-      : exercise_name == "" || weight == "0" || rep == "0" || set == "0";
+      : exercise_name == "" ||
+          parseInt(weight) == 0 ||
+          parseInt(rep) == 0 ||
+          parseInt(set) == 0;
   };
 
   const inputsInvalid = () => {

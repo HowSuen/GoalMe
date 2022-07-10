@@ -75,11 +75,25 @@ export default ModuleEditor = ({ navigation }) => {
 
   const hasEmptyValues = () => {
     return exercise.type == "run"
-      ? exercise_name == "" || distance == "0" || (min == "0" && sec == "00")
+      ? exercise_name == "" ||
+          distance == "0" ||
+          !isFloat(distance) ||
+          (min == "0" && sec == "00")
       : exercise_name == "" ||
-          parseInt(weight) == 0 ||
-          parseInt(rep) == 0 ||
-          parseInt(set) == 0;
+          weight == "0" ||
+          !isInteger(weight) ||
+          rep == "0" ||
+          !isInteger(rep) ||
+          set == "0" ||
+          !isInteger(set);
+  };
+
+  const isInteger = (number) => {
+    return /^\d+$/.test(number);
+  };
+
+  const isFloat = (number) => {
+    return /^(?!0\d)\d*(\.\d+)?$/.test(number);
   };
 
   const inputsInvalid = () => {
@@ -94,9 +108,9 @@ export default ModuleEditor = ({ navigation }) => {
   };
 
   const calculateVolume = (weight, rep, set) => {
-    const w = parseFloat(weight, 10);
-    const r = parseFloat(rep, 10);
-    const s = parseFloat(set, 10);
+    const w = parseInt(weight, 10);
+    const r = parseInt(rep, 10);
+    const s = parseInt(set, 10);
     return (w * r * s).toString();
   };
 

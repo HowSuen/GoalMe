@@ -2,10 +2,9 @@ import { StyleSheet, DarkTheme } from "react-native";
 
 export default StyleSheet.create({
   container: {
-    padding: 15,
     justifyContent: "center",
     flex: 1,
-    backgroundColor: "ghostwhite",
+    backgroundColor: "rgb(36,184,249)",
   },
   avatarContainer: {
     justifyContent: "center",
@@ -17,24 +16,26 @@ export default StyleSheet.create({
   },
   formContainer: {
     marginTop: 0,
+    backgroundColor: "ghostwhite",
+    padding: 15,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
   },
   verticallySpaced: {
     paddingTop: 5,
-    paddingBottom: 5,
     alignSelf: "stretch",
   },
   textInput: {
     color: "black",
   },
   button: {
-    marginRight: 20,
-    marginLeft: 20,
     marginTop: 20,
     paddingTop: 10,
     paddingBottom: 10,
+    width: 200,
     backgroundColor: "dodgerblue",
-    borderRadius: 5,
-    elevation: 10,
+    borderRadius: 30,
+    elevation: 5,
   },
   buttonText: {
     color: "white",
@@ -42,9 +43,11 @@ export default StyleSheet.create({
     textAlign: "center",
   },
   avatarButton: {
-    backgroundColor: "dodgerblue",
+    backgroundColor: "ghostwhite",
     padding: 5,
-    borderRadius: 5,
+    borderRadius: 15,
     elevation: 10,
+    margin: 10,
+    marginTop: 0,
   },
 });

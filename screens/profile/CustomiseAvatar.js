@@ -184,6 +184,7 @@ const CustomiseAvatar = ({ navigation, session }) => {
   const [lipColor, setLipColor] = useState("red");
 
   const isFocused = useIsFocused();
+  const [state, setState] = useState({});
 
   const [avatar1, setAvatar1] = useState(false);
   const [count, setCount] = useState(0);
@@ -192,6 +193,9 @@ const CustomiseAvatar = ({ navigation, session }) => {
     if (session) {
       getProfile();
     }
+    return () => {
+      setState({});
+    };
   }, [session, isFocused]);
 
   const getProfile = async () => {
@@ -349,6 +353,7 @@ const CustomiseAvatar = ({ navigation, session }) => {
           hairColor={hairColor}
           mouth={mouth}
           lipColor={lipColor}
+          bgShape="squircle"
         />
       </View>
       <ScrollView style={styles.menu}>

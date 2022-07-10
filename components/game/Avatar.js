@@ -19,12 +19,13 @@ const Avatar = ({
   hairColor,
   mouth,
   lipColor,
+  bgShape,
 }) => {
   return (
     <BigHead
       accessory={accessory || "none"}
       bgColor={bgColor || "blue"}
-      bgShape="circle"
+      bgShape={bgShape || "circle"}
       body={gender || "chest"}
       clothing={clothing || "shirt"}
       clothingColor={clotheColor || "white"}

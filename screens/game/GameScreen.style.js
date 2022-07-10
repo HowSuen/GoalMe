@@ -7,7 +7,7 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "ghostwhite",
+    backgroundColor: "rgba(245,242,234,1.0)",
     marginTop: -20,
   },
   avatar: {

@@ -85,6 +85,7 @@ export default ModuleEditor = ({ navigation }) => {
       : isNaN(+weight) ||
           isNaN(+rep) ||
           isNaN(+set) ||
+          parseInt(weight) != weight ||
           parseInt(rep) != rep ||
           parseInt(set) != set;
   };
@@ -239,7 +240,7 @@ export default ModuleEditor = ({ navigation }) => {
               <View style={styles.exercise}>
                 <View style={styles.inputContainerSmall}>
                   <Input
-                    keyboardType="numeric"
+                    keyboardType="number-pad"
                     style={styles.timerText}
                     inputContainerStyle={styles.inputContainer}
                     label="Weight"

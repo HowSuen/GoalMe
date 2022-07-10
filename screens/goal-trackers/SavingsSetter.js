@@ -29,10 +29,10 @@ export default SavingsSetter = ({ navigation }) => {
   const [amount, setAmount] = useState("");
   //   const [recurring, setRecurring] = useState(false);
 
-  const currencyFormat = (str) => {
-    const num = parseFloat(str.replace(",", ""), 10);
-    return num.toPrecision().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-  };
+  const floatFormat = (value) => {
+    const num = parseFloat(value.replace(",", ""), 10);
+    return num.toString();
+  }
 
   const submitSaving = async () => {
     try {
@@ -41,7 +41,7 @@ export default SavingsSetter = ({ navigation }) => {
           user_id: user.id,
           name: name,
           description: description,
-          amount: currencyFormat(amount),
+          amount: floatFormat(amount),
           curr_amount: 0,
           //   recurring: recurring,
         },
@@ -89,7 +89,7 @@ export default SavingsSetter = ({ navigation }) => {
             maxHeight={160}
           />
           <Input
-            keyboardType="number-pad"
+            keyboardType="numeric"
             style={styles.textInput}
             inputContainerStyle={styles.inputContainer}
             label="Saving Amount ($)"

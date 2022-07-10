@@ -94,6 +94,17 @@ export default ExerciseSetter = ({ navigation }) => {
       : exercise_name == "" || weight == "0" || rep == "0" || set == "0";
   };
 
+  const inputsInvalid = () => {
+    return (
+      isNaN(+distance) ||
+      isNaN(+weight) ||
+      isNaN(+rep) ||
+      isNaN(+set) ||
+      parseInt(rep) != rep ||
+      parseInt(set) != set
+    );
+  };
+
   const calculateVolume = (weight, rep, set) => {
     const w = parseFloat(weight, 10);
     const r = parseFloat(rep, 10);
@@ -169,7 +180,7 @@ export default ExerciseSetter = ({ navigation }) => {
                 <View style={styles.exercise}>
                   <View style={styles.inputContainerSmall}>
                     <Input
-                      keyboardType="number-pad"
+                      keyboardType="numeric"
                       style={styles.timerText}
                       inputContainerStyle={styles.inputContainer}
                       label="Distance"
@@ -210,7 +221,7 @@ export default ExerciseSetter = ({ navigation }) => {
                 <View style={styles.exercise}>
                   <View style={styles.inputContainerSmall}>
                     <Input
-                      keyboardType="number-pad"
+                      keyboardType="numeric"
                       style={styles.timerText}
                       inputContainerStyle={styles.inputContainer}
                       label="Weight"
@@ -246,9 +257,11 @@ export default ExerciseSetter = ({ navigation }) => {
               <View style={styles.buttonContainer}>
                 <TouchableOpacity
                   style={
-                    hasEmptyValues() ? styles.disabledButton : styles.button
+                    hasEmptyValues() || inputsInvalid()
+                      ? styles.disabledButton
+                      : styles.button
                   }
-                  disabled={hasEmptyValues()}
+                  disabled={hasEmptyValues() || inputsInvalid()}
                   onPress={() => {
                     type == "run" ? submitRun() : submitWeight();
                     navigation.navigate(routeName);

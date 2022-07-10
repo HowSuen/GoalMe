@@ -70,7 +70,7 @@ export default SavingsTimeChart = () => {
 
       let { data, error, status } = await supabase
         .from("savings")
-        .select("completed_at, amount")
+        .select("completed_at, curr_amount")
         .match({ user_id: user.id, completion_status: true })
         .gt("completed_at", oneYearAgo.toISOString());
 
@@ -89,7 +89,7 @@ export default SavingsTimeChart = () => {
 
       for (let i = 0; i < data.length; i++) {
         const obj = m.filter((o) => o.x == data[i].month)[0];
-        obj.y += parseFloat(data[i].amount);
+        obj.y += parseFloat(data[i].curr_amount, 10);
       }
 
       let stateChanged = false;

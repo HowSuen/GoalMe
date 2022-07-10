@@ -79,6 +79,16 @@ export default ModuleEditor = ({ navigation }) => {
       : exercise_name == "" || weight == "0" || rep == "0" || set == "0";
   };
 
+  const inputsInvalid = () => {
+    return exercise.type == "run"
+      ? isNaN(+distance)
+      : isNaN(+weight) ||
+          isNaN(+rep) ||
+          isNaN(+set) ||
+          parseInt(rep) != rep ||
+          parseInt(set) != set;
+  };
+
   const calculateVolume = (weight, rep, set) => {
     const w = parseFloat(weight, 10);
     const r = parseFloat(rep, 10);
@@ -187,7 +197,7 @@ export default ModuleEditor = ({ navigation }) => {
               <View style={styles.exercise}>
                 <View style={styles.inputContainerSmall}>
                   <Input
-                    keyboardType="number-pad"
+                    keyboardType="numeric"
                     style={styles.timerText}
                     inputContainerStyle={styles.inputContainer}
                     label="Distance"
@@ -229,7 +239,7 @@ export default ModuleEditor = ({ navigation }) => {
               <View style={styles.exercise}>
                 <View style={styles.inputContainerSmall}>
                   <Input
-                    keyboardType="number-pad"
+                    keyboardType="numeric"
                     style={styles.timerText}
                     inputContainerStyle={styles.inputContainer}
                     label="Weight"
@@ -268,11 +278,13 @@ export default ModuleEditor = ({ navigation }) => {
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 style={
-                  hasEmptyValues() || noStateChange()
+                  hasEmptyValues() || noStateChange() || inputsInvalid()
                     ? styles.disabledButton
                     : styles.button
                 }
-                disabled={hasEmptyValues() || noStateChange()}
+                disabled={
+                  hasEmptyValues() || noStateChange() || inputsInvalid()
+                }
                 onPress={() => {
                   exercise.type == "run"
                     ? updateRun(exercise)

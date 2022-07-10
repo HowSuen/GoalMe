@@ -172,7 +172,7 @@ export default Exercise = ({ navigation }) => {
       );
     }
 
-    const totalDist = totalRunDist + parseFloat(exercise.distance) || 0;
+    const totalDist = totalRunDist + (parseFloat(exercise.distance) || 0);
 
     setTotalXp(newTotalXp);
     setTotalLvl(totalLvl + addLVL);

@@ -15,11 +15,13 @@ export default SavingsProgress = () => {
   const [totalSavings, setTotalSavings] = useState(0);
   const [highestSavings, setHighestSavings] = useState(0);
   const [oneYearSavings, setOneYearSavings] = useState(0);
+  const [thirtyDaysSavings, setThirtyDaysSavings] = useState(0);
 
   useEffect(() => {
     getExpData();
     getPending();
     getOneYearSum();
+    getThirtyDaysSum();
   }, [isFocused]);
 
   const getExpData = async () => {
@@ -69,21 +71,21 @@ export default SavingsProgress = () => {
 
   const getOneYearSum = async () => {
     let sum = 0;
-  
+
     const oneYearAgo = new Date(Date.now() - 364 * 24 * 60 * 60 * 1000);
-  
+
     oneYearAgo.setMonth(oneYearAgo.getMonth() + 1, 1);
     oneYearAgo.setHours(0, 0, 0, 0);
-  
+
     try {
       if (!user) throw new Error("No user on the session!");
-  
+
       let { data, error, status } = await supabase
         .from("savings")
         .select("completed_at, curr_amount")
         .match({ user_id: user.id, completion_status: true })
         .gt("completed_at", oneYearAgo.toISOString());
-  
+
       if (error && status !== 406) {
         throw error;
       }
@@ -91,13 +93,47 @@ export default SavingsProgress = () => {
       sum = data
         .map((o) => parseFloat(o.curr_amount, 10))
         .reduce((a, b) => a + b);
-  
+
       setOneYearSavings(sum);
     } catch (error) {
       Alert.alert(error.message);
     }
   };
-  
+
+  const getThirtyDaysSum = async () => {
+    let sum = 0;
+
+    const thirtyDaysAgo = new Date(Date.now() - 29 * 24 * 60 * 60 * 1000);
+
+    thirtyDaysAgo.setHours(0, 0, 0, 0);
+
+    try {
+      if (!user) throw new Error("No user on the session!");
+
+      let { data, error, status } = await supabase
+        .from("savings")
+        .select("completed_at, curr_amount")
+        .match({ user_id: user.id, completion_status: true })
+        .gt("completed_at", thirtyDaysAgo.toISOString());
+
+      if (error && status !== 406) {
+        throw error;
+      }
+
+      sum = data
+        .map((o) => parseFloat(o.curr_amount, 10))
+        .reduce((a, b) => a + b);
+
+      setThirtyDaysSavings(sum);
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+  };
+
+  const currencyFormat = (str) => {
+    const num = parseFloat(str.replace(",", ""), 10);
+    return "$" + num.toPrecision().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  };
 
   return (
     <View style={styles.container}>
@@ -135,7 +171,7 @@ export default SavingsProgress = () => {
               adjustsFontSizeToFit={true}
               numberOfLines={1}
             >
-              ${totalSavings}
+              {currencyFormat(totalSavings.toString())}
             </Text>
             <Text style={{ alignSelf: "center" }}>Total Saved</Text>
           </Card>
@@ -145,7 +181,25 @@ export default SavingsProgress = () => {
               adjustsFontSizeToFit={true}
               numberOfLines={1}
             >
-              ${oneYearSavings}
+              {currencyFormat(highestSavings.toString())}
+            </Text>
+            <Text
+              style={{ alignSelf: "center" }}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
+              Highest Saved in One Goal
+            </Text>
+          </Card>
+        </View>
+        <View style={styles.topRowContainer}>
+          <Card containerStyle={styles.topRowCard}>
+            <Text
+              style={styles.topRowCardText}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
+              {currencyFormat(oneYearSavings.toString())}
             </Text>
             <Text
               style={{ alignSelf: "center" }}
@@ -153,6 +207,22 @@ export default SavingsProgress = () => {
               numberOfLines={1}
             >
               Saved in The Past Year
+            </Text>
+          </Card>
+          <Card containerStyle={styles.topRowCard}>
+            <Text
+              style={styles.topRowCardText}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
+              {currencyFormat(thirtyDaysSavings.toString())}
+            </Text>
+            <Text
+              style={{ alignSelf: "center" }}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
+              Saved in The Past 30 Days
             </Text>
           </Card>
         </View>

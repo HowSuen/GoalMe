@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Alert, View, FlatList, TouchableOpacity } from "react-native";
+import { Alert, View, FlatList, TouchableOpacity, Text } from "react-native";
 import { useIsFocused, useRoute } from "@react-navigation/native";
+import { Image } from "react-native-elements";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { orders } from "./GoalTracker";
 import styles from "./GoalTracker.style";
@@ -310,7 +311,15 @@ export default Exercise = ({ navigation }) => {
       <View>
         <FlatList
           data={data}
-          ListEmptyComponent={() => <Empty text={"No exercises added."} />}
+          ListEmptyComponent={() => (
+            <View style={styles.emptyContainer}>
+              <Image
+                style={styles.emptyImage}
+                source={require("../../assets/dumbbells.png")}
+              />
+              <Text style={styles.emptyText}>No exercises added.</Text>
+            </View>
+          )}
           keyExtractor={(exercise) => exercise.id}
           renderItem={({ item }) => (
             <ExerciseList

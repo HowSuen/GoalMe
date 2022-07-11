@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Alert, View, FlatList, TouchableOpacity } from "react-native";
+import { Alert, View, FlatList, TouchableOpacity, Text } from "react-native";
 import styles from "./GoalTracker.style";
 import { FontAwesome5 } from "@expo/vector-icons";
 import ModuleList from "../../components/goal-trackers/ModuleList";
@@ -8,6 +8,7 @@ import supabase from "../../lib/supabase";
 import { useIsFocused, useRoute } from "@react-navigation/native";
 import SortButton from "../../components/goal-trackers/SortButton";
 import { orders } from "./GoalTracker";
+import { Image } from "react-native-elements";
 
 const orderBys = [
   { label: "Alphabetical", value: "alphabetical" },
@@ -92,7 +93,7 @@ export default Modules = ({ navigation }) => {
   const [completedMod, setCompletedMod] = useState(0);
   const [modsTargetReached, setModsTargetReached] = useState(0);
   const [aboveA, setAboveA] = useState(0);
-  const [highestGrade, setHighestGrade] = useState(null)
+  const [highestGrade, setHighestGrade] = useState(null);
 
   useEffect(() => {
     getModules();
@@ -208,7 +209,10 @@ export default Modules = ({ navigation }) => {
 
     let addA = compareGrade(gradeReceived, "A") >= 0 ? 1 : 0;
 
-    let grade = compareGrade(highestGrade, gradeReceived) < 0 ? gradeReceived : highestGrade;
+    let grade =
+      compareGrade(highestGrade, gradeReceived) < 0
+        ? gradeReceived
+        : highestGrade;
 
     let newTotalXp = totalXp + addXP;
     let newWisdomXp = wisdomXp + addXP;
@@ -327,7 +331,15 @@ export default Modules = ({ navigation }) => {
       <View>
         <FlatList
           data={data}
-          ListEmptyComponent={() => <Empty text={"No modules added."} />}
+          ListEmptyComponent={() => (
+            <View style={styles.emptyContainer}>
+              <Image
+                style={styles.emptyImage}
+                source={require("../../assets/old_book.png")}
+              />
+              <Text style={styles.emptyText}>No modules added.</Text>
+            </View>
+          )}
           keyExtractor={(module) => module.id}
           renderItem={({ item }) => (
             <ModuleList

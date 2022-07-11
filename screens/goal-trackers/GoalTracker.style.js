@@ -67,7 +67,7 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#27A4F2",
-    borderRadius: 10,
+    borderRadius: 5,
     marginTop: 15,
   },
   exerciseButton: {
@@ -85,7 +85,7 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "plum",
-    borderRadius: 10,
+    borderRadius: 5,
     marginTop: 15,
   },
   walletButton: {
@@ -103,12 +103,27 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "rgb(255,176,58)",
-    borderRadius: 10,
+    borderRadius: 5,
     marginTop: 15,
   },
   buttonText: {
     fontSize: 18,
     padding: 10,
     color: "black",
+  },
+  emptyContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 150,
+    width: 350,
+  },
+  emptyImage: {
+    width: 200,
+    height: 200,
+  },
+  emptyText: {
+    color: "black",
+    marginTop: 20,
+    fontSize: 28,
   },
 });

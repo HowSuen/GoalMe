@@ -33,7 +33,7 @@ const goalsColor = (route) => {
 const profileColor = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route);
   if (routeName == "CustomiseAvatar") {
-    return "rgb(69,190,219)";
+    return "#0d329f";
   } else {
     return "dodgerblue";
   }

@@ -22,7 +22,8 @@ export default StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
     paddingHorizontal: 20,
-    backgroundColor: "rgb(69,190,219)",
+    // backgroundColor: "#0094f7",
+    backgroundColor: "dodgerblue",
     borderRadius: Platform.OS == "ios" ? 5 : 30,
     elevation: 5,
     width: 100,
@@ -40,14 +41,15 @@ export default StyleSheet.create({
   label: {
     fontSize: 17,
     padding: 10,
-    color: "rgb(17, 74, 89)",
+    color: "#0d329f",
     flex: 0.45,
   },
   slot: {
     paddingBottom: 10,
   },
   save: {
-    color: "rgb(17, 74, 89)",
+    // color: "#0d329f",
+    color: "white",
     fontSize: 17,
     textAlign: "center",
   },

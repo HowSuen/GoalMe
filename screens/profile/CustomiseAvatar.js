@@ -343,7 +343,7 @@ const CustomiseAvatar = ({ navigation, session }) => {
     <View style={styles.container}>
       <ImageBackground
         resizeMode="cover"
-        source={require("../../assets/goal_bg_white.jpg")}
+        source={require("../../assets/avatar_bg.jpg")}
       >
         <View style={styles.avatar}>
           <Avatar

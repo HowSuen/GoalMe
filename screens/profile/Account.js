@@ -87,10 +87,10 @@ const Account = ({ navigation, session }) => {
           <View>
             <ImageBackground
               resizeMode="cover"
-              source={require("../../assets/coins_bg.jpg")}
+              source={require("../../assets/profile_bg.jpg")}
             >
               <View style={styles.avatarContainer}>
-                <SavedAvatar size={250} session={session}/>
+                <SavedAvatar size={250} session={session} />
                 <TouchableOpacity
                   style={styles.avatarButton}
                   onPress={() =>
@@ -99,7 +99,12 @@ const Account = ({ navigation, session }) => {
                     })
                   }
                 >
-                  <Text style={[styles.buttonText, { color: "#333333", fontSize: 15 }]}>
+                  <Text
+                    style={[
+                      styles.buttonText,
+                      { color: "#333333", fontSize: 15 },
+                    ]}
+                  >
                     Customise
                   </Text>
                 </TouchableOpacity>
@@ -136,10 +141,10 @@ const Account = ({ navigation, session }) => {
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={styles.button}
+                  style={styles.signOutButton}
                   onPress={() => supabase.auth.signOut()}
                 >
-                  <Text style={styles.buttonText}>Sign Out</Text>
+                  <Text style={styles.signOutText}>Sign Out</Text>
                 </TouchableOpacity>
               </View>
             </View>

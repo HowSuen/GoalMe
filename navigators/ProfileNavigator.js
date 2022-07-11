@@ -17,7 +17,8 @@ export default ProfileNavigator = ({ navigation, session }) => {
           headerShown: true,
           headerTitle: "Profile",
           headerStyle: { backgroundColor: "ghostwhite" },
-          headerTintColor: "dodgerblue",
+          // headerTintColor: "dodgerblue",
+          headerTintColor: "#0d329f",
           headerShadowVisible: true,
           presentation: "modal",
           headerTitleAlign: "center",
@@ -32,7 +33,7 @@ export default ProfileNavigator = ({ navigation, session }) => {
           headerShadowVisible: true,
           headerTitle: "Avatar",
           headerStyle: { backgroundColor: "ghostwhite" },
-          headerTintColor: "rgb(17, 74, 89)",
+          headerTintColor: "#0d329f",
           presentation: "modal",
           headerTitleAlign: "center",
           headerRight: () => (

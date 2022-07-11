@@ -11,7 +11,7 @@ const GameScreen = ({ navigation, session }) => {
       <Card
         containerStyle={{
           padding: 5,
-          backgroundColor: "white",
+          backgroundColor: "rgba(245,242,234,1.0)",
           elevation: 15,
           borderRadius: 10,
         }}
@@ -21,7 +21,7 @@ const GameScreen = ({ navigation, session }) => {
       <Card
         containerStyle={{
           padding: 5,
-          backgroundColor: "white",
+          backgroundColor: "rgba(245,242,234,1.0)",
           elevation: 10,
           borderRadius: 10,
         }}
@@ -35,7 +35,7 @@ const GameScreen = ({ navigation, session }) => {
       <Card
         containerStyle={{
           padding: 5,
-          backgroundColor: "white",
+          backgroundColor: "rgba(245,242,234,1.0)",
           elevation: 10,
           borderRadius: 10,
         }}

@@ -221,7 +221,7 @@ export default SavingsEditor = ({ navigation }) => {
                 width: (Dimensions.get("window").width / 10) * 4,
                 minWidth: 160,
               }}
-              label="Saving Amount ($)"
+              label="Goal Amount ($)"
               placeholder="Add amount..."
               placeholderTextColor="darkgray"
               onChangeText={(value) => setAmount(value)}

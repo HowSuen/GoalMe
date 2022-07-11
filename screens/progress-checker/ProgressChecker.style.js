@@ -49,6 +49,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     borderRadius: 5,
     elevation: 5,
+    minHeight: 110,
   },
   topRowCardText: {
     justifyContent: "center",

@@ -22,14 +22,14 @@ export default StyleSheet.create({
     borderTopRightRadius: 30,
   },
   verticallySpaced: {
-    paddingTop: 5,
+    paddingTop: 10,
     alignSelf: "stretch",
   },
   textInput: {
     color: "black",
   },
   button: {
-    marginTop: 20,
+    marginTop: 30,
     paddingTop: 10,
     paddingBottom: 10,
     width: 200,

@@ -23,7 +23,8 @@ export default ProgressChecker = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* <Card
+      <ScrollView contentContainerStyle={styles.container}>
+        {/* <Card
         containerStyle={{
           padding: Platform.OS == "ios" ? 5 : 0,
           borderRadius: 10,
@@ -44,35 +45,36 @@ export default ProgressChecker = ({ navigation }) => {
           <Text style={styles.cardText}>Goals</Text>
         </TouchableOpacity>
       </Card> */}
-      <TouchableOpacity
-        style={{ marginVertical: 10, borderRadius: 10, elevation: 5 }}
-        onPress={() => navigation.navigate("GoalsProgress")}
-      >
-        <ImageBackground
-          resizeMode="cover"
-          source={require("../../assets/green_mountain.jpg")}
-          imageStyle={{ borderRadius: 10 }}
+        <TouchableOpacity
+          style={{ marginVertical: 10, borderRadius: 10, elevation: 5 }}
+          onPress={() => navigation.navigate("GoalsProgress")}
         >
-          <View style={[styles.cardContainer, { alignItems: "flex-end" }]}>
-            {/* <Image
+          <ImageBackground
+            resizeMode="cover"
+            source={require("../../assets/green_mountain.jpeg")}
+            imageStyle={{ borderRadius: 10 }}
+          >
+            <View style={[styles.cardContainer, { alignItems: "flex-end" }]}>
+              {/* <Image
               style={styles.cardIcon}
               source={require("../../assets/goals-progress.png")}
             /> */}
-            <Text
-              style={[
-                styles.cardText,
-                {
-                  backgroundColor: "mediumseagreen",
-                  borderRadius: 5,
-                },
-              ]}
-            >
-              Goals
-            </Text>
-          </View>
-        </ImageBackground>
-      </TouchableOpacity>
-      {/* <Card
+              <Text
+                style={[
+                  styles.cardText,
+                  {
+                    backgroundColor: "mediumseagreen",
+                    borderRadius: 10,
+                    overflow: "hidden",
+                  },
+                ]}
+              >
+                Goals
+              </Text>
+            </View>
+          </ImageBackground>
+        </TouchableOpacity>
+        {/* <Card
         containerStyle={{
           padding: Platform.OS == "ios" ? 5 : 0,
           borderRadius: 10,
@@ -93,35 +95,36 @@ export default ProgressChecker = ({ navigation }) => {
           <Text style={styles.cardText}>Modules</Text>
         </TouchableOpacity>
       </Card> */}
-      <TouchableOpacity
-        style={{ marginVertical: 10, borderRadius: 10, elevation: 5 }}
-        onPress={() => navigation.navigate("ModulesProgress")}
-      >
-        <ImageBackground
-          resizeMode="cover"
-          source={require("../../assets/books_bg.jpg")}
-          imageStyle={{ borderRadius: 10 }}
+        <TouchableOpacity
+          style={{ marginVertical: 10, borderRadius: 10, elevation: 5 }}
+          onPress={() => navigation.navigate("ModulesProgress")}
         >
-          <View style={[styles.cardContainer, { alignItems: "flex-start" }]}>
-            {/* <Image
+          <ImageBackground
+            resizeMode="cover"
+            source={require("../../assets/books_bg.jpeg")}
+            imageStyle={{ borderRadius: 10 }}
+          >
+            <View style={[styles.cardContainer, { alignItems: "flex-start" }]}>
+              {/* <Image
               style={styles.cardIcon}
               source={require("../../assets/modules-progress.png")}
             /> */}
-            <Text
-              style={[
-                styles.cardText,
-                {
-                  backgroundColor: "#27A4F2",
-                  borderRadius: 5,
-                },
-              ]}
-            >
-              Modules
-            </Text>
-          </View>
-        </ImageBackground>
-      </TouchableOpacity>
-      {/* <Card
+              <Text
+                style={[
+                  styles.cardText,
+                  {
+                    backgroundColor: "#27A4F2",
+                    borderRadius: 10,
+                    overflow: "hidden",
+                  },
+                ]}
+              >
+                Modules
+              </Text>
+            </View>
+          </ImageBackground>
+        </TouchableOpacity>
+        {/* <Card
         containerStyle={{
           padding: Platform.OS == "ios" ? 5 : 0,
           borderRadius: 10,
@@ -142,35 +145,36 @@ export default ProgressChecker = ({ navigation }) => {
           <Text style={styles.cardText}>Exercises</Text>
         </TouchableOpacity>
       </Card> */}
-      <TouchableOpacity
-        style={{ marginVertical: 10, borderRadius: 10, elevation: 5 }}
-        onPress={() => navigation.navigate("ExercisesProgress")}
-      >
-        <ImageBackground
-          resizeMode="cover"
-          source={require("../../assets/gym_bg.jpg")}
-          imageStyle={{ borderRadius: 10 }}
+        <TouchableOpacity
+          style={{ marginVertical: 10, borderRadius: 10, elevation: 5 }}
+          onPress={() => navigation.navigate("ExercisesProgress")}
         >
-          <View style={[styles.cardContainer, { alignItems: "flex-end" }]}>
-            {/* <Image
+          <ImageBackground
+            resizeMode="cover"
+            source={require("../../assets/gym_bg.jpeg")}
+            imageStyle={{ borderRadius: 10 }}
+          >
+            <View style={[styles.cardContainer, { alignItems: "flex-end" }]}>
+              {/* <Image
             style={styles.cardIcon}
             source={require("../../assets/exercises-progress.png")}
           /> */}
-            <Text
-              style={[
-                styles.cardText,
-                {
-                  backgroundColor: "hotpink",
-                  borderRadius: 5,
-                },
-              ]}
-            >
-              Exercises
-            </Text>
-          </View>
-        </ImageBackground>
-      </TouchableOpacity>
-      {/* <Card
+              <Text
+                style={[
+                  styles.cardText,
+                  {
+                    backgroundColor: "hotpink",
+                    borderRadius: 10,
+                    overflow: "hidden",
+                  },
+                ]}
+              >
+                Exercises
+              </Text>
+            </View>
+          </ImageBackground>
+        </TouchableOpacity>
+        {/* <Card
         containerStyle={{
           padding: Platform.OS == "ios" ? 5 : 0,
           borderRadius: 10,
@@ -191,34 +195,36 @@ export default ProgressChecker = ({ navigation }) => {
           <Text style={styles.cardText}>Savings</Text>
         </TouchableOpacity>
       </Card> */}
-      <TouchableOpacity
-        style={{ marginVertical: 10, borderRadius: 10, elevation: 5 }}
-        onPress={() => navigation.navigate("SavingsProgress")}
-      >
-        <ImageBackground
-          resizeMode="cover"
-          source={require("../../assets/money_bg.jpg")}
-          imageStyle={{ borderRadius: 10 }}
+        <TouchableOpacity
+          style={{ marginVertical: 10, borderRadius: 10, elevation: 5 }}
+          onPress={() => navigation.navigate("SavingsProgress")}
         >
-          <View style={[styles.cardContainer, { alignItems: "flex-start" }]}>
-            {/* <Image
+          <ImageBackground
+            resizeMode="cover"
+            source={require("../../assets/money_bg.jpg")}
+            imageStyle={{ borderRadius: 10 }}
+          >
+            <View style={[styles.cardContainer, { alignItems: "flex-start" }]}>
+              {/* <Image
               style={styles.cardIcon}
               source={require("../../assets/savings-progress.png")}
             /> */}
-            <Text
-              style={[
-                styles.cardText,
-                {
-                  backgroundColor: "rgb(255,176,58)",
-                  borderRadius: 5,
-                },
-              ]}
-            >
-              Savings
-            </Text>
-          </View>
-        </ImageBackground>
-      </TouchableOpacity>
+              <Text
+                style={[
+                  styles.cardText,
+                  {
+                    backgroundColor: "rgb(255,176,58)",
+                    borderRadius: 10,
+                    overflow: "hidden",
+                  },
+                ]}
+              >
+                Savings
+              </Text>
+            </View>
+          </ImageBackground>
+        </TouchableOpacity>
+      </ScrollView>
     </View>
   );
 };

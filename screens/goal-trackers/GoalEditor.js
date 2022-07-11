@@ -132,16 +132,18 @@ export default GoalEditor = ({ navigation }) => {
               placeholder={{ label: "Select a type...", value: null }}
             />
           </View>
-          <View style={styles.dropdownContainer}>
-            <Text style={styles.dropdownLabel}>Module</Text>
-            <GoalDropdownList
-              value={type == "Academic" ? module : null}
-              items={modules}
-              onValueChange={(value) => setModule(value)}
-              placeholder={{ label: "Select a module...", value: null }}
-              disabled={loading || type != "Academic"}
-            />
-          </View>
+          {type == "Academic" && (
+            <View style={styles.dropdownContainer}>
+              <Text style={styles.dropdownLabel}>Module</Text>
+              <GoalDropdownList
+                value={type == "Academic" ? module : null}
+                items={modules}
+                onValueChange={(value) => setModule(value)}
+                placeholder={{ label: "Select a module...", value: null }}
+                disabled={loading || type != "Academic"}
+              />
+            </View>
+          )}
           <View style={styles.dropdownContainer}>
             <Text style={styles.dropdownLabel}>Difficulty</Text>
             <GoalDropdownList

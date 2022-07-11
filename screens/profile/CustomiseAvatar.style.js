@@ -17,6 +17,8 @@ export default StyleSheet.create({
   saveButton: {
     marginRight: 20,
     marginLeft: 20,
+    marginBottom: Platform.OS == "ios" ? 30 : 0,
+    marginTop: Platform.OS == "ios" ? -10 : 0,
     paddingTop: 10,
     paddingBottom: 10,
     paddingHorizontal: 20,
@@ -29,6 +31,7 @@ export default StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.1)"
   },
   menu: {
     backgroundColor: "ghostwhite",

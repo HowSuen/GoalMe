@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, StyleSheet, Platform } from "react-native";
 
 const width = (Dimensions.get("window").width / 10) * 9;
 
@@ -6,7 +6,7 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "ghostwhite",
-    justifyContent: "flex-start",
+    justifyContent: "space-evenly",
     alignItems: "center",
     padding: 5,
   },
@@ -14,14 +14,16 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: width,
-    height: 120,
+    height: Platform.OS == "ios" ? 150 : 120,
   },
   cardText: {
-    fontSize: 25,
+    fontSize: Platform.OS === "ios" ? 21 : 25,
     fontWeight: "bold",
+    color: "black",
     opacity: 0.8,
     minWidth: 120,
-    height: 120,
+    height: Platform.OS == "ios" ? 150 : 120,
+    lineHeight: Platform.OS == "ios" ? 150 : 120,
     textAlignVertical: "center",
     textAlign: "center",
   },

@@ -49,7 +49,7 @@ export default ProfileNavigator = ({ navigation, session }) => {
                 )
               }
             >
-              <FontAwesome name="question-circle-o" size={30} color="white" />
+              <FontAwesome name="question-circle-o" size={30} color="black" />
             </TouchableOpacity>
           ),
         }}

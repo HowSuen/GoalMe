@@ -91,7 +91,7 @@ export default AppNavigator = ({ session }) => {
         <Tab.Screen
           name="Progress"
           options={({ route, navigation }) => ({
-            tabBarActiveTintColor: "indianred",
+            tabBarActiveTintColor: "slateblue",
           })}
         >
           {({ navigation }) => ProgressNavigator({ navigation: navigation })}

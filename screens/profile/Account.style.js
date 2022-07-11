@@ -1,11 +1,10 @@
-import { StyleSheet, DarkTheme } from "react-native";
+import { StyleSheet, DarkTheme, Platform } from "react-native";
 
 export default StyleSheet.create({
   container: {
-    padding: 15,
     justifyContent: "center",
     flex: 1,
-    backgroundColor: "ghostwhite",
+    backgroundColor: "#0094f7",
   },
   avatarContainer: {
     justifyContent: "center",
@@ -17,34 +16,55 @@ export default StyleSheet.create({
   },
   formContainer: {
     marginTop: 0,
+    backgroundColor: "ghostwhite",
+    padding: 15,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
   },
   verticallySpaced: {
-    paddingTop: 5,
-    paddingBottom: 5,
+    paddingTop: 10,
     alignSelf: "stretch",
   },
   textInput: {
     color: "black",
   },
   button: {
-    marginRight: 20,
-    marginLeft: 20,
-    marginTop: 20,
+    marginTop: 30,
     paddingTop: 10,
     paddingBottom: 10,
+    width: 200,
     backgroundColor: "dodgerblue",
-    borderRadius: 5,
-    elevation: 10,
+    borderRadius: Platform.OS == "ios" ? 5 : 30,
+    elevation: 5,
   },
   buttonText: {
     color: "white",
     fontSize: 17,
     textAlign: "center",
   },
+  signOutButton: {
+    marginTop: 30,
+    paddingTop: 10,
+    paddingBottom: 10,
+    width: 200,
+    borderWidth: 1,
+    borderColor: "red",
+    backgroundColor: "ghostwhite",
+    borderRadius: Platform.OS == "ios" ? 5 : 30,
+    elevation: 5,
+  },
+  signOutText: {
+    color: "red",
+    fontSize: 17,
+    textAlign: "center",
+  },
   avatarButton: {
-    backgroundColor: "dodgerblue",
+    backgroundColor: "ghostwhite",
     padding: 5,
-    borderRadius: 5,
+    paddingHorizontal: 7,
+    borderRadius: 15,
     elevation: 10,
+    margin: 10,
+    marginTop: 0,
   },
 });

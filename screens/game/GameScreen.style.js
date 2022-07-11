@@ -8,6 +8,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "ghostwhite",
+    marginTop: -20,
   },
   avatar: {
     justifyContent: "center",

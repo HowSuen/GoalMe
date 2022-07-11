@@ -79,14 +79,18 @@ export default AppNavigator = ({ session }) => {
             GoalTrackerNavigator({ route: route, navigation: navigation })
           }
         </Tab.Screen>
-        <Tab.Screen name="Progress">
-          {({ navigation }) =>
-            ProgressNavigator({ navigation: navigation })
-          }
+        <Tab.Screen
+          name="Progress"
+          options={({ route, navigation }) => ({
+            tabBarActiveTintColor: "slateblue",
+          })}
+        >
+          {({ navigation }) => ProgressNavigator({ navigation: navigation })}
         </Tab.Screen>
         <Tab.Screen
           name="Game"
           options={{
+            tabBarActiveTintColor: "#3A637A",
             tabBarIcon: ({ focused, color, size }) => {
               return (
                 <Ionicons
@@ -105,7 +109,12 @@ export default AppNavigator = ({ session }) => {
             GameNavigator({ navigation: navigation, session: session })
           }
         </Tab.Screen>
-        <Tab.Screen name="Profile">
+        <Tab.Screen
+          name="Profile"
+          options={({ route, navigation }) => ({
+            tabBarActiveTintColor: "#0d329f",
+          })}
+        >
           {({ navigation }) =>
             ProfileNavigator({ session: session, navigation: navigation })
           }

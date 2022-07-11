@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: "auto",
     width: "auto",
-    marginTop: 25,
+    marginTop: 15,
   },
   listContainer: {
     height: "auto",

@@ -6,7 +6,7 @@ import supabase from "../../lib/supabase";
 import { Text } from "react-native-elements";
 import Svg from "react-native-svg";
 
-export default CompletedGoalsChart = () => {
+export default GoalsChart = () => {
   const user = supabase.auth.user();
   const isFocused = useIsFocused();
 
@@ -150,6 +150,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
+    fontWeight: "bold",
     color: "black",
     marginTop: 10,
     marginBottom: -30,

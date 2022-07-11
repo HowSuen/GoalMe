@@ -4,6 +4,7 @@ import {
   View,
   Text,
   Keyboard,
+  Dimensions,
 } from "react-native";
 import { useState } from "react";
 import { Input } from "react-native-elements";
@@ -93,9 +94,9 @@ export default SavingsEditor = ({ navigation }) => {
     return "$" + num.toPrecision().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
   };
 
-  const currencyFormatWithoutS = (str) => {
-    const num = parseFloat(str.replace(",", ""), 10);
-    return num.toPrecision().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  const floatFormat = (value) => {
+    const num = parseFloat(value.replace(",", ""), 10);
+    return num.toString();
   };
 
   const updateSaving = async (saving) => {
@@ -105,8 +106,8 @@ export default SavingsEditor = ({ navigation }) => {
         .update({
           name: name,
           description: description,
-          amount: currencyFormatWithoutS(amount),
-          curr_amount: curr_amount,
+          amount: floatFormat(amount),
+          curr_amount: floatFormat(curr_amount),
           updated_at: new Date().toISOString().toLocaleString(),
           // recurring: recurring,
         })
@@ -123,7 +124,7 @@ export default SavingsEditor = ({ navigation }) => {
       let { error } = await supabase
         .from("savings")
         .update({
-          curr_amount: new_amount,
+          curr_amount: floatFormat(new_amount),
           updated_at: new Date().toISOString().toLocaleString(),
           // recurring: recurring,
         })
@@ -182,13 +183,9 @@ export default SavingsEditor = ({ navigation }) => {
                 <View style={styles.savedContainer}>
                   <Text style={styles.savedText}>GOAL</Text>
                   <View style={{ flexDirection: "row" }}>
-                    <Text style={styles.savedNumber}>$</Text>
-                    <TextInput
-                      keyboardType="numeric"
-                      style={styles.savedNumber}
-                      onChangeText={setAmount}
-                      value={amount}
-                    />
+                    <Text style={styles.savedNumber}>
+                      {currencyFormat(amount)}
+                    </Text>
                   </View>
                 </View>
               </View>
@@ -202,15 +199,35 @@ export default SavingsEditor = ({ navigation }) => {
               </View>
             </View>
           </View>
-          <Input
-            style={styles.textInput}
-            inputContainerStyle={styles.inputContainer}
-            label="Goal"
-            placeholder="Edit goal name..."
-            placeholderTextColor="darkgray"
-            value={name}
-            onChangeText={(text) => setName(text)}
-          />
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Input
+              style={styles.textInput}
+              inputContainerStyle={styles.inputContainer}
+              containerStyle={{
+                width: (Dimensions.get("window").width / 10) * 6,
+                maxWidth: Dimensions.get("window").width - 160,
+              }}
+              label="Goal"
+              placeholder="Edit goal name..."
+              placeholderTextColor="darkgray"
+              value={name}
+              onChangeText={(text) => setName(text)}
+            />
+            <Input
+              keyboardType="numeric"
+              style={styles.textInput}
+              inputContainerStyle={styles.inputContainer}
+              containerStyle={{
+                width: (Dimensions.get("window").width / 10) * 4,
+                minWidth: 160,
+              }}
+              label="Goal Amount ($)"
+              placeholder="Add amount..."
+              placeholderTextColor="darkgray"
+              onChangeText={(value) => setAmount(value)}
+              value={amount}
+            />
+          </View>
           <Input
             style={styles.textInput}
             inputContainerStyle={styles.inputContainer}

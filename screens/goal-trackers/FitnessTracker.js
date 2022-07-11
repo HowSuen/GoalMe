@@ -15,6 +15,7 @@ import {
   deleteItem,
 } from "./GoalTracker";
 import AlertPrompt from "../../components/goal-trackers/AlertPrompt";
+import { Image } from "react-native-elements";
 
 export default fitnessTracker = ({ navigation }) => {
   const [data, setData] = useState([]);
@@ -203,7 +204,14 @@ export default fitnessTracker = ({ navigation }) => {
           }}
           style={styles.exerciseNavButton}
         >
-          <Text style={styles.buttonText}>Exercises</Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Image
+              style={{ width: 30, height: 28 }}
+              source={require("../../assets/exercises-progress.png")}
+              resizeMode="contain"
+            />
+            <Text style={styles.buttonText}>Exercises</Text>
+          </View>
         </TouchableOpacity>
         <FlatList
           data={data}

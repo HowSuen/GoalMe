@@ -48,31 +48,15 @@ const AchievementList = ({ navigation, session }) => {
   const [finlvl20, setFinlvl20] = useState(false);
   const [finlvl30, setFinlvl30] = useState(false);
 
-  const [totalXp, setTotalXp] = useState(0);
-  const [wisdomXp, setWisdomXp] = useState(0);
-  const [strengthXp, setStrengthXp] = useState(0);
-  const [wealthXp, setWealthXp] = useState(0);
-
-  const [totalLvl, setTotalLvl] = useState(1);
-  const [strengthLvl, setStrengthLvl] = useState(1);
-  const [wisdomLvl, setWisdomLvl] = useState(1);
-  const [wealthLvl, setWealthLvl] = useState(1);
-  const [completed, setCompleted] = useState(0);
-  const [completedAcad, setCompletedAcad] = useState(0);
-  const [completedFit, setCompletedFit] = useState(0);
-  const [completedFinance, setCompletedFinance] = useState(0);
-
   const [isFetching, setIsFetching] = useState(false);
   const [state, setState] = useState({});
 
   useEffect(() => {
-    if (session) {
-      getAchievements().then(() => getExperience().then(() => null));
-    }
+    getAchievements();
     return () => {
       setState({});
     };
-  }, [session, isFocused, completed]);
+  }, [isFocused]);
 
   const user = supabase.auth.user();
 
@@ -132,43 +116,6 @@ const AchievementList = ({ navigation, session }) => {
         setFinlvl10(data.finlvl10);
         setFinlvl20(data.finlvl20);
         setFinlvl30(data.finlvl30);
-      }
-
-      promise = data;
-    } catch (error) {
-      Alert.alert(error.message);
-    }
-    return promise;
-  };
-
-  const getExperience = async () => {
-    let promise;
-    try {
-      if (!user) throw new Error("No user on the session!");
-
-      let { data, error, status } = await supabase
-        .from("experience")
-        .select()
-        .eq("id", user.id)
-        .single();
-
-      if (error && status !== 406) {
-        throw error;
-      }
-
-      if (data) {
-        setTotalXp(data.totalXP);
-        setTotalLvl(data.totalLVL);
-        setWisdomXp(data.wisdomXP);
-        setWisdomLvl(data.wisdomLVL);
-        setStrengthXp(data.strengthXP);
-        setStrengthLvl(data.strengthLVL);
-        setWealthXp(data.wealthXP);
-        setWealthLvl(data.wealthLVL);
-        setCompleted(data.completed);
-        setCompletedAcad(data.completedAcad);
-        setCompletedFit(data.completedFit);
-        setCompletedFinance(data.completedFinance);
       }
 
       promise = data;
@@ -452,9 +399,8 @@ const AchievementList = ({ navigation, session }) => {
         )}
         onRefresh={() => {
           setIsFetching(true);
-          getAchievements().then(() =>
-            getExperience().then(() => setIsFetching(false))
-          );
+          getAchievements();
+          setIsFetching(false);
         }}
         refreshing={isFetching}
       />
@@ -469,7 +415,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginVertical: 10,
+    marginTop: 10,
   },
   sectionHeader: {
     paddingTop: 15,

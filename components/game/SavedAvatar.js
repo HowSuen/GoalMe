@@ -4,7 +4,7 @@ import { Alert } from "react-native";
 import supabase from "../../lib/supabase";
 import { useIsFocused } from "@react-navigation/native";
 
-const SavedAvatar = ({ size, session }) => {
+const SavedAvatar = ({ size, session, bgShape }) => {
   const [gender, setGender] = useState("chest");
   const [hat, setHat] = useState("None");
   const [skin, setSkin] = useState("light");
@@ -85,6 +85,7 @@ const SavedAvatar = ({ size, session }) => {
       hairColor={hairColor}
       mouth={mouth}
       lipColor={lipColor}
+      bgShape={bgShape || "circle"}
     />
   );
 };

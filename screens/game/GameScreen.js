@@ -8,33 +8,53 @@ import styles from "./GameScreen.style";
 const GameScreen = ({ navigation, session }) => {
   return (
     <View style={styles.container}>
-      <Card containerStyle={{ padding: 5 }}>
+      <Card
+        containerStyle={{
+          padding: 5,
+          backgroundColor: "rgba(245,242,234,1.0)",
+          elevation: 15,
+          borderRadius: 10,
+        }}
+      >
         <MainLevel session={session} />
       </Card>
-      <Card containerStyle={{ padding: 5 }}>
+      <Card
+        containerStyle={{
+          padding: 5,
+          backgroundColor: "rgba(245,242,234,1.0)",
+          elevation: 10,
+          borderRadius: 10,
+        }}
+      >
         <View style={styles.levelContainer}>
           <LevelBar type="WISDOM" session={session} />
           <LevelBar type="STRENGTH" session={session} />
           <LevelBar type="WEALTH" session={session} />
         </View>
       </Card>
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate("Game", {
-            screen: "Achievements",
-          })
-        }
+      <Card
+        containerStyle={{
+          padding: 5,
+          backgroundColor: "rgba(245,242,234,1.0)",
+          elevation: 10,
+          borderRadius: 10,
+        }}
       >
-        <Card containerStyle={{ padding: 5 }}>
-          <View style={styles.achievementContainer}>
-            <Image
-              style={styles.achievement}
-              source={require("../../assets/achievement_logo_alt.png")}
-            />
-            <Text style={styles.achievementText}>Achievements Completed</Text>
-          </View>
-        </Card>
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("Game", {
+              screen: "Achievements",
+            })
+          }
+          style={styles.achievementContainer}
+        >
+          <Image
+            style={styles.achievement}
+            source={require("../../assets/achievement_logo_alt.png")}
+          />
+          <Text style={styles.achievementText}>Achievements Completed</Text>
+        </TouchableOpacity>
+      </Card>
     </View>
   );
 };

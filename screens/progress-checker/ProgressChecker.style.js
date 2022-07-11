@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, StyleSheet, Platform } from "react-native";
 
 const width = (Dimensions.get("window").width / 10) * 9;
 
@@ -6,27 +6,36 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "ghostwhite",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    padding: 5,
   },
   cardContainer: {
     justifyContent: "center",
     alignItems: "center",
-    padding: 10,
     width: width,
+    height: Platform.OS == "ios" ? 150 : 120,
   },
   cardText: {
-    fontSize: 20,
+    fontSize: Platform.OS === "ios" ? 21 : 25,
     fontWeight: "bold",
-    paddingTop: 10,
+    color: "black",
+    opacity: 0.8,
+    minWidth: 120,
+    height: Platform.OS == "ios" ? 150 : 120,
+    lineHeight: Platform.OS == "ios" ? 150 : 120,
+    textAlignVertical: "center",
+    textAlign: "center",
   },
   cardIcon: {
-    width: 90,
-    height: 90,
+    width: Platform.OS === "ios" ? 90 : 80,
+    height: Platform.OS === "ios" ? 90 : 80,
   },
   scrollView: {
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "ghostwhite",
+    paddingBottom: Platform.OS === "ios" ? 0 : 10,
   },
   topRowContainer: {
     flex: 1,
@@ -37,6 +46,10 @@ export default StyleSheet.create({
     paddingVertical: 20,
     flex: 1,
     alignSelf: "stretch",
+    justifyContent: "center",
+    borderRadius: 5,
+    elevation: 5,
+    minHeight: 110,
   },
   topRowCardText: {
     justifyContent: "center",

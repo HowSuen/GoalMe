@@ -68,7 +68,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#27A4F2",
     borderRadius: 10,
-    marginTop: 25,
+    marginTop: 15,
   },
   exerciseButton: {
     width: 60,
@@ -86,7 +86,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "plum",
     borderRadius: 10,
-    marginTop: 25,
+    marginTop: 15,
   },
   walletButton: {
     width: 60,
@@ -104,7 +104,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "rgb(255,176,58)",
     borderRadius: 10,
-    marginTop: 25,
+    marginTop: 15,
   },
   buttonText: {
     fontSize: 18,

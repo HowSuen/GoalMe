@@ -88,7 +88,12 @@ export default AppNavigator = ({ session }) => {
             GoalTrackerNavigator({ route: route, navigation: navigation })
           }
         </Tab.Screen>
-        <Tab.Screen name="Progress">
+        <Tab.Screen
+          name="Progress"
+          options={({ route, navigation }) => ({
+            tabBarActiveTintColor: "#A093BF",
+          })}
+        >
           {({ navigation }) => ProgressNavigator({ navigation: navigation })}
         </Tab.Screen>
         <Tab.Screen

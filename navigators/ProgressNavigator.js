@@ -17,7 +17,7 @@ export default ProgressNavigator = ({ navigation }) => {
         name="ProgressChecker"
         options={{
           headerTitle: "Progress",
-          headerStyle: { backgroundColor: "mediumseagreen" },
+          headerStyle: { backgroundColor: "#D5C4FF" },
           headerTintColor: "black",
           headerShadowVisible: true,
           presentation: "card",

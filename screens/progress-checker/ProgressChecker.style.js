@@ -6,19 +6,24 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "ghostwhite",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
+    padding: 5,
   },
   cardContainer: {
     justifyContent: "center",
     alignItems: "center",
-    padding: 10,
     width: width,
+    height: 120,
   },
   cardText: {
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: "bold",
-    paddingTop: 10,
+    opacity: 0.8,
+    minWidth: 120,
+    height: 120,
+    textAlignVertical: "center",
+    textAlign: "center",
   },
   cardIcon: {
     width: Platform.OS === "ios" ? 90 : 80,
@@ -28,7 +33,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "ghostwhite",
-    paddingBottom: Platform.OS === "ios" ? 0: 10,
+    paddingBottom: Platform.OS === "ios" ? 0 : 10,
   },
   topRowContainer: {
     flex: 1,

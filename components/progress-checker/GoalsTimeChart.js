@@ -6,6 +6,7 @@ import {
   VictoryChart,
   VictoryTheme,
   VictoryAxis,
+  VictoryLabel,
 } from "victory-native";
 import supabase from "../../lib/supabase";
 import { Text } from "react-native-elements";
@@ -121,6 +122,13 @@ export default GoalsTimeChart = () => {
             duration: 500,
           }}
           labels={({ datum }) => (datum.y == 0 ? null : Math.floor(datum.y))}
+          labelComponent={
+            <VictoryLabel
+              textAnchor={({ datum }) =>
+                datum.x == "Mon" ? "start" : datum.x == "Sun" ? "end" : "middle"
+              }
+            />
+          }
           data={days}
         />
       </VictoryChart>

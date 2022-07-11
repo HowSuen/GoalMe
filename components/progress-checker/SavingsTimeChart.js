@@ -6,6 +6,7 @@ import {
   VictoryChart,
   VictoryTheme,
   VictoryAxis,
+  VictoryLabel,
 } from "victory-native";
 import supabase from "../../lib/supabase";
 import { Text } from "react-native-elements";
@@ -106,6 +107,11 @@ export default SavingsTimeChart = () => {
     }
   };
 
+  const currencyFormat = (str) => {
+    const num = parseFloat(str.replace(",", ""), 10);
+    return "$" + num.toPrecision().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Monthly Savings</Text>
@@ -120,7 +126,7 @@ export default SavingsTimeChart = () => {
       >
         <VictoryAxis
           dependentAxis={true}
-          tickFormat={(y) => "$" + y}
+          tickFormat={(y) => currencyFormat(y.toString())}
           // label="Amount Saved ($)"
           style={{
             axisLabel: { padding: 30, fontWeight: "bold" },
@@ -137,9 +143,17 @@ export default SavingsTimeChart = () => {
         <VictoryArea
           style={{ data: { fill: "darkgoldenrod", opacity: 0.6 } }}
           animate={{
-            duration: 500,
+            duration: 100,
+            // animationWhitelist: ["data"]
           }}
-          labels={({ datum }) => (datum.y == 0 ? null : "$" + datum.y)}
+          labels={({ datum }) => (datum.y == 0 ? null : currencyFormat(datum.y.toString()))}
+          labelComponent={
+            <VictoryLabel
+              textAnchor={({ datum }) =>
+                datum.x == "Jan" ? "start" : datum.x == "Dec" ? "end" : "middle"
+              }
+            />
+          }
           data={months}
         />
       </VictoryChart>

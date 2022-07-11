@@ -1,4 +1,4 @@
-import { StyleSheet, DarkTheme } from "react-native";
+import { StyleSheet, DarkTheme, Platform } from "react-native";
 
 export default StyleSheet.create({
   container: {
@@ -34,7 +34,7 @@ export default StyleSheet.create({
     paddingBottom: 10,
     width: 200,
     backgroundColor: "dodgerblue",
-    borderRadius: 30,
+    borderRadius: Platform.OS == "ios" ? 5 : 30,
     elevation: 5,
   },
   buttonText: {

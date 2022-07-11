@@ -31,7 +31,7 @@ const pickerSelectStyles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 10,
     borderWidth: 1,
-    borderColor: "dodgerblue",
+    borderColor: "rgb(69,190,219)",
     borderRadius: 4,
     color: "black",
     paddingRight: 40, // to ensure the text is never behind the icon
@@ -43,7 +43,7 @@ const pickerSelectStyles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 8,
     borderWidth: 1,
-    borderColor: "dodgerblue",
+    borderColor: "rgb(69,190,219)",
     borderRadius: 8,
     color: "black",
     paddingRight: 40, // to ensure the text is never behind the icon

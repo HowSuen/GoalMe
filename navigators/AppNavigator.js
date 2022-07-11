@@ -30,6 +30,15 @@ const goalsColor = (route) => {
   }
 };
 
+const profileColor = (route) => {
+  const routeName = getFocusedRouteNameFromRoute(route);
+  if (routeName == "CustomiseAvatar") {
+    return "rgb(69,190,219)";
+  } else {
+    return "dodgerblue";
+  }
+};
+
 export default AppNavigator = ({ session }) => {
   return (
     <NavigationContainer styles={styles.container}>
@@ -104,7 +113,12 @@ export default AppNavigator = ({ session }) => {
             GameNavigator({ navigation: navigation, session: session })
           }
         </Tab.Screen>
-        <Tab.Screen name="Profile">
+        <Tab.Screen
+          name="Profile"
+          options={({ route, navigation }) => ({
+            tabBarActiveTintColor: profileColor(route),
+          })}
+        >
           {({ navigation }) =>
             ProfileNavigator({ session: session, navigation: navigation })
           }

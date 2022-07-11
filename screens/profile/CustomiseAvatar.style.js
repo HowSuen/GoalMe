@@ -10,8 +10,9 @@ export default StyleSheet.create({
   buttonContainer: {
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 5,
-    marginBottom: Platform.OS === "ios" ? 50 : 10,
+    paddingTop: 5,
+    paddingBottom: 10,
+    backgroundColor: "ghostwhite",
   },
   saveButton: {
     marginRight: 20,
@@ -19,17 +20,15 @@ export default StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
     paddingHorizontal: 20,
-    backgroundColor: "dodgerblue",
-    borderRadius: 5,
+    backgroundColor: "rgb(69,190,219)",
+    borderRadius: Platform.OS == "ios" ? 5 : 30,
     elevation: 5,
-    width: 90,
+    width: 100,
   },
   avatar: {
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 1,
-    marginBottom: 5,
   },
   menu: {
     backgroundColor: "ghostwhite",
@@ -38,14 +37,14 @@ export default StyleSheet.create({
   label: {
     fontSize: 17,
     padding: 10,
-    color: "rgb(0, 77, 153)",
+    color: "rgb(17, 74, 89)",
     flex: 0.45,
   },
   slot: {
     paddingBottom: 10,
   },
   save: {
-    color: "white",
+    color: "rgb(17, 74, 89)",
     fontSize: 17,
     textAlign: "center",
   },

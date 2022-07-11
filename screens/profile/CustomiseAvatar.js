@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, ScrollView, TouchableOpacity, Alert } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Alert,
+  ImageBackground,
+} from "react-native";
 import Avatar from "../../components/game/Avatar";
 import styles from "./CustomiseAvatar.style";
 import DropdownList from "../../components/game/DropdownList";
@@ -334,28 +341,33 @@ const CustomiseAvatar = ({ navigation, session }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.avatar}>
-        <Avatar
-          size={250}
-          gender={gender}
-          skin={skin}
-          hat={hat}
-          hatColor={hatColor}
-          bgColor={bgColor}
-          accessory={accessory}
-          clothing={clothing}
-          clotheColor={clotheColor}
-          eyebrow={eyebrow}
-          eye={eye}
-          facialHair={facialHair}
-          graphic={graphic}
-          hair={hair}
-          hairColor={hairColor}
-          mouth={mouth}
-          lipColor={lipColor}
-          bgShape="squircle"
-        />
-      </View>
+      <ImageBackground
+        resizeMode="cover"
+        source={require("../../assets/goal_bg_white.jpg")}
+      >
+        <View style={styles.avatar}>
+          <Avatar
+            size={250}
+            gender={gender}
+            skin={skin}
+            hat={hat}
+            hatColor={hatColor}
+            bgColor={bgColor}
+            accessory={accessory}
+            clothing={clothing}
+            clotheColor={clotheColor}
+            eyebrow={eyebrow}
+            eye={eye}
+            facialHair={facialHair}
+            graphic={graphic}
+            hair={hair}
+            hairColor={hairColor}
+            mouth={mouth}
+            lipColor={lipColor}
+            bgShape="squircle"
+          />
+        </View>
+      </ImageBackground>
       <ScrollView style={styles.menu}>
         <View style={styles.slot}>
           <Text style={styles.label}>Gender</Text>

@@ -4,9 +4,9 @@ import { Alert, View } from "react-native";
 import { Card, Text } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import styles from "./ProgressChecker.style";
-import CompletedGoalsChart from "../../components/progress-checker/CompletedGoalsChart";
+import GoalsChart from "../../components/progress-checker/GoalsChart";
 import TitleCard from "../../components/progress-checker/TitleCard";
-import CompletedGoalsTimeChart from "../../components/progress-checker/CompletedGoalsTimeChart";
+import GoalsTimeChart from "../../components/progress-checker/GoalsTimeChart";
 
 export default GoalsProgress = ({ navigation }) => {
   const user = supabase.auth.user();
@@ -14,10 +14,14 @@ export default GoalsProgress = ({ navigation }) => {
 
   const [completed, setCompleted] = useState(0);
   const [pending, setPending] = useState(0);
+  const [state, setState] = useState({});
 
   useEffect(() => {
     getCompleted();
     getPending();
+    return () => {
+      setState({});
+    };
   }, [isFocused]);
 
   const getCompleted = async () => {
@@ -34,9 +38,10 @@ export default GoalsProgress = ({ navigation }) => {
         throw error;
       }
 
-      let num = data ? data.completed : 0;
+      if (!data) return;
 
-      setCompleted(num);
+      setCompleted(data.completed);
+
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -55,7 +60,10 @@ export default GoalsProgress = ({ navigation }) => {
         throw error;
       }
 
-      setPending((data || []).length);
+      if (!data) return;
+
+      setPending(data.length);
+
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -63,23 +71,44 @@ export default GoalsProgress = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        <TitleCard type="Goals" />
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* <TitleCard type="Goals"/> */}
         <View style={styles.topRowContainer}>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{completed}</Text>
-            <Text style={{ alignSelf: "center" }}>Goal{completed != 1 ? "s" : ""} Achieved</Text>
+            <Text style={{ alignSelf: "center" }}>
+              Goal{completed != 1 ? "s" : ""} Achieved
+            </Text>
           </Card>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{pending}</Text>
-            <Text style={{ alignSelf: "center" }}>Ongoing Goal{pending != 1 ? "s" : ""}</Text>
+            <Text style={{ alignSelf: "center" }}>
+              Ongoing Goal{pending != 1 ? "s" : ""}
+            </Text>
           </Card>
         </View>
-        <Card containerStyle={{ padding: 0, alignSelf: "stretch" }}>
-          <CompletedGoalsChart />
+        <Card
+          containerStyle={{
+            padding: 0,
+            alignSelf: "stretch",
+            elevation: 5,
+            borderRadius: 5,
+          }}
+        >
+          <GoalsChart />
         </Card>
-        <Card containerStyle={{ padding: 0, alignSelf: "stretch" }}>
-          <CompletedGoalsTimeChart />
+        <Card
+          containerStyle={{
+            padding: 0,
+            alignSelf: "stretch",
+            elevation: 5,
+            borderRadius: 5,
+          }}
+        >
+          <GoalsTimeChart />
         </Card>
       </ScrollView>
     </View>

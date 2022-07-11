@@ -4,7 +4,7 @@ import { Alert, View } from "react-native";
 import { Card, Text } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import styles from "./ProgressChecker.style";
-import CompletedModulesChart from "../../components/progress-checker/CompletedModulesChart";
+import ModulesChart from "../../components/progress-checker/ModulesChart";
 import TitleCard from "../../components/progress-checker/TitleCard";
 import { compareGrade } from "../goal-trackers/Modules";
 
@@ -20,25 +20,31 @@ export default ModulesProgress = () => {
   const [aboveA, setAboveA] = useState(0);
 
   useEffect(() => {
-    getCompleted();
+    getExpData();
     getPending();
     getGrades();
   }, [isFocused]);
 
-  const getCompleted = async () => {
+  const getExpData = async () => {
     try {
       if (!user) throw new Error("No user on the session!");
 
       let { data, error, status } = await supabase
-        .from("modules")
-        .select("module_code, module_name, grade_received")
-        .match({ user_id: user.id, completion_status: true });
+        .from("experience")
+        .select("completedMod, modsTargetReached, aboveA, highestGrade")
+        .match({ id: user.id })
+        .single();
 
       if (error && status !== 406) {
         throw error;
       }
 
-      setCompleted((data || []).length);
+      if (!data) return;
+
+      setCompleted(data.completedMod);
+      setTargetReached(data.modsTargetReached);
+      setAboveA(data.aboveA);
+      if (data.highestGrade) setHighestGrade(data.highestGrade);
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -59,20 +65,28 @@ export default ModulesProgress = () => {
 
       if (!data) return;
 
-      setHighestGrade(
-        data.reduce((a, b) => {
-          const s1 = a.grade_received || "";
-          const s2 = b.grade_received || "";
-          return compareGrade(s1, s2) < 0 ? s1 : s2;
-        })
-      );
+      // setHighestGrade(
+      //   data
+      //     .map((o) => o.grade_received)
+      //     .reduce((a, b) => {
+      //       return compareGrade(a, b) < 0 ? b : a;
+      //     })
+      // );
+
+      // setNumA(
+      //   data
+      //     .map((o) => o.grade_received)
+      //     .reduce((a, b) => {
+      //       return compareGrade(b, "A") >= 0 ? a + 1 : a;
+      //     }, 0)
+      // );
 
       const mode = (arr) => {
         const store = {};
         arr.forEach((o) => (store[o] ? (store[o] += 1) : (store[o] = 1)));
-        return Object.keys(store)
-          .sort((a, b) => store[b] - store[a])
-          .sort((a, b) =>compareGrade(b, a))[0];
+        return Object.keys(store).sort((a, b) =>
+          store[b] - store[a] == 0 ? compareGrade(b, a) : store[b] - store[a]
+        )[0];
       };
 
       const grade = mode(data.map((o) => o.grade_received))
@@ -96,7 +110,9 @@ export default ModulesProgress = () => {
         throw error;
       }
 
-      setPending((data || []).length);
+      if (!data) return;
+
+      setPending(data.length);
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -104,12 +120,19 @@ export default ModulesProgress = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        <TitleCard type="Modules" />
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* <TitleCard type="Modules" /> */}
         <View style={styles.topRowContainer}>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{completed}</Text>
-            <Text style={{ alignSelf: "center" }}>
+            <Text
+              style={{ alignSelf: "center" }}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
               Module{completed != 1 ? "s" : ""} Completed
             </Text>
           </Card>
@@ -122,16 +145,47 @@ export default ModulesProgress = () => {
         </View>
         <View style={styles.topRowContainer}>
           <Card containerStyle={styles.topRowCard}>
+            <Text style={styles.topRowCardText}>{targetReached}</Text>
+            <Text
+              style={{ alignSelf: "center" }}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
+              Target Grade{targetReached != 1 ? "s" : ""} Achieved
+            </Text>
+          </Card>
+          <Card containerStyle={styles.topRowCard}>
+            <Text style={styles.topRowCardText}>{aboveA}</Text>
+            <Text style={{ alignSelf: "center" }}>
+              A{aboveA != 1 ? "'s and" : " or"} Above
+            </Text>
+          </Card>
+        </View>
+        <View style={styles.topRowContainer}>
+          <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{highestGrade}</Text>
             <Text style={{ alignSelf: "center" }}>Highest Grade</Text>
           </Card>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{modeGrade}</Text>
-            <Text style={{ alignSelf: "center" }}>Most Common Grade</Text>
+            <Text
+              style={{ alignSelf: "center" }}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
+              Most Common Grade
+            </Text>
           </Card>
         </View>
-        <Card containerStyle={{ padding: 0, alignSelf: "stretch" }}>
-          <CompletedModulesChart />
+        <Card
+          containerStyle={{
+            padding: 0,
+            alignSelf: "stretch",
+            elevation: 5,
+            borderRadius: 5,
+          }}
+        >
+          <ModulesChart />
         </Card>
       </ScrollView>
     </View>

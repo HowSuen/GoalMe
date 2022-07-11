@@ -90,14 +90,42 @@ export default ExerciseSetter = ({ navigation }) => {
 
   const hasEmptyValues = () => {
     return type == "run"
-      ? exercise_name == "" || distance == "0" || (min == "0" && sec == "00")
-      : exercise_name == "" || weight == "0" || rep == "0" || set == "0";
+      ? exercise_name == "" ||
+          distance == "0" ||
+          !isFloat(distance) ||
+          (min == "0" && sec == "00")
+      : exercise_name == "" ||
+          weight == "0" ||
+          !isInteger(weight) ||
+          rep == "0" ||
+          !isInteger(rep) ||
+          set == "0" ||
+          !isInteger(set);
+  };
+
+  const isInteger = (number) => {
+    return /^\d+$/.test(number);
+  };
+
+  const isFloat = (number) => {
+    return /^(?!0\d)\d*(\.\d+)?$/.test(number);
+  };
+
+  const inputsInvalid = () => {
+    return exercise.type == "run"
+      ? isNaN(+distance)
+      : isNaN(+weight) ||
+          isNaN(+rep) ||
+          isNaN(+set) ||
+          parseInt(weight) != weight ||
+          parseInt(rep) != rep ||
+          parseInt(set) != set;
   };
 
   const calculateVolume = (weight, rep, set) => {
-    const w = parseInt(weight);
-    const r = parseInt(rep);
-    const s = parseInt(set);
+    const w = parseInt(weight, 10);
+    const r = parseInt(rep, 10);
+    const s = parseInt(set, 10);
     return (w * r * s).toString();
   };
 
@@ -169,11 +197,11 @@ export default ExerciseSetter = ({ navigation }) => {
                 <View style={styles.exercise}>
                   <View style={styles.inputContainerSmall}>
                     <Input
-                      keyboardType="number-pad"
+                      keyboardType="numeric"
                       style={styles.timerText}
                       inputContainerStyle={styles.inputContainer}
                       label="Distance"
-                      placeholder="0"
+                      placeholder="km"
                       placeholderTextColor="darkgray"
                       onChangeText={(value) => setDistance(value)}
                     />
@@ -246,9 +274,11 @@ export default ExerciseSetter = ({ navigation }) => {
               <View style={styles.buttonContainer}>
                 <TouchableOpacity
                   style={
-                    hasEmptyValues() ? styles.disabledButton : styles.button
+                    hasEmptyValues() || inputsInvalid()
+                      ? styles.disabledButton
+                      : styles.button
                   }
-                  disabled={hasEmptyValues()}
+                  disabled={hasEmptyValues() || inputsInvalid()}
                   onPress={() => {
                     type == "run" ? submitRun() : submitWeight();
                     navigation.navigate(routeName);

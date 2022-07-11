@@ -10,26 +10,29 @@ export default StyleSheet.create({
   buttonContainer: {
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 5,
-    marginBottom: Platform.OS === "ios" ? 50 : 10,
+    paddingTop: 5,
+    paddingBottom: 10,
+    backgroundColor: "ghostwhite",
   },
   saveButton: {
     marginRight: 20,
     marginLeft: 20,
+    marginBottom: Platform.OS == "ios" ? 30 : 0,
+    marginTop: Platform.OS == "ios" ? -10 : 0,
     paddingTop: 10,
     paddingBottom: 10,
     paddingHorizontal: 20,
+    // backgroundColor: "#0094f7",
     backgroundColor: "dodgerblue",
-    borderRadius: 5,
+    borderRadius: Platform.OS == "ios" ? 5 : 30,
     elevation: 5,
-    width: 90,
+    width: 100,
   },
   avatar: {
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 1,
-    marginBottom: 5,
+    backgroundColor: "rgba(0, 0, 0, 0.1)"
   },
   menu: {
     backgroundColor: "ghostwhite",
@@ -38,13 +41,14 @@ export default StyleSheet.create({
   label: {
     fontSize: 17,
     padding: 10,
-    color: "rgb(0, 77, 153)",
+    color: "#0d329f",
     flex: 0.45,
   },
   slot: {
     paddingBottom: 10,
   },
   save: {
+    // color: "#0d329f",
     color: "white",
     fontSize: 17,
     textAlign: "center",

@@ -4,7 +4,7 @@ import { Alert, View } from "react-native";
 import { Card, Text } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import styles from "./ProgressChecker.style";
-import CompletedModulesChart from "../../components/progress-checker/CompletedModulesChart";
+import SavingsTimeChart from "../../components/progress-checker/SavingsTimeChart";
 
 export default SavingsProgress = () => {
   const user = supabase.auth.user();
@@ -12,26 +12,37 @@ export default SavingsProgress = () => {
 
   const [completed, setCompleted] = useState(0);
   const [pending, setPending] = useState(0);
+  const [totalSavings, setTotalSavings] = useState(0);
+  const [highestSavings, setHighestSavings] = useState(0);
+  const [oneYearSavings, setOneYearSavings] = useState(0);
+  const [thirtyDaysSavings, setThirtyDaysSavings] = useState(0);
 
   useEffect(() => {
-    getCompleted();
+    getExpData();
     getPending();
+    getOneYearSum();
+    getThirtyDaysSum();
   }, [isFocused]);
 
-  const getCompleted = async () => {
+  const getExpData = async () => {
     try {
       if (!user) throw new Error("No user on the session!");
 
       let { data, error, status } = await supabase
-        .from("savings")
-        .select("id")
-        .match({ user_id: user.id, completion_status: true });
+        .from("experience")
+        .select("completedSavings, totalSavings, highestSavings")
+        .match({ id: user.id })
+        .single();
 
       if (error && status !== 406) {
         throw error;
       }
 
-      setCompleted((data || []).length);
+      if (!data) return;
+
+      setCompleted(data.completedSavings);
+      setTotalSavings(data.totalSavings);
+      setHighestSavings(data.highestSavings);
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -130,24 +141,104 @@ export default SavingsProgress = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        <TitleCard type="Savings" />
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* <TitleCard type="Exercises" /> */}
         <View style={styles.topRowContainer}>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{completed}</Text>
-            <Text style={{ alignSelf: "center" }}>
+            <Text
+              style={{ alignSelf: "center" }}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
               Saving Goal{completed != 1 ? "s" : ""} Achieved
             </Text>
           </Card>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{pending}</Text>
-            <Text style={{ alignSelf: "center" }}>
+            <Text
+              style={{ alignSelf: "center" }}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
               Ongoing Saving Goal{pending != 1 ? "s" : ""}
             </Text>
           </Card>
         </View>
-        <Card containerStyle={{ padding: 0 }}>
-          <CompletedModulesChart />
+        <View style={styles.topRowContainer}>
+          <Card containerStyle={styles.topRowCard}>
+            <Text
+              style={styles.topRowCardText}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
+              {currencyFormat(totalSavings.toString())}
+            </Text>
+            <Text style={{ alignSelf: "center" }}>Total Saved</Text>
+          </Card>
+          <Card containerStyle={styles.topRowCard}>
+            <Text
+              style={styles.topRowCardText}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
+              {currencyFormat(highestSavings.toString())}
+            </Text>
+            <Text
+              style={{ alignSelf: "center" }}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
+              Highest Saved in One Goal
+            </Text>
+          </Card>
+        </View>
+        <View style={styles.topRowContainer}>
+          <Card containerStyle={styles.topRowCard}>
+            <Text
+              style={styles.topRowCardText}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
+              {currencyFormat(oneYearSavings.toString())}
+            </Text>
+            <Text
+              style={{ alignSelf: "center" }}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
+              Saved in The Past Year
+            </Text>
+          </Card>
+          <Card containerStyle={styles.topRowCard}>
+            <Text
+              style={styles.topRowCardText}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
+              {currencyFormat(thirtyDaysSavings.toString())}
+            </Text>
+            <Text
+              style={{ alignSelf: "center" }}
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+            >
+              Saved in The Past 30 Days
+            </Text>
+          </Card>
+        </View>
+        <Card
+          containerStyle={{
+            padding: 0,
+            alignSelf: "stretch",
+            elevation: 5,
+            borderRadius: 5,
+          }}
+        >
+          <SavingsTimeChart />
         </Card>
       </ScrollView>
     </View>

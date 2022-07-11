@@ -39,7 +39,7 @@ const Achievement = ({ item }) => {
               <Text style={styles.title}>{item.name}</Text>
               <Text>{item.description}</Text>
             </View>
-            <AntDesign name="star" size={25} color={"goldenrod"} />
+            <AntDesign name="star" size={25} color="goldenrod" />
           </View>
         </Card>
       </View>

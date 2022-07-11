@@ -6,7 +6,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     height: "auto",
     width: "auto",
-    marginTop: 25,
+    marginTop: 15,
   },
   moduleListContainer: {
     height: "auto",

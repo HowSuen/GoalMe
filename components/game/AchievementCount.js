@@ -49,6 +49,7 @@ const AchievementCount = ({ navigation, session }) => {
         padding: 5,
         paddingRight: 10,
         marginTop: 0,
+        elevation: 10,
       }}
     >
       <View style={styles.countContainer}>
@@ -67,8 +68,8 @@ const AchievementCount = ({ navigation, session }) => {
             progress={Math.round((count / 40) * 100) / 100}
             width={(Dimensions.get("window").width / 10) * 5.6}
             height={8}
-            unfilledColor="lightgray"
-            color={"#987e59"}
+            unfilledColor="#BFC5CC"
+            color={"#5E7480"}
             borderWidth={0}
             animationConfig={{ bounciness: 5 }}
           />
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
   },
   percentage: {
     fontSize: 32,
-    color: "#987e59",
+    color: "#5E7480",
     fontWeight: "bold",
     marginBottom: 10,
   },

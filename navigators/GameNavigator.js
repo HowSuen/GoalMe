@@ -8,17 +8,28 @@ const Stack = createNativeStackNavigator();
 export default GameNavigator = ({ navigation, session }) => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="GameScreen">
+      <Stack.Screen
+        name="GameScreen"
+        options={{
+          headerShown: true,
+          headerTitle: "Game",
+          headerStyle: { backgroundColor: "#3A637A" },
+          headerTintColor: "#F5F2EA",
+          headerShadowVisible: true,
+          presentation: "card",
+          headerTitleAlign: "center",
+        }}
+      >
         {() => <GameScreen session={session} navigation={navigation} />}
       </Stack.Screen>
       <Stack.Screen
         name="Achievements"
         options={{
           headerShown: true,
-          headerTitle: "",
-          headerStyle: { backgroundColor: "ghostwhite" },
-          headerTintColor: "black",
-          headerShadowVisible: false,
+          headerTitle: "Achievements",
+          headerStyle: { backgroundColor: "#3A637A" },
+          headerTintColor: "#F5F2EA",
+          headerShadowVisible: true,
           presentation: "card",
           headerTitleAlign: "center",
         }}

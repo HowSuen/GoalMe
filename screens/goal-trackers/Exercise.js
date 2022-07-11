@@ -60,6 +60,11 @@ export default Exercise = ({ navigation }) => {
   const [strengthLvl, setStrengthLvl] = useState(1);
   const [completed, setCompleted] = useState(0);
   const [completedFit, setCompletedFit] = useState(0);
+  const [completedExercise, setCompletedExercise] = useState(0);
+  const [maxRunDist, setMaxRunDist] = useState(0);
+  const [totalRunDist, setTotalRunDist] = useState(0);
+  const [maxWeight, setMaxWeight] = useState(0);
+  const [maxWeightVol, setMaxWeightVol] = useState(0);
 
   useEffect(() => {
     getExercises();
@@ -132,6 +137,11 @@ export default Exercise = ({ navigation }) => {
         setStrengthLvl(data.strengthLVL);
         setCompleted(data.completed);
         setCompletedFit(data.completedFit);
+        setCompletedExercise(data.completedExercise);
+        setMaxRunDist(data.maxRunDist);
+        setTotalRunDist(data.totalRunDist);
+        setMaxWeight(data.maxWeight);
+        setMaxWeightVol(data.maxWeightVol);
       }
     } catch (error) {
       Alert.alert(error.message);
@@ -162,12 +172,19 @@ export default Exercise = ({ navigation }) => {
       );
     }
 
+    const totalDist = totalRunDist + (parseFloat(exercise.distance) || 0);
+
     setTotalXp(newTotalXp);
     setTotalLvl(totalLvl + addLVL);
     setStrengthXp(newStrengthXp);
     setStrengthLvl(strengthLvl + addStrengthLVL);
     setCompleted(completed + 1);
     setCompletedFit(completedFit + 1);
+    setCompletedExercise(completedExercise + 1);
+    setMaxRunDist(Math.max(maxRunDist, exercise.distance));
+    setTotalRunDist(totalDist);
+    setMaxWeightVol(Math.max(maxWeightVol, exercise.volume));
+    setMaxWeight(Math.max(maxWeight, exercise.weight));
 
     try {
       if (!user) throw new Error("No user on the session!");
@@ -181,6 +198,11 @@ export default Exercise = ({ navigation }) => {
         strengthLVL: strengthLvl + addStrengthLVL,
         completed: completed + 1,
         completedFit: completedFit + 1,
+        completedExercise: completedExercise + 1,
+        maxRunDist: Math.max(maxRunDist, exercise.distance),
+        totalRunDist: totalDist,
+        maxWeight: Math.max(maxWeight, exercise.weight),
+        maxWeightVol: Math.max(maxWeightVol, exercise.volume),
       };
 
       let { error } = await supabase
@@ -244,7 +266,7 @@ export default Exercise = ({ navigation }) => {
 
   const completeExercise = async (exercise) => {
     AlertPrompt({
-      title: "Complete this Exercise?",
+      title: "Complete This Exercise?",
       proceedText: "Complete",
       onPress: () => {
         const recurringExercise = completeItem(exercise);

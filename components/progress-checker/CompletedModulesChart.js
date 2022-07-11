@@ -125,7 +125,7 @@ export default CompletedModulesChart = () => {
           animate={{
             duration: 500,
           }}
-          labels={({ datum }) => Math.floor(datum.y)}
+          labels={({ datum }) => datum.y == 0?  null : Math.floor(datum.y)}
           data={
             completedMods.filter((obj) => obj.y != 0).length == 0
               ? completedMods

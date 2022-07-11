@@ -14,8 +14,10 @@ export default ModulesProgress = () => {
 
   const [completed, setCompleted] = useState(0);
   const [pending, setPending] = useState(0);
-  const [highestGrade, setHighestGrade] = useState("No Data");
-  const [modeGrade, setModeGrade] = useState("No Data");
+  const [highestGrade, setHighestGrade] = useState("-");
+  const [modeGrade, setModeGrade] = useState("-");
+  const [targetReached, setTargetReached] = useState(0);
+  const [aboveA, setAboveA] = useState(0);
 
   useEffect(() => {
     getCompleted();
@@ -73,7 +75,9 @@ export default ModulesProgress = () => {
           .sort((a, b) =>compareGrade(b, a))[0];
       };
 
-      setModeGrade(mode(data.map((o) => o.grade_received)));
+      const grade = mode(data.map((o) => o.grade_received))
+
+      if (grade) setModeGrade(grade);
     } catch (error) {
       Alert.alert(error.message);
     }

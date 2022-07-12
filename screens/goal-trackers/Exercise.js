@@ -159,7 +159,12 @@ export default Exercise = ({ navigation }) => {
   };
 
   const updateExperience = async (exercise) => {
-    let addXP = 500; // temporary amount
+    let addXP =
+      exercise.type == "run"
+        ? Math.round(parseFloat(exercise.distance, 10) * 1000)
+        : parseInt(exercise.volume, 10);
+    addXP = addXP > 1000 ? 1000 : addXP;
+    console.log(addXP);
 
     let newTotalXp = totalXp + addXP;
     let newStrengthXp = strengthXp + addXP;

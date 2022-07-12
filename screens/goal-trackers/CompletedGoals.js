@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Alert, View, FlatList } from "react-native";
+import { Alert, View, FlatList, ActivityIndicator } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./CompletedGoals.style";
 import CompletedList from "../../components/goal-trackers/CompletedList";
-import Empty from "./Empty";
+import Empty from "../../components/goal-trackers/Empty";
 import supabase from "../../lib/supabase";
 import { orders, sortItems, deleteItem } from "./GoalTracker";
 import AlertPrompt from "../../components/goal-trackers/AlertPrompt";
 import { Text, Image } from "react-native-elements";
+import Loading from "../../components/goal-trackers/Loading";
 
 const orderBys = [
   { label: "Date Completed", value: "dateCompleted" },
@@ -43,11 +44,12 @@ const deleteAllItems = async () => {
 };
 
 export default CompletedGoals = ({ navigation }) => {
+  const user = supabase.auth.user();
   const [data, setData] = useState([]);
   const [order, setOrder] = useState("ascending");
   const [orderBy, setOrderBy] = useState("dateCompleted");
   const [isFetching, setIsFetching] = useState(false);
-  const user = supabase.auth.user();
+  const [loading, setLoading] = useState(false);
   const [state, setState] = useState({});
 
   useEffect(() => {
@@ -58,6 +60,7 @@ export default CompletedGoals = ({ navigation }) => {
   }, []);
 
   const getGoals = async () => {
+    setLoading(true);
     try {
       let { data: goals, error } = await supabase
         .from("goals")
@@ -89,6 +92,8 @@ export default CompletedGoals = ({ navigation }) => {
       });
     } catch (error) {
       Alert.alert(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -191,25 +196,33 @@ export default CompletedGoals = ({ navigation }) => {
             </View>
           </TouchableOpacity>
         </View>
-        <FlatList
-          data={data}
-          ListEmptyComponent={() => <Empty text={"No goals completed."} />}
-          keyExtractor={(goal) => goal.id}
-          renderItem={({ item }) => (
-            <CompletedList
-              goal={item}
-              deleteGoal={deleteGoal}
-              redoGoal={() => {}}
-            />
-          )}
-          showsVerticalScrollIndicator={false}
-          onRefresh={() => {
-            setIsFetching(true);
-            getGoals();
-            setIsFetching(false);
-          }}
-          refreshing={isFetching}
-        />
+        {loading ? (
+          <FlatList
+            data={[]}
+            ListEmptyComponent={() => <Loading />}
+            showsVerticalScrollIndicator={false}
+          />
+        ) : (
+          <FlatList
+            data={data}
+            ListEmptyComponent={() => <Empty text={"No goals completed."} />}
+            keyExtractor={(goal) => goal.id}
+            renderItem={({ item }) => (
+              <CompletedList
+                goal={item}
+                deleteGoal={deleteGoal}
+                redoGoal={() => {}}
+              />
+            )}
+            showsVerticalScrollIndicator={false}
+            onRefresh={() => {
+              setIsFetching(true);
+              getGoals();
+              setIsFetching(false);
+            }}
+            refreshing={isFetching}
+          />
+        )}
         <View style={styles.bottomContainer}>
           <SortButton
             value={orderBy}

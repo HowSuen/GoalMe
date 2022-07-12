@@ -9,6 +9,7 @@ import { sortItems } from "./Exercise";
 import AlertPrompt from "../../components/goal-trackers/AlertPrompt";
 import CompletedExerciseList from "../../components/goal-trackers/CompletedExerciseList";
 import { Image, Text } from "react-native-elements";
+import Loading from "../../components/goal-trackers/Loading";
 
 const orderBys = [
   { label: "Date Completed", value: "dateCompleted" },
@@ -49,6 +50,7 @@ export default CompletedExercises = () => {
   const [isFetching, setIsFetching] = useState(false);
   const user = supabase.auth.user();
   const [state, setState] = useState({});
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getExercises();
@@ -58,6 +60,7 @@ export default CompletedExercises = () => {
   }, []);
 
   const getExercises = async () => {
+    setLoading(true);
     try {
       let { data: exercises, error } = await supabase
         .from("exercises")
@@ -95,6 +98,8 @@ export default CompletedExercises = () => {
       });
     } catch (error) {
       Alert.alert(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -159,33 +164,41 @@ export default CompletedExercises = () => {
   return (
     <View style={styles.container}>
       <View>
-        <FlatList
-          data={data}
-          ListEmptyComponent={() => (
-            <View style={styles.emptyContainer}>
-              <Image
-                style={styles.emptyImage}
-                source={require("../../assets/dumbbells.png")}
+        {loading ? (
+          <FlatList
+            data={[]}
+            ListEmptyComponent={() => <Loading />}
+            showsVerticalScrollIndicator={false}
+          />
+        ) : (
+          <FlatList
+            data={data}
+            ListEmptyComponent={() => (
+              <View style={styles.emptyContainer}>
+                <Image
+                  style={styles.emptyImage}
+                  source={require("../../assets/dumbbells.png")}
+                />
+                <Text style={styles.emptyText}>No exercises completed.</Text>
+              </View>
+            )}
+            keyExtractor={(exercise) => exercise.id}
+            renderItem={({ item }) => (
+              <CompletedExerciseList
+                exercise={item}
+                deleteExercise={deleteExercise}
+                redoExercise={() => {}}
               />
-              <Text style={styles.emptyText}>No exercises completed.</Text>
-            </View>
-          )}
-          keyExtractor={(exercise) => exercise.id}
-          renderItem={({ item }) => (
-            <CompletedExerciseList
-              exercise={item}
-              deleteExercise={deleteExercise}
-              redoExercise={() => {}}
-            />
-          )}
-          showsVerticalScrollIndicator={false}
-          onRefresh={() => {
-            setIsFetching(true);
-            getExercises();
-            setIsFetching(false);
-          }}
-          refreshing={isFetching}
-        />
+            )}
+            showsVerticalScrollIndicator={false}
+            onRefresh={() => {
+              setIsFetching(true);
+              getExercises();
+              setIsFetching(false);
+            }}
+            refreshing={isFetching}
+          />
+        )}
         <View style={styles.bottomContainer}>
           <SortButton
             value={orderBy}

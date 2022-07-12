@@ -6,7 +6,7 @@ import {
   Keyboard,
   ScrollView,
 } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "react-native-elements";
 import styles from "./GoalSetter.style";
 import { useRoute } from "@react-navigation/native";
@@ -35,6 +35,8 @@ const recurrings = [
   { label: "Yes", value: true },
 ];
 
+let modules = [];
+
 export default GoalSetter = ({ navigation }) => {
   const route = useRoute();
   const { user, routeName, defaultType } = route.params;
@@ -43,6 +45,16 @@ export default GoalSetter = ({ navigation }) => {
   const [type, setType] = useState(defaultType);
   const [difficulty, setDifficulty] = useState("None");
   const [recurring, setRecurring] = useState(false);
+  const [module, setModule] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [state, setState] = useState({});
+
+  useEffect(() => {
+    getModules();
+    return () => {
+      setState({});
+    };
+  }, []);
 
   const submitGoal = async () => {
     try {
@@ -54,6 +66,7 @@ export default GoalSetter = ({ navigation }) => {
           type: type,
           difficulty: difficulty,
           recurring: recurring,
+          module: module,
         },
       ]);
       if (error) throw error;
@@ -66,6 +79,32 @@ export default GoalSetter = ({ navigation }) => {
     return (
       content == "" || type == null || difficulty == null || recurring == null
     );
+  };
+
+  const getModules = async () => {
+    setLoading(true);
+    const user = supabase.auth.user();
+    try {
+      let { data: mods, error } = await supabase
+        .from("modules")
+        .select("module_code, module_name")
+        .match({
+          user_id: user.id,
+          completion_status: false,
+        });
+
+      if (error) throw error;
+
+      modules = mods.map((object) => {
+        return {
+          label: object.module_code || object.module_name,
+          value: object.module_code || object.module_name,
+        };
+      });
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+    setLoading(false);
   };
 
   return (
@@ -103,6 +142,18 @@ export default GoalSetter = ({ navigation }) => {
               placeholder={{ label: "Select a type...", value: null }}
             />
           </View>
+          {type == "Academic" && (
+            <View style={styles.dropdownContainer}>
+              <Text style={styles.dropdownLabel}>Module</Text>
+              <GoalDropdownList
+                value={type == "Academic" ? module : null}
+                items={modules}
+                onValueChange={(value) => setModule(value)}
+                placeholder={{ label: "Select a module...", value: null }}
+                disabled={loading || type != "Academic"}
+              />
+            </View>
+          )}
           <View style={styles.dropdownContainer}>
             <Text style={styles.dropdownLabel}>Difficulty</Text>
             <GoalDropdownList

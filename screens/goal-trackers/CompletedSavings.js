@@ -9,6 +9,7 @@ import { sortItems } from "./Savings";
 import AlertPrompt from "../../components/goal-trackers/AlertPrompt";
 import CompletedSavingList from "../../components/goal-trackers/CompletedSavingList";
 import { Image, Text } from "react-native-elements";
+import Loading from "../../components/goal-trackers/Loading";
 
 const orderBys = [
   { label: "Date Completed", value: "dateCompleted" },
@@ -20,7 +21,11 @@ const redoItem = async (item) => {
   try {
     let { data, error } = await supabase
       .from("savings")
-      .update({ completion_status: false, completed_at: null, curr_amount: "0" })
+      .update({
+        completion_status: false,
+        completed_at: null,
+        curr_amount: "0",
+      })
       .match({ id: item.id });
 
     if (error) throw error;
@@ -49,6 +54,7 @@ export default CompletedSavings = () => {
   const [isFetching, setIsFetching] = useState(false);
   const user = supabase.auth.user();
   const [state, setState] = useState({});
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getSavings();
@@ -58,6 +64,7 @@ export default CompletedSavings = () => {
   }, []);
 
   const getSavings = async () => {
+    setLoading(true);
     try {
       let { data: savings, error } = await supabase
         .from("savings")
@@ -88,6 +95,8 @@ export default CompletedSavings = () => {
       });
     } catch (error) {
       Alert.alert(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -152,33 +161,41 @@ export default CompletedSavings = () => {
   return (
     <View style={styles.container}>
       <View>
-        <FlatList
-          data={data}
-          ListEmptyComponent={() => (
-            <View style={styles.emptyContainer}>
-              <Image
-                style={styles.emptyImage}
-                source={require("../../assets/bankrupt.png")}
+        {loading ? (
+          <FlatList
+            data={[]}
+            ListEmptyComponent={() => <Loading />}
+            showsVerticalScrollIndicator={false}
+          />
+        ) : (
+          <FlatList
+            data={data}
+            ListEmptyComponent={() => (
+              <View style={styles.emptyContainer}>
+                <Image
+                  style={styles.emptyImage}
+                  source={require("../../assets/bankrupt.png")}
+                />
+                <Text style={styles.emptyText}>No savings completed.</Text>
+              </View>
+            )}
+            keyExtractor={(saving) => saving.id}
+            renderItem={({ item }) => (
+              <CompletedSavingList
+                saving={item}
+                deleteSaving={deleteSaving}
+                redoSaving={() => {}}
               />
-              <Text style={styles.emptyText}>No savings completed.</Text>
-            </View>
-          )}
-          keyExtractor={(saving) => saving.id}
-          renderItem={({ item }) => (
-            <CompletedSavingList
-              saving={item}
-              deleteSaving={deleteSaving}
-              redoSaving={() => {}}
-            />
-          )}
-          showsVerticalScrollIndicator={false}
-          onRefresh={() => {
-            setIsFetching(true);
-            getSavings();
-            setIsFetching(false);
-          }}
-          refreshing={isFetching}
-        />
+            )}
+            showsVerticalScrollIndicator={false}
+            onRefresh={() => {
+              setIsFetching(true);
+              getSavings();
+              setIsFetching(false);
+            }}
+            refreshing={isFetching}
+          />
+        )}
         <View style={styles.bottomContainer}>
           <SortButton
             value={orderBy}

@@ -3,7 +3,7 @@ import { Alert, View, FlatList, TouchableOpacity } from "react-native";
 import styles from "./GoalTracker.style";
 import { FontAwesome5 } from "@expo/vector-icons";
 import GoalList from "../../components/goal-trackers/GoalList";
-import Empty from "./Empty";
+import Empty from "../../components/goal-trackers/Empty";
 import supabase from "../../lib/supabase";
 import { useIsFocused, useRoute } from "@react-navigation/native";
 import SortButton from "../../components/goal-trackers/SortButton";

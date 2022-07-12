@@ -5,7 +5,6 @@ import { Image } from "react-native-elements";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { orders } from "./GoalTracker";
 import styles from "./GoalTracker.style";
-import Empty from "./Empty";
 import supabase from "../../lib/supabase";
 import SortButton from "../../components/goal-trackers/SortButton";
 import ExerciseList from "../../components/goal-trackers/ExerciseList";

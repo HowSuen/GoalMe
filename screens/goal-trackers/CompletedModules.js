@@ -9,6 +9,7 @@ import { sortItems } from "./Modules";
 import AlertPrompt from "../../components/goal-trackers/AlertPrompt";
 import CompletedModuleList from "../../components/goal-trackers/CompletedModuleList";
 import { Image, Text } from "react-native-elements";
+import Loading from "../../components/goal-trackers/Loading";
 
 const orderBys = [
   { label: "Date Completed", value: "dateCompleted" },
@@ -21,7 +22,11 @@ const redoItem = async (item) => {
   try {
     let { data, error } = await supabase
       .from("modules")
-      .update({ completion_status: false, completed_at: null, grade_received: null })
+      .update({
+        completion_status: false,
+        completed_at: null,
+        grade_received: null,
+      })
       .match({ id: item.id });
 
     if (error) throw error;
@@ -50,6 +55,7 @@ export default CompletedModules = () => {
   const [isFetching, setIsFetching] = useState(false);
   const user = supabase.auth.user();
   const [state, setState] = useState({});
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getModules();
@@ -59,6 +65,7 @@ export default CompletedModules = () => {
   }, []);
 
   const getModules = async () => {
+    setLoading(true);
     try {
       let { data: modules, error } = await supabase
         .from("modules")
@@ -90,6 +97,8 @@ export default CompletedModules = () => {
       });
     } catch (error) {
       Alert.alert(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -154,33 +163,41 @@ export default CompletedModules = () => {
   return (
     <View style={styles.container}>
       <View>
-        <FlatList
-          data={data}
-          ListEmptyComponent={() => (
-            <View style={styles.emptyContainer}>
-              <Image
-                style={styles.emptyImage}
-                source={require("../../assets/old_book.png")}
+        {loading ? (
+          <FlatList
+            data={[]}
+            ListEmptyComponent={() => <Loading />}
+            showsVerticalScrollIndicator={false}
+          />
+        ) : (
+          <FlatList
+            data={data}
+            ListEmptyComponent={() => (
+              <View style={styles.emptyContainer}>
+                <Image
+                  style={styles.emptyImage}
+                  source={require("../../assets/old_book.png")}
+                />
+                <Text style={styles.emptyText}>No modules completed.</Text>
+              </View>
+            )}
+            keyExtractor={(module) => module.id}
+            renderItem={({ item }) => (
+              <CompletedModuleList
+                module={item}
+                deleteModule={deleteModule}
+                redoModule={() => {}}
               />
-              <Text style={styles.emptyText}>No modules completed.</Text>
-            </View>
-          )}
-          keyExtractor={(module) => module.id}
-          renderItem={({ item }) => (
-            <CompletedModuleList
-              module={item}
-              deleteModule={deleteModule}
-              redoModule={() => {}}
-            />
-          )}
-          showsVerticalScrollIndicator={false}
-          onRefresh={() => {
-            setIsFetching(true);
-            getModules();
-            setIsFetching(false);
-          }}
-          refreshing={isFetching}
-        />
+            )}
+            showsVerticalScrollIndicator={false}
+            onRefresh={() => {
+              setIsFetching(true);
+              getModules();
+              setIsFetching(false);
+            }}
+            refreshing={isFetching}
+          />
+        )}
         <View style={styles.bottomContainer}>
           <SortButton
             value={orderBy}

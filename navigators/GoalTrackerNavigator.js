@@ -95,7 +95,7 @@ export default GoalTrackerNavigator = () => {
             backgroundColor: !inExercise(route) ? "tomato" : "plum",
           },
           drawerActiveBackgroundColor: "tomato",
-          headerTitle: !inExercise(route) ? "Fitness Goals" : "Exercise",
+          headerTitle: !inExercise(route) ? "Fitness Goals" : "Exercises",
           drawerLabel: "Fitness Goals",
         })}
       >

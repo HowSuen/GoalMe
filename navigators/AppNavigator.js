@@ -30,6 +30,23 @@ const goalsColor = (route) => {
   }
 };
 
+const progressColor = (route) => {
+  const routeName = getFocusedRouteNameFromRoute(route);
+  if (routeName == "ProgressChecker") {
+    return "slateblue";
+  } else if (routeName == "GoalsProgress") {
+    return "mediumseagreen";
+  } else if (routeName == "ModulesProgress") {
+    return "#27A4F2";
+  } else if (routeName == "ExercisesProgress") {
+    return "plum";
+  } else if (routeName == "SavingsProgress") {
+    return "rgb(255,176,58)";
+  } else {
+    return "slateblue";
+  }
+};
+
 export default AppNavigator = ({ session }) => {
   return (
     <NavigationContainer styles={styles.container}>
@@ -82,7 +99,7 @@ export default AppNavigator = ({ session }) => {
         <Tab.Screen
           name="Progress"
           options={({ route, navigation }) => ({
-            tabBarActiveTintColor: "slateblue",
+            tabBarActiveTintColor: progressColor(route),
           })}
         >
           {({ navigation }) => ProgressNavigator({ navigation: navigation })}

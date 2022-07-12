@@ -30,8 +30,7 @@ export default StyleSheet.create({
   },
   button: {
     marginTop: 30,
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingVertical: 10,
     width: 200,
     backgroundColor: "dodgerblue",
     borderRadius: Platform.OS == "ios" ? 5 : 30,
@@ -44,8 +43,7 @@ export default StyleSheet.create({
   },
   signOutButton: {
     marginTop: 30,
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingVertical: 10,
     width: 200,
     borderWidth: 1,
     borderColor: "red",

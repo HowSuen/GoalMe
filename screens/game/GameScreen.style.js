@@ -5,10 +5,10 @@ const width = (Dimensions.get("window").width / 10) * 9;
 export default StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "ghostwhite",
-    marginTop: -20,
+    // marginTop: -20,
   },
   avatar: {
     justifyContent: "center",
@@ -67,5 +67,6 @@ export default StyleSheet.create({
     fontSize: 20,
     color: "#2d2b2c",
     fontWeight: "bold",
+    paddingTop: 5,
   }
 });

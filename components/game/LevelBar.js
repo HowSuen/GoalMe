@@ -27,11 +27,15 @@ const LevelBar = ({ type, session }) => {
   const [strengthLvl, setStrengthLvl] = useState(1);
   const [wisdomLvl, setWisdomLvl] = useState(1);
   const [wealthLvl, setWealthLvl] = useState(1);
+  const [state, setState] = useState({});
 
   useEffect(() => {
     if (session) {
       getExperience();
     }
+    return () => {
+      setState({});
+    };
   }, [session, isFocused]);
 
   const getExperience = async () => {

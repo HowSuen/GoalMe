@@ -16,12 +16,16 @@ export default SavingsProgress = () => {
   const [highestSavings, setHighestSavings] = useState(0);
   const [oneYearSavings, setOneYearSavings] = useState(0);
   const [thirtyDaysSavings, setThirtyDaysSavings] = useState(0);
+  const [state, setState] = useState({});
 
   useEffect(() => {
     getExpData();
     getPending();
     getOneYearSum();
     getThirtyDaysSum();
+    return () => {
+      setState({});
+    };
   }, [isFocused]);
 
   const getExpData = async () => {

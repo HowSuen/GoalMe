@@ -112,7 +112,7 @@ export default ExerciseSetter = ({ navigation }) => {
   };
 
   const inputsInvalid = () => {
-    return exercise.type == "run"
+    return type == "run"
       ? isNaN(+distance)
       : isNaN(+weight) ||
           isNaN(+rep) ||

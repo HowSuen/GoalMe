@@ -8,35 +8,27 @@ import {
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useRoute } from "@react-navigation/native";
 
-export default ExerciseList = ({
+export default CompletedExerciseList = ({
   exercise,
-  completeExercise,
+  redoExercise,
   deleteExercise,
-  navigation,
 }) => {
-  const route = useRoute();
   const exerciseText = exercise.exercise_name;
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
+      <View
         style={
           exercise.type == "run"
             ? styles.runListContainer
             : styles.weightListContainer
         }
-        onPress={() =>
-          navigation.navigate("ExerciseEditor", {
-            routeName: route.name,
-            exercise: exercise,
-          })
-        }
       >
         <TouchableOpacity
           style={styles.boxContainer}
-          onPress={() => completeExercise(exercise)}
+          onPress={() => redoExercise(exercise)}
         >
-          <FontAwesome name="square-o" size={25} color={"black"} />
+          <FontAwesome name="check-square-o" size={25} color={"black"} />
         </TouchableOpacity>
         <View>
           <Text style={styles.listText}>
@@ -77,7 +69,7 @@ export default ExerciseList = ({
             <Ionicons name="trash" size={20} color="black" />
           </TouchableOpacity>
         </View>
-      </TouchableOpacity>
+      </View>
     </View>
   );
 };

@@ -120,7 +120,7 @@ export default SavingsTimeChart = () => {
         width={350}
         theme={VictoryTheme.material}
         animate={{
-          duration: 500,
+          duration: 100,
         }}
         domainPadding={{ y: 20 }}
       >

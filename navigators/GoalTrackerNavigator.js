@@ -1,7 +1,6 @@
 import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import GoalNavigator from "./GoalNavigator";
-import CompletedGoals from "../screens/goal-trackers/CompletedGoals";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 
 const Drawer = createDrawerNavigator();
@@ -19,7 +18,8 @@ const inModules = (route) => {
   if (
     routeName == "Modules" ||
     routeName == "ModuleSetter" ||
-    routeName == "ModuleEditor"
+    routeName == "ModuleEditor" ||
+    routeName == "CompletedModules"
   ) {
     return true;
   }
@@ -31,7 +31,8 @@ const inExercise = (route) => {
   return (
     routeName == "Exercise" ||
     routeName == "ExerciseSetter" ||
-    routeName == "ExerciseEditor"
+    routeName == "ExerciseEditor" || 
+    routeName == "CompletedExercises"
   );
 };
 
@@ -40,7 +41,8 @@ const inSavings = (route) => {
   return (
     routeName == "Savings" ||
     routeName == "SavingsSetter" ||
-    routeName == "SavingsEditor"
+    routeName == "SavingsEditor" || 
+    routeName == "CompletedSavings"
   );
 };
 
@@ -66,7 +68,7 @@ export default GoalTrackerNavigator = () => {
           headerStyle: { backgroundColor: "mediumseagreen" },
           drawerActiveBackgroundColor: "mediumseagreen",
           headerTitle: "All Goals",
-          drawerLabel: "All Goals",
+          drawerLabel: "All",
         }}
       >
         {({ route, navigation }) =>
@@ -80,8 +82,11 @@ export default GoalTrackerNavigator = () => {
           headerStyle: {
             backgroundColor: !inModules(route) ? "royalblue" : "#27A4F2",
           },
-          drawerActiveBackgroundColor: "royalblue",
-          drawerLabel: "Academic Goals",
+          drawerActiveBackgroundColor: !inModules(route)
+            ? "royalblue"
+            : "#27A4F2",
+          // drawerActiveBackgroundColor: "royalblue",
+          drawerLabel: "Academic",
         })}
       >
         {({ route, navigation }) =>
@@ -94,9 +99,10 @@ export default GoalTrackerNavigator = () => {
           headerStyle: {
             backgroundColor: !inExercise(route) ? "tomato" : "plum",
           },
-          drawerActiveBackgroundColor: "tomato",
+          drawerActiveBackgroundColor: !inExercise(route) ? "tomato" : "plum",
+          // drawerActiveBackgroundColor: "tomato",
           headerTitle: !inExercise(route) ? "Fitness Goals" : "Exercises",
-          drawerLabel: "Fitness Goals",
+          drawerLabel: "Fitness",
         })}
       >
         {({ route, navigation }) =>
@@ -107,11 +113,16 @@ export default GoalTrackerNavigator = () => {
         name="Finance Tracker"
         options={({ route }) => ({
           headerStyle: {
-            backgroundColor: !inSavings(route) ? "goldenrod" : "rgb(255,176,58)",
+            backgroundColor: !inSavings(route)
+              ? "goldenrod"
+              : "rgb(255,176,58)",
           },
-          drawerActiveBackgroundColor: "goldenrod",
+          drawerActiveBackgroundColor: !inSavings(route)
+            ? "goldenrod"
+            : "rgb(255,176,58)",
+          // drawerActiveBackgroundColor: "goldenrod",
           headerTitle: !inSavings(route) ? "Finance Goals" : "Savings",
-          drawerLabel: "Finance Goals",
+          drawerLabel: "Finance",
         })}
       >
         {({ route, navigation }) =>
@@ -120,12 +131,41 @@ export default GoalTrackerNavigator = () => {
       </Drawer.Screen>
       <Drawer.Screen
         name="Completed Goals"
-        component={CompletedGoals}
-        options={{
-          headerStyle: { backgroundColor: "mediumaquamarine" },
-          drawerActiveBackgroundColor: "mediumaquamarine",
-        }}
-      />
+        options={({ route }) => ({
+          headerStyle: {
+            backgroundColor: inModules(route)
+              ? "#27A4F2"
+              : inExercise(route)
+              ? "plum"
+              : inSavings(route)
+              ? "rgb(255,176,58)"
+              : "mediumaquamarine",
+          },
+          drawerActiveBackgroundColor: inModules(route)
+            ? "#27A4F2"
+            : inExercise(route)
+            ? "plum"
+            : inSavings(route)
+            ? "rgb(255,176,58)"
+            : "mediumaquamarine",
+          // drawerActiveBackgroundColor: "mediumaquamarine",
+          headerTitle: inModules(route)
+            ? "Completed Modules"
+            : inExercise(route)
+            ? "Completed Exercises"
+            : inSavings(route)
+            ? "Completed Savings"
+            : "Completed Goals",
+          // headerStyle: { backgroundColor: "mediumaquamarine" },
+          // drawerActiveBackgroundColor: "mediumaquamarine",
+          // headerTitle: "Completed Goals",
+          drawerLabel: "Completed",
+        })}
+      >
+        {({ route, navigation }) =>
+          GoalNavigator({ route: route, navigation: navigation })
+        }
+      </Drawer.Screen>
     </Drawer.Navigator>
   );
 };

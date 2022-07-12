@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Alert, View, FlatList } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import styles from "./CompletedGoals.style";
 import CompletedList from "../../components/goal-trackers/CompletedList";
 import Empty from "./Empty";
 import supabase from "../../lib/supabase";
 import { orders, sortItems, deleteItem } from "./GoalTracker";
 import AlertPrompt from "../../components/goal-trackers/AlertPrompt";
+import { Text, Image } from "react-native-elements";
 
 const orderBys = [
   { label: "Date Completed", value: "dateCompleted" },
@@ -41,7 +42,7 @@ const deleteAllItems = async () => {
   }
 };
 
-export default CompletedGoals = () => {
+export default CompletedGoals = ({ navigation }) => {
   const [data, setData] = useState([]);
   const [order, setOrder] = useState("ascending");
   const [orderBy, setOrderBy] = useState("dateCompleted");
@@ -89,7 +90,7 @@ export default CompletedGoals = () => {
     } catch (error) {
       Alert.alert(error.message);
     }
-  }
+  };
 
   const sortGoals = (order, orderBy) => {
     setData((goals) => {
@@ -139,9 +140,56 @@ export default CompletedGoals = () => {
   return (
     <View style={styles.container}>
       <View>
+        <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("CompletedModules");
+            }}
+            style={styles.moduleNavButton}
+          >
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              {/* <Image
+                style={{ width: 30, height: 28 }}
+                source={require("../../assets/modules-progress.png")}
+                resizeMode="contain"
+              /> */}
+              <Text style={styles.buttonText}>Modules</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("CompletedExercises");
+            }}
+            style={styles.exerciseNavButton}
+          >
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              {/* <Image
+                style={{ width: 30, height: 28 }}
+                source={require("../../assets/exercises-progress.png")}
+                resizeMode="contain"
+              /> */}
+              <Text style={styles.buttonText}>Exercises</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("CompletedSavings");
+            }}
+            style={styles.walletNavButton}
+          >
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              {/* <Image
+                style={{ width: 30, height: 28 }}
+                source={require("../../assets/exercises-progress.png")}
+                resizeMode="contain"
+              /> */}
+              <Text style={styles.buttonText}>Savings</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
         <FlatList
           data={data}
-          ListEmptyComponent={() => <Empty />}
+          ListEmptyComponent={() => <Empty text={"No goals completed."} />}
           keyExtractor={(goal) => goal.id}
           renderItem={({ item }) => (
             <CompletedList
@@ -179,7 +227,7 @@ export default CompletedGoals = () => {
             style={styles.deleteButton}
             onPress={deleteAllGoals}
           >
-            <FontAwesome5 name="trash" size={25} color="black" />
+            <Ionicons name="trash" size={25} color="black" />
           </TouchableOpacity>
         </View>
       </View>

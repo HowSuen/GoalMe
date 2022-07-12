@@ -68,8 +68,18 @@ const sortItems = (order, orderBy) => {
       const s2 = b.moduleCode || b.module_code || b.moduleName || b.module_name;
       return order == "ascending" ? s1.localeCompare(s2) : s2.localeCompare(s1);
     };
+  } else if (orderBy == "dateCompleted") {
+    comparator = (a, b) =>
+      order == "ascending"
+        ? convertDate(a.completed_at) - convertDate(b.completed_at)
+        : convertDate(b.completed_at) - convertDate(a.completed_at);
+  } else if (orderBy == "gradeReceived") {
+    comparator = (a, b) => {
+      const s1 = a.gradeReceived || a.grade_received;
+      const s2 = b.gradeReceived || b.grade_received;
+      return order == "ascending" ? compareGrade(s1, s2) : compareGrade(s2, s1);
+    };
   }
-
   return comparator;
 };
 

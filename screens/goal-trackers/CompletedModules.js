@@ -21,7 +21,7 @@ const redoItem = async (item) => {
   try {
     let { data, error } = await supabase
       .from("modules")
-      .update({ completion_status: false, completed_at: null })
+      .update({ completion_status: false, completed_at: null, grade_received: null })
       .match({ id: item.id });
 
     if (error) throw error;

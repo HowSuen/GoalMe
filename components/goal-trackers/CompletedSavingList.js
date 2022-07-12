@@ -32,7 +32,13 @@ export default CompletedSavingList = ({ saving, redoSaving, deleteSaving }) => {
 
   const currencyFormat = (str) => {
     const num = parseFloat(str.replace(",", ""), 10);
-    return "$" + num.toPrecision().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+    return (
+      "$" +
+      num
+        .toFixed(2)
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+        .replace(".00", "")
+    );
   };
 
   return (
@@ -60,9 +66,7 @@ export default CompletedSavingList = ({ saving, redoSaving, deleteSaving }) => {
               animationConfig={{ bounciness: 50 }}
             />
             <View style={styles.progressText}>
-              <Text
-                style={styles.fullAmountText}
-              >
+              <Text style={styles.fullAmountText}>
                 {isNegative(saving.curr_amount) ? "-" : ""}
                 {currencyFormat(calculateAbsolute(saving.curr_amount))}
               </Text>

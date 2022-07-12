@@ -75,7 +75,7 @@ const sortItems = (order, orderBy) => {
 export default Savings = ({ navigation }) => {
   const [data, setData] = useState([]);
   const [order, setOrder] = useState("ascending");
-  const [orderBy, setOrderBy] = useState("alphabetical");
+  const [orderBy, setOrderBy] = useState("dateCreated");
 
   const [isFetching, setIsFetching] = useState(false);
   const user = supabase.auth.user();

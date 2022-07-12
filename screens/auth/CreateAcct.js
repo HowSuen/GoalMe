@@ -14,6 +14,7 @@ import "react-native-url-polyfill/auto";
 import AuthButton from "../../components/auth/AuthButton";
 import UserInput from "../../components/auth/UserInput";
 import PasswordSecureInput from "../../components/auth/PasswordSecureInput";
+import { ScrollView } from "react-native-gesture-handler";
 
 const CreateAcct = () => {
   const [email, setEmail] = useState("");

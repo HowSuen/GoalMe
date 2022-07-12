@@ -10,38 +10,47 @@ const PasswordInput = ({
   onIconPress,
 }) => {
   return (
-    <View style={styles.verticallySpaced}>
-      <Input
-        style={styles.textInput}
-        label="Password"
-        leftIcon={{ type: "font-awesome", name: "lock", color: "#222222" }}
-        onChangeText={onChangeText}
-        value={password}
-        secureTextEntry={passVisible}
-        placeholder="Password"
-        autoCapitalize={"none"}
-      />
-      <TouchableOpacity style={styles.icon} onPress={onIconPress}>
-        <Icon name={passVisible ? "eye" : "eye-off"} size={20} color="#222222" />
-      </TouchableOpacity>
-    </View>
+    <Input
+      style={styles.textInput}
+      inputContainerStyle={styles.inputContainer}
+      leftIcon={{
+        type: "font-awesome",
+        name: "lock",
+        color: "#0656BF",
+        size: 28,
+      }}
+      leftIconContainerStyle={{ width: 50 }}
+      onChangeText={onChangeText}
+      value={password}
+      secureTextEntry={passVisible}
+      placeholder="Password"
+      placeholderTextColor="#0656BF"
+      autoCapitalize={"none"}
+      rightIcon={() => (
+        <TouchableOpacity onPress={onIconPress}>
+          <Icon
+            name={passVisible ? "eye" : "eye-off"}
+            size={26}
+            color="#0656BF"
+          />
+        </TouchableOpacity>
+      )}
+      rightIconContainerStyle={{ paddingLeft: 10, paddingRight: 10 }}
+    />
   );
 };
 
 export default PasswordInput;
 
 const styles = StyleSheet.create({
-  verticallySpaced: {
-    paddingTop: 5,
-    paddingBottom: 5,
-    alignSelf: "stretch",
-  },
   textInput: {
-    color: "black",
+    color: "#052440",
   },
-  icon: {
-    position: "absolute",
-    top: 45,
-    right: 20,
+  inputContainer: {
+    paddingVertical: 2,
+    paddingHorizontal: 8,
+    backgroundColor: "#9DCDF1",
+    borderRadius: 30,
+    borderColor: "transparent",
   },
 });

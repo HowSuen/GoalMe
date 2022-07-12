@@ -12,7 +12,7 @@ import { Image, Text } from "react-native-elements";
 
 const orderBys = [
   { label: "Date Completed", value: "dateCompleted" },
-  { label: "Grade Received", value: "gradeReceived" },
+  { label: "Received Grade", value: "gradeReceived" },
   { label: "Target Grade", value: "targetGrade" },
   { label: "Alphabetical", value: "alphabetical" },
 ];
@@ -103,7 +103,7 @@ export default CompletedModules = () => {
     AlertPrompt({
       title: "Delete This Module?",
       description:
-        "Deleting this module will remove its data from Progress Checker. \n You can't undo this action.",
+        "Doing so will remove its data from Progress Checker.\nYou can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {
         try {
@@ -126,6 +126,8 @@ export default CompletedModules = () => {
   const redoModule = async (module) => {
     AlertPrompt({
       title: "Redo This Module?",
+      description:
+        "Doing so will remove its completion data from Progress Checker.\nYou can't undo this action.",
       proceedText: "Redo",
       onPress: async () => {
         redoItem(module);
@@ -140,7 +142,7 @@ export default CompletedModules = () => {
     AlertPrompt({
       title: "Delete All Completed Modules?",
       description:
-        "Deleting all modules will remove all modules data from Progress Checker. You can't undo this action.",
+        "Doing so will remove all module data from Progress Checker.\nYou can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {
         deleteAllItems();
@@ -168,7 +170,7 @@ export default CompletedModules = () => {
             <CompletedModuleList
               module={item}
               deleteModule={deleteModule}
-              redoModule={redoModule}
+              redoModule={() => {}}
             />
           )}
           showsVerticalScrollIndicator={false}

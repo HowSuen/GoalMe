@@ -101,7 +101,8 @@ export default CompletedGoals = ({ navigation }) => {
   const deleteGoal = async (goal) => {
     AlertPrompt({
       title: "Delete This Goal?",
-      description: "You can't undo this action.",
+      description:
+        "Doing so will remove its data from 'Daily Goals' in Progress Checker.\nYou can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {
         deleteItem(goal);
@@ -115,6 +116,8 @@ export default CompletedGoals = ({ navigation }) => {
   const redoGoal = async (goal) => {
     AlertPrompt({
       title: "Redo This Goal?",
+      description:
+        "Doing so will remove its data from 'Daily Goals' in Progress Checker.\nYou can't undo this action.",
       proceedText: "Redo",
       onPress: async () => {
         redoItem(goal);
@@ -128,7 +131,8 @@ export default CompletedGoals = ({ navigation }) => {
   const deleteAllGoals = async () => {
     AlertPrompt({
       title: "Delete All Completed Goals?",
-      description: "You can't undo this action.",
+      description:
+        "Doing so will remove all goal data from 'Daily Goals' in Progress Checker. You can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {
         deleteAllItems();
@@ -195,7 +199,7 @@ export default CompletedGoals = ({ navigation }) => {
             <CompletedList
               goal={item}
               deleteGoal={deleteGoal}
-              redoGoal={redoGoal}
+              redoGoal={() => {}}
             />
           )}
           showsVerticalScrollIndicator={false}

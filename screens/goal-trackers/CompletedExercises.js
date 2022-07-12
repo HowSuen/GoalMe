@@ -107,7 +107,8 @@ export default CompletedExercises = () => {
   const deleteExercise = async (exercise) => {
     AlertPrompt({
       title: "Delete This Exercise?",
-      description: "You can't undo this action.",
+      description:
+        "Doing so will remove its data from 'Daily Exercises' and 'Daily Goals' in Progress Checker.\nYou can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {
         try {
@@ -130,6 +131,8 @@ export default CompletedExercises = () => {
   const redoExercise = async (exercise) => {
     AlertPrompt({
       title: "Redo This Exercise?",
+      description:
+        "Doing so will remove its data from 'Daily Exercises' and 'Daily Goals' in Progress Checker.\nYou can't undo this action.",
       proceedText: "Redo",
       onPress: async () => {
         redoItem(exercise);
@@ -143,7 +146,8 @@ export default CompletedExercises = () => {
   const deleteAllExercises = async () => {
     AlertPrompt({
       title: "Delete All Completed Exercises?",
-      description: "You can't undo this action.",
+      description:
+        "Doing so will remove all exercise data from 'Daily Exercises' and 'Daily Goals' in Progress Checker.\nYou can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {
         deleteAllItems();
@@ -171,7 +175,7 @@ export default CompletedExercises = () => {
             <CompletedExerciseList
               exercise={item}
               deleteExercise={deleteExercise}
-              redoExercise={redoExercise}
+              redoExercise={() => {}}
             />
           )}
           showsVerticalScrollIndicator={false}

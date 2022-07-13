@@ -50,25 +50,112 @@ export default GoalsTimeChart = () => {
     try {
       if (!user) throw new Error("No user on the session!");
 
-      let { data, error, status } = await supabase
+      let data = [];
+
+      let {
+        data: goals,
+        error: error1,
+        status: status1,
+      } = await supabase
         .from("goals")
         .select("completed_at")
         .match({ user_id: user.id, completion_status: true })
         .gt("completed_at", sevenDaysAgo.toISOString());
 
-      if (error && status !== 406) {
-        throw error;
+      if (error1 && status1 !== 406) {
+        throw error1;
       }
 
-      data = data
-        .map((obj) =>
-          new Date(obj.completed_at).toLocaleString("en-US", {
-            timeZone: "Asia/Singapore",
-          })
-        )
-        .sort()
-        // .map((d) => d.toLocaleDateString("en-gb", { weekday: "short" }));
-        .map((date) => getDayOfWeek(date));
+      let {
+        data: modules,
+        error: error2,
+        status: status2,
+      } = await supabase
+        .from("modules")
+        .select("completed_at")
+        .match({ user_id: user.id, completion_status: true })
+        .gt("completed_at", sevenDaysAgo.toISOString());
+
+      if (error2 && status2 !== 406) {
+        throw error2;
+      }
+
+      let {
+        data: exercises,
+        error: error3,
+        status: status3,
+      } = await supabase
+        .from("exercises")
+        .select("completed_at")
+        .match({ user_id: user.id, completion_status: true })
+        .gt("completed_at", sevenDaysAgo.toISOString());
+
+      if (error3 && status3 !== 406) {
+        throw error3;
+      }
+
+      let {
+        data: savings,
+        error: error4,
+        status: status4,
+      } = await supabase
+        .from("savings")
+        .select("completed_at")
+        .match({ user_id: user.id, completion_status: true })
+        .gt("completed_at", sevenDaysAgo.toISOString());
+
+      if (error4 && status4 !== 406) {
+        throw error4;
+      }
+
+      data.push.apply(
+        data,
+        goals
+          .map((obj) =>
+            new Date(obj.completed_at).toLocaleString("en-US", {
+              timeZone: "Asia/Singapore",
+            })
+          )
+          .sort()
+          // .map((d) => d.toLocaleDateString("en-gb", { weekday: "short" }));
+          .map((date) => getDayOfWeek(date))
+      );
+
+      data.push.apply(
+        data,
+        modules
+          .map((obj) =>
+            new Date(obj.completed_at).toLocaleString("en-US", {
+              timeZone: "Asia/Singapore",
+            })
+          )
+          .sort()
+          .map((date) => getDayOfWeek(date))
+      );
+
+      data.push.apply(
+        data,
+        exercises
+          .map((obj) =>
+            new Date(obj.completed_at).toLocaleString("en-US", {
+              timeZone: "Asia/Singapore",
+            })
+          )
+          .sort()
+          .map((date) => getDayOfWeek(date))
+      );
+
+      data.push.apply(
+        data,
+        savings
+          .map((obj) =>
+            new Date(obj.completed_at).toLocaleString("en-US", {
+              timeZone: "Asia/Singapore",
+            })
+          )
+          .sort()
+          .map((date) => getDayOfWeek(date))
+      );
 
       for (let i = 0; i < data.length; i++) {
         d.filter((o) => o.x == data[i])[0].y++;
@@ -96,7 +183,7 @@ export default GoalsTimeChart = () => {
         width={350}
         theme={VictoryTheme.material}
         animate={{
-          duration: 500,
+          duration: 200,
         }}
         domainPadding={{ y: 20 }}
       >
@@ -119,7 +206,7 @@ export default GoalsTimeChart = () => {
         <VictoryArea
           style={{ data: { fill: "darkcyan", opacity: 0.6 } }}
           animate={{
-            duration: 500,
+            duration: 200,
           }}
           labels={({ datum }) => (datum.y == 0 ? null : Math.floor(datum.y))}
           labelComponent={

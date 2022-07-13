@@ -91,7 +91,13 @@ export default SavingsEditor = ({ navigation }) => {
 
   const currencyFormat = (str) => {
     const num = parseFloat(str.replace(",", ""), 10);
-    return "$" + num.toPrecision().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+    return (
+      "$" +
+      num
+        .toFixed(2)
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+        .replace(".00", "")
+    );
   };
 
   const floatFormat = (value) => {
@@ -221,7 +227,7 @@ export default SavingsEditor = ({ navigation }) => {
                 width: (Dimensions.get("window").width / 10) * 4,
                 minWidth: 160,
               }}
-              label="Goal Amount ($)"
+              label="Saving Target ($)"
               placeholder="Add amount..."
               placeholderTextColor="darkgray"
               onChangeText={(value) => setAmount(value)}

@@ -192,9 +192,9 @@ const CustomiseAvatar = ({ navigation, session }) => {
 
   const isFocused = useIsFocused();
   const [state, setState] = useState({});
-
-  const [avatar1, setAvatar1] = useState(false);
-  const [count, setCount] = useState(0);
+  const [loading, setLoading] = useState(false);
+  // const [avatar1, setAvatar1] = useState(false);
+  // const [count, setCount] = useState(0);
 
   useEffect(() => {
     if (session) {
@@ -206,6 +206,7 @@ const CustomiseAvatar = ({ navigation, session }) => {
   }, [session, isFocused]);
 
   const getProfile = async () => {
+    setLoading(true);
     try {
       const user = supabase.auth.user();
       if (!user) throw new Error("No user on the session!");
@@ -240,8 +241,10 @@ const CustomiseAvatar = ({ navigation, session }) => {
       }
     } catch (error) {
       Alert.alert(error.message);
+    } finally {
+      setLoading(false);
     }
-    getAchievements();
+    // getAchievements();
   };
 
   const updateProfile = async (e) => {
@@ -278,56 +281,43 @@ const CustomiseAvatar = ({ navigation, session }) => {
       if (error) {
         throw error;
       }
-    } catch (error) {
-      Alert.alert(error.message);
-    }
-  };
 
-  const getAchievements = async () => {
-    try {
-      const user = supabase.auth.user();
-      if (!user) throw new Error("No user on the session!");
+      const achievementUpdates = {
+        id: user.id,
+        avatar1: true,
+        updated_at: new Date().toISOString().toLocaleString(),
+      };
 
-      let { data, error, status } = await supabase
+      let { achievementsError } = await supabase
         .from("achievements")
-        .select()
-        .eq("id", user.id)
-        .single();
+        .upsert(achievementUpdates, { returning: "minimal" });
 
-      if (error && status !== 406) {
-        throw error;
-      }
-
-      if (data) {
-        setCount(data.count);
-        setAvatar1(data.avatar1);
+      if (achievementsError) {
+        throw achievementsError;
       }
     } catch (error) {
       Alert.alert(error.message);
     }
   };
 
-  // const updateAchievements = async (e) => {
-  //   setAvatar1(true);
-  //   setCount(count + 1);
-
+  // const getAchievements = async () => {
   //   try {
   //     const user = supabase.auth.user();
   //     if (!user) throw new Error("No user on the session!");
 
-  //     const updates = {
-  //       id: user.id,
-  //       updated_at: new Date().toISOString().toLocaleString(),
-  //       avatar1: true,
-  //       count: count + 1,
-  //     };
-
-  //     let { error } = await supabase
+  //     let { data, error, status } = await supabase
   //       .from("achievements")
-  //       .upsert(updates, { returning: "minimal" });
+  //       .select()
+  //       .eq("id", user.id)
+  //       .single();
 
-  //     if (error) {
+  //     if (error && status !== 406) {
   //       throw error;
+  //     }
+
+  //     if (data) {
+  //       setCount(data.count);
+  //       setAvatar1(data.avatar1);
   //     }
   //   } catch (error) {
   //     Alert.alert(error.message);
@@ -456,8 +446,11 @@ const CustomiseAvatar = ({ navigation, session }) => {
         </View>
       </ScrollView>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.saveButton} onPress={onSave}>
-          <Text style={styles.save}>Save</Text>
+        <TouchableOpacity
+          style={loading ? styles.disabledButton : styles.saveButton}
+          onPress={onSave}
+        >
+          <Text style={styles.save}>{loading ? "Loading..." : "Save"}</Text>
         </TouchableOpacity>
       </View>
     </View>

@@ -95,7 +95,7 @@ export default ExercisesTimeChart = () => {
         width={350}
         theme={VictoryTheme.material}
         animate={{
-          duration: 500,
+          duration: 200,
         }}
         domainPadding={{ y: 20 }}
       >
@@ -118,7 +118,7 @@ export default ExercisesTimeChart = () => {
         <VictoryArea
           style={{ data: { fill: "darkmagenta", opacity: 0.6 } }}
           animate={{
-            duration: 500,
+            duration: 200,
           }}
           labels={({ datum }) => (datum.y == 0 ? null : Math.floor(datum.y))}
           labelComponent={

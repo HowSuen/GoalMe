@@ -90,7 +90,9 @@ export default GoalsChart = () => {
         innerRadius={({ radius }) => radius / 2}
         labelPlacement="vertical"
         labelPosition="centroid"
-        labels={({ datum }) => Math.floor(datum.y)}
+        labels={({ datum }) =>
+          !datum.y || datum.y == 0 ? null : Math.floor(datum.y)
+        }
         labelRadius={({ radius }) => (11 / 16) * radius}
         style={{
           data: {
@@ -107,9 +109,10 @@ export default GoalsChart = () => {
           x: ["General", "Academic", "Fitness", "Finance"],
         }}
         data={
-          data.filter((obj) => obj.y != 0).length == 0
-            ? data
-            : data.filter((obj) => obj.y != 0)
+          data
+          // data.filter((obj) => obj.y != 0).length == 0
+          //   ? data
+          //   : data.filter((obj) => obj.y != 0)
         }
         events={[
           {

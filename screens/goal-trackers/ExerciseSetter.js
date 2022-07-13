@@ -112,7 +112,7 @@ export default ExerciseSetter = ({ navigation }) => {
   };
 
   const inputsInvalid = () => {
-    return exercise.type == "run"
+    return type == "run"
       ? isNaN(+distance)
       : isNaN(+weight) ||
           isNaN(+rep) ||
@@ -148,16 +148,22 @@ export default ExerciseSetter = ({ navigation }) => {
           <View style={styles.defaultContainer}>
             <Text style={styles.defaultText}>Choose the type of Exercise!</Text>
             <View style={styles.exercise}>
-              <MaterialCommunityIcons
-                name="weight-lifter"
-                size={80}
-                style={{ marginHorizontal: 20 }}
-              />
-              <MaterialCommunityIcons
-                name="run-fast"
-                size={80}
-                style={{ marginHorizontal: 20 }}
-              />
+              <TouchableOpacity onPress={() => setType("run")}>
+                <MaterialCommunityIcons
+                  name="weight-lifter"
+                  size={80}
+                  style={{ marginHorizontal: 20 }}
+                  color="#cc99ff"
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setType("weight")}>
+                <MaterialCommunityIcons
+                  name="run-fast"
+                  size={80}
+                  style={{ marginHorizontal: 20 }}
+                  color="#ff6699"
+                />
+              </TouchableOpacity>
             </View>
           </View>
         ) : (

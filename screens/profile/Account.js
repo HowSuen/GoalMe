@@ -124,7 +124,7 @@ const Account = ({ navigation, session }) => {
               <View style={styles.verticallySpaced}>
                 <Input
                   style={styles.textInput}
-                  containerStyle={{ marginBottom: -10 }}
+                  // containerStyle={{ marginBottom: -10 }}
                   label="Username"
                   value={username || ""}
                   onChangeText={(text) => setUsername(text)}

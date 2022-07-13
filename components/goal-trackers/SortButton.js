@@ -37,6 +37,7 @@ const pickerSelectStyles = StyleSheet.create({
     paddingLeft: 6.5,
     paddingRight: 25, // to ensure the text is never behind the icon
     marginTop: 15,
+    marginBottom: 12.5,
     borderRadius: 4,
     borderWidth: 1.5,
     borderColor: "black",
@@ -46,11 +47,12 @@ const pickerSelectStyles = StyleSheet.create({
   inputAndroid: {
     fontSize: 15,
     height: 40,
-    width: 130,
+    width: 139,
     paddingVertical: 8,
     paddingHorizontal: 6.5,
     paddingRight: 25, // to ensure the text is never behind the icon
     marginTop: 15,
+    marginBottom: 12.5,
     borderWidth: 1.5,
     borderRadius: 8,
     borderColor: "black",

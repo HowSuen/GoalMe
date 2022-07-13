@@ -3,7 +3,7 @@ import { Alert, View, FlatList, TouchableOpacity, Text } from "react-native";
 import styles from "./GoalTracker.style";
 import { FontAwesome5 } from "@expo/vector-icons";
 import GoalList from "../../components/goal-trackers/GoalList";
-import Empty from "./Empty";
+import Empty from "../../components/goal-trackers/Empty";
 import supabase from "../../lib/supabase";
 import { useIsFocused, useRoute } from "@react-navigation/native";
 import SortButton from "../../components/goal-trackers/SortButton";
@@ -117,17 +117,30 @@ export default AcademicTracker = ({ navigation }) => {
     } else if (goal.difficulty == "Easy") {
       addXP = 50;
     }
-    const newTotalXp = totalXp + addXP;
-    const newWisdomXp = wisdomXp + addXP;
-    const totalMax = Math.round(Math.pow(totalLvl / 0.05, 1.6));
-    const wisdomMax = Math.round(Math.pow(wisdomLvl / 0.05, 1.6));
 
-    setTotalXp(newTotalXp >= totalMax ? newTotalXp % totalMax : newTotalXp);
-    setTotalLvl(newTotalXp >= totalMax ? totalLvl + 1 : totalLvl);
-    setWisdomXp(
-      newWisdomXp >= wisdomMax ? newWisdomXp % wisdomMax : newWisdomXp
-    );
-    setWisdomLvl(newWisdomXp >= wisdomMax ? wisdomLvl + 1 : wisdomLvl);
+    let newTotalXp = totalXp + addXP;
+    let newWisdomXp = wisdomXp + addXP;
+    let totalMax = Math.round(Math.pow(totalLvl / 0.05, 1.6));
+    let wisdomMax = Math.round(Math.pow(wisdomLvl / 0.05, 1.6));
+
+    let addLVL = 0;
+    while (newTotalXp >= totalMax) {
+      newTotalXp -= totalMax;
+      addLVL += 1;
+      totalMax = Math.round(Math.pow((totalLvl + addLVL) / 0.05, 1.6));
+    }
+
+    let addWisdomLVL = 0;
+    while (newWisdomXp >= wisdomMax) {
+      newWisdomXp -= wisdomMax;
+      addWisdomLVL += 1;
+      wisdomMax = Math.round(Math.pow((wisdomLvl + addWisdomLVL) / 0.05, 1.6));
+    }
+
+    setTotalXp(newTotalXp);
+    setTotalLvl(totalLvl + addLVL);
+    setWisdomXp(newWisdomXp);
+    setWisdomLvl(wisdomLvl + addWisdomLVL);
     setCompleted(completed + 1);
     setCompletedAcad(completedAcad + 1);
 
@@ -137,11 +150,10 @@ export default AcademicTracker = ({ navigation }) => {
       const updates = {
         id: user.id,
         updated_at: new Date().toISOString().toLocaleString(),
-        totalXP: newTotalXp >= totalMax ? newTotalXp % totalMax : newTotalXp,
-        totalLVL: newTotalXp >= totalMax ? totalLvl + 1 : totalLvl,
-        wisdomXP:
-          newWisdomXp >= wisdomMax ? newWisdomXp % wisdomMax : newWisdomXp,
-        wisdomLVL: newWisdomXp >= wisdomMax ? wisdomLvl + 1 : wisdomLvl,
+        totalXP: newTotalXp,
+        totalLVL: totalLvl + addLVL,
+        wisdomXP: newWisdomXp,
+        wisdomLVL: wisdomLvl + addWisdomLVL,
         completed: completed + 1,
         completedAcad: completedAcad + 1,
       };

@@ -5,16 +5,16 @@ import { Image } from "react-native-elements";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { orders } from "./GoalTracker";
 import styles from "./GoalTracker.style";
-import Empty from "./Empty";
 import supabase from "../../lib/supabase";
 import SortButton from "../../components/goal-trackers/SortButton";
 import ExerciseList from "../../components/goal-trackers/ExerciseList";
 import AlertPrompt from "../../components/goal-trackers/AlertPrompt";
 
 const orderBys = [
-  { label: "Alphabetical", value: "alphabetical" },
-  { label: "Type", value: "type" },
+  { label: "Date Created", value: "dateCreated" },
   { label: "Date Updated", value: "dateUpdated" },
+  { label: "Type", value: "type" },
+  { label: "Alphabetical", value: "alphabetical" },
 ];
 
 const sortItems = (order, orderBy) => {
@@ -23,7 +23,11 @@ const sortItems = (order, orderBy) => {
   };
 
   let comparator;
-  if (orderBy == "type") {
+  if (orderBy == "dateCreated") {
+    comparator = (a, b) => {
+      return order == "ascending" ? a.id - b.id : b.id - a.id;
+    };
+  } else if (orderBy == "type") {
     comparator = (a, b) => {
       const s1 = a.type;
       const s2 = b.type;
@@ -40,6 +44,11 @@ const sortItems = (order, orderBy) => {
       const s2 = b.exercise_name;
       return order == "ascending" ? s1.localeCompare(s2) : s2.localeCompare(s1);
     };
+  } else if (orderBy == "dateCompleted") {
+    comparator = (a, b) =>
+      order == "ascending"
+        ? convertDate(a.completed_at) - convertDate(b.completed_at)
+        : convertDate(b.completed_at) - convertDate(a.completed_at);
   }
   return comparator;
 };
@@ -47,7 +56,7 @@ const sortItems = (order, orderBy) => {
 export default Exercise = ({ navigation }) => {
   const [data, setData] = useState([]);
   const [order, setOrder] = useState("ascending");
-  const [orderBy, setOrderBy] = useState("alphabetical");
+  const [orderBy, setOrderBy] = useState("dateCreated");
 
   const [isFetching, setIsFetching] = useState(false);
   const user = supabase.auth.user();
@@ -150,7 +159,12 @@ export default Exercise = ({ navigation }) => {
   };
 
   const updateExperience = async (exercise) => {
-    let addXP = 500; // temporary amount
+    let addXP =
+      exercise.type == "run"
+        ? Math.round(parseFloat(exercise.distance, 10) * 1000)
+        : parseInt(exercise.volume, 10);
+    addXP = addXP > 1000 ? 1000 : addXP;
+    // console.log(addXP);
 
     let newTotalXp = totalXp + addXP;
     let newStrengthXp = strengthXp + addXP;
@@ -370,3 +384,5 @@ export default Exercise = ({ navigation }) => {
     </View>
   );
 };
+
+export { sortItems };

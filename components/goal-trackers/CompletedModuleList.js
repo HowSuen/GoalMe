@@ -4,7 +4,6 @@ import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import styles from "./ModuleList.style";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useRoute } from "@react-navigation/native";
-import DialogPrompt from "./DialogPrompt";
 import { useState } from "react";
 
 const grades = [
@@ -25,50 +24,27 @@ const grades = [
   // { label: "U", value: "U" },
 ];
 
-export default ModuleList = ({
-  module,
-  completeModule,
-  deleteModule,
-  onChangeText,
-  navigation,
-}) => {
+export default CompletedModuleList = ({ module, redoModule, deleteModule }) => {
   const route = useRoute();
   const [visible, setVisible] = useState(false);
   const moduleText = module.moduleCode || module.moduleName;
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.moduleListContainer}
-        onPress={() =>
-          navigation.navigate("ModuleEditor", {
-            routeName: route.name,
-            module: module,
-          })
-        }
-      >
+      <View style={styles.moduleListContainer}>
         <TouchableOpacity
-          title=""
-          onPress={() => setVisible(true)}
-          style={styles.boxContainer}
+          style={styles.checkContainer}
+          onPress={() => redoModule(module)}
         >
-          <FontAwesome name="square-o" size={25} color={"black"} />
-          <DialogPrompt
-            title="Received Grade"
-            description="What letter grade did you receive for this module?"
-            placeholder="Enter grade here..."
-            matches={grades}
-            onChangeText={onChangeText}
-            onPress={() => completeModule(module)}
-            alertMessage={"Invalid letter grade."}
-            visible={visible}
-            setVisible={setVisible}
-          />
+          <FontAwesome name="check-square-o" size={25} color="black" />
         </TouchableOpacity>
         <View>
           <Text style={styles.listText}>
             {moduleText.substring(0, 16) +
               (moduleText.length > 16 ? "..." : "")}
+          </Text>
+          <Text style={{ color: "black", fontSize: 12 }}>
+            Received Grade: {module.gradeReceived}
           </Text>
           <Text style={styles.listSubtext}>
             Target Grade: {module.targetGrade}
@@ -80,7 +56,7 @@ export default ModuleList = ({
         >
           <Ionicons name="trash" size={20} color="black" />
         </TouchableOpacity>
-      </TouchableOpacity>
+      </View>
     </View>
   );
 };

@@ -5,7 +5,7 @@ export default StyleSheet.create({
     padding: 15,
     justifyContent: "center",
     flex: 1,
-    backgroundColor: "ghostwhite",
+    backgroundColor: "rgb(213,244,255)",
   },
   logoContainer: {
     justifyContent: "flex-start",

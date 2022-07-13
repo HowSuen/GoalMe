@@ -3,7 +3,7 @@ import { Alert, View, FlatList, TouchableOpacity, Text } from "react-native";
 import styles from "./GoalTracker.style";
 import { FontAwesome5 } from "@expo/vector-icons";
 import GoalList from "../../components/goal-trackers/GoalList";
-import Empty from "./Empty";
+import Empty from "../../components/goal-trackers/Empty";
 import supabase from "../../lib/supabase";
 import { useIsFocused, useRoute } from "@react-navigation/native";
 import SortButton from "../../components/goal-trackers/SortButton";
@@ -117,19 +117,31 @@ export default fitnessTracker = ({ navigation }) => {
       addXP = 50;
     }
 
-    const newTotalXp = totalXp + addXP;
-    const newStrengthXp = strengthXp + addXP;
-    const totalMax = Math.round(Math.pow(totalLvl / 0.05, 1.6));
-    const strengthMax = Math.round(Math.pow(strengthLvl / 0.05, 1.6));
+    let newTotalXp = totalXp + addXP;
+    let newStrengthXp = strengthXp + addXP;
+    let totalMax = Math.round(Math.pow(totalLvl / 0.05, 1.6));
+    let strengthMax = Math.round(Math.pow(strengthLvl / 0.05, 1.6));
 
-    setTotalXp(newTotalXp >= totalMax ? newTotalXp % totalMax : newTotalXp);
-    setTotalLvl(newTotalXp >= totalMax ? totalLvl + 1 : totalLvl);
-    setStrengthXp(
-      newStrengthXp >= strengthMax ? newStrengthXp % strengthMax : newStrengthXp
-    );
-    setStrengthLvl(
-      newStrengthXp >= strengthMax ? strengthLvl + 1 : strengthLvl
-    );
+    let addLVL = 0;
+    while (newTotalXp >= totalMax) {
+      newTotalXp -= totalMax;
+      addLVL += 1;
+      totalMax = Math.round(Math.pow((totalLvl + addLVL) / 0.05, 1.6));
+    }
+
+    let addStrengthLVL = 0;
+    while (newStrengthXp >= strengthMax) {
+      newStrengthXp -= strengthMax;
+      addStrengthLVL += 1;
+      strengthMax = Math.round(
+        Math.pow((strengthLvl + addStrengthLVL) / 0.05, 1.6)
+      );
+    }
+
+    setTotalXp(newTotalXp);
+    setTotalLvl(totalLvl + addLVL);
+    setStrengthXp(newStrengthXp);
+    setStrengthLvl(strengthLvl + addStrengthLVL);
     setCompleted(completed + 1);
     setCompletedFit(completedFit + 1);
 
@@ -139,14 +151,10 @@ export default fitnessTracker = ({ navigation }) => {
       const updates = {
         id: user.id,
         updated_at: new Date().toISOString().toLocaleString(),
-        totalXP: newTotalXp >= totalMax ? newTotalXp % totalMax : newTotalXp,
-        totalLVL: newTotalXp >= totalMax ? totalLvl + 1 : totalLvl,
-        strengthXP:
-          newStrengthXp >= strengthMax
-            ? newStrengthXp % strengthMax
-            : newStrengthXp,
-        strengthLVL:
-          newStrengthXp >= strengthMax ? strengthLvl + 1 : strengthLvl,
+        totalXP: newTotalXp,
+        totalLVL: totalLvl + addLVL,
+        strengthXP: newStrengthXp,
+        strengthLVL: strengthLvl + addStrengthLVL,
         completed: completed + 1,
         completedFit: completedFit + 1,
       };

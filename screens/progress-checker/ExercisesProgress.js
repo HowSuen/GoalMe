@@ -16,10 +16,14 @@ export default ExercisesProgress = () => {
   const [totalRunDist, setTotalRunDist] = useState(0);
   const [maxWeight, setMaxWeight] = useState(0);
   const [maxWeightVol, setMaxWeightVol] = useState(0);
+  const [state, setState] = useState({});
 
   useEffect(() => {
     getExpData();
     getPending();
+    return () => {
+      setState({});
+    };
   }, [isFocused]);
 
   const getExpData = async () => {

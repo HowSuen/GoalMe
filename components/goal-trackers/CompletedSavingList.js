@@ -5,13 +5,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { useRoute } from "@react-navigation/native";
 import { Bar } from "react-native-progress";
 
-export default SavingList = ({
-  saving,
-  completeSaving,
-  deleteSaving,
-  navigation,
-}) => {
-  const route = useRoute();
+export default CompletedSavingList = ({ saving, redoSaving, deleteSaving }) => {
   const savingText = saving.name;
 
   const calculateProgress = (saving) => {
@@ -47,33 +41,14 @@ export default SavingList = ({
     );
   };
 
-  const completed = () => {
-    const curr = parseFloat(saving.curr_amount.replace(",", ""), 10);
-    const total = parseFloat(saving.amount.replace(",", ""), 10);
-    return curr >= total;
-  };
-
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.listContainer}
-        onPress={() =>
-          navigation.navigate("SavingsEditor", {
-            routeName: route.name,
-            saving: saving,
-          })
-        }
-      >
+      <View style={styles.listContainer}>
         <TouchableOpacity
           style={styles.boxContainer}
-          onPress={() => completeSaving(saving)}
-          disabled={!completed()}
+          onPress={() => redoSaving(saving)}
         >
-          <FontAwesome
-            name="square-o"
-            size={25}
-            color={completed() ? "black" : "transparent"}
-          />
+          <FontAwesome name="check-square-o" size={25} color={"black"} />
         </TouchableOpacity>
         <View style={styles.barContainer}>
           <Text style={styles.listText}>
@@ -86,14 +61,12 @@ export default SavingList = ({
               width={null}
               height={5}
               unfilledColor="#FFF0A5"
-              color={completed() ? "rgb(91,130,75)" : "rgb(182,74,38)"}
+              color={"rgb(91,130,75)"}
               borderWidth={0}
               animationConfig={{ bounciness: 50 }}
             />
             <View style={styles.progressText}>
-              <Text
-                style={completed() ? styles.fullAmountText : styles.amountText}
-              >
+              <Text style={styles.fullAmountText}>
                 {isNegative(saving.curr_amount) ? "-" : ""}
                 {currencyFormat(calculateAbsolute(saving.curr_amount))}
               </Text>
@@ -117,7 +90,7 @@ export default SavingList = ({
             <Ionicons name="trash" size={20} color="black" />
           </TouchableOpacity>
         </View>
-      </TouchableOpacity>
+      </View>
     </View>
   );
 };

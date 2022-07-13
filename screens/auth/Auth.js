@@ -51,13 +51,11 @@ const Auth = ({ navigation }) => {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View>
-          <View style={styles.logoContainer}>
+          <View style={styles.titleContainer}>
             <Image
               style={styles.logo}
               source={require("../../assets/goalme-transparent-logo.png")}
             />
-          </View>
-          <View style={styles.titleContainer}>
             <Image
               style={styles.title}
               source={require("../../assets/goalme-title.png")}
@@ -85,7 +83,12 @@ const Auth = ({ navigation }) => {
               disabled={loading}
               onPress={() => navigation.navigate("Signup")}
             >
-              <Text style={styles.signUpText}>No account yet? <Text style={styles.signUpTextR}>Sign up</Text></Text>
+              <View>
+                <Text style={styles.signUpText}>
+                  No account yet?{" "}
+                  <Text style={styles.signUpTextR}>Sign up</Text>
+                </Text>
+              </View>
             </TouchableOpacity>
           </View>
         </View>

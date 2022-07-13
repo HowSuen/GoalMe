@@ -3,7 +3,7 @@ import { Alert, View, FlatList, TouchableOpacity, Text } from "react-native";
 import styles from "./GoalTracker.style";
 import { FontAwesome5 } from "@expo/vector-icons";
 import GoalList from "../../components/goal-trackers/GoalList";
-import Empty from "./Empty";
+import Empty from "../../components/goal-trackers/Empty";
 import supabase from "../../lib/supabase";
 import { useIsFocused, useRoute } from "@react-navigation/native";
 import SortButton from "../../components/goal-trackers/SortButton";
@@ -117,17 +117,29 @@ export default FinanceTracker = ({ navigation }) => {
       addXP = 50;
     }
 
-    const newTotalXp = totalXp + addXP;
-    const newWealthXp = wealthXp + addXP;
-    const totalMax = Math.round(Math.pow(totalLvl / 0.05, 1.6));
-    const wealthMax = Math.round(Math.pow(wealthLvl / 0.05, 1.6));
+    let newTotalXp = totalXp + addXP;
+    let newWealthXp = wealthXp + addXP;
+    let totalMax = Math.round(Math.pow(totalLvl / 0.05, 1.6));
+    let wealthMax = Math.round(Math.pow(wealthLvl / 0.05, 1.6));
 
-    setTotalXp(newTotalXp >= totalMax ? newTotalXp % totalMax : newTotalXp);
-    setTotalLvl(newTotalXp >= totalMax ? totalLvl + 1 : totalLvl);
-    setWealthXp(
-      newWealthXp >= wealthMax ? newWealthXp % wealthMax : newWealthXp
-    );
-    setWealthLvl(newWealthXp >= wealthMax ? wealthLvl + 1 : wealthLvl);
+    let addLVL = 0;
+    while (newTotalXp >= totalMax) {
+      newTotalXp -= totalMax;
+      addLVL += 1;
+      totalMax = Math.round(Math.pow((totalLvl + addLVL) / 0.05, 1.6));
+    }
+
+    let addWealthLVL = 0;
+    while (newWealthXp >= wealthMax) {
+      newWealthXp -= wealthMax;
+      addWealthLVL += 1;
+      wealthMax = Math.round(Math.pow((wealthLvl + addWealthLVL) / 0.05, 1.6));
+    }
+
+    setTotalXp(newTotalXp);
+    setTotalLvl(totalLvl + addLVL);
+    setWealthXp(newWealthXp);
+    setWealthLvl(wealthLvl + addWealthLVL);
     setCompleted(completed + 1);
     setCompletedFinance(completedFinance + 1);
 
@@ -137,11 +149,10 @@ export default FinanceTracker = ({ navigation }) => {
       const updates = {
         id: user.id,
         updated_at: new Date().toISOString().toLocaleString(),
-        totalXP: newTotalXp >= totalMax ? newTotalXp % totalMax : newTotalXp,
-        totalLVL: newTotalXp >= totalMax ? totalLvl + 1 : totalLvl,
-        wealthXP:
-          newWealthXp >= wealthMax ? newWealthXp % wealthMax : newWealthXp,
-        wealthLVL: newWealthXp >= wealthMax ? wealthLvl + 1 : wealthLvl,
+        totalXP: newTotalXp,
+        totalLVL: totalLvl + addLVL,
+        wealthXP: newWealthXp,
+        wealthLVL: wealthLvl + addWealthLVL,
         completed: completed + 1,
         completedFinance: completedFinance + 1,
       };
@@ -193,7 +204,7 @@ export default FinanceTracker = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View>
-      <TouchableOpacity
+        <TouchableOpacity
           onPress={() => {
             navigation.navigate("Savings");
           }}

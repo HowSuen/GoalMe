@@ -109,7 +109,13 @@ export default SavingsTimeChart = () => {
 
   const currencyFormat = (str) => {
     const num = parseFloat(str.replace(",", ""), 10);
-    return "$" + num.toPrecision().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+    return (
+      "$" +
+      num
+        .toFixed(2)
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+        .replace(".00", "")
+    );
   };
 
   return (
@@ -120,13 +126,13 @@ export default SavingsTimeChart = () => {
         width={350}
         theme={VictoryTheme.material}
         animate={{
-          duration: 500,
+          duration: 100,
         }}
         domainPadding={{ y: 20 }}
       >
         <VictoryAxis
           dependentAxis={true}
-          tickFormat={(y) => y < 1 ? null : currencyFormat(y.toString())}
+          tickFormat={(y) => (y < 1 ? null : currencyFormat(y.toString()))}
           // label="Amount Saved ($)"
           style={{
             axisLabel: { padding: 30, fontWeight: "bold" },
@@ -146,7 +152,9 @@ export default SavingsTimeChart = () => {
             duration: 100,
             // animationWhitelist: ["data"]
           }}
-          labels={({ datum }) => (datum.y == 0 ? null : currencyFormat(datum.y.toString()))}
+          labels={({ datum }) =>
+            datum.y == 0 ? null : currencyFormat(datum.y.toString())
+          }
           labelComponent={
             <VictoryLabel
               textAnchor={({ datum }) =>

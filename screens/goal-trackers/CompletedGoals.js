@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Alert, View, FlatList } from "react-native";
+import { Alert, View, FlatList, ActivityIndicator } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import styles from "./CompletedGoals.style";
 import CompletedList from "../../components/goal-trackers/CompletedList";
-import Empty from "./Empty";
+import Empty from "../../components/goal-trackers/Empty";
 import supabase from "../../lib/supabase";
 import { orders, sortItems, deleteItem } from "./GoalTracker";
 import AlertPrompt from "../../components/goal-trackers/AlertPrompt";
+import { Text, Image } from "react-native-elements";
+import Loading from "../../components/goal-trackers/Loading";
 
 const orderBys = [
   { label: "Date Completed", value: "dateCompleted" },
@@ -41,12 +43,13 @@ const deleteAllItems = async () => {
   }
 };
 
-export default CompletedGoals = () => {
+export default CompletedGoals = ({ navigation }) => {
+  const user = supabase.auth.user();
   const [data, setData] = useState([]);
   const [order, setOrder] = useState("ascending");
   const [orderBy, setOrderBy] = useState("dateCompleted");
   const [isFetching, setIsFetching] = useState(false);
-  const user = supabase.auth.user();
+  const [loading, setLoading] = useState(false);
   const [state, setState] = useState({});
 
   useEffect(() => {
@@ -57,6 +60,7 @@ export default CompletedGoals = () => {
   }, []);
 
   const getGoals = async () => {
+    setLoading(true);
     try {
       let { data: goals, error } = await supabase
         .from("goals")
@@ -88,8 +92,10 @@ export default CompletedGoals = () => {
       });
     } catch (error) {
       Alert.alert(error.message);
+    } finally {
+      setLoading(false);
     }
-  }
+  };
 
   const sortGoals = (order, orderBy) => {
     setData((goals) => {
@@ -100,7 +106,8 @@ export default CompletedGoals = () => {
   const deleteGoal = async (goal) => {
     AlertPrompt({
       title: "Delete This Goal?",
-      description: "You can't undo this action.",
+      description:
+        "Doing so will remove its data from 'Daily Goals' in Progress. You can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {
         deleteItem(goal);
@@ -114,6 +121,8 @@ export default CompletedGoals = () => {
   const redoGoal = async (goal) => {
     AlertPrompt({
       title: "Redo This Goal?",
+      description:
+        "Doing so will remove its data from 'Daily Goals' in Progress. You can't undo this action.",
       proceedText: "Redo",
       onPress: async () => {
         redoItem(goal);
@@ -127,7 +136,8 @@ export default CompletedGoals = () => {
   const deleteAllGoals = async () => {
     AlertPrompt({
       title: "Delete All Completed Goals?",
-      description: "You can't undo this action.",
+      description:
+        "Doing so will remove all goal data from 'Daily Goals' in Progress. You can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {
         deleteAllItems();
@@ -139,25 +149,80 @@ export default CompletedGoals = () => {
   return (
     <View style={styles.container}>
       <View>
-        <FlatList
-          data={data}
-          ListEmptyComponent={() => <Empty />}
-          keyExtractor={(goal) => goal.id}
-          renderItem={({ item }) => (
-            <CompletedList
-              goal={item}
-              deleteGoal={deleteGoal}
-              redoGoal={redoGoal}
-            />
-          )}
-          showsVerticalScrollIndicator={false}
-          onRefresh={() => {
-            setIsFetching(true);
-            getGoals();
-            setIsFetching(false);
-          }}
-          refreshing={isFetching}
-        />
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("CompletedModules");
+            }}
+            style={styles.moduleNavButton}
+          >
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              {/* <Image
+                style={{ width: 30, height: 28 }}
+                source={require("../../assets/modules-progress.png")}
+                resizeMode="contain"
+              /> */}
+              <Text style={styles.buttonText}>Modules</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("CompletedExercises");
+            }}
+            style={styles.exerciseNavButton}
+          >
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              {/* <Image
+                style={{ width: 30, height: 28 }}
+                source={require("../../assets/exercises-progress.png")}
+                resizeMode="contain"
+              /> */}
+              <Text style={styles.buttonText}>Exercises</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("CompletedSavings");
+            }}
+            style={styles.walletNavButton}
+          >
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              {/* <Image
+                style={{ width: 30, height: 28 }}
+                source={require("../../assets/exercises-progress.png")}
+                resizeMode="contain"
+              /> */}
+              <Text style={styles.buttonText}>Savings</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        {loading ? (
+          <FlatList
+            data={[]}
+            ListEmptyComponent={() => <Loading />}
+            showsVerticalScrollIndicator={false}
+          />
+        ) : (
+          <FlatList
+            data={data}
+            ListEmptyComponent={() => <Empty text={"No goals completed."} />}
+            keyExtractor={(goal) => goal.id}
+            renderItem={({ item }) => (
+              <CompletedList
+                goal={item}
+                deleteGoal={deleteGoal}
+                redoGoal={() => {}}
+              />
+            )}
+            showsVerticalScrollIndicator={false}
+            onRefresh={() => {
+              setIsFetching(true);
+              getGoals();
+              setIsFetching(false);
+            }}
+            refreshing={isFetching}
+          />
+        )}
         <View style={styles.bottomContainer}>
           <SortButton
             value={orderBy}
@@ -179,7 +244,7 @@ export default CompletedGoals = () => {
             style={styles.deleteButton}
             onPress={deleteAllGoals}
           >
-            <FontAwesome5 name="trash" size={25} color="black" />
+            <Ionicons name="trash" size={25} color="black" />
           </TouchableOpacity>
         </View>
       </View>

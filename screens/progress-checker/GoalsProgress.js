@@ -41,7 +41,6 @@ export default GoalsProgress = ({ navigation }) => {
       if (!data) return;
 
       setCompleted(data.completed);
-
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -51,19 +50,69 @@ export default GoalsProgress = ({ navigation }) => {
     try {
       if (!user) throw new Error("No user on the session!");
 
-      let { data, error, status } = await supabase
+      let data = [];
+
+      let {
+        data: goals,
+        error: error1,
+        status: status1,
+      } = await supabase
         .from("goals")
         .select("id")
         .match({ user_id: user.id, completion_status: false });
 
-      if (error && status !== 406) {
-        throw error;
+      if (error1 && status1 !== 406) {
+        throw error1;
       }
 
-      if (!data) return;
+      let {
+        data: modules,
+        error: error2,
+        status: status2,
+      } = await supabase
+        .from("modules")
+        .select("id")
+        .match({ user_id: user.id, completion_status: false });
+
+      if (error2 && status2 !== 406) {
+        throw error2;
+      }
+
+      let {
+        data: exercises,
+        error: error3,
+        status: status3,
+      } = await supabase
+        .from("exercises")
+        .select("id")
+        .match({ user_id: user.id, completion_status: false });
+
+      if (error3 && status3 !== 406) {
+        throw error3;
+      }
+
+      let {
+        data: savings,
+        error: error4,
+        status: status4,
+      } = await supabase
+        .from("savings")
+        .select("id")
+        .match({ user_id: user.id, completion_status: false });
+
+      if (error4 && status4 !== 406) {
+        throw error4;
+      }
+
+      data.push.apply(data, goals);
+
+      data.push.apply(data, modules);
+
+      data.push.apply(data, exercises);
+
+      data.push.apply(data, savings);
 
       setPending(data.length);
-
     } catch (error) {
       Alert.alert(error.message);
     }

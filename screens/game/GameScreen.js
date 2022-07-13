@@ -10,7 +10,8 @@ const GameScreen = ({ navigation, session }) => {
     <View style={styles.container}>
       <Card
         containerStyle={{
-          padding: 5,
+          paddingHorizontal: 5,
+          paddingVertical: Platform.OS === "ios" ? 10 : 5,
           backgroundColor: "rgba(245,242,234,1.0)",
           elevation: 15,
           borderRadius: 10,
@@ -20,7 +21,8 @@ const GameScreen = ({ navigation, session }) => {
       </Card>
       <Card
         containerStyle={{
-          padding: 5,
+          paddingHorizontal: 5,
+          paddingVertical: Platform.OS === "ios" ? 10 : 5,
           backgroundColor: "rgba(245,242,234,1.0)",
           elevation: 10,
           borderRadius: 10,
@@ -34,7 +36,8 @@ const GameScreen = ({ navigation, session }) => {
       </Card>
       <Card
         containerStyle={{
-          padding: 5,
+          paddingHorizontal: 5,
+          paddingVertical: Platform.OS === "ios" ? 15 : 5,
           backgroundColor: "rgba(245,242,234,1.0)",
           elevation: 10,
           borderRadius: 10,

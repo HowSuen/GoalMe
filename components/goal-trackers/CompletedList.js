@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, View } from "react-native";
-import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import styles from "./GoalList.style";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -44,7 +44,7 @@ export default CompletedList = ({ goal, redoGoal, deleteGoal }) => {
             style={styles.trashContainer}
             onPress={() => deleteGoal(goal)}
           >
-            <FontAwesome5 name="trash" size={20} color="black" />
+            <Ionicons name="trash" size={20} color="black" />
           </TouchableOpacity>
         </View>
       </View>

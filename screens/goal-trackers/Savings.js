@@ -17,9 +17,12 @@ import AlertPrompt from "../../components/goal-trackers/AlertPrompt";
 import SavingList from "../../components/goal-trackers/SavingList";
 
 const orderBys = [
+  { label: "Date Created", value: "dateCreated" },
+  { label: "Date Updated", value: "dateUpdated" },
+  { label: "Saving Target ($)", value: "savingTarget" },
+  { label: "Current Savings (%)", value: "currentSavings" },
   { label: "Alphabetical", value: "alphabetical" },
   //   { label: "Type", value: "type" },
-  { label: "Date Updated", value: "dateUpdated" },
 ];
 
 const sortItems = (order, orderBy) => {
@@ -35,7 +38,11 @@ const sortItems = (order, orderBy) => {
   //     return order == "ascending" ? s1.localeCompare(s2) : s2.localeCompare(s1);
   //   };
   // } else
-  if (orderBy == "dateUpdated") {
+  if (orderBy == "dateCreated") {
+    comparator = (a, b) => {
+      return order == "ascending" ? a.id - b.id : b.id - a.id;
+    };
+  } else if (orderBy == "dateUpdated") {
     comparator = (a, b) =>
       order == "ascending"
         ? convertDate(a.updated_at) - convertDate(b.updated_at)
@@ -46,6 +53,21 @@ const sortItems = (order, orderBy) => {
       const s2 = b.name;
       return order == "ascending" ? s1.localeCompare(s2) : s2.localeCompare(s1);
     };
+  } else if (orderBy == "savingTarget") {
+    comparator = (a, b) => {
+      return order == "ascending" ? a.amount - b.amount : b.amount - a.amount;
+    };
+  } else if (orderBy == "currentSavings") {
+    comparator = (a, b) => {
+      return order == "ascending"
+        ? a.curr_amount / a.amount - b.curr_amount / b.amount
+        : b.curr_amount / b.amount - a.curr_amount / a.amount;
+    };
+  } else if (orderBy == "dateCompleted") {
+    comparator = (a, b) =>
+      order == "ascending"
+        ? convertDate(a.completed_at) - convertDate(b.completed_at)
+        : convertDate(b.completed_at) - convertDate(a.completed_at);
   }
   return comparator;
 };
@@ -53,7 +75,7 @@ const sortItems = (order, orderBy) => {
 export default Savings = ({ navigation }) => {
   const [data, setData] = useState([]);
   const [order, setOrder] = useState("ascending");
-  const [orderBy, setOrderBy] = useState("alphabetical");
+  const [orderBy, setOrderBy] = useState("dateCreated");
 
   const [isFetching, setIsFetching] = useState(false);
   const user = supabase.auth.user();
@@ -146,7 +168,8 @@ export default Savings = ({ navigation }) => {
   };
 
   const updateExperience = async (saving) => {
-    let addXP = 500; // temporary amount
+    let addXP = Math.round(parseFloat(saving.curr_amount, 10));
+    // console.log(addXP);
 
     let newTotalXp = totalXp + addXP;
     let newWealthXp = wealthXp + addXP;
@@ -265,7 +288,7 @@ export default Savings = ({ navigation }) => {
         // }
         completeItem(saving);
         setData((savings) => {
-          return savings.filter((e) => e != saving);
+          return savings.filter((s) => s != saving);
         });
         updateExperience(saving);
       },
@@ -289,7 +312,7 @@ export default Savings = ({ navigation }) => {
           Alert.alert(error.message);
         }
         setData((savings) => {
-          return savings.filter((e) => e != saving);
+          return savings.filter((s) => s != saving);
         });
       },
     });
@@ -359,3 +382,5 @@ export default Savings = ({ navigation }) => {
     </View>
   );
 };
+
+export { sortItems };

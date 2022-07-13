@@ -7,13 +7,14 @@ import {
   Keyboard,
   Platform,
 } from "react-native";
-import supabase  from "../../lib/supabase";
+import supabase from "../../lib/supabase";
 import { Image } from "react-native-elements";
 import styles from "./CreateAcct.style";
 import "react-native-url-polyfill/auto";
 import AuthButton from "../../components/auth/AuthButton";
 import UserInput from "../../components/auth/UserInput";
 import PasswordSecureInput from "../../components/auth/PasswordSecureInput";
+import { ScrollView } from "react-native-gesture-handler";
 
 const CreateAcct = () => {
   const [email, setEmail] = useState("");
@@ -53,6 +54,18 @@ const CreateAcct = () => {
         let { error } = await supabase.from("profiles").upsert(updates);
         if (error) {
           throw error;
+        }
+
+        const experienceUpdates = {
+          id: user.id,
+          updated_at: new Date().toISOString().toLocaleString(),
+        };
+
+        let { experienceError } = await supabase
+          .from("experience")
+          .upsert(experienceUpdates);
+        if (experienceError) {
+          throw experienceError;
         }
       } catch (error) {
         alert(error.message);

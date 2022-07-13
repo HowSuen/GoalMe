@@ -15,6 +15,10 @@ import ExerciseSetter from "../screens/goal-trackers/ExerciseSetter";
 import Savings from "../screens/goal-trackers/Savings";
 import SavingsEditor from "../screens/goal-trackers/SavingsEditor";
 import SavingsSetter from "../screens/goal-trackers/SavingsSetter";
+import CompletedGoals from "../screens/goal-trackers/CompletedGoals";
+import CompletedModules from "../screens/goal-trackers/CompletedModules";
+import CompletedExercises from "../screens/goal-trackers/CompletedExercises";
+import CompletedSavings from "../screens/goal-trackers/CompletedSavings";
 import { Platform } from "react-native";
 
 const Stack = createNativeStackNavigator();
@@ -30,8 +34,10 @@ export default GoalNavigator = ({ route, navigation }) => {
         <Stack.Screen name="AcademicTracker" component={AcademicTracker} />
       ) : route.name == "Fitness Tracker" ? (
         <Stack.Screen name="FitnessTracker" component={FitnessTracker} />
-      ) : (
+      ) : route.name == "Finance Tracker" ? (
         <Stack.Screen name="FinanceTracker" component={FinanceTracker} />
+      ) : (
+        <Stack.Screen name="CompletedGoals" component={CompletedGoals} />
       )}
       <Stack.Screen
         name="GoalSetter"
@@ -174,6 +180,39 @@ export default GoalNavigator = ({ route, navigation }) => {
       >
         {() => <SavingsEditor route={route} navigation={navigation} />}
       </Stack.Screen>
+      <Stack.Screen
+        name="CompletedModules"
+        component={CompletedModules}
+        options={{
+          headerShown: Platform.OS === "ios" ? true : false,
+          headerTitle: "",
+          headerStyle: { backgroundColor: "ghostwhite" },
+          headerTintColor: "black",
+          headerShadowVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="CompletedExercises"
+        component={CompletedExercises}
+        options={{
+          headerShown: Platform.OS === "ios" ? true : false,
+          headerTitle: "",
+          headerStyle: { backgroundColor: "ghostwhite" },
+          headerTintColor: "black",
+          headerShadowVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="CompletedSavings"
+        component={CompletedSavings}
+        options={{
+          headerShown: Platform.OS === "ios" ? true : false,
+          headerTitle: "",
+          headerStyle: { backgroundColor: "ghostwhite" },
+          headerTintColor: "black",
+          headerShadowVisible: false,
+        }}
+      />
     </Stack.Navigator>
   );
 };

@@ -5,7 +5,7 @@ export default StyleSheet.create({
     padding: 15,
     justifyContent: "center",
     flex: 1,
-    backgroundColor: "ghostwhite",
+    backgroundColor: "rgb(213,244,255)",
   },
   logoContainer: {
     justifyContent: "center",
@@ -18,7 +18,6 @@ export default StyleSheet.create({
   titleContainer: {
     justifyContent: "center",
     alignItems: "center",
-    marginTop: -30,
   },
   title: {
     height: 60,
@@ -28,20 +27,20 @@ export default StyleSheet.create({
     marginTop: 50,
   },
   signUpButton: {
-    marginRight: 100,
-    marginLeft: 100,
     marginTop: 20,
     paddingTop: 5,
     paddingBottom: 5,
+    alignSelf:"center",
   },
   signUpText: {
     color: "black",
-    fontSize: 14,
+    fontSize: 16,
     textAlign: "center",
   },
   signUpTextR: {
     color: "dodgerblue",
-    fontSize: 14,
+    fontSize: 16,
+    fontWeight: "bold",
     textAlign: "center",
   },
 });

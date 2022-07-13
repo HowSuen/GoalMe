@@ -30,9 +30,13 @@ export default GoalEditor = ({ navigation }) => {
   const [difficulty, setDifficulty] = useState(goal.difficulty);
   const [recurring, setRecurring] = useState(goal.recurring);
   const [loading, setLoading] = useState(false);
+  const [state, setState] = useState({});
 
   useEffect(() => {
     getModules();
+    return () => {
+      setState({});
+    };
   }, []);
 
   const noStateChange = () => {

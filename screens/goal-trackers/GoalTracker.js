@@ -3,7 +3,7 @@ import { Alert, View, FlatList, TouchableOpacity } from "react-native";
 import styles from "./GoalTracker.style";
 import { FontAwesome5 } from "@expo/vector-icons";
 import GoalList from "../../components/goal-trackers/GoalList";
-import Empty from "./Empty";
+import Empty from "../../components/goal-trackers/Empty";
 import supabase from "../../lib/supabase";
 import { useIsFocused, useRoute } from "@react-navigation/native";
 import SortButton from "../../components/goal-trackers/SortButton";
@@ -256,29 +256,50 @@ export default GoalTracker = ({ navigation }) => {
       newWealthXp += addXP;
     }
 
-    const newTotalXp = totalXp + addXP;
+    let newTotalXp = totalXp + addXP;
+    let totalMax = Math.round(Math.pow(totalLvl / 0.05, 1.6));
+    let wisdomMax = Math.round(Math.pow(wisdomLvl / 0.05, 1.6));
+    let strengthMax = Math.round(Math.pow(strengthLvl / 0.05, 1.6));
+    let wealthMax = Math.round(Math.pow(wealthLvl / 0.05, 1.6));
 
-    const totalMax = Math.round(Math.pow(totalLvl / 0.05, 1.6));
-    const wisdomMax = Math.round(Math.pow(wisdomLvl / 0.05, 1.6));
-    const strengthMax = Math.round(Math.pow(strengthLvl / 0.05, 1.6));
-    const wealthMax = Math.round(Math.pow(wealthLvl / 0.05, 1.6));
+    let addLVL = 0;
+    while (newTotalXp >= totalMax) {
+      newTotalXp -= totalMax;
+      addLVL += 1;
+      totalMax = Math.round(Math.pow((totalLvl + addLVL) / 0.05, 1.6));
+    }
 
-    setTotalXp(newTotalXp >= totalMax ? newTotalXp % totalMax : newTotalXp);
-    setTotalLvl(newTotalXp >= totalMax ? totalLvl + 1 : totalLvl);
-    setWisdomXp(
-      newWisdomXp >= wisdomMax ? newWisdomXp % wisdomMax : newWisdomXp
-    );
-    setWisdomLvl(newWisdomXp >= wisdomMax ? wisdomLvl + 1 : wisdomLvl);
-    setStrengthXp(
-      newStrengthXp >= strengthMax ? newStrengthXp % strengthMax : newStrengthXp
-    );
-    setStrengthLvl(
-      newStrengthXp >= strengthMax ? strengthLvl + 1 : strengthLvl
-    );
-    setWealthXp(
-      newWealthXp >= wealthMax ? newWealthXp % wealthMax : newWealthXp
-    );
-    setWealthLvl(newWealthXp >= wealthMax ? wealthLvl + 1 : wealthLvl);
+    let addWisdomLVL = 0;
+    while (newWisdomXp >= wisdomMax) {
+      newWisdomXp -= wisdomMax;
+      addWisdomLVL += 1;
+      wisdomMax = Math.round(Math.pow((wisdomLvl + addWisdomLVL) / 0.05, 1.6));
+    }
+
+    let addStrengthLVL = 0;
+    while (newStrengthXp >= strengthMax) {
+      newStrengthXp -= strengthMax;
+      addStrengthLVL += 1;
+      strengthMax = Math.round(
+        Math.pow((strengthLvl + addStrengthLVL) / 0.05, 1.6)
+      );
+    }
+
+    let addWealthLVL = 0;
+    while (newWealthXp >= wealthMax) {
+      newWealthXp -= wealthMax;
+      addWealthLVL += 1;
+      wealthMax = Math.round(Math.pow((wealthLvl + addWealthLVL) / 0.05, 1.6));
+    }
+
+    setTotalXp(newTotalXp);
+    setTotalLvl(totalLvl + addLVL);
+    setWisdomXp(newWisdomXp);
+    setWisdomLvl(wisdomLvl + addWisdomLVL);
+    setStrengthXp(newStrengthXp);
+    setStrengthLvl(strengthLvl + addStrengthLVL);
+    setWealthXp(newWealthXp);
+    setWealthLvl(wealthLvl + addWealthLVL);
     setCompleted(completed + 1);
     setCompletedAcad(goal.type == "Academic" ? completedAcad + 1 : completedAcad);
     setCompletedFit(goal.type == "Fitness" ? completedFit + 1 : completedFit);
@@ -291,20 +312,14 @@ export default GoalTracker = ({ navigation }) => {
       const updates = {
         id: user.id,
         updated_at: new Date().toISOString().toLocaleString(),
-        totalXP: newTotalXp >= totalMax ? newTotalXp % totalMax : newTotalXp,
-        totalLVL: newTotalXp >= totalMax ? totalLvl + 1 : totalLvl,
-        wisdomXP:
-          newWisdomXp >= wisdomMax ? newWisdomXp % wisdomMax : newWisdomXp,
-        wisdomLVL: newWisdomXp >= wisdomMax ? wisdomLvl + 1 : wisdomLvl,
-        strengthXP:
-          newStrengthXp >= strengthMax
-            ? newStrengthXp % strengthMax
-            : newStrengthXp,
-        strengthLVL:
-          newStrengthXp >= strengthMax ? strengthLvl + 1 : strengthLvl,
-        wealthXP:
-          newWealthXp >= wealthMax ? newWealthXp % wealthMax : newWealthXp,
-        wealthLVL: newWealthXp >= wealthMax ? wealthLvl + 1 : wealthLvl,
+        totalXP: newTotalXp,
+        totalLVL: totalLvl + addLVL,
+        wisdomXP: newWisdomXp,
+        wisdomLVL: wisdomLvl + addWisdomLVL,
+        strengthXP: newStrengthXp,
+        strengthLVL: strengthLvl + addStrengthLVL,
+        wealthXP: newWealthXp,
+        wealthLVL: wealthLvl + addWealthLVL,
         completed: completed + 1,
         completedAcad: goal.type == "Academic" ? completedAcad + 1 : completedAcad,
         completedFit: goal.type == "Fitness" ? completedFit + 1 : completedFit,

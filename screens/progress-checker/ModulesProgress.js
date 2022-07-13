@@ -18,11 +18,15 @@ export default ModulesProgress = () => {
   const [modeGrade, setModeGrade] = useState("-");
   const [targetReached, setTargetReached] = useState(0);
   const [aboveA, setAboveA] = useState(0);
+  const [state, setState] = useState({});
 
   useEffect(() => {
     getExpData();
     getPending();
-    getGrades();
+    // getGrades();
+    return () => {
+      setState({});
+    };
   }, [isFocused]);
 
   const getExpData = async () => {
@@ -30,33 +34,8 @@ export default ModulesProgress = () => {
       if (!user) throw new Error("No user on the session!");
 
       let { data, error, status } = await supabase
-        .from("experience")
-        .select("completedMod, modsTargetReached, aboveA, highestGrade")
-        .match({ id: user.id })
-        .single();
-
-      if (error && status !== 406) {
-        throw error;
-      }
-
-      if (!data) return;
-
-      setCompleted(data.completedMod);
-      setTargetReached(data.modsTargetReached);
-      setAboveA(data.aboveA);
-      if (data.highestGrade) setHighestGrade(data.highestGrade);
-    } catch (error) {
-      Alert.alert(error.message);
-    }
-  };
-
-  const getGrades = async () => {
-    try {
-      if (!user) throw new Error("No user on the session!");
-
-      let { data, error, status } = await supabase
         .from("modules")
-        .select("grade_received")
+        .select("target_grade, grade_received")
         .match({ user_id: user.id, completion_status: true });
 
       if (error && status !== 406) {
@@ -65,21 +44,22 @@ export default ModulesProgress = () => {
 
       if (!data) return;
 
-      // setHighestGrade(
-      //   data
-      //     .map((o) => o.grade_received)
-      //     .reduce((a, b) => {
-      //       return compareGrade(a, b) < 0 ? b : a;
-      //     })
-      // );
+      setCompleted(data.length);
 
-      // setNumA(
-      //   data
-      //     .map((o) => o.grade_received)
-      //     .reduce((a, b) => {
-      //       return compareGrade(b, "A") >= 0 ? a + 1 : a;
-      //     }, 0)
-      // );
+      setTargetReached(
+        data.filter((o) => compareGrade(o.target_grade, o.grade_received) <= 0)
+          .length
+      );
+
+      setAboveA(
+        data.filter((o) => compareGrade("A", o.grade_received) <= 0).length
+      );
+
+      const hGrade = data
+        .map((o) => o.grade_received)
+        .reduce((a, b) => (compareGrade(a, b) < 0 ? b : a), "");
+
+      if (hGrade && hGrade != "") setHighestGrade(hGrade);
 
       const mode = (arr) => {
         const store = {};
@@ -89,13 +69,44 @@ export default ModulesProgress = () => {
         )[0];
       };
 
-      const grade = mode(data.map((o) => o.grade_received))
+      const mGrade = mode(data.map((o) => o.grade_received));
 
-      if (grade) setModeGrade(grade);
+      if (mGrade) setModeGrade(mGrade);
     } catch (error) {
       Alert.alert(error.message);
     }
   };
+
+  // const getGrades = async () => {
+  //   try {
+  //     if (!user) throw new Error("No user on the session!");
+
+  //     let { data, error, status } = await supabase
+  //       .from("modules")
+  //       .select("grade_received")
+  //       .match({ user_id: user.id, completion_status: true });
+
+  //     if (error && status !== 406) {
+  //       throw error;
+  //     }
+
+  //     if (!data) return;
+
+  //     const mode = (arr) => {
+  //       const store = {};
+  //       arr.forEach((o) => (store[o] ? (store[o] += 1) : (store[o] = 1)));
+  //       return Object.keys(store).sort((a, b) =>
+  //         store[b] - store[a] == 0 ? compareGrade(b, a) : store[b] - store[a]
+  //       )[0];
+  //     };
+
+  //     const grade = mode(data.map((o) => o.grade_received));
+
+  //     if (grade) setModeGrade(grade);
+  //   } catch (error) {
+  //     Alert.alert(error.message);
+  //   }
+  // };
 
   const getPending = async () => {
     try {
@@ -103,7 +114,7 @@ export default ModulesProgress = () => {
 
       let { data, error, status } = await supabase
         .from("modules")
-        .select("module_code, module_name, grade_received")
+        .select("module_code, module_name")
         .match({ user_id: user.id, completion_status: false });
 
       if (error && status !== 406) {

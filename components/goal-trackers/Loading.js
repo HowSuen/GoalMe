@@ -1,10 +1,10 @@
 import React from "react";
-import { View, StyleSheet, ActivityIndicator } from "react-native";
+import { View, StyleSheet, ActivityIndicator, Platform } from "react-native";
 
 export default Loading = () => {
   return (
     <View style={styles.container}>
-      <ActivityIndicator size={"large"} />
+      <ActivityIndicator size={Platform.OS == "ios" ? "large" : 100} />
     </View>
   );
 };

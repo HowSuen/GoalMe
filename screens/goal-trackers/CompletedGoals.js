@@ -107,7 +107,7 @@ export default CompletedGoals = ({ navigation }) => {
     AlertPrompt({
       title: "Delete This Goal?",
       description:
-        "Doing so will remove its data from 'Daily Goals' in Progress Checker.\nYou can't undo this action.",
+        "Doing so will remove its data from 'Daily Goals' in Progress. You can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {
         deleteItem(goal);
@@ -122,7 +122,7 @@ export default CompletedGoals = ({ navigation }) => {
     AlertPrompt({
       title: "Redo This Goal?",
       description:
-        "Doing so will remove its data from 'Daily Goals' in Progress Checker.\nYou can't undo this action.",
+        "Doing so will remove its data from 'Daily Goals' in Progress. You can't undo this action.",
       proceedText: "Redo",
       onPress: async () => {
         redoItem(goal);
@@ -137,7 +137,7 @@ export default CompletedGoals = ({ navigation }) => {
     AlertPrompt({
       title: "Delete All Completed Goals?",
       description:
-        "Doing so will remove all goal data from 'Daily Goals' in Progress Checker. You can't undo this action.",
+        "Doing so will remove all goal data from 'Daily Goals' in Progress. You can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {
         deleteAllItems();
@@ -149,7 +149,7 @@ export default CompletedGoals = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View>
-        <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("CompletedModules");

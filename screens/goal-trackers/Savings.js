@@ -169,7 +169,7 @@ export default Savings = ({ navigation }) => {
 
   const updateExperience = async (saving) => {
     let addXP = Math.round(parseFloat(saving.curr_amount, 10));
-    console.log(addXP);
+    // console.log(addXP);
 
     let newTotalXp = totalXp + addXP;
     let newWealthXp = wealthXp + addXP;

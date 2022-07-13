@@ -110,7 +110,7 @@ export default CompletedSavings = () => {
     AlertPrompt({
       title: "Delete This Saving Goal?",
       description:
-        "Doing so will remove its data from 'Monthly Savings' and 'Daily Goals' in Progress Checker.\nYou can't undo this action.",
+        "Doing so will remove its data from 'Monthly Savings' and 'Daily Goals' in Progress. You can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {
         try {
@@ -134,7 +134,7 @@ export default CompletedSavings = () => {
     AlertPrompt({
       title: "Redo This Saving Goal?",
       description:
-        "Doing so will remove its data from 'Monthly Savings' and 'Daily Goals' in Progress Checker.\nYou can't undo this action.",
+        "Doing so will remove its data from 'Monthly Savings' and 'Daily Goals' in Progress. You can't undo this action.",
       proceedText: "Redo",
       onPress: async () => {
         redoItem(saving);
@@ -149,7 +149,7 @@ export default CompletedSavings = () => {
     AlertPrompt({
       title: "Delete All Completed Saving Goals?",
       description:
-        "Doing so will remove all savings data from 'Monthly Savings' and 'Daily Goals' in Progress Checker.\nYou can't undo this action.",
+        "Doing so will remove all savings data from 'Monthly Savings' and 'Daily Goals' in Progress. You can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {
         deleteAllItems();

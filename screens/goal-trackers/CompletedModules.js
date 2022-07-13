@@ -112,7 +112,7 @@ export default CompletedModules = () => {
     AlertPrompt({
       title: "Delete This Module?",
       description:
-        "Doing so will remove its data from Progress Checker.\nYou can't undo this action.",
+        "Doing so will remove its data from Progress. You can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {
         try {
@@ -136,7 +136,7 @@ export default CompletedModules = () => {
     AlertPrompt({
       title: "Redo This Module?",
       description:
-        "Doing so will remove its completion data from Progress Checker.\nYou can't undo this action.",
+        "Doing so will remove its completion data from Progress. You can't undo this action.",
       proceedText: "Redo",
       onPress: async () => {
         redoItem(module);
@@ -151,7 +151,7 @@ export default CompletedModules = () => {
     AlertPrompt({
       title: "Delete All Completed Modules?",
       description:
-        "Doing so will remove all module data from Progress Checker.\nYou can't undo this action.",
+        "Doing so will remove all module data from Progress. You can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {
         deleteAllItems();

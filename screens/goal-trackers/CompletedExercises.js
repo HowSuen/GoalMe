@@ -113,7 +113,7 @@ export default CompletedExercises = () => {
     AlertPrompt({
       title: "Delete This Exercise?",
       description:
-        "Doing so will remove its data from 'Daily Exercises' and 'Daily Goals' in Progress Checker.\nYou can't undo this action.",
+        "Doing so will remove its data from 'Daily Exercises' and 'Daily Goals' in Progress. You can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {
         try {
@@ -137,7 +137,7 @@ export default CompletedExercises = () => {
     AlertPrompt({
       title: "Redo This Exercise?",
       description:
-        "Doing so will remove its data from 'Daily Exercises' and 'Daily Goals' in Progress Checker.\nYou can't undo this action.",
+        "Doing so will remove its data from 'Daily Exercises' and 'Daily Goals' in Progress. You can't undo this action.",
       proceedText: "Redo",
       onPress: async () => {
         redoItem(exercise);
@@ -152,7 +152,7 @@ export default CompletedExercises = () => {
     AlertPrompt({
       title: "Delete All Completed Exercises?",
       description:
-        "Doing so will remove all exercise data from 'Daily Exercises' and 'Daily Goals' in Progress Checker.\nYou can't undo this action.",
+        "Doing so will remove all exercise data from 'Daily Exercises' and 'Daily Goals' in Progress. You can't undo this action.",
       proceedText: "Delete",
       onPress: async () => {
         deleteAllItems();

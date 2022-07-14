@@ -28,7 +28,7 @@ export default ExercisesTimeChart = () => {
 
   const today = new Date().toLocaleDateString("en-us", { weekday: "short" });
 
-  const [days, setDays] = useState(defaultData);
+  const [days, setDays] = useState([...defaultData]);
 
   useEffect(() => {
     getData();
@@ -60,6 +60,8 @@ export default ExercisesTimeChart = () => {
       if (error && status !== 406) {
         throw error;
       }
+
+      if (!data) return;
 
       data = data
         .map((obj) =>

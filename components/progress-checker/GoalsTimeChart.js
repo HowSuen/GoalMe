@@ -28,7 +28,7 @@ export default GoalsTimeChart = () => {
 
   const today = new Date().toLocaleDateString("en-us", { weekday: "short" });
 
-  const [days, setDays] = useState(defaultData);
+  const [days, setDays] = useState([...defaultData]);
 
   useEffect(() => {
     getData();

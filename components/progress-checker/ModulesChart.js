@@ -57,7 +57,7 @@ export default ModulesChart = () => {
     { x: "A+", y: 0 },
   ];
 
-  const [completedMods, setCompletedMods] = useState([]);
+  const [completedMods, setCompletedMods] = useState([...defaultData]);
 
   useEffect(() => {
     getData();
@@ -78,6 +78,8 @@ export default ModulesChart = () => {
         throw error;
       }
 
+      if (!data) return;
+
       for (let obj of data) {
         for (let mod of mods) {
           if (obj.grade_received == mod.x) {
@@ -86,18 +88,14 @@ export default ModulesChart = () => {
         }
       }
 
-      if (completedMods.length == 0) {
-        setCompletedMods(mods);
-      } else {
-        let stateChanged = false;
-        for (let i = 0; i < mods.length; i++) {
-          if (mods[i].y != completedMods[i].y) {
-            stateChanged = true;
-            break;
-          }
+      let stateChanged = false;
+      for (let i = 0; i < mods.length; i++) {
+        if (mods[i].y != completedMods[i].y) {
+          stateChanged = true;
+          break;
         }
-        if (stateChanged) setCompletedMods(mods);
       }
+      if (stateChanged) setCompletedMods(mods);
     } catch (error) {
       Alert.alert(error.message);
     }

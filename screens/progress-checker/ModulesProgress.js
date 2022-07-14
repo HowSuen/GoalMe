@@ -59,7 +59,11 @@ export default ModulesProgress = () => {
         .map((o) => o.grade_received)
         .reduce((a, b) => (compareGrade(a, b) < 0 ? b : a), "");
 
-      if (hGrade && hGrade != "") setHighestGrade(hGrade);
+      if (hGrade && hGrade != "") {
+        setHighestGrade(hGrade);
+      } else {
+        setHighestGrade("-");
+      }
 
       const mode = (arr) => {
         const store = {};
@@ -71,7 +75,11 @@ export default ModulesProgress = () => {
 
       const mGrade = mode(data.map((o) => o.grade_received));
 
-      if (mGrade) setModeGrade(mGrade);
+      if (mGrade) {
+        setModeGrade(mGrade);
+      } else {
+        setModeGrade("-");
+      }
     } catch (error) {
       Alert.alert(error.message);
     }

@@ -1,6 +1,4 @@
 const getExerciseChartData = (data) => {
-  if (!data) return [];
-
   const defaultData = [
     { x: "Mon", y: 0 },
     { x: "Tue", y: 0 },
@@ -10,6 +8,8 @@ const getExerciseChartData = (data) => {
     { x: "Sat", y: 0 },
     { x: "Sun", y: 0 },
   ];
+
+  if (!data || data.length == 0) return defaultData;
 
   let d = [...defaultData];
 
@@ -54,7 +54,7 @@ const getDayOfWeek = (date) => {
     : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][dayOfWeek];
 };
 
-const test_data = [
+const test_data_1 = [
   {
     completed_at: "2022-07-08 08:27:12.472+00",
   },
@@ -96,7 +96,7 @@ const test_data = [
   },
 ];
 
-const expected_data = [
+const expected_data_1 = [
   { x: "Mon", y: 3 },
   { x: "Tue", y: 0 },
   { x: "Wed", y: 2 },
@@ -106,7 +106,24 @@ const expected_data = [
   { x: "Sun", y: 1 },
 ];
 
+const test_data_2 = [];
+
+const expected_data_2 = [
+  { x: "Mon", y: 0 },
+  { x: "Tue", y: 0 },
+  { x: "Wed", y: 0 },
+  { x: "Thu", y: 0 },
+  { x: "Fri", y: 0 },
+  { x: "Sat", y: 0 },
+  { x: "Sun", y: 0 },
+];
+
 // Test 1
-test("getExerciseChartData returns the correct data", () => {
-  expect(getExerciseChartData(test_data)).toEqual(expected_data);
+test("getExerciseChartData returns the correct chart data for the first user", () => {
+  expect(getExerciseChartData(test_data_1)).toEqual(expected_data_1);
+});
+
+// Test 2
+test("getExerciseChartData returns the correct chart data for the user with no exercises", () => {
+  expect(getExerciseChartData(test_data_2)).toEqual(expected_data_2);
 });

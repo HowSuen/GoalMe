@@ -1,6 +1,4 @@
 const getModuleChartData = (data) => {
-  if (!data) return [];
-
   const defaultData = [
     { x: "F*", y: 0 },
     { x: "F", y: 0 },
@@ -16,6 +14,8 @@ const getModuleChartData = (data) => {
     { x: "A", y: 0 },
     { x: "A+", y: 0 },
   ];
+
+  if (!data || data.length == 0) return defaultData;
 
   let mods = [...defaultData];
 
@@ -41,7 +41,7 @@ const getModuleChartData = (data) => {
   return completedMods;
 };
 
-const test_data = [
+const test_data_1 = [
   { grade_received: "A" },
   { grade_received: "A+" },
   { grade_received: "A-" },
@@ -55,7 +55,7 @@ const test_data = [
   { grade_received: "A-" },
 ];
 
-const expected_data = [
+const expected_data_1 = [
   { x: "F*", y: 0 },
   { x: "F", y: 0 },
   { x: "D", y: 0 },
@@ -71,7 +71,30 @@ const expected_data = [
   { x: "A+", y: 2 },
 ];
 
+const test_data_2 = [];
+
+const expected_data_2 = [
+  { x: "F*", y: 0 },
+  { x: "F", y: 0 },
+  { x: "D", y: 0 },
+  { x: "D+", y: 0 },
+  { x: "C-", y: 0 },
+  { x: "C", y: 0 },
+  { x: "C+", y: 0 },
+  { x: "B-", y: 0 },
+  { x: "B", y: 0 },
+  { x: "B+", y: 0 },
+  { x: "A-", y: 0 },
+  { x: "A", y: 0 },
+  { x: "A+", y: 0 },
+];
+
 // Test 1
-test("getModuleChartData returns the correct data", () => {
-  expect(getModuleChartData(test_data)).toEqual(expected_data);
+test("getModuleChartData returns the correct chart data for the first user", () => {
+  expect(getModuleChartData(test_data_1)).toEqual(expected_data_1);
+});
+
+// Test 2
+test("getModuleChartData returns the correct chart data for the user with no modules", () => {
+  expect(getModuleChartData(test_data_2)).toEqual(expected_data_2);
 });

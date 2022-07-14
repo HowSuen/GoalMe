@@ -5,7 +5,7 @@ const getGoalPieData = (data) => {
   let completedFinance = 0;
   let completedGen = 0;
 
-  if (!data) return [];
+  if (!data || data.lenth == 0) return [0, 0, 0, 0];
 
   Object.entries(data).forEach(([key, value] = entry) => {
     if (key == "completed") {
@@ -140,6 +140,8 @@ const test_data_pie = {
   completedFinance: 6,
 };
 
+const expected_pie_data = [30, 14, 7, 6, 3];
+
 const test_goals = [
   {
     completed_at: "2022-07-08 08:27:12.472+00",
@@ -219,14 +221,45 @@ const expected_graph_data = [
   { x: "Sun", y: 1 },
 ];
 
+const test_data_empty = [];
+
+const expected_pie_empty = [0, 0, 0, 0, 0];
+
+const expected_graph_empty = [
+  { x: "Mon", y: 0 },
+  { x: "Tue", y: 0 },
+  { x: "Wed", y: 0 },
+  { x: "Thu", y: 0 },
+  { x: "Fri", y: 0 },
+  { x: "Sat", y: 0 },
+  { x: "Sun", y: 0 },
+];
+
 // Test 1
-test("getGoalPieData returns the correct data", () => {
-  expect(getGoalPieData(test_data_pie)).toEqual([30, 14, 7, 6, 3]);
+test("getGoalPieData returns the correct chart data for the first user", () => {
+  expect(getGoalPieData(test_data_pie)).toEqual(expected_pie_data);
 });
 
 // Test 2
-test("getGoalGraphData returns the correct data", () => {
+test("getGoalGraphData returns the correct chart data for the second user", () => {
   expect(
     getGoalGraphData(test_goals, test_modules, test_exercises, test_savings)
   ).toEqual(expected_graph_data);
+});
+
+// Test 3
+test("getGoalPieData returns the correct chart data for the user with no goals completed", () => {
+  expect(getGoalPieData(test_data_empty)).toEqual(expected_pie_empty);
+});
+
+// Test 4
+test("getGoalGraphData returns the correct chart data for the user with no goals completed", () => {
+  expect(
+    getGoalGraphData(
+      test_data_empty,
+      test_data_empty,
+      test_data_empty,
+      test_data_empty
+    )
+  ).toEqual(expected_graph_empty);
 });

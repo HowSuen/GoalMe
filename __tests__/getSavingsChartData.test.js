@@ -1,6 +1,4 @@
 const getSavingsChartData = (data) => {
-  if (!data) return [];
-
   const defaultData = [
     { x: "Jan", y: 0 },
     { x: "Feb", y: 0 },
@@ -15,6 +13,11 @@ const getSavingsChartData = (data) => {
     { x: "Nov", y: 0 },
     { x: "Dec", y: 0 },
   ];
+
+  if (!data || data.length == 0) {
+    defaultData.forEach((obj) => (obj.y = currencyFormat(obj.y.toString())));
+    return defaultData;
+  }
 
   let m = [...defaultData];
 
@@ -89,7 +92,7 @@ const currencyFormat = (str) => {
   );
 };
 
-const test_data = [
+const test_data_1 = [
   {
     curr_amount: "100.1",
     completed_at: "2021-08-20 08:27:12.472+00",
@@ -160,7 +163,7 @@ const test_data = [
   },
 ];
 
-const expected_data = [
+const expected_data_1 = [
   { x: "Jan", y: "$0" },
   { x: "Feb", y: "$234.56" },
   { x: "Mar", y: "$353.01" },
@@ -175,7 +178,29 @@ const expected_data = [
   { x: "Dec", y: "$1,919.19" },
 ];
 
+const test_data_2 = [];
+
+const expected_data_2 = [
+  { x: "Jan", y: "$0" },
+  { x: "Feb", y: "$0" },
+  { x: "Mar", y: "$0" },
+  { x: "Apr", y: "$0" },
+  { x: "May", y: "$0" },
+  { x: "Jun", y: "$0" },
+  { x: "Jul", y: "$0" },
+  { x: "Aug", y: "$0" },
+  { x: "Sep", y: "$0" },
+  { x: "Oct", y: "$0" },
+  { x: "Nov", y: "$0" },
+  { x: "Dec", y: "$0" },
+];
+
 // Test 1
-test("getSavingsChartData returns the correct data", () => {
-  expect(getSavingsChartData(test_data)).toEqual(expected_data);
+test("getSavingsChartData returns the correct chart data for the first user", () => {
+  expect(getSavingsChartData(test_data_1)).toEqual(expected_data_1);
+});
+
+// Test 2
+test("getSavingsChartData returns the correct chart data for the user with no savings", () => {
+  expect(getSavingsChartData(test_data_2)).toEqual(expected_data_2);
 });

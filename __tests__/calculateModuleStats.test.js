@@ -143,21 +143,21 @@ const test_data_3 = [
 const test_data_4 = [];
 
 // Test 1
-test("calculateModuleStats returns the correct statistics for first set of modules", () => {
+test("calculateModuleStats returns the correct statistics for the first user", () => {
   expect(calculateModuleStats(test_data_1)).toEqual([8, 5, 4, "A+", "A+"]);
 });
 
 // Test 2
-test("calculateModuleStats returns the correct statistics for the second set of modules", () => {
+test("calculateModuleStats returns the correct statistics for the second user", () => {
   expect(calculateModuleStats(test_data_2)).toEqual([7, 3, 0, "B+", "B+"]);
 });
 
 // Test 3
-test("calculateModuleStats returns the correct statistics for the third set of modules", () => {
+test("calculateModuleStats returns the correct statistics for the third user", () => {
   expect(calculateModuleStats(test_data_3)).toEqual([6, 0, 0, "C+", "C-"]);
 });
 
 // Test 4
-test("calculateModuleStats returns the correct statistics for empty module data", () => {
+test("calculateModuleStats returns the correct statistics for the user with no modules", () => {
   expect(calculateModuleStats(test_data_4)).toEqual([0, 0, 0, "-", "-"]);
 });

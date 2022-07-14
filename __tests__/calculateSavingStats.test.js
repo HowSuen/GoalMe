@@ -112,22 +112,34 @@ const test_data_2 = [
   },
 ];
 
+const test_data_3 = [];
+
 // Test 1
-test("oneYearSavings correctly returns $1,448.79 for first set of savings data", () => {
+test("oneYearSavings correctly returns $1,448.79 for the first user", () => {
   expect(oneYearSavings(test_data_1)).toBe("$1,448.79");
 });
 
 // Test 2
-test("thirtDaysSavings correctly returns $1,114.13 for first set of savings data", () => {
+test("thirtDaysSavings correctly returns $1,114.13 for the first user", () => {
   expect(thirtyDaysSavings(test_data_1)).toBe("$1,114.13");
 });
 
 // Test 3
-test("oneYearSavings correctly returns $13,833.93 for second set of savings data", () => {
+test("oneYearSavings correctly returns $13,833.93 for the second user", () => {
   expect(oneYearSavings(test_data_2)).toBe("$13,833.93");
 });
 
 // Test 4
-test("thirtDaysSavings correctly returns $0 for second set of savings data", () => {
+test("thirtDaysSavings correctly returns $0 for the second user", () => {
   expect(thirtyDaysSavings(test_data_2)).toBe("$0");
+});
+
+// Test 5
+test("oneYearSavings correctly returns $0 for the user with no savings", () => {
+  expect(oneYearSavings(test_data_3)).toBe("$0");
+});
+
+// Test 6
+test("thirtDaysSavings correctly returns $0 for the user with no savings", () => {
+  expect(thirtyDaysSavings(test_data_3)).toBe("$0");
 });

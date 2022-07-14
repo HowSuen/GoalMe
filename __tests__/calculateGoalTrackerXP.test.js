@@ -95,19 +95,19 @@ const test_goals = [
 ];
 
 // Test 1
-test("For a user at 50 xp and level 2, completing a general goal with Hard difficulty will update user to be 250 xp at level 2", () => {
+test("For a user at 50 xp and level 2, completing a general goal with Hard \ndifficulty will update user to be 250 xp at level 2", () => {
   expect(updateLevel(test_users[0], test_goals[0]).totalXP).toBe(250);
   expect(updateLevel(test_users[0], test_goals[0]).totalLVL).toBe(2);
 });
 
 // Test 2
-test("For a user at 200 xp and level 2, completing a general goal with Hard difficulty will update user to be 34 xp at level 3", () => {
+test("For a user at 200 xp and level 2, completing a general goal with Hard \ndifficulty will update user to be 34 xp at level 3", () => {
   expect(updateLevel(test_users[1], test_goals[0]).totalXP).toBe(34);
   expect(updateLevel(test_users[1], test_goals[0]).totalLVL).toBe(3);
 });
 
 // Test 3
-test("For a user at 50 xp and level 2 with 50 wisdom xp at level 2 wisdom, completing an academic goal with Hard difficulty will update user to be 250 xp at level 2 with 250 wisdom xp at level 2 wisdom", () => {
+test("For a user at 50 xp and level 2 with 50 wisdom xp at level 2 wisdom, \ncompleting an academic goal with Hard difficulty will update user to be \n250 xp at level 2 with 250 wisdom xp at level 2 wisdom", () => {
   expect(updateLevel(test_users[0], test_goals[0]).totalXP).toBe(250);
   expect(updateLevel(test_users[0], test_goals[0]).totalLVL).toBe(2);
   expect(updateLevel(test_users[0], test_goals[1]).wisdomXP).toBe(250);
@@ -115,7 +115,7 @@ test("For a user at 50 xp and level 2 with 50 wisdom xp at level 2 wisdom, compl
 });
 
 // Test 4
-test("For a user at 200 xp and level 2 with 200 wisdom xp at level 2 wisdom, completing an academic goal with Hard difficulty will update user to be 34 xp at level 3 with 34 wisdom xp at level 3 wisdom", () => {
+test("For a user at 200 xp and level 2 with 200 wisdom xp at level 2 wisdom, \ncompleting an academic goal with Hard difficulty will update user to be \n34 xp at level 3 with 34 wisdom xp at level 3 wisdom", () => {
   expect(updateLevel(test_users[1], test_goals[0]).totalXP).toBe(34);
   expect(updateLevel(test_users[1], test_goals[0]).totalLVL).toBe(3);
   expect(updateLevel(test_users[1], test_goals[1]).wisdomXP).toBe(34);
@@ -123,7 +123,7 @@ test("For a user at 200 xp and level 2 with 200 wisdom xp at level 2 wisdom, com
 });
 
 // Test 5
-test("For a user at 50 xp and level 2 with 50 strength xp at level 2 strength, completing a fitness goal with Hard difficulty will update user to be 250 xp at level 2 with 250 strength xp at level 2 strength", () => {
+test("For a user at 50 xp and level 2 with 50 strength xp at level 2 strength, \ncompleting a fitness goal with Hard difficulty will update user to be \n250 xp at level 2 with 250 strength xp at level 2 strength", () => {
   expect(updateLevel(test_users[0], test_goals[0]).totalXP).toBe(250);
   expect(updateLevel(test_users[0], test_goals[0]).totalLVL).toBe(2);
   expect(updateLevel(test_users[0], test_goals[2]).strengthXP).toBe(250);
@@ -131,7 +131,7 @@ test("For a user at 50 xp and level 2 with 50 strength xp at level 2 strength, c
 });
 
 // Test 6
-test("For a user at 200 xp and level 2 with 200 strength xp at level 2 strength, completing a fitness goal with Hard difficulty will update user to be 34 xp at level 3 with 34 strength xp at level 3 strength", () => {
+test("For a user at 200 xp and level 2 with 200 strength xp at level 2 strength, \ncompleting a fitness goal with Hard difficulty will update user to be \n34 xp at level 3 with 34 strength xp at level 3 strength", () => {
   expect(updateLevel(test_users[1], test_goals[0]).totalXP).toBe(34);
   expect(updateLevel(test_users[1], test_goals[0]).totalLVL).toBe(3);
   expect(updateLevel(test_users[1], test_goals[2]).strengthXP).toBe(34);
@@ -139,7 +139,7 @@ test("For a user at 200 xp and level 2 with 200 strength xp at level 2 strength,
 });
 
 // Test 5
-test("For a user at 50 xp and level 2 with 50 wealth xp at level 2 wealth, completing a financial goal with Hard difficulty will update user to be 250 xp at level 2 with 250 wealth xp at level 2 wealth", () => {
+test("For a user at 50 xp and level 2 with 50 wealth xp at level 2 wealth, \ncompleting a financial goal with Hard difficulty will update user to be \n250 xp at level 2 with 250 wealth xp at level 2 wealth", () => {
   expect(updateLevel(test_users[0], test_goals[0]).totalXP).toBe(250);
   expect(updateLevel(test_users[0], test_goals[0]).totalLVL).toBe(2);
   expect(updateLevel(test_users[0], test_goals[3]).wealthXP).toBe(250);
@@ -147,7 +147,7 @@ test("For a user at 50 xp and level 2 with 50 wealth xp at level 2 wealth, compl
 });
 
 // Test 6
-test("For a user at 200 xp and level 2 with 200 wealth xp at level 2 wealth, completing a financial goal with Hard difficulty will update user to be 34 xp at level 3 with 34 wealth xp at level 3 wealth", () => {
+test("For a user at 200 xp and level 2 with 200 wealth xp at level 2 wealth, \ncompleting a financial goal with Hard difficulty will update user to be \n34 xp at level 3 with 34 wealth xp at level 3 wealth", () => {
   expect(updateLevel(test_users[1], test_goals[0]).totalXP).toBe(34);
   expect(updateLevel(test_users[1], test_goals[0]).totalLVL).toBe(3);
   expect(updateLevel(test_users[1], test_goals[3]).wealthXP).toBe(34);

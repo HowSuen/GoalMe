@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import {
   VictoryArea,
+  VictoryBar,
   VictoryChart,
   VictoryTheme,
   VictoryAxis,
@@ -183,9 +184,10 @@ export default GoalsTimeChart = () => {
         width={350}
         theme={VictoryTheme.material}
         animate={{
-          duration: 200,
+          duration: 100,
         }}
-        domainPadding={{ y: 20 }}
+        // domainPadding={{ y: 20 }}
+        domainPadding={{ x: 20, y: 10 }}
       >
         <VictoryAxis
           dependentAxis={true}
@@ -203,19 +205,19 @@ export default GoalsTimeChart = () => {
             axisLabel: { padding: 30, fontWeight: "bold" },
           }}
         />
-        <VictoryArea
-          style={{ data: { fill: "darkcyan", opacity: 0.6 } }}
+        <VictoryBar
+          style={{ data: { fill: "darkcyan", opacity: 0.8 } }}
           animate={{
-            duration: 200,
+            duration: 100,
           }}
           labels={({ datum }) => (datum.y == 0 ? null : Math.floor(datum.y))}
-          labelComponent={
-            <VictoryLabel
-              textAnchor={({ datum }) =>
-                datum.x == "Mon" ? "start" : datum.x == "Sun" ? "end" : "middle"
-              }
-            />
-          }
+          // labelComponent={
+          //   <VictoryLabel
+          //     textAnchor={({ datum }) =>
+          //       datum.x == "Mon" ? "start" : datum.x == "Sun" ? "end" : "middle"
+          //     }
+          //   />
+          // }
           data={days}
         />
       </VictoryChart>

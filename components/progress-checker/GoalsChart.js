@@ -83,7 +83,7 @@ export default GoalsChart = () => {
       <VictoryPie
         theme={VictoryTheme.material}
         animate={{
-          duration: 500,
+          duration: 300,
         }}
         width={350}
         height={350}

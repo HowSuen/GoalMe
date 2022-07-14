@@ -48,6 +48,15 @@ export default ModulesChart = () => {
     { x: "A+", y: 0 },
   ];
 
+  const defaultDisplayData = [
+    { x: "B-", y: 0 },
+    { x: "B", y: 0 },
+    { x: "B+", y: 0 },
+    { x: "A-", y: 0 },
+    { x: "A", y: 0 },
+    { x: "A+", y: 0 },
+  ];
+
   const [completedMods, setCompletedMods] = useState([]);
 
   useEffect(() => {
@@ -102,7 +111,7 @@ export default ModulesChart = () => {
         width={350}
         theme={VictoryTheme.material}
         animate={{
-          duration: 500,
+          duration: 100,
         }}
       >
         <VictoryAxis
@@ -118,18 +127,24 @@ export default ModulesChart = () => {
         <VictoryAxis
           label="Grades Received"
           style={{ axisLabel: { padding: 30, fontWeight: "bold" } }}
-          domainPadding={40}
+          domainPadding={20}
         />
         <VictoryBar
           style={{ data: { fill: "#27A4F2" } }}
           animate={{
-            duration: 500,
+            duration: 100,
           }}
-          labels={({ datum }) => datum.y == 0?  null : Math.floor(datum.y)}
+          labels={({ datum }) => (datum.y == 0 ? null : Math.floor(datum.y))}
           data={
-            completedMods.filter((obj) => obj.y != 0).length == 0
-              ? completedMods
-              : completedMods.filter((obj) => obj.y != 0)
+            // completedMods.filter((obj) => obj.y != 0)
+            (() => {
+              const data = completedMods.filter(
+                (obj) =>
+                  defaultDisplayData.map((o) => o.x).includes(obj.x) ||
+                  obj.y != 0
+              );
+              return data.length == 0 ? defaultDisplayData : data;
+            })()
           }
         />
       </VictoryChart>

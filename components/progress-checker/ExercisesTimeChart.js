@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import {
   VictoryArea,
+  VictoryBar,
   VictoryChart,
   VictoryTheme,
   VictoryAxis,
@@ -27,7 +28,7 @@ export default ExercisesTimeChart = () => {
 
   const today = new Date().toLocaleDateString("en-us", { weekday: "short" });
 
-  const [days, setDays] = useState(defaultData);
+  const [days, setDays] = useState([...defaultData]);
 
   useEffect(() => {
     getData();
@@ -59,6 +60,8 @@ export default ExercisesTimeChart = () => {
       if (error && status !== 406) {
         throw error;
       }
+
+      if (!data) return;
 
       data = data
         .map((obj) =>
@@ -95,9 +98,9 @@ export default ExercisesTimeChart = () => {
         width={350}
         theme={VictoryTheme.material}
         animate={{
-          duration: 200,
+          duration: 100,
         }}
-        domainPadding={{ y: 20 }}
+        domainPadding={{ x: 20, y: 10 }}
       >
         <VictoryAxis
           dependentAxis={true}
@@ -115,19 +118,19 @@ export default ExercisesTimeChart = () => {
             axisLabel: { padding: 30, fontWeight: "bold" },
           }}
         />
-        <VictoryArea
-          style={{ data: { fill: "darkmagenta", opacity: 0.6 } }}
+        <VictoryBar
+          style={{ data: { fill: "darkmagenta", opacity: 0.8 } }}
           animate={{
-            duration: 200,
+            duration: 100,
           }}
           labels={({ datum }) => (datum.y == 0 ? null : Math.floor(datum.y))}
-          labelComponent={
-            <VictoryLabel
-              textAnchor={({ datum }) =>
-                datum.x == "Mon" ? "start" : datum.x == "Sun" ? "end" : "middle"
-              }
-            />
-          }
+          // labelComponent={
+          //   <VictoryLabel
+          //     textAnchor={({ datum }) =>
+          //       datum.x == "Mon" ? "start" : datum.x == "Sun" ? "end" : "middle"
+          //     }
+          //   />
+          // }
           data={days}
         />
       </VictoryChart>

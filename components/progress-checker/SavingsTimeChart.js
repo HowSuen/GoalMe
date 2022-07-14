@@ -32,7 +32,7 @@ export default SavingsTimeChart = () => {
     { x: "Dec", y: 0 },
   ];
 
-  const [months, setMonths] = useState(defaultData);
+  const [months, setMonths] = useState([...defaultData]);
 
   useEffect(() => {
     getData();
@@ -78,6 +78,8 @@ export default SavingsTimeChart = () => {
       if (error && status !== 406) {
         throw error;
       }
+
+      if (!data) return;
 
       data.forEach(
         (obj) =>

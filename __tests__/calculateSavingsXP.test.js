@@ -27,11 +27,18 @@ const updateLevel = (user, saving) => {
     );
   }
 
+  let amount = parseFloat(saving.curr_amount, 10);
+
   const result = {
     totalXP: newTotalXp,
     totalLVL: user.totalLvl + addLVL,
     wealthXP: newWealthXp,
     wealthLVL: user.wealthLvl + addWealthLVL,
+    completed: user.completed + 1,
+    completedFinance: user.completedFinance + 1,
+    completedSavings: user.completedSavings + 1,
+    totalSavings: user.totalSavings + amount,
+    highestSavings: Math.max(user.highestSavings, amount),
   };
   return result;
 };
@@ -46,6 +53,11 @@ const test_users = [
     strengthLvl: 2,
     wealthXp: 50,
     wealthLvl: 2,
+    completed: 419,
+    completedFinance: 123,
+    completedSavings: 68,
+    totalSavings: 10000,
+    highestSavings: 1500,
   },
 ];
 
@@ -64,6 +76,10 @@ const test_savings = [
   },
   {
     amount: "1200",
+    curr_amount: "1000",
+  },
+  {
+    amount: "1000",
     curr_amount: "1000",
   },
 ];
@@ -94,4 +110,28 @@ test("Completing a saving goal of $2,000 grants 2000 XP and 2000 Wealth XP. \nFo
   expect(updateLevel(test_users[0], test_savings[0]).totalLVL).toBe(4);
   expect(updateLevel(test_users[0], test_savings[0]).wealthXP).toBe(984);
   expect(updateLevel(test_users[0], test_savings[0]).wealthLVL).toBe(4);
+});
+
+// Test 6
+test("Completing a saving goal increases numbers of completed goals, finance goals, \nand savings by 1 each.", () => {
+  expect(updateLevel(test_users[0], test_savings[0]).completed).toBe(420);
+  expect(updateLevel(test_users[0], test_savings[0]).completedFinance).toBe(
+    124
+  );
+  expect(updateLevel(test_users[0], test_savings[0]).completedSavings).toBe(69);
+});
+
+// Test 7
+test("Completing a saving goal of $2,000 adds to the Total Amount Saved, \nwhich was $10,000, giving a new total of $12,000", () => {
+  expect(updateLevel(test_users[0], test_savings[0]).totalSavings).toBe(12000);
+});
+
+// Test 8
+test("Completing a saving goal of $2,000 beats the previous record for highest amount \nsaved in one goal, which was $1,500.", () => {
+  expect(updateLevel(test_users[0], test_savings[0]).highestSavings).toBe(2000);
+});
+
+// Test 9
+test("Completing a saving goal of $1,000 does not replace the previous record for \nhighest amount saved in one goal, which was $1,500.", () => {
+  expect(updateLevel(test_users[0], test_savings[4]).highestSavings).toBe(1500);
 });

@@ -58,14 +58,29 @@ const updateLevel = (user, module) => {
   while (newWisdomXp >= wisdomMax) {
     newWisdomXp -= wisdomMax;
     addWisdomLVL += 1;
-    wisdomMax = Math.round(Math.pow((user.wisdomLvl + addWisdomLVL) / 0.05, 1.6));
+    wisdomMax = Math.round(
+      Math.pow((user.wisdomLvl + addWisdomLVL) / 0.05, 1.6)
+    );
   }
+
+  const addMod =
+    compareGrade(module.targetGrade, module.gradeReceived) <= 0 ? 1 : 0;
+  const addA = compareGrade(module.gradeReceived, "A") >= 0 ? 1 : 0;
 
   const result = {
     totalXP: newTotalXp,
     totalLVL: user.totalLvl + addLVL,
     wisdomXP: newWisdomXp,
     wisdomLVL: user.wisdomLvl + addWisdomLVL,
+    completed: user.completed + 1,
+    completedAcad: user.completedAcad + 1,
+    completedMod: user.completedMod + 1,
+    modsTargetReached: user.modsTargetReached + addMod,
+    aboveA: user.aboveA + addA,
+    highestGrade:
+      compareGrade(user.highestGrade, module.gradeReceived) < 0
+        ? module.gradeReceived
+        : user.highestGrade,
   };
   return result;
 };
@@ -80,6 +95,12 @@ const test_users = [
     strengthLvl: 2,
     wealthXp: 50,
     wealthLvl: 2,
+    completed: 419,
+    completedAcad: 123,
+    completedMod: 10,
+    modsTargetReached: 6,
+    aboveA: 6,
+    highestGrade: "A",
   },
 ];
 
@@ -102,7 +123,7 @@ const test_modules = [
 ];
 
 // Test 1
-test("Achieving target grade of A+ for a module grants 2000 XP and an additional 200 XP for reaching the target grade, thus a total of 2200 XP", () => {
+test("Achieving target grade of A+ for a module grants 2000 XP and an additional 200 XP for \nreaching the target grade, thus a total of 2200 XP", () => {
   expect(updateExperience(test_modules[0])).toBe(2200);
 });
 
@@ -117,9 +138,46 @@ test("Receiving grade F* for a module with target grade A+ grants 100 XP", () =>
 });
 
 // Test 4
-test("Receiving grade A for a module with target grade A+ grants 1900 XP and 1900 wisdom XP. For a user initially with 50 XP at Level 2 with 50 wisdom XP at Wisdom Level 2, they will have 884 XP at Level 4 with 884 Wisdom XP at Wisdom Level 4", () => {
+test("Receiving grade A for a module with target grade A+ grants 1900 XP and 1900 wisdom XP. \nFor a user initially with 50 XP at Level 2 with 50 wisdom XP at Wisdom Level 2, \nthey will have 884 XP at Level 4 with 884 Wisdom XP at Wisdom Level 4", () => {
   expect(updateLevel(test_users[0], test_modules[1]).totalXP).toBe(884);
   expect(updateLevel(test_users[0], test_modules[1]).totalLVL).toBe(4);
   expect(updateLevel(test_users[0], test_modules[1]).wisdomXP).toBe(884);
   expect(updateLevel(test_users[0], test_modules[1]).wisdomLVL).toBe(4);
+});
+
+// Test 5
+test("Completing a module increases numbers of completed goals, academic goals, and modules by 1 each.", () => {
+  expect(updateLevel(test_users[0], test_modules[0]).completed).toBe(420);
+  expect(updateLevel(test_users[0], test_modules[0]).completedAcad).toBe(124);
+  expect(updateLevel(test_users[0], test_modules[0]).completedMod).toBe(11);
+});
+
+// Test 6
+test("Achieving target grade for a module increases the number of modules with target grades received by 1.", () => {
+  expect(updateLevel(test_users[0], test_modules[0]).modsTargetReached).toBe(7);
+});
+
+// Test 7
+test("Receiving grade A for a module with target grade A+ does not increase the number of \nmodules with target grades received.", () => {
+  expect(updateLevel(test_users[0], test_modules[1]).modsTargetReached).toBe(6);
+});
+
+// Test 8
+test("Receiving grade A or A+ for a module increases the number of modules with grades A or above by 1.", () => {
+  expect(updateLevel(test_users[0], test_modules[0]).aboveA).toBe(7);
+});
+
+// Test 8
+test("Receiving grade A- or below for a module does not increase the number of modules\n with grades A or above.", () => {
+  expect(updateLevel(test_users[0], test_modules[2]).aboveA).toBe(6);
+});
+
+// Test 9
+test("Receiving a new highest grade for a module (eg. A+) beats the previous record for\n the highest grade received (eg. A).", () => {
+  expect(updateLevel(test_users[0], test_modules[0]).highestGrade).toBe("A+");
+});
+
+// Test 10
+test("Receiving a grade below the highest received (eg. F*) does not replace the previous \nrecord for the highest grade received (eg. A).", () => {
+  expect(updateLevel(test_users[0], test_modules[2]).highestGrade).toBe("A");
 });

@@ -25,8 +25,8 @@ export default UsernamePrompt = ({
             Platform.OS === "ios" ? styles.iosWrapper : styles.wrapper
           }
           style={Platform.OS === "ios" ? styles.iosInput : styles.input}
-            placeholder={defaultName}
-            placeholderTextColor="gray"
+          placeholder={defaultName}
+          placeholderTextColor="gray"
           value={value}
           onChangeText={(text) => {
             setValue(text);
@@ -34,7 +34,11 @@ export default UsernamePrompt = ({
           underlineColorAndroid="transparent"
         ></Dialog.Input>
         <Dialog.Button label="Cancel" onPress={() => setVisible(false)} />
-        <Dialog.Button label="Done" onPress={() => updateName(value)} />
+        <Dialog.Button
+          label="Done"
+          onPress={() => updateName(value)}
+          disabled={value == ""}
+        />
       </Dialog.Container>
     </View>
   );

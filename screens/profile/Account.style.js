@@ -2,8 +2,8 @@ import { StyleSheet, DarkTheme, Platform } from "react-native";
 
 export default StyleSheet.create({
   container: {
-    justifyContent: "center",
     flex: 1,
+    justifyContent: "space-between",
     backgroundColor: "ghostwhite",
   },
   avatarContainer: {

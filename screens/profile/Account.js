@@ -80,98 +80,86 @@ const Account = ({ navigation, session }) => {
   };
 
   return (
-    <ScrollView style={{ backgroundColor: "ghostwhite" }}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.container}
+    <View style={styles.container}>
+      <ImageBackground
+        resizeMode="stretch"
+        source={require("../../assets/gradient_bg3-min.jpg")}
       >
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View>
-            <ImageBackground
-              resizeMode="stretch"
-              source={require("../../assets/gradient_bg3-min.jpg")}
+        <View style={styles.avatarContainer}>
+          <SavedAvatar size={250} session={session} />
+          <TouchableOpacity
+            style={styles.avatarButton}
+            onPress={() =>
+              navigation.navigate("Profile", {
+                screen: "CustomiseAvatar",
+              })
+            }
+          >
+            <Text
+              style={[styles.buttonText, { color: "#333333", fontSize: 15 }]}
             >
-              <View style={styles.avatarContainer}>
-                <SavedAvatar size={250} session={session} />
-                <TouchableOpacity
-                  style={styles.avatarButton}
-                  onPress={() =>
-                    navigation.navigate("Profile", {
-                      screen: "CustomiseAvatar",
-                    })
-                  }
-                >
-                  <Text
-                    style={[
-                      styles.buttonText,
-                      { color: "#333333", fontSize: 15 },
-                    ]}
-                  >
-                    Customise
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              {/* </ImageBackground> */}
-              <View style={styles.formContainer}>
-                <View style={styles.verticallySpaced}>
-                  <Input
-                    inputContainerStyle={{ borderBottomColor: "transparent" }}
-                    containerStyle={{ marginBottom: -10 }}
-                    label="Email"
-                    value={session?.user?.email}
-                    disabled
-                    disabledInputStyle={{ paddingBottom: 5, opacity: 1 }}
-                  />
-                </View>
-                <View style={styles.verticallySpaced}>
-                  <Input
-                    inputContainerStyle={{ borderBottomColor: "transparent" }}
-                    containerStyle={{ marginVertical: -10 }}
-                    label="Username"
-                    value={username || ""}
-                    disabled
-                    disabledInputStyle={{ paddingBottom: 5, opacity: 1 }}
-                    rightIcon={() => (
-                      <TouchableOpacity
-                        onPress={() => {
-                          setPromptVisible(true);
-                        }}
-                      >
-                        <MaterialCommunityIcons
-                          name="square-edit-outline"
-                          size={24}
-                        />
-                      </TouchableOpacity>
-                    )}
-                  />
-                  <UsernamePrompt
-                    defaultName={username}
-                    updateName={(value) => {
-                      setUsername(value);
-                      updateProfile(value);
-                      setPromptVisible(false);
-                    }}
-                    visible={promptVisible}
-                    setVisible={setPromptVisible}
-                  />
-                </View>
-                <View style={{ marginTop: 30, alignItems: "center" }}>
-                  <TouchableOpacity
-                    style={styles.signOutButton}
-                    onPress={() => supabase.auth.signOut()}
-                    disabled={loading}
-                  >
-                    <Text style={styles.signOutText}>
-                      {loading ? "Loading..." : "Sign Out"}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </ImageBackground>
+              Customise
+            </Text>
+          </TouchableOpacity>
+        </View>
+        {/* </ImageBackground> */}
+        <View style={styles.formContainer}>
+          <View style={styles.verticallySpaced}>
+            <Input
+              inputContainerStyle={{ borderBottomColor: "transparent" }}
+              containerStyle={{ marginBottom: -10 }}
+              label="Email"
+              value={session?.user?.email}
+              disabled
+              disabledInputStyle={{ paddingBottom: 5, opacity: 1 }}
+            />
           </View>
-        </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
-    </ScrollView>
+          <View style={styles.verticallySpaced}>
+            <Input
+              inputContainerStyle={{ borderBottomColor: "transparent" }}
+              containerStyle={{ marginVertical: -10 }}
+              label="Username"
+              value={username || ""}
+              disabled
+              disabledInputStyle={{ paddingBottom: 5, opacity: 1 }}
+              rightIcon={() => (
+                <TouchableOpacity
+                  onPress={() => {
+                    setPromptVisible(true);
+                  }}
+                >
+                  <MaterialCommunityIcons
+                    name="square-edit-outline"
+                    size={24}
+                  />
+                </TouchableOpacity>
+              )}
+            />
+            <UsernamePrompt
+              defaultName={username}
+              updateName={(value) => {
+                setUsername(value);
+                updateProfile(value);
+                setPromptVisible(false);
+              }}
+              visible={promptVisible}
+              setVisible={setPromptVisible}
+            />
+          </View>
+          <View style={{ marginTop: 70, alignItems: "center" }}>
+            <TouchableOpacity
+              style={styles.signOutButton}
+              onPress={() => supabase.auth.signOut()}
+              disabled={loading}
+            >
+              <Text style={styles.signOutText}>
+                {loading ? "Loading..." : "Sign Out"}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ImageBackground>
+    </View>
   );
 };
 

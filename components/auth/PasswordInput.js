@@ -16,7 +16,7 @@ const PasswordInput = ({
       leftIcon={{
         type: "font-awesome",
         name: "lock",
-        color: "#0656BF",
+        color: "rgb(10,102,132)",
         size: 28,
       }}
       leftIconContainerStyle={{ width: 50 }}
@@ -24,14 +24,14 @@ const PasswordInput = ({
       value={password}
       secureTextEntry={passVisible}
       placeholder="Password"
-      placeholderTextColor="#0656BF"
+      placeholderTextColor="rgb(10,102,132)"
       autoCapitalize={"none"}
       rightIcon={() => (
         <TouchableOpacity onPress={onIconPress}>
           <Icon
             name={passVisible ? "eye" : "eye-off"}
             size={26}
-            color="#0656BF"
+            color="rgb(10,102,132)"
           />
         </TouchableOpacity>
       )}
@@ -44,12 +44,12 @@ export default PasswordInput;
 
 const styles = StyleSheet.create({
   textInput: {
-    color: "#052440",
+    color: "rgb(7,71,92)",
   },
   inputContainer: {
     paddingVertical: 2,
     paddingHorizontal: 8,
-    backgroundColor: "#9DCDF1",
+    backgroundColor: "rgb(152,209,205)",
     borderRadius: 30,
     borderColor: "transparent",
   },

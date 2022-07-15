@@ -10,7 +10,7 @@ const PasswordSecureInput = ({ password, onChangeText, placeholder }) => {
       leftIcon={{
         type: "font-awesome",
         name: "lock",
-        color: "#0656BF",
+        color: "rgb(10,102,132)",
         size: 28,
       }}
       leftIconContainerStyle={{ width: 50 }}
@@ -18,7 +18,7 @@ const PasswordSecureInput = ({ password, onChangeText, placeholder }) => {
       value={password}
       secureTextEntry={true}
       placeholder={placeholder}
-      placeholderTextColor="#0656BF"
+      placeholderTextColor="rgb(10,102,132)"
       autoCapitalize={"none"}
     />
   );
@@ -28,12 +28,12 @@ export default PasswordSecureInput;
 
 const styles = StyleSheet.create({
   textInput: {
-    color: "#052440",
+    color: "rgb(7,71,92)",
   },
   inputContainer: {
     paddingVertical: 2,
     paddingHorizontal: 8,
-    backgroundColor: "#9DCDF1",
+    backgroundColor: "rgb(152,209,205)",
     borderRadius: 30,
     borderColor: "transparent",
   },

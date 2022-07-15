@@ -54,11 +54,11 @@ const Auth = ({ navigation }) => {
           <View style={styles.titleContainer}>
             <Image
               style={styles.logo}
-              source={require("../../assets/goalme-transparent-logo.png")}
+              source={require("../../assets/logo_trans.png")}
             />
             <Image
               style={styles.title}
-              source={require("../../assets/goalme-title.png")}
+              source={require("../../assets/title_trans.png")}
             />
           </View>
           <View style={styles.formContainer}>

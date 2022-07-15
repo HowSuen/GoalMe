@@ -8,14 +8,13 @@ export default StyleSheet.create({
     backgroundColor: "rgb(213,244,255)",
   },
   logoContainer: {
-    justifyContent: "flex-start",
+    justifyContent: "center",
     alignItems: "center",
-    flexDirection: "row",
+    marginBottom: 50,
   },
   logo: {
-    height: 200,
-    width: 200,
-    marginRight: -40,
+    height: 180,
+    width: 180,
   },
   title: {
     height: 40,

@@ -12,15 +12,15 @@ const UserInput = ({ label, onChangeText, value }) => {
           ? {
               type: "font-awesome",
               name: "envelope",
-              color: "#0656BF",
+              color: "rgb(10,102,132)",
             }
-          : { type: "font-awesome", name: "user", color: "#0656BF" }
+          : { type: "font-awesome", name: "user", color: "rgb(10,102,132)" }
       }
       leftIconContainerStyle={{ width: 50 }}
       onChangeText={onChangeText}
       value={value}
       placeholder={label}
-      placeholderTextColor="#0656BF"
+      placeholderTextColor="rgb(10,102,132)"
       autoCapitalize={"none"}
       keyboardType={label === "Email" ? "email-address" : "default"}
     />
@@ -31,12 +31,12 @@ export default UserInput;
 
 const styles = StyleSheet.create({
   textInput: {
-    color: "#052440",
+    color: "rgb(7,71,92)",
   },
   inputContainer: {
     paddingVertical: 2,
     paddingHorizontal: 8,
-    backgroundColor: "#9DCDF1",
+    backgroundColor: "rgb(152,209,205)",
     borderRadius: 30,
     borderColor: "transparent",
   },

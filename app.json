@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "sdkVersion": "45.0.0",
     "orientation": "portrait",
-    "icon": "./assets/goalme-app-icon.png",
+    "icon": "./assets/logo.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -25,7 +25,7 @@
     "android": {
       "package": "com.goalme.goalme",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/goalme-app-icon.png",
+        "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#FFFFFF"
       }
     },

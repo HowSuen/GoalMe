@@ -89,7 +89,7 @@ const Account = ({ navigation, session }) => {
           <View>
             <ImageBackground
               resizeMode="stretch"
-              source={require("../../assets/gradient_bg3.jpg")}
+              source={require("../../assets/gradient_bg3-min.jpg")}
             >
               <View style={styles.avatarContainer}>
                 <SavedAvatar size={250} session={session} />
@@ -155,7 +155,7 @@ const Account = ({ navigation, session }) => {
                     setVisible={setPromptVisible}
                   />
                 </View>
-                <View style={{ marginTop: 10, justifyContent: "center", alignItems: "center" }}>
+                <View style={{ marginTop: 30, alignItems: "center" }}>
                   <TouchableOpacity
                     style={styles.signOutButton}
                     onPress={() => supabase.auth.signOut()}

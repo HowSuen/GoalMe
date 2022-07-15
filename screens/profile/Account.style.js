@@ -4,7 +4,7 @@ export default StyleSheet.create({
   container: {
     justifyContent: "center",
     flex: 1,
-    backgroundColor: "#0094f7",
+    backgroundColor: "ghostwhite",
   },
   avatarContainer: {
     justifyContent: "center",

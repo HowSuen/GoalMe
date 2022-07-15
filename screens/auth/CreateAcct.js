@@ -34,6 +34,9 @@ const CreateAcct = () => {
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       setLoading(false);
+    } else if (username == "") {
+      alert("Username can't be empty!");
+      setLoading(false);
     } else {
       setLoading(true);
       const { error } = await supabase.auth.signUp({

@@ -34,6 +34,9 @@ const CreateAcct = () => {
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       setLoading(false);
+    } else if (username == "") {
+      alert("Username can't be empty!");
+      setLoading(false);
     } else {
       setLoading(true);
       const { error } = await supabase.auth.signUp({
@@ -85,11 +88,11 @@ const CreateAcct = () => {
           <View style={styles.logoContainer}>
             <Image
               style={styles.logo}
-              source={require("../../assets/goalme-transparent-logo.png")}
+              source={require("../../assets/logo_trans.png")}
             />
             <Image
               style={styles.title}
-              source={require("../../assets/goalme-title.png")}
+              source={require("../../assets/title_trans.png")}
             />
           </View>
           <UserInput

@@ -333,7 +333,7 @@ const CustomiseAvatar = ({ navigation, session }) => {
     <View style={styles.container}>
       <ImageBackground
         resizeMode="cover"
-        source={require("../../assets/avatar_bg.jpg")}
+        source={require("../../assets/gradient_bg3-min.jpg")}
       >
         <View style={styles.avatar}>
           <Avatar

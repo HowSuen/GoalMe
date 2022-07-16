@@ -129,7 +129,7 @@ export default AppNavigator = ({ session }) => {
         <Tab.Screen
           name="Profile"
           options={({ route, navigation }) => ({
-            tabBarActiveTintColor: "#0d329f",
+            tabBarActiveTintColor: "dodgerblue",
           })}
         >
           {({ navigation }) =>

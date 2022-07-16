@@ -2,9 +2,9 @@ import { StyleSheet, DarkTheme, Platform } from "react-native";
 
 export default StyleSheet.create({
   container: {
-    justifyContent: "center",
     flex: 1,
-    backgroundColor: "#0094f7",
+    justifyContent: "space-between",
+    backgroundColor: "ghostwhite",
   },
   avatarContainer: {
     justifyContent: "center",
@@ -25,24 +25,12 @@ export default StyleSheet.create({
     paddingTop: 10,
     alignSelf: "stretch",
   },
-  textInput: {
-    color: "black",
-  },
-  button: {
-    marginTop: 30,
-    paddingVertical: 10,
-    width: 200,
-    backgroundColor: "dodgerblue",
-    borderRadius: Platform.OS == "ios" ? 5 : 30,
-    elevation: 5,
-  },
   buttonText: {
     color: "white",
     fontSize: 17,
     textAlign: "center",
   },
   signOutButton: {
-    marginTop: 30,
     paddingVertical: 10,
     width: 200,
     borderWidth: 1,

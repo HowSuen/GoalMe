@@ -4,21 +4,22 @@ import {
   View,
   Alert,
   TouchableOpacity,
-  KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  Keyboard,
   ImageBackground,
 } from "react-native";
 import { Input, Text } from "react-native-elements";
 import styles from "./Account.style";
 import "react-native-url-polyfill/auto";
 import SavedAvatar from "../../components/game/SavedAvatar";
-import { ScrollView } from "react-native-gesture-handler";
+import UsernamePrompt from "../../components/auth/UsernamePrompt";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import LogoutPrompt from "../../components/auth/LogoutPrompt";
 
 const Account = ({ navigation, session }) => {
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [avatar_url, setAvatarUrl] = useState("");
+  const [promptVisible, setPromptVisible] = useState(false);
+  const [logoutPrompt, setLogoutPrompt] = useState(false);
 
   useEffect(() => {
     if (session) getProfile();
@@ -50,7 +51,7 @@ const Account = ({ navigation, session }) => {
     }
   };
 
-  const updateProfile = async ({ username, avatar_url }) => {
+  const updateProfile = async (username) => {
     try {
       setLoading(true);
       const user = supabase.auth.user();
@@ -59,7 +60,6 @@ const Account = ({ navigation, session }) => {
       const updates = {
         id: user.id,
         username,
-        avatar_url,
         updated_at: new Date(),
       };
 
@@ -78,80 +78,91 @@ const Account = ({ navigation, session }) => {
   };
 
   return (
-    <ScrollView style={{ backgroundColor: "ghostwhite" }}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.container}
+    <View style={styles.container}>
+      <ImageBackground
+        resizeMode="stretch"
+        source={require("../../assets/gradient_bg3-min.jpg")}
       >
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View>
-            <ImageBackground
-              resizeMode="cover"
-              source={require("../../assets/profile_bg.jpg")}
+        <View style={styles.avatarContainer}>
+          <SavedAvatar size={250} session={session} />
+          <TouchableOpacity
+            style={styles.avatarButton}
+            onPress={() =>
+              navigation.navigate("Profile", {
+                screen: "CustomiseAvatar",
+              })
+            }
+          >
+            <Text
+              style={[styles.buttonText, { color: "#333333", fontSize: 15 }]}
             >
-              <View style={styles.avatarContainer}>
-                <SavedAvatar size={250} session={session} />
-                <TouchableOpacity
-                  style={styles.avatarButton}
-                  onPress={() =>
-                    navigation.navigate("Profile", {
-                      screen: "CustomiseAvatar",
-                    })
-                  }
-                >
-                  <Text
-                    style={[
-                      styles.buttonText,
-                      { color: "#333333", fontSize: 15 },
-                    ]}
-                  >
-                    Customise
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </ImageBackground>
-            <View style={styles.formContainer}>
-              <View style={styles.verticallySpaced}>
-                <Input
-                  style={styles.textInput}
-                  inputContainerStyle={{ borderBottomColor: "transparent" }}
-                  containerStyle={{ marginBottom: -10 }}
-                  label="Email"
-                  value={session?.user?.email}
-                  disabled
-                />
-              </View>
-              <View style={styles.verticallySpaced}>
-                <Input
-                  style={styles.textInput}
-                  // containerStyle={{ marginBottom: -10 }}
-                  label="Username"
-                  value={username || ""}
-                  onChangeText={(text) => setUsername(text)}
-                />
-              </View>
-              <View style={{ alignItems: "center" }}>
-                <TouchableOpacity
-                  style={styles.button}
-                  disabled={loading}
-                  onPress={() => updateProfile({ username, avatar_url })}
-                >
-                  <Text style={styles.buttonText}>
-                    {loading ? "Loading ..." : "Update"}
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.signOutButton}
-                  onPress={() => supabase.auth.signOut()}
-                >
-                  <Text style={styles.signOutText}>Sign Out</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+              Customise
+            </Text>
+          </TouchableOpacity>
+        </View>
+        {/* </ImageBackground> */}
+        <View style={styles.formContainer}>
+          <View style={styles.verticallySpaced}>
+            <Input
+              inputContainerStyle={{ borderBottomColor: "transparent" }}
+              containerStyle={{ marginBottom: -10 }}
+              label="Email"
+              value={session?.user?.email}
+              disabled
+              disabledInputStyle={{ paddingBottom: 5, opacity: 1 }}
+            />
           </View>
-        </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
-    </ScrollView>
+          <View style={styles.verticallySpaced}>
+            <Input
+              inputContainerStyle={{ borderBottomColor: "transparent" }}
+              containerStyle={{ marginVertical: -10 }}
+              label="Username"
+              value={username || ""}
+              disabled
+              disabledInputStyle={{ paddingBottom: 5, opacity: 1 }}
+              rightIcon={() => (
+                <TouchableOpacity
+                  onPress={() => {
+                    setPromptVisible(true);
+                  }}
+                >
+                  <MaterialCommunityIcons
+                    name="square-edit-outline"
+                    size={24}
+                  />
+                </TouchableOpacity>
+              )}
+            />
+            <UsernamePrompt
+              defaultName={username}
+              updateName={(value) => {
+                setUsername(value);
+                updateProfile(value);
+                setPromptVisible(false);
+              }}
+              visible={promptVisible}
+              setVisible={setPromptVisible}
+            />
+          </View>
+          <View style={{ marginTop: 70, alignItems: "center" }}>
+            <TouchableOpacity
+              style={styles.signOutButton}
+              onPress={() => setLogoutPrompt(true)}
+              disabled={loading}
+            >
+              <Text style={styles.signOutText}>
+                {loading ? "Loading..." : "Sign Out"}
+              </Text>
+            </TouchableOpacity>
+            <LogoutPrompt
+              logout={() => supabase.auth.signOut()}
+              visible={logoutPrompt}
+              setVisible={setLogoutPrompt}
+            />
+          </View>
+        </View>
+      </ImageBackground>
+    </View>
   );
 };
 

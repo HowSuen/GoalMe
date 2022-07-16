@@ -38,7 +38,7 @@ export default StyleSheet.create({
     textAlign: "center",
   },
   signUpTextR: {
-    color: "dodgerblue",
+    color: "rgb(23,159,171)",
     fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",

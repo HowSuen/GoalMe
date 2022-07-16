@@ -1,8 +1,7 @@
 import Dialog from "react-native-dialog";
-import { View, StyleSheet, Alert, Platform } from "react-native";
+import { View, StyleSheet, Platform } from "react-native";
 import { BlurView } from "expo-blur";
 import { useState, useEffect } from "react";
-import { CheckBox, Text } from "react-native-elements";
 
 export default UsernamePrompt = ({
   defaultName,
@@ -57,16 +56,6 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     color: "black",
     fontSize: 16,
-  },
-  checkBox: {
-    backgroundColor: "transparent",
-    borderWidth: 0,
-  },
-  checkBoxText: {
-    color: "white",
-    fontSize: 15,
-    fontWeight: "bold",
-    marginLeft: 8,
   },
   iosInput: {
     backgroundColor: "white",

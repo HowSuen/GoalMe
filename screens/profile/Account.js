@@ -4,24 +4,22 @@ import {
   View,
   Alert,
   TouchableOpacity,
-  KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  Keyboard,
   ImageBackground,
 } from "react-native";
 import { Input, Text } from "react-native-elements";
 import styles from "./Account.style";
 import "react-native-url-polyfill/auto";
 import SavedAvatar from "../../components/game/SavedAvatar";
-import { ScrollView } from "react-native-gesture-handler";
 import UsernamePrompt from "../../components/auth/UsernamePrompt";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import LogoutPrompt from "../../components/auth/LogoutPrompt";
 
 const Account = ({ navigation, session }) => {
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [avatar_url, setAvatarUrl] = useState("");
   const [promptVisible, setPromptVisible] = useState(false);
+  const [logoutPrompt, setLogoutPrompt] = useState(false);
 
   useEffect(() => {
     if (session) getProfile();
@@ -149,13 +147,18 @@ const Account = ({ navigation, session }) => {
           <View style={{ marginTop: 70, alignItems: "center" }}>
             <TouchableOpacity
               style={styles.signOutButton}
-              onPress={() => supabase.auth.signOut()}
+              onPress={() => setLogoutPrompt(true)}
               disabled={loading}
             >
               <Text style={styles.signOutText}>
                 {loading ? "Loading..." : "Sign Out"}
               </Text>
             </TouchableOpacity>
+            <LogoutPrompt
+              logout={() => supabase.auth.signOut()}
+              visible={logoutPrompt}
+              setVisible={setLogoutPrompt}
+            />
           </View>
         </View>
       </ImageBackground>

@@ -1,15 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Dimensions, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  Text,
+  Dimensions,
+  StyleSheet,
+  Alert,
+  StatusBar,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { Bar } from "react-native-progress";
 import { useIsFocused } from "@react-navigation/native";
 import supabase from "../../lib/supabase";
-import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import Tooltip from "react-native-walkthrough-tooltip";
 
 const width = (Dimensions.get("window").width / 10) * 9;
 const xpBarWidth = (Dimensions.get("window").width / 10) * 5.2;
 
 const LevelBar = ({ type, session }) => {
   const isFocused = useIsFocused();
+  const [showTip, setShowTip] = useState(false);
 
   const color =
     type == "WISDOM"
@@ -37,6 +47,24 @@ const LevelBar = ({ type, session }) => {
       setState({});
     };
   }, [session, isFocused]);
+
+  const content = (totallvl, totalxp) => {
+    return (
+      <View>
+        <Text style={{ color: "white" }}>
+          {totalxp} / {Math.round(Math.pow(totallvl / 0.05, 1.6))} XP (
+          {Math.round(
+            (totalxp / Math.round(Math.pow(totallvl / 0.05, 1.6))) * 100
+          )}
+          %)
+        </Text>
+        <Text style={{ color: "white" }}>
+          {Math.round(Math.pow(totallvl / 0.05, 1.6)) - totalxp} XP to Next
+          Level
+        </Text>
+      </View>
+    );
+  };
 
   const getExperience = async () => {
     try {
@@ -69,46 +97,68 @@ const LevelBar = ({ type, session }) => {
   };
 
   return (
-    <View style={styles.experience}>
-      <Text style={[styles.generalLvl, { color: color }]}>
-        {type}{" "}
-        <FontAwesome5
-          name={
+    <TouchableWithoutFeedback onPress={() => setShowTip(true)}>
+      <View style={styles.experience}>
+        <Tooltip
+          isVisible={showTip}
+          onClose={() => setShowTip(false)}
+          content={
             type == "WISDOM"
-              ? "hat-wizard"
+              ? content(wisdomLvl, wisdomXp)
               : type == "STRENGTH"
-              ? "fist-raised"
-              : "balance-scale"
+              ? content(strengthLvl, strengthXp)
+              : content(wealthLvl, wealthXp)
           }
-          size={16}
-        />
-      </Text>
-      <View style={styles.bar}>
-        <Text style={[styles.generalLvl, { color: color }]}>
-          {type == "WISDOM"
-            ? wisdomLvl
-            : type == "STRENGTH"
-            ? strengthLvl
-            : wealthLvl}
-        </Text>
-        <Bar
-          progress={
-            type == "WISDOM"
-              ? wisdomXp / Math.round(Math.pow(wisdomLvl / 0.05, 1.6))
+          placement="top"
+          topAdjustment={
+            Platform.OS === "android" ? -StatusBar.currentHeight : 0
+          }
+          contentStyle={{ backgroundColor: color }}
+          // backgroundColor="transparent"
+          showChildInTooltip={false}
+        >
+          <Text style={[styles.generalLvl, { color: color }]}>
+            {type}{" "}
+            <FontAwesome5
+              name={
+                type == "WISDOM"
+                  ? "hat-wizard"
+                  : type == "STRENGTH"
+                  ? "fist-raised"
+                  : "balance-scale"
+              }
+              size={16}
+            />
+          </Text>
+        </Tooltip>
+        <View style={styles.bar}>
+          <Text style={[styles.generalLvl, { color: color }]}>
+            {type == "WISDOM"
+              ? wisdomLvl
               : type == "STRENGTH"
-              ? strengthXp / Math.round(Math.pow(strengthLvl / 0.05, 1.6))
-              : wealthXp / Math.round(Math.pow(wealthLvl / 0.05, 1.6))
-          }
-          width={xpBarWidth}
-          height={14}
-          unfilledColor="#BFC5CC"
-          color={type == "LEVEL" ? "mediumspringgreen" : color}
-          borderWidth={0}
-          animationConfig={{ bounciness: 10 }}
-          borderRadius={20}
-        />
+              ? strengthLvl
+              : wealthLvl}
+          </Text>
+
+          <Bar
+            progress={
+              type == "WISDOM"
+                ? wisdomXp / Math.round(Math.pow(wisdomLvl / 0.05, 1.6))
+                : type == "STRENGTH"
+                ? strengthXp / Math.round(Math.pow(strengthLvl / 0.05, 1.6))
+                : wealthXp / Math.round(Math.pow(wealthLvl / 0.05, 1.6))
+            }
+            width={xpBarWidth}
+            height={14}
+            unfilledColor="#BFC5CC"
+            color={color}
+            borderWidth={0}
+            animationConfig={{ bounciness: 10 }}
+            borderRadius={20}
+          />
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 

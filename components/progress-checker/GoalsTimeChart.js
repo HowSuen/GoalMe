@@ -118,7 +118,6 @@ export default GoalsTimeChart = () => {
             })
           )
           .sort()
-          // .map((d) => d.toLocaleDateString("en-gb", { weekday: "short" }));
           .map((date) => getDayOfWeek(date))
       );
 
@@ -186,7 +185,6 @@ export default GoalsTimeChart = () => {
         animate={{
           duration: 100,
         }}
-        // domainPadding={{ y: 20 }}
         domainPadding={{ x: 20, y: 10 }}
       >
         <VictoryAxis
@@ -211,13 +209,6 @@ export default GoalsTimeChart = () => {
             duration: 100,
           }}
           labels={({ datum }) => (datum.y == 0 ? null : Math.floor(datum.y))}
-          // labelComponent={
-          //   <VictoryLabel
-          //     textAnchor={({ datum }) =>
-          //       datum.x == "Mon" ? "start" : datum.x == "Sun" ? "end" : "middle"
-          //     }
-          //   />
-          // }
           data={days}
         />
       </VictoryChart>

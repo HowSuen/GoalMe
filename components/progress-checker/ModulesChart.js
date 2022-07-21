@@ -24,8 +24,6 @@ const grades = [
   { label: "D", value: "D" },
   { label: "F", value: "F" },
   { label: "F*", value: "F*" },
-  // { label: "S", value: "S" },
-  // { label: "U", value: "U" },
 ];
 
 export default ModulesChart = () => {
@@ -134,7 +132,6 @@ export default ModulesChart = () => {
           }}
           labels={({ datum }) => (datum.y == 0 ? null : Math.floor(datum.y))}
           data={
-            // completedMods.filter((obj) => obj.y != 0)
             (() => {
               const data = completedMods.filter(
                 (obj) =>

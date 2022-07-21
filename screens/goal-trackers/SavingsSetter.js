@@ -16,18 +16,12 @@ import {
 } from "react-native-gesture-handler";
 import AndroidTitle from "../../components/goal-trackers/AndroidTitle";
 
-// const recurrings = [
-//   { label: "No", value: false },
-//   { label: "Yes", value: true },
-// ];
-
 export default SavingsSetter = ({ navigation }) => {
   const route = useRoute();
   const { user, routeName } = route.params;
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
-  //   const [recurring, setRecurring] = useState(false);
 
   const floatFormat = (value) => {
     const num = parseFloat(value.replace(",", ""), 10);
@@ -43,7 +37,6 @@ export default SavingsSetter = ({ navigation }) => {
           description: description,
           amount: floatFormat(amount),
           curr_amount: 0,
-          //   recurring: recurring,
         },
       ]);
       if (error) throw error;

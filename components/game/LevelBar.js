@@ -114,7 +114,6 @@ const LevelBar = ({ type, session }) => {
             Platform.OS === "android" ? -StatusBar.currentHeight : 0
           }
           contentStyle={{ backgroundColor: color }}
-          // backgroundColor="transparent"
           showChildInTooltip={false}
         >
           <Text style={[styles.generalLvl, { color: color }]}>

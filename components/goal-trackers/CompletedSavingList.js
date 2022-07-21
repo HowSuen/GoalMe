@@ -77,12 +77,6 @@ export default CompletedSavingList = ({ saving, redoSaving, deleteSaving }) => {
           </View>
         </View>
         <View style={styles.iconContainer}>
-          {/* <FontAwesome
-            name="repeat"
-            size={15}
-            // color={exercise.recurring ? "white" : "transparent"}
-              // color="transparent"
-          /> */}
           <TouchableOpacity
             style={styles.trashContainer}
             onPress={() => deleteSaving(saving)}
@@ -135,9 +129,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginRight: 10,
   },
-  // trashContainer: {
-  //   marginTop: 10,
-  // },
   amountText: {
     color: "rgb(182,74,38)",
     fontSize: 14,

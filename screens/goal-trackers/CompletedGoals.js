@@ -157,11 +157,6 @@ export default CompletedGoals = ({ navigation }) => {
             style={styles.moduleNavButton}
           >
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              {/* <Image
-                style={{ width: 30, height: 28 }}
-                source={require("../../assets/modules-progress.png")}
-                resizeMode="contain"
-              /> */}
               <Text style={styles.buttonText}>Modules</Text>
             </View>
           </TouchableOpacity>
@@ -172,11 +167,6 @@ export default CompletedGoals = ({ navigation }) => {
             style={styles.exerciseNavButton}
           >
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              {/* <Image
-                style={{ width: 30, height: 28 }}
-                source={require("../../assets/exercises-progress.png")}
-                resizeMode="contain"
-              /> */}
               <Text style={styles.buttonText}>Exercises</Text>
             </View>
           </TouchableOpacity>
@@ -187,11 +177,6 @@ export default CompletedGoals = ({ navigation }) => {
             style={styles.walletNavButton}
           >
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              {/* <Image
-                style={{ width: 30, height: 28 }}
-                source={require("../../assets/exercises-progress.png")}
-                resizeMode="contain"
-              /> */}
               <Text style={styles.buttonText}>Savings</Text>
             </View>
           </TouchableOpacity>

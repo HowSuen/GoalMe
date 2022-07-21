@@ -36,24 +36,12 @@ const styles = StyleSheet.create({
     flexDirection: "row-reverse",
   },
   titleText: {
-    // alignSelf: "center",
     textAlign: "center",
     fontSize: 18,
     fontWeight: "600",
   },
   titleContainer: {
-    // flexDirection: "row",
-    // justifyContent: "flex-start",
     width: "100%",
     marginLeft: -50,
-  },
-  iconContainer: {
-    // backgroundColor: "blue"
-    // position: "absolute",
-    // paddingLeft: 5,
-  },
-  icon: {
-    // position: "absolute",
-    // right: '100%',
   },
 });

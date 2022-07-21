@@ -72,14 +72,6 @@ export default GoalsChart = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Number of Goals Achieved</Text>
-      {/* <Svg width={400} height={400}> */}
-      {/* <VictoryLabel
-          x={200}
-          y={200}
-          style={{ fontSize: 18 }}
-          textAnchor={"middle"}
-          text={"Total: " + completedTotal}
-        /> */}
       <VictoryPie
         theme={VictoryTheme.material}
         animate={{
@@ -108,12 +100,7 @@ export default GoalsChart = () => {
         categories={{
           x: ["General", "Academic", "Fitness", "Finance"],
         }}
-        data={
-          data
-          // data.filter((obj) => obj.y != 0).length == 0
-          //   ? data
-          //   : data.filter((obj) => obj.y != 0)
-        }
+        data={data}
         events={[
           {
             target: "data",
@@ -126,11 +113,9 @@ export default GoalsChart = () => {
                       return text == datum.y
                         ? {
                             text: datum.x,
-                            // style: { fontSize: 14 },
                           }
                         : {
                             text: datum.y,
-                            // style: { fontSize: 18 },
                           };
                     },
                   },
@@ -140,7 +125,6 @@ export default GoalsChart = () => {
           },
         ]}
       />
-      {/* </Svg> */}
     </View>
   );
 };

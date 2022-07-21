@@ -2,7 +2,7 @@ import RNPickerSelect from "react-native-picker-select";
 import { StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-const DropdownList = ({items, onValueChange}) => {
+const DropdownList = ({ items, onValueChange }) => {
   return (
     <RNPickerSelect
       items={items}
@@ -31,7 +31,6 @@ const pickerSelectStyles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 10,
     borderWidth: 1,
-    // borderColor: "#0094f7",
     borderColor: "dodgerblue",
     borderRadius: 4,
     color: "black",
@@ -44,7 +43,6 @@ const pickerSelectStyles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 8,
     borderWidth: 1,
-    // borderColor: "#0094f7",
     borderColor: "dodgerblue",
     borderRadius: 8,
     color: "black",

@@ -100,7 +100,6 @@ const Account = ({ navigation, session }) => {
             </Text>
           </TouchableOpacity>
         </View>
-        {/* </ImageBackground> */}
         <View style={styles.formContainer}>
           <View style={styles.verticallySpaced}>
             <Input

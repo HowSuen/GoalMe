@@ -29,8 +29,6 @@ const grades = [
   { label: "D", value: "D" },
   { label: "F", value: "F" },
   { label: "F*", value: "F*" },
-  // { label: "S", value: "S" },
-  // { label: "U", value: "U" },
 ];
 
 const compareGrade = (g1, g2) => {

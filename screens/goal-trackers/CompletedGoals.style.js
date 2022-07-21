@@ -74,7 +74,6 @@ export default StyleSheet.create({
     borderRadius: 100,
   },
   moduleNavButton: {
-    // alignSelf: "stretch",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#27A4F2",
@@ -93,7 +92,6 @@ export default StyleSheet.create({
     borderRadius: 100,
   },
   exerciseNavButton: {
-    // alignSelf: "stretch",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "plum",

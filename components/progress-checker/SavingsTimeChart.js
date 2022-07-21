@@ -135,7 +135,6 @@ export default SavingsTimeChart = () => {
         <VictoryAxis
           dependentAxis={true}
           tickFormat={(y) => (y < 1 ? null : currencyFormat(y.toString()))}
-          // label="Amount Saved ($)"
           style={{
             axisLabel: { padding: 30, fontWeight: "bold" },
             tickLabels: { fontSize: 10 },
@@ -152,7 +151,6 @@ export default SavingsTimeChart = () => {
           style={{ data: { fill: "darkgoldenrod", opacity: 0.6 } }}
           animate={{
             duration: 100,
-            // animationWhitelist: ["data"]
           }}
           labels={({ datum }) =>
             datum.y == 0 ? null : currencyFormat(datum.y.toString())

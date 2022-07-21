@@ -5,7 +5,6 @@ import { Card, Text } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import styles from "./ProgressChecker.style";
 import GoalsChart from "../../components/progress-checker/GoalsChart";
-import TitleCard from "../../components/progress-checker/TitleCard";
 import GoalsTimeChart from "../../components/progress-checker/GoalsTimeChart";
 
 export default GoalsProgress = ({ navigation }) => {
@@ -124,7 +123,6 @@ export default GoalsProgress = ({ navigation }) => {
         contentContainerStyle={styles.scrollView}
         showsVerticalScrollIndicator={false}
       >
-        {/* <TitleCard type="Goals"/> */}
         <View style={styles.topRowContainer}>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{completed}</Text>

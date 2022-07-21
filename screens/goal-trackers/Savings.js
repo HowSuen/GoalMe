@@ -22,7 +22,6 @@ const orderBys = [
   { label: "Saving Target ($)", value: "savingTarget" },
   { label: "Current Savings (%)", value: "currentSavings" },
   { label: "Alphabetical", value: "alphabetical" },
-  //   { label: "Type", value: "type" },
 ];
 
 const sortItems = (order, orderBy) => {
@@ -31,13 +30,6 @@ const sortItems = (order, orderBy) => {
   };
 
   let comparator;
-  // if (orderBy == "type") {
-  //   comparator = (a, b) => {
-  //     const s1 = a.type;
-  //     const s2 = b.type;
-  //     return order == "ascending" ? s1.localeCompare(s2) : s2.localeCompare(s1);
-  //   };
-  // } else
   if (orderBy == "dateCreated") {
     comparator = (a, b) => {
       return order == "ascending" ? a.id - b.id : b.id - a.id;
@@ -125,7 +117,6 @@ export default Savings = ({ navigation }) => {
               amount: saving.amount,
               curr_amount: saving.curr_amount,
               updated_at: saving.updated_at,
-              // recurring: saving.recurring,
             },
             ...prevSavings,
           ];
@@ -169,7 +160,6 @@ export default Savings = ({ navigation }) => {
 
   const updateExperience = async (saving) => {
     let addXP = Math.round(parseFloat(saving.curr_amount, 10));
-    // console.log(addXP);
 
     let newTotalXp = totalXp + addXP;
     let newWealthXp = wealthXp + addXP;
@@ -248,26 +238,6 @@ export default Savings = ({ navigation }) => {
         .match({ id: saving.id });
 
       if (error) throw error;
-
-      // const userId = data[0].user_id;
-
-      // if (saving.recurring) {
-      //   let { data, error } = await supabase.from("savings").insert([
-      //     {
-      //       user_id: userId,
-      //       name: saving.name,
-      //       description: saving.description,
-      //       amount: saving.amount,
-      //       curr_amount: saving.curr_amount,
-      //       updated_at: saving.updated_at,
-      //       recurring: saving.recurring,
-      //     },
-      //   ]);
-
-      //   if (error) throw error;
-
-      //   return data[0];
-      // }
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -278,14 +248,6 @@ export default Savings = ({ navigation }) => {
       title: "Complete This Saving Goal?",
       proceedText: "Complete",
       onPress: () => {
-        // const recurringSaving = completeItem(saving);
-        // if (saving.recurring) {
-        //   recurringSaving.then(() => getSavings());
-        // } else {
-        //   setData((savings) => {
-        //     return savings.filter((e) => e != saving);
-        //   });
-        // }
         completeItem(saving);
         setData((savings) => {
           return savings.filter((s) => s != saving);

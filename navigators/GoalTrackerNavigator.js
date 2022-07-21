@@ -85,7 +85,6 @@ export default GoalTrackerNavigator = () => {
           drawerActiveBackgroundColor: !inModules(route)
             ? "royalblue"
             : "#27A4F2",
-          // drawerActiveBackgroundColor: "royalblue",
           drawerLabel: "Academic",
         })}
       >
@@ -100,7 +99,6 @@ export default GoalTrackerNavigator = () => {
             backgroundColor: !inExercise(route) ? "tomato" : "plum",
           },
           drawerActiveBackgroundColor: !inExercise(route) ? "tomato" : "plum",
-          // drawerActiveBackgroundColor: "tomato",
           headerTitle: !inExercise(route) ? "Fitness Goals" : "Exercises",
           drawerLabel: "Fitness",
         })}
@@ -120,7 +118,6 @@ export default GoalTrackerNavigator = () => {
           drawerActiveBackgroundColor: !inSavings(route)
             ? "goldenrod"
             : "rgb(255,176,58)",
-          // drawerActiveBackgroundColor: "goldenrod",
           headerTitle: !inSavings(route) ? "Finance Goals" : "Savings",
           drawerLabel: "Finance",
         })}
@@ -148,7 +145,6 @@ export default GoalTrackerNavigator = () => {
             : inSavings(route)
             ? "rgb(255,176,58)"
             : "mediumaquamarine",
-          // drawerActiveBackgroundColor: "mediumaquamarine",
           headerTitle: inModules(route)
             ? "Completed Modules"
             : inExercise(route)
@@ -156,9 +152,6 @@ export default GoalTrackerNavigator = () => {
             : inSavings(route)
             ? "Completed Savings"
             : "Completed Goals",
-          // headerStyle: { backgroundColor: "mediumaquamarine" },
-          // drawerActiveBackgroundColor: "mediumaquamarine",
-          // headerTitle: "Completed Goals",
           drawerLabel: "Completed",
         })}
       >

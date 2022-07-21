@@ -5,7 +5,6 @@ import { Card, Text } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import styles from "./ProgressChecker.style";
 import ModulesChart from "../../components/progress-checker/ModulesChart";
-import TitleCard from "../../components/progress-checker/TitleCard";
 import { compareGrade } from "../goal-trackers/Modules";
 
 export default ModulesProgress = () => {
@@ -23,7 +22,6 @@ export default ModulesProgress = () => {
   useEffect(() => {
     getExpData();
     getPending();
-    // getGrades();
     return () => {
       setState({});
     };
@@ -85,37 +83,6 @@ export default ModulesProgress = () => {
     }
   };
 
-  // const getGrades = async () => {
-  //   try {
-  //     if (!user) throw new Error("No user on the session!");
-
-  //     let { data, error, status } = await supabase
-  //       .from("modules")
-  //       .select("grade_received")
-  //       .match({ user_id: user.id, completion_status: true });
-
-  //     if (error && status !== 406) {
-  //       throw error;
-  //     }
-
-  //     if (!data) return;
-
-  //     const mode = (arr) => {
-  //       const store = {};
-  //       arr.forEach((o) => (store[o] ? (store[o] += 1) : (store[o] = 1)));
-  //       return Object.keys(store).sort((a, b) =>
-  //         store[b] - store[a] == 0 ? compareGrade(b, a) : store[b] - store[a]
-  //       )[0];
-  //     };
-
-  //     const grade = mode(data.map((o) => o.grade_received));
-
-  //     if (grade) setModeGrade(grade);
-  //   } catch (error) {
-  //     Alert.alert(error.message);
-  //   }
-  // };
-
   const getPending = async () => {
     try {
       if (!user) throw new Error("No user on the session!");
@@ -143,7 +110,6 @@ export default ModulesProgress = () => {
         contentContainerStyle={styles.scrollView}
         showsVerticalScrollIndicator={false}
       >
-        {/* <TitleCard type="Modules" /> */}
         <View style={styles.topRowContainer}>
           <Card containerStyle={styles.topRowCard}>
             <Text style={styles.topRowCardText}>{completed}</Text>

@@ -89,7 +89,6 @@ const MainLevel = ({ session }) => {
               Platform.OS === "android" ? -StatusBar.currentHeight : 0
             }
             contentStyle={{ backgroundColor: "mediumseagreen" }}
-            // backgroundColor="transparent"
             showChildInTooltip={false}
           >
             <Text style={styles.generalLvl}>LEVEL</Text>

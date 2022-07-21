@@ -17,7 +17,6 @@ export default ProfileNavigator = ({ navigation, session }) => {
           headerShown: true,
           headerTitle: "Profile",
           headerStyle: { backgroundColor: "ghostwhite" },
-          // headerTintColor: "dodgerblue",
           headerTintColor: "#0d329f",
           headerShadowVisible: true,
           presentation: "modal",

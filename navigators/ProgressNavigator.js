@@ -30,7 +30,6 @@ export default ProgressNavigator = ({ navigation }) => {
         name="GoalsProgress"
         options={{
           headerShown: true,
-          // headerTitle: "GOALS",
           headerTitle: (props) => (
             <Text
               style={{
@@ -61,7 +60,6 @@ export default ProgressNavigator = ({ navigation }) => {
         name="ModulesProgress"
         options={{
           headerShown: true,
-          // headerTitle: "MODULES",
           headerTitle: (props) => (
             <Text
               style={{
@@ -92,7 +90,6 @@ export default ProgressNavigator = ({ navigation }) => {
         name="ExercisesProgress"
         options={{
           headerShown: true,
-          // headerTitle: "EXERCISES",
           headerTitle: (props) => (
             <Text
               style={{
@@ -123,7 +120,6 @@ export default ProgressNavigator = ({ navigation }) => {
         name="SavingsProgress"
         options={{
           headerShown: true,
-          // headerTitle: "SAVINGS",
           headerTitle: (props) => (
             <Text
               style={{

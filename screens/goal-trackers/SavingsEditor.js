@@ -19,11 +19,6 @@ import { Circle } from "react-native-progress";
 import styles from "./SavingsEditor.style";
 import SavingPrompt from "../../components/goal-trackers/SavingPrompt";
 
-// const recurrings = [
-//   { label: "No", value: false },
-//   { label: "Yes", value: true },
-// ];
-
 export default SavingsEditor = ({ navigation }) => {
   const route = useRoute();
   const { routeName, saving } = route.params;
@@ -31,18 +26,7 @@ export default SavingsEditor = ({ navigation }) => {
   const [description, setDescription] = useState(saving.description);
   const [amount, setAmount] = useState(saving.amount);
   const [curr_amount, setCurrAmount] = useState(saving.curr_amount);
-  // const [recurring, setRecurring] = useState(saving.recurring);
   const [promptVisible, setPromptVisible] = useState(false);
-
-  // const noStateChange = () => {
-  //   return (
-  //     name == saving.name &&
-  //     description == saving.description &&
-  //     amount == saving.amount &&
-  //   //   recurring == saving.recurring &&
-  //     curr_amount == saving.curr_amount
-  //   );
-  // };
 
   const hasEmptyValues = () => {
     return name == "" || amount == "" || !numberRegex(amount);
@@ -115,7 +99,6 @@ export default SavingsEditor = ({ navigation }) => {
           amount: floatFormat(amount),
           curr_amount: floatFormat(curr_amount),
           updated_at: new Date().toISOString().toLocaleString(),
-          // recurring: recurring,
         })
         .match({ id: saving.id });
 
@@ -132,7 +115,6 @@ export default SavingsEditor = ({ navigation }) => {
         .update({
           curr_amount: floatFormat(new_amount),
           updated_at: new Date().toISOString().toLocaleString(),
-          // recurring: recurring,
         })
         .match({ id: saving.id });
 

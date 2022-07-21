@@ -78,7 +78,6 @@ export default StyleSheet.create({
     marginVertical: 7,
   },
   trashContainer: {
-    // marginVertical: 4,
     marginTop: 10,
   },
 });

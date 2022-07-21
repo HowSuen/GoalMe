@@ -20,8 +20,6 @@ const grades = [
   { label: "D", value: "D" },
   { label: "F", value: "F" },
   { label: "F*", value: "F*" },
-  // { label: "S", value: "S" },
-  // { label: "U", value: "U" },
 ];
 
 export default CompletedModuleList = ({ module, redoModule, deleteModule }) => {

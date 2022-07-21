@@ -124,13 +124,6 @@ export default ExercisesTimeChart = () => {
             duration: 100,
           }}
           labels={({ datum }) => (datum.y == 0 ? null : Math.floor(datum.y))}
-          // labelComponent={
-          //   <VictoryLabel
-          //     textAnchor={({ datum }) =>
-          //       datum.x == "Mon" ? "start" : datum.x == "Sun" ? "end" : "middle"
-          //     }
-          //   />
-          // }
           data={days}
         />
       </VictoryChart>

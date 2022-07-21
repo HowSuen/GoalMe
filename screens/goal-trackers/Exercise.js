@@ -164,7 +164,6 @@ export default Exercise = ({ navigation }) => {
         ? Math.round(parseFloat(exercise.distance, 10) * 1000)
         : parseInt(exercise.volume, 10);
     addXP = addXP > 1000 ? 1000 : addXP;
-    // console.log(addXP);
 
     let newTotalXp = totalXp + addXP;
     let newStrengthXp = strengthXp + addXP;

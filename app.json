@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "sdkVersion": "45.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logo.png",
+    "icon": "./assets/app_icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/goalme_splash.png",

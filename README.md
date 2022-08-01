@@ -23,7 +23,7 @@ To use GoalMe, a user will need to create a new account with a valid email, a us
 Our main feature, Goal Tracker, allows users to set their goals, and branches into its children trackers, Academic Tracker, Fitness Tracker, and Finance Tracker. There is also a Completed Goals section for users to view the goals they have achieved. 
 
 ### Profile
-Registered users are able to access their account profile, which displays their avatar, email and username. Users are also able to change their username and customise their Avatar.
+Registered users are able to access their account profile, which displays their Avatar, email and username. Users are also able to change their username and customise their Avatar.
 
 ### Gamified System
 Our Gamified System introduces a fun and rewarding way for users to set goals and pursue them. This motivates users to continue pursuing their goals and feel rewarded in the process of working towards their goals, thus ensuring sustainable and prolonged usage of our app.
@@ -34,15 +34,10 @@ Our Progress Checker provides detailed analysis of the user’s journey in achie
 ## Complete README
 The full README can be found here: https://tinyurl.com/3afvvnhp
 
-## To run the application
-Ensure that you have `node`, `npm`, and `expo-cli` installed. 
+## Installation
+Android APK: [link](https://drive.google.com/file/d/17iXAc_QF2x1dxwXz_7iwibK0UfIPtOyW/view?usp=sharing)
 
-Pick a local directory and clone this repository with:
-
-`git clone https://github.com/HowSuen/GoalMe.git`.
-
-Once that is done, run `npm install` in the project directory to install the dependencies in this application. 
-
-You can now run the app via `expo start` or `npm start`. A QR code will be generated.  
-
-To use the app on your phone, install Expo Go from the App Store or Play Store first. Then, scan the QR code using your phone, and open it in Expo Go. 
+Expo Installion:
+1. Install Expo Go on your mobile device
+2. Open Expo Go and scan the QR Code in this [link](exp.host/@jorrdansoh/GoalMe?release-channel=default)
+3. GoalMe will be loaded on your device.

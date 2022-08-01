@@ -31,10 +31,10 @@ Our Gamified System introduces a fun and rewarding way for users to set goals an
 ### Progress Checker
 Our Progress Checker provides detailed analysis of the user’s journey in achieving their goals through data visualisation with pleasing aesthetics. It entails data visualisation tools such as pie charts, bar graphs, and line graphs that show users’ progress in completing goals, modules, exercises and savings. Through data visualisations of their progress, users will be able to know the areas they have done well in and their areas of improvement. There are four categories in Progress Checker: Goals, Modules, Exercises, and Savings. 
 
-## Full README
+## Complete README
 The full README can be found here: https://tinyurl.com/3afvvnhp
 
-## Running the application
+## To run the application
 Ensure that you have `node`, `npm`, and `expo-cli` installed. 
 
 Pick a local directory and clone this repository with:

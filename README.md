@@ -41,3 +41,5 @@ Install through Expo:
 1. Install Expo Go on your mobile device
 2. Open Expo Go and scan the QR Code in this [link](exp.host/@jorrdansoh/GoalMe?release-channel=default)
 3. GoalMe will be loaded on your device.
+
+Note: If you encounter any errors while signing up, it means that the database has been paused. Please contact the owners to unpause the database. 

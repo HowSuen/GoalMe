@@ -1,5 +1,5 @@
 # GoalMe
-This is the repository that holds all the code for the Orbital project GoalMe, done by Tan How Suen and Jordan Soh. 
+This is the repository that holds the source code for the Orbital project GoalMe, done by [@HowSuen](https://github.com/HowSuen) and [@jorrdansoh](https://github.com/jorrdansoh).
 
 ## Motivation
 For many students, university is the first time in their lives where they are truly independent, and free to define their own goals and progress. However, the extent of freedom and the multitude of choices students suddenly encounter can be overwhelming, making it hard to set clear goals or find any concrete ways to achieve them.
@@ -32,14 +32,16 @@ Our Gamified System introduces a fun and rewarding way for users to set goals an
 Our Progress Checker provides detailed analysis of the user’s journey in achieving their goals through data visualisation with pleasing aesthetics. It entails data visualisation tools such as pie charts, bar graphs, and line graphs that show users’ progress in completing goals, modules, exercises and savings. Through data visualisations of their progress, users will be able to know the areas they have done well in and their areas of improvement. There are four categories in Progress Checker: Goals, Modules, Exercises, and Savings. 
 
 ## Complete README
-The full README can be found here: [link](https://drive.google.com/file/d/1rLlHS0j4v3IBmkRg1V_zZXzHGW7fNQ9r/view?usp=sharing)
+The complete README can be found here: [link](https://drive.google.com/file/d/1rLlHS0j4v3IBmkRg1V_zZXzHGW7fNQ9r/view?usp=sharing)
 
 ## Installation
 Android APK: [link](https://drive.google.com/file/d/17iXAc_QF2x1dxwXz_7iwibK0UfIPtOyW/view?usp=sharing)
 
-Install through Expo:
+Expo:
 1. Install Expo Go on your mobile device
-2. Open Expo Go and scan the QR Code in this [link](exp.host/@jorrdansoh/GoalMe?release-channel=default)
+2. Open Expo Go and scan the QR Code in this [link](https://expo.dev/@jorrdansoh/GoalMe?release-channel=default)
 3. GoalMe will be loaded on your device.
 
-Note: If you encounter any errors while signing up, it means that the database has been paused. Please contact the owners to unpause the database. 
+Notes
+1. Due to a change in Apple's policies, iOS users can no longer use GoalMe on Expo Go without being invited to the Expo organisation.
+2: If you encounter any errors while signing up, it is because the database has been paused by Supabase. Please contact the owners of this repository to unpause the database. 

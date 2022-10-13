@@ -44,4 +44,4 @@ Expo:
 
 Notes
 1. Due to a change in Apple's policies, iOS users can no longer use GoalMe on Expo Go without being invited to the Expo organisation.
-2: If you encounter any errors while signing up, it is because the database has been paused by Supabase. Please contact the owners of this repository to unpause the database. 
+2. If you encounter any errors while signing up, it is because the database has been paused by Supabase. Please contact the owners of this repository to unpause the database. 
